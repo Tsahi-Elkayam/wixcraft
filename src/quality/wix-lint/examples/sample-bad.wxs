@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    sample-bad.wxs - A WiX file with common issues
+
+    This file demonstrates various lint warnings and errors
+    that wix-lint can detect.
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <!-- ISSUE: Package missing UpgradeCode (required for upgrades) -->
+  <!-- ISSUE: Package missing Manufacturer (required) -->
+  <Package Name="BadApp" Version="1.0.0">
+
+    <!-- ISSUE: No MajorUpgrade element (needed for upgrade handling) -->
+    <!-- ISSUE: No MediaTemplate element (no cab file settings) -->
+
+    <!-- ISSUE: Directory not under StandardDirectory -->
+    <Directory Id="INSTALLFOLDER" Name="BadApp">
+
+      <!-- ISSUE: Component missing Guid attribute -->
+      <Component>
+        <!-- ISSUE: File missing KeyPath (no reliable uninstall key) -->
+        <File Source="app.exe" />
+
+        <!-- ISSUE: Multiple files in one component (harder to service) -->
+        <File Source="lib1.dll" />
+        <File Source="lib2.dll" />
+        <File Source="lib3.dll" />
+      </Component>
+
+      <!-- ISSUE: Empty Component -->
+      <Component Id="EmptyComp" Guid="*">
+      </Component>
+
+    </Directory>
+
+    <!-- ISSUE: Feature missing Title attribute -->
+    <!-- ISSUE: Feature missing Level attribute -->
+    <Feature Id="MainFeature">
+      <!-- Feature has no component references -->
+    </Feature>
+
+    <!-- ISSUE: Property with hardcoded path -->
+    <Property Id="INSTALLPATH" Value="C:\Program Files\BadApp" />
+
+    <!-- ISSUE: Property with sensitive name but not hidden -->
+    <Property Id="DATABASE_PASSWORD" Value="secret123" />
+
+    <!-- ISSUE: CustomAction with impersonation issues -->
+    <CustomAction Id="BadAction"
+                  Directory="INSTALLFOLDER"
+                  ExeCommand="setup.exe"
+                  Execute="deferred" />
+
+    <!-- ISSUE: Registry key without Component wrapper -->
+    <!-- (This would be invalid XML, but demonstrates the concept) -->
+
+  </Package>
+</Wix>

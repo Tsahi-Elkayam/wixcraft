@@ -1,0 +1,20 @@
+# Build artifacts
+target/
+*.pyc
+__pycache__/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Rust - keep Cargo.lock for binaries
+
+# Environment
+.env
+.env.local

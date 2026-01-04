@@ -1,0 +1,34 @@
+[package]
+name = "wix-lint"
+version = "0.1.0"
+edition = "2021"
+description = "A linter for WiX XML files"
+license = "MIT"
+repository = "https://github.com/wixcraft/wixcraft"
+keywords = ["wix", "msi", "installer", "lint", "windows"]
+categories = ["development-tools", "command-line-utilities"]
+
+[dependencies]
+clap = { version = "4", features = ["derive", "env"] }
+roxmltree = "0.20"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+miette = { version = "7", features = ["fancy"] }
+thiserror = "2"
+glob = "0.3"
+globset = "0.4"
+regex = "1"
+once_cell = "1"
+rayon = "1"
+
+[dev-dependencies]
+tempfile = "3"
+
+[[bin]]
+name = "wix-lint"
+path = "src/main.rs"
+
+[lib]
+name = "wix_lint"
+path = "src/lib.rs"

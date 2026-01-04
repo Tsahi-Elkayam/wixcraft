@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    sample-disable.wxs - Demonstrating inline disable comments
+
+    This file shows how to suppress specific lint warnings
+    when you have a good reason to deviate from best practices.
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+
+  <!--
+      Disable specific rules for the next line using:
+      wix-lint-disable-next-line <rule-id> [, <rule-id>, ...]
+
+      The comment must be on the line IMMEDIATELY before the element.
+  -->
+
+  <!-- Justification: This is a one-time utility that doesn't need upgrade support -->
+  <!-- wix-lint-disable-next-line package-requires-upgradecode, package-requires-manufacturer, package-majorupgrade-recommended -->
+  <Package Name="Utility" Version="1.0.0">
+
+    <StandardDirectory Id="ProgramFilesFolder">
+      <Directory Id="INSTALLFOLDER" Name="Utility">
+
+        <!-- This component is linted normally -->
+        <Component Id="ModernComponent" Guid="*">
+          <File Id="ModernFile" Source="modern.exe" KeyPath="yes" />
+        </Component>
+
+        <!-- wix-lint-disable-next-line component-requires-guid -->
+        <Component Id="LegacyComponent">
+          <File Id="LegacyFile" Source="legacy.dll" KeyPath="yes" />
+        </Component>
+
+      </Directory>
+    </StandardDirectory>
+
+    <!-- Justification: Internal feature, title not shown to users -->
+    <!-- wix-lint-disable-next-line feature-requires-title -->
+    <Feature Id="InternalFeature" Level="1">
+      <ComponentRef Id="ModernComponent" />
+      <ComponentRef Id="LegacyComponent" />
+    </Feature>
+
+  </Package>
+</Wix>

@@ -1,0 +1,14 @@
+{
+  "ignore": [
+    "package-compressed-recommended",
+    "feature-description-recommended"
+  ],
+  "minSeverity": "warning",
+  "exclude": [
+    "**/node_modules/**",
+    "**/*.g.wxs"
+  ],
+  "perFileIgnores": {
+    "tests/fixtures/*.wxs": ["file-assembly-application"]
+  }
+}

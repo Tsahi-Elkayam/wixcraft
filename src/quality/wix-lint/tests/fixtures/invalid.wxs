@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <!-- Missing UpgradeCode, Manufacturer -->
+  <Package Name="InvalidApp" Version="1.0.0">
+
+    <!-- No MajorUpgrade element -->
+    <!-- No MediaTemplate element -->
+
+    <Directory Id="INSTALLFOLDER" Name="InvalidApp">
+      <!-- Component missing Guid -->
+      <Component>
+        <!-- Multiple files in one component -->
+        <File Source="app.exe" />
+        <File Source="lib1.dll" />
+        <File Source="lib2.dll" />
+      </Component>
+    </Directory>
+
+    <!-- Feature missing Title and Level -->
+    <Feature Id="Main">
+    </Feature>
+
+    <!-- Property with hardcoded path -->
+    <Property Id="installpath" Value="C:\Program Files\MyApp" />
+
+  </Package>
+</Wix>
