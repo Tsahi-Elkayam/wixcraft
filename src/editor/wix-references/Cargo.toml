@@ -1,0 +1,25 @@
+[package]
+name = "wix-references"
+version = "0.1.0"
+edition = "2021"
+description = "WiX symbol references and Go to Definition"
+license = "MIT"
+
+[dependencies]
+roxmltree = "0.20"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+clap = { version = "4", features = ["derive"] }
+walkdir = "2"
+
+[dev-dependencies]
+tempfile = "3"
+
+[[bin]]
+name = "wix-references"
+path = "src/main.rs"
+
+[lib]
+name = "wix_references"
+path = "src/lib.rs"
