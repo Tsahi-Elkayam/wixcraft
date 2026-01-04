@@ -1,0 +1,74 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "File",
+  "namespace": "wix",
+  "since": "v3",
+  "description": "Represents a file to be installed as part of a component.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/file/",
+  "parents": ["Component", "Directory", "DirectoryRef", "StandardDirectory"],
+  "children": ["Shortcut", "Permission"],
+  "attributes": {
+    "Id": {
+      "type": "identifier",
+      "required": false,
+      "description": "Unique identifier for the file. Auto-generated from filename if not specified."
+    },
+    "Source": {
+      "type": "path",
+      "required": true,
+      "description": "Path to the source file to include in the installer."
+    },
+    "Name": {
+      "type": "filename",
+      "required": false,
+      "description": "The destination filename. Defaults to source filename."
+    },
+    "KeyPath": {
+      "type": "yesno",
+      "required": false,
+      "default": "no",
+      "description": "If yes, this file is the key path for its component."
+    },
+    "Vital": {
+      "type": "yesno",
+      "required": false,
+      "default": "yes",
+      "description": "If yes, installation fails if this file cannot be installed."
+    },
+    "Checksum": {
+      "type": "yesno",
+      "required": false,
+      "default": "no",
+      "description": "If yes, the file has a checksum stored in the MsiFileHash table."
+    },
+    "ReadOnly": {
+      "type": "yesno",
+      "required": false,
+      "default": "no",
+      "description": "If yes, the file is installed with read-only attribute."
+    },
+    "Hidden": {
+      "type": "yesno",
+      "required": false,
+      "default": "no",
+      "description": "If yes, the file is installed with hidden attribute."
+    },
+    "System": {
+      "type": "yesno",
+      "required": false,
+      "default": "no",
+      "description": "If yes, the file is installed with system attribute."
+    }
+  },
+  "msiTables": ["File", "MsiFileHash"],
+  "rules": [
+    "file-source-exists",
+    "file-unique-id"
+  ],
+  "examples": [
+    {
+      "description": "Simple file installation",
+      "code": "<File Source=\"bin\\app.exe\" KeyPath=\"yes\" />"
+    }
+  ]
+}

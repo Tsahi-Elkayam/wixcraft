@@ -1,0 +1,64 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "RegistrySearch",
+  "namespace": "wix",
+  "since": "v3",
+  "description": "Searches for a registry value to set a property.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/registrysearch/",
+  "parents": ["Property", "Bundle", "Fragment"],
+  "children": [],
+  "attributes": {
+    "Id": {
+      "type": "identifier",
+      "required": false,
+      "description": "Unique identifier for the search."
+    },
+    "Root": {
+      "type": "enum",
+      "required": true,
+      "values": ["HKCR", "HKCU", "HKLM", "HKU"],
+      "description": "The registry hive to search."
+    },
+    "Key": {
+      "type": "string",
+      "required": true,
+      "description": "The registry key path."
+    },
+    "Name": {
+      "type": "string",
+      "required": false,
+      "description": "The registry value name. Empty for default value."
+    },
+    "Type": {
+      "type": "enum",
+      "required": false,
+      "values": ["directory", "file", "raw"],
+      "default": "raw",
+      "description": "How to interpret the value."
+    },
+    "Variable": {
+      "type": "string",
+      "required": false,
+      "description": "Variable to set with the result (for bundles)."
+    },
+    "Condition": {
+      "type": "string",
+      "required": false,
+      "description": "Condition for running the search."
+    },
+    "Result": {
+      "type": "enum",
+      "required": false,
+      "values": ["exists", "value"],
+      "default": "value",
+      "description": "What to return from the search."
+    }
+  },
+  "msiTables": ["RegLocator"],
+  "examples": [
+    {
+      "description": "Search for installed version",
+      "code": "<Property Id=\"INSTALLEDVERSION\">\n  <RegistrySearch Root=\"HKLM\" Key=\"Software\\MyApp\" Name=\"Version\" Type=\"raw\" />\n</Property>"
+    }
+  ]
+}

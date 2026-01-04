@@ -1,0 +1,23 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "FeatureGroupRef",
+  "namespace": "wix",
+  "since": "v3",
+  "description": "References a feature group defined elsewhere.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/featuregroupref/",
+  "parents": ["Feature", "FeatureRef", "FeatureGroup"],
+  "children": [],
+  "attributes": {
+    "Id": {
+      "type": "identifier",
+      "required": true,
+      "description": "The identifier of the feature group to reference."
+    }
+  },
+  "examples": [
+    {
+      "description": "Reference a feature group",
+      "code": "<Feature Id=\"Complete\" Level=\"1000\">\n  <FeatureGroupRef Id=\"OptionalFeatures\" />\n</Feature>"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "DirectoryRef",
+  "namespace": "wix",
+  "since": "v3",
+  "description": "References a directory defined elsewhere, allowing you to add content to it.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/directoryref/",
+  "parents": ["Package", "Module", "Fragment"],
+  "children": ["Component", "Directory", "File", "Merge"],
+  "attributes": {
+    "Id": {
+      "type": "identifier",
+      "required": true,
+      "description": "The identifier of the directory to reference."
+    }
+  },
+  "examples": [
+    {
+      "description": "Add components to an existing directory",
+      "code": "<DirectoryRef Id=\"INSTALLFOLDER\">\n  <Component Guid=\"*\">\n    <File Source=\"config.xml\" />\n  </Component>\n</DirectoryRef>"
+    }
+  ]
+}

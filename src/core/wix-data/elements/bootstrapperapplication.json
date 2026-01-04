@@ -1,0 +1,28 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "BootstrapperApplication",
+  "namespace": "wix",
+  "since": "v4",
+  "description": "Defines a bootstrapper application for the bundle UI.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/bootstrapperapplication/",
+  "parents": ["Bundle"],
+  "children": ["BootstrapperApplicationDll", "Payload", "PayloadGroupRef"],
+  "attributes": {
+    "Id": {
+      "type": "identifier",
+      "required": false,
+      "description": "Unique identifier for the bootstrapper application."
+    },
+    "SourceFile": {
+      "type": "path",
+      "required": false,
+      "description": "Path to the bootstrapper application DLL."
+    }
+  },
+  "examples": [
+    {
+      "description": "Custom bootstrapper application",
+      "code": "<BootstrapperApplication SourceFile=\"MyBA.dll\" />"
+    }
+  ]
+}

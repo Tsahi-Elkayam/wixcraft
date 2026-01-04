@@ -1,0 +1,95 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "CustomAction",
+  "namespace": "wix",
+  "since": "v3",
+  "description": "Defines a custom action that runs during installation.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/customaction/",
+  "parents": ["Package", "Module", "Fragment"],
+  "children": [],
+  "attributes": {
+    "Id": {
+      "type": "identifier",
+      "required": true,
+      "description": "Unique identifier for the custom action."
+    },
+    "DllEntry": {
+      "type": "string",
+      "required": false,
+      "description": "Entry point in a DLL custom action."
+    },
+    "ExeCommand": {
+      "type": "string",
+      "required": false,
+      "description": "Command line for an executable custom action."
+    },
+    "Script": {
+      "type": "enum",
+      "required": false,
+      "values": ["jscript", "vbscript"],
+      "description": "Script type for script custom actions."
+    },
+    "BinaryRef": {
+      "type": "identifier",
+      "required": false,
+      "description": "Reference to a Binary element containing the custom action code."
+    },
+    "FileRef": {
+      "type": "identifier",
+      "required": false,
+      "description": "Reference to a File element to execute."
+    },
+    "Property": {
+      "type": "identifier",
+      "required": false,
+      "description": "Property containing the path to execute."
+    },
+    "Directory": {
+      "type": "identifier",
+      "required": false,
+      "description": "Directory to use as working directory."
+    },
+    "Value": {
+      "type": "string",
+      "required": false,
+      "description": "Value to set for SetProperty custom actions."
+    },
+    "Execute": {
+      "type": "enum",
+      "required": false,
+      "values": ["immediate", "deferred", "rollback", "commit", "oncePerProcess", "secondSequence"],
+      "default": "immediate",
+      "description": "When to execute the custom action."
+    },
+    "Impersonate": {
+      "type": "yesno",
+      "required": false,
+      "default": "yes",
+      "description": "Whether to impersonate the user."
+    },
+    "Return": {
+      "type": "enum",
+      "required": false,
+      "values": ["check", "ignore", "asyncWait", "asyncNoWait"],
+      "default": "check",
+      "description": "How to handle the return value."
+    },
+    "HideTarget": {
+      "type": "yesno",
+      "required": false,
+      "default": "no",
+      "description": "Whether to hide the target in logs."
+    }
+  },
+  "msiTables": ["CustomAction"],
+  "examples": [
+    {
+      "description": "Set property custom action",
+      "code": "<CustomAction Id=\"SetInstallFolder\" Property=\"INSTALLFOLDER\" Value=\"[ProgramFilesFolder]MyApp\" />"
+    },
+    {
+      "description": "Deferred executable custom action",
+      "code": "<CustomAction Id=\"RunSetup\" FileRef=\"SetupExe\" ExeCommand=\"/configure\" Execute=\"deferred\" Impersonate=\"no\" />"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "ComponentRef",
+  "namespace": "wix",
+  "since": "v3",
+  "description": "References a component defined elsewhere to include it in a feature.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/componentref/",
+  "parents": ["Feature", "FeatureRef", "FeatureGroup", "ComponentGroup"],
+  "children": [],
+  "attributes": {
+    "Id": {
+      "type": "identifier",
+      "required": true,
+      "description": "The identifier of the component to reference."
+    }
+  },
+  "examples": [
+    {
+      "description": "Reference a component in a feature",
+      "code": "<Feature Id=\"Main\" Level=\"1\">\n  <ComponentRef Id=\"AppComponent\" />\n</Feature>"
+    }
+  ]
+}

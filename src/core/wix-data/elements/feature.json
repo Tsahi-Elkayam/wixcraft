@@ -1,0 +1,77 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "Feature",
+  "namespace": "wix",
+  "since": "v3",
+  "description": "A feature is a logical grouping of components. Users can choose which features to install.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/feature/",
+  "parents": ["Package", "Module", "Fragment", "Feature", "FeatureRef", "FeatureGroup"],
+  "children": ["Component", "ComponentRef", "ComponentGroupRef", "Feature", "FeatureRef", "FeatureGroupRef", "MergeRef"],
+  "attributes": {
+    "Id": {
+      "type": "identifier",
+      "required": true,
+      "description": "Unique identifier for the feature."
+    },
+    "Title": {
+      "type": "string",
+      "required": false,
+      "description": "Short description of the feature displayed in the UI."
+    },
+    "Description": {
+      "type": "string",
+      "required": false,
+      "description": "Longer description of the feature."
+    },
+    "Level": {
+      "type": "integer",
+      "required": false,
+      "default": 1,
+      "description": "Installation level. 0 means disabled, 1 means enabled by default."
+    },
+    "Display": {
+      "type": "enum",
+      "required": false,
+      "values": ["collapse", "expand", "hidden"],
+      "default": "expand",
+      "description": "How the feature is displayed in the feature tree."
+    },
+    "Absent": {
+      "type": "enum",
+      "required": false,
+      "values": ["allow", "disallow"],
+      "default": "allow",
+      "description": "Whether the user can choose not to install this feature."
+    },
+    "AllowAdvertise": {
+      "type": "enum",
+      "required": false,
+      "values": ["yes", "no", "system"],
+      "default": "no",
+      "description": "Whether the feature can be advertised."
+    },
+    "ConfigurableDirectory": {
+      "type": "identifier",
+      "required": false,
+      "description": "Directory the user can change the destination of."
+    },
+    "TypicalDefault": {
+      "type": "enum",
+      "required": false,
+      "values": ["advertise", "install"],
+      "default": "install",
+      "description": "Default install state for typical installation."
+    }
+  },
+  "msiTables": ["Feature", "FeatureComponents"],
+  "rules": [
+    "feature-requires-components",
+    "feature-max-depth"
+  ],
+  "examples": [
+    {
+      "description": "Main feature with sub-features",
+      "code": "<Feature Id=\"MainFeature\" Title=\"My Application\" Level=\"1\">\n  <ComponentRef Id=\"AppComponent\" />\n  <Feature Id=\"DocsFeature\" Title=\"Documentation\" Level=\"2\" />\n</Feature>"
+    }
+  ]
+}

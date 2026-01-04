@@ -1,0 +1,24 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "CreateFolder",
+  "namespace": "wix",
+  "since": "v3",
+  "description": "Creates an empty folder during installation.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/createfolder/",
+  "parents": ["Component"],
+  "children": ["Permission", "PermissionEx", "Shortcut"],
+  "attributes": {
+    "Directory": {
+      "type": "identifier",
+      "required": false,
+      "description": "Directory to create. Defaults to parent component's directory."
+    }
+  },
+  "msiTables": ["CreateFolder"],
+  "examples": [
+    {
+      "description": "Create an empty logs folder",
+      "code": "<Component Guid=\"*\">\n  <CreateFolder Directory=\"LogsFolder\" />\n</Component>"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "$schema": "../schema/rule.schema.json",
+  "rules": [
+    {
+      "id": "registry-root-required",
+      "name": "RegistryKey requires Root",
+      "description": "RegistryKey must specify a Root (HKLM, HKCU, etc.)",
+      "severity": "error",
+      "element": "RegistryKey",
+      "condition": "!attributes.Root",
+      "message": "RegistryKey must have a Root attribute (HKLM, HKCU, HKCR, HKU, or HKMU)."
+    },
+    {
+      "id": "registry-key-required",
+      "name": "RegistryKey requires Key",
+      "description": "RegistryKey must specify the registry path",
+      "severity": "error",
+      "element": "RegistryKey",
+      "condition": "!attributes.Key",
+      "message": "RegistryKey must have a Key attribute specifying the registry path."
+    },
+    {
+      "id": "registry-hkmu-warning",
+      "name": "HKMU usage warning",
+      "description": "HKMU writes to HKLM or HKCU based on ALLUSERS property - be careful",
+      "severity": "info",
+      "element": "RegistryKey",
+      "condition": "attributes.Root === 'HKMU'",
+      "message": "HKMU writes to HKLM or HKCU based on ALLUSERS. Ensure this is the intended behavior."
+    },
+    {
+      "id": "registry-value-type",
+      "name": "RegistryValue should have explicit Type",
+      "description": "RegistryValue should specify Type for clarity",
+      "severity": "info",
+      "element": "RegistryValue",
+      "condition": "!attributes.Type",
+      "message": "Consider adding explicit Type to RegistryValue (string, integer, binary, expandable, multiString).",
+      "fix": {
+        "action": "addAttribute",
+        "attribute": "Type",
+        "value": "string"
+      }
+    },
+    {
+      "id": "registry-software-company",
+      "name": "Follow registry key conventions",
+      "description": "Application keys should be under Software\\Company\\Product",
+      "severity": "info",
+      "element": "RegistryKey",
+      "condition": "attributes.Key && !attributes.Key.startsWith('Software\\\\') && attributes.Root !== 'HKCR'",
+      "message": "Consider using 'Software\\\\Company\\\\Product' path convention for application registry keys."
+    },
+    {
+      "id": "registry-forcecreateoninstall",
+      "name": "Consider ForceCreateOnInstall for new keys",
+      "description": "Use ForceCreateOnInstall to ensure registry key is created",
+      "severity": "info",
+      "element": "RegistryKey",
+      "condition": "!attributes.ForceCreateOnInstall && countChildren('RegistryValue') > 0",
+      "message": "Consider ForceCreateOnInstall=\"yes\" to ensure the registry key exists before writing values."
+    }
+  ]
+}

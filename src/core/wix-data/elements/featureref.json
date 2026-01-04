@@ -1,0 +1,23 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "FeatureRef",
+  "namespace": "wix",
+  "since": "v3",
+  "description": "References a feature defined elsewhere to add components or sub-features to it.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/featureref/",
+  "parents": ["Package", "Fragment"],
+  "children": ["Component", "ComponentRef", "ComponentGroupRef", "Feature", "FeatureRef", "FeatureGroupRef", "MergeRef"],
+  "attributes": {
+    "Id": {
+      "type": "identifier",
+      "required": true,
+      "description": "The identifier of the feature to reference."
+    }
+  },
+  "examples": [
+    {
+      "description": "Add components to an existing feature",
+      "code": "<FeatureRef Id=\"MainFeature\">\n  <ComponentRef Id=\"ExtraComponent\" />\n</FeatureRef>"
+    }
+  ]
+}

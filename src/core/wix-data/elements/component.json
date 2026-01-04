@@ -1,0 +1,81 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "Component",
+  "namespace": "wix",
+  "since": "v3",
+  "description": "A component is the smallest unit of installation. Each component contains files, registry entries, or other resources that are always installed or removed together.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/component/",
+  "parents": ["Directory", "DirectoryRef", "ComponentGroup", "Fragment"],
+  "children": [
+    "File",
+    "RegistryKey",
+    "RegistryValue",
+    "RemoveFile",
+    "RemoveFolder",
+    "ServiceInstall",
+    "ServiceControl",
+    "Shortcut",
+    "Environment",
+    "CreateFolder"
+  ],
+  "attributes": {
+    "Id": {
+      "type": "identifier",
+      "required": false,
+      "description": "Unique identifier for the component. Auto-generated if not specified."
+    },
+    "Guid": {
+      "type": "guid",
+      "required": false,
+      "description": "Component GUID for Windows Installer. Use '*' to auto-generate. Required unless Transitive='yes'."
+    },
+    "Directory": {
+      "type": "identifier",
+      "required": false,
+      "description": "Directory where the component is installed. Defaults to parent directory."
+    },
+    "Bitness": {
+      "type": "enum",
+      "required": false,
+      "values": ["always32", "always64", "default"],
+      "default": "default",
+      "description": "Specifies the bitness of the component."
+    },
+    "KeyPath": {
+      "type": "yesno",
+      "required": false,
+      "default": "no",
+      "description": "If yes, the component's directory is the key path."
+    },
+    "Transitive": {
+      "type": "yesno",
+      "required": false,
+      "default": "no",
+      "description": "If yes, the component is transitive and re-evaluated on reinstall."
+    },
+    "Permanent": {
+      "type": "yesno",
+      "required": false,
+      "default": "no",
+      "description": "If yes, the component is never removed during uninstall."
+    },
+    "Shared": {
+      "type": "yesno",
+      "required": false,
+      "default": "no",
+      "description": "If yes, the component is marked as shared."
+    }
+  },
+  "msiTables": ["Component"],
+  "rules": [
+    "component-single-keypath",
+    "component-requires-guid",
+    "component-one-file-recommended"
+  ],
+  "examples": [
+    {
+      "description": "Component with auto-generated GUID",
+      "code": "<Component Guid=\"*\">\n  <File Source=\"app.exe\" />\n</Component>"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "ComponentGroupRef",
+  "namespace": "wix",
+  "since": "v3",
+  "description": "References a component group defined elsewhere to include all its components.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/componentgroupref/",
+  "parents": ["Feature", "FeatureRef", "FeatureGroup", "ComponentGroup"],
+  "children": [],
+  "attributes": {
+    "Id": {
+      "type": "identifier",
+      "required": true,
+      "description": "The identifier of the component group to reference."
+    }
+  },
+  "examples": [
+    {
+      "description": "Reference a component group in a feature",
+      "code": "<Feature Id=\"Main\" Level=\"1\">\n  <ComponentGroupRef Id=\"ProductComponents\" />\n</Feature>"
+    }
+  ]
+}

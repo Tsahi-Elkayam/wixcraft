@@ -1,0 +1,24 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "Upgrade",
+  "namespace": "wix",
+  "since": "v3",
+  "description": "Defines upgrade behavior for detecting and removing previous versions.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/upgrade/",
+  "parents": ["Package", "Fragment"],
+  "children": ["UpgradeVersion"],
+  "attributes": {
+    "Id": {
+      "type": "guid",
+      "required": true,
+      "description": "The UpgradeCode to search for."
+    }
+  },
+  "msiTables": ["Upgrade"],
+  "examples": [
+    {
+      "description": "Upgrade configuration",
+      "code": "<Upgrade Id=\"PUT-UPGRADE-CODE-HERE\">\n  <UpgradeVersion Minimum=\"1.0.0\" Maximum=\"99.0.0\" Property=\"OLDERFOUND\" IncludeMinimum=\"yes\" IncludeMaximum=\"no\" />\n</Upgrade>"
+    }
+  ]
+}

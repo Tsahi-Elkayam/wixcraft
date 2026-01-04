@@ -1,0 +1,23 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "PropertyRef",
+  "namespace": "wix",
+  "since": "v3",
+  "description": "References a property defined elsewhere to ensure it is included.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/propertyref/",
+  "parents": ["Package", "Fragment"],
+  "children": [],
+  "attributes": {
+    "Id": {
+      "type": "identifier",
+      "required": true,
+      "description": "The identifier of the property to reference."
+    }
+  },
+  "examples": [
+    {
+      "description": "Reference a property",
+      "code": "<PropertyRef Id=\"NETFRAMEWORK45\" />"
+    }
+  ]
+}

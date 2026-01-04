@@ -1,0 +1,64 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "RegistryValue",
+  "namespace": "wix",
+  "since": "v3",
+  "description": "Creates a registry value under a registry key.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/registryvalue/",
+  "parents": ["Component", "RegistryKey"],
+  "children": ["MultiStringValue"],
+  "attributes": {
+    "Id": {
+      "type": "identifier",
+      "required": false,
+      "description": "Unique identifier for this registry value."
+    },
+    "Root": {
+      "type": "enum",
+      "required": false,
+      "values": ["HKCR", "HKCU", "HKLM", "HKU", "HKMU"],
+      "description": "The registry hive. Inherited from parent RegistryKey if not specified."
+    },
+    "Key": {
+      "type": "string",
+      "required": false,
+      "description": "The path to the registry key. Inherited from parent RegistryKey if not specified."
+    },
+    "Name": {
+      "type": "string",
+      "required": false,
+      "description": "Name of the value. Leave empty for the default value."
+    },
+    "Value": {
+      "type": "string",
+      "required": false,
+      "description": "The value data."
+    },
+    "Type": {
+      "type": "enum",
+      "required": true,
+      "values": ["string", "integer", "binary", "expandable", "multiString"],
+      "description": "The registry value type."
+    },
+    "KeyPath": {
+      "type": "yesno",
+      "required": false,
+      "default": "no",
+      "description": "If yes, this registry value is the key path for its component."
+    },
+    "Action": {
+      "type": "enum",
+      "required": false,
+      "values": ["append", "prepend", "write"],
+      "default": "write",
+      "description": "How to write the value."
+    }
+  },
+  "msiTables": ["Registry"],
+  "examples": [
+    {
+      "description": "String registry value",
+      "code": "<RegistryValue Root=\"HKLM\" Key=\"Software\\MyApp\" Name=\"InstallPath\" Value=\"[INSTALLFOLDER]\" Type=\"string\" KeyPath=\"yes\" />"
+    }
+  ]
+}

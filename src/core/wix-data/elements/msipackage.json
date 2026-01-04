@@ -1,0 +1,79 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "MsiPackage",
+  "namespace": "wix",
+  "since": "v3",
+  "description": "An MSI package to install as part of a bundle chain.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/msipackage/",
+  "parents": ["Chain", "PackageGroup"],
+  "children": ["MsiProperty", "SlipstreamMsp", "Payload", "PayloadGroupRef"],
+  "attributes": {
+    "Id": {
+      "type": "identifier",
+      "required": false,
+      "description": "Unique identifier for the package."
+    },
+    "SourceFile": {
+      "type": "path",
+      "required": true,
+      "description": "Path to the MSI file."
+    },
+    "Name": {
+      "type": "string",
+      "required": false,
+      "description": "Display name for the package."
+    },
+    "DownloadUrl": {
+      "type": "string",
+      "required": false,
+      "description": "URL to download the package from."
+    },
+    "InstallCondition": {
+      "type": "string",
+      "required": false,
+      "description": "Condition for installing the package."
+    },
+    "Cache": {
+      "type": "enum",
+      "required": false,
+      "values": ["always", "yes", "no", "remove"],
+      "default": "yes",
+      "description": "Whether to cache the package."
+    },
+    "CacheId": {
+      "type": "string",
+      "required": false,
+      "description": "Unique identifier for the cached package."
+    },
+    "Permanent": {
+      "type": "yesno",
+      "required": false,
+      "default": "no",
+      "description": "Whether to leave the package installed when the bundle is uninstalled."
+    },
+    "Vital": {
+      "type": "yesno",
+      "required": false,
+      "default": "yes",
+      "description": "Whether failure to install this package fails the bundle."
+    },
+    "Visible": {
+      "type": "yesno",
+      "required": false,
+      "default": "no",
+      "description": "Whether to show the package in ARP."
+    },
+    "DisplayInternalUI": {
+      "type": "yesno",
+      "required": false,
+      "default": "no",
+      "description": "Whether to display the MSI's internal UI."
+    }
+  },
+  "examples": [
+    {
+      "description": "MSI package in a chain",
+      "code": "<MsiPackage Id=\"MainProduct\" SourceFile=\"product.msi\" Vital=\"yes\" />"
+    }
+  ]
+}

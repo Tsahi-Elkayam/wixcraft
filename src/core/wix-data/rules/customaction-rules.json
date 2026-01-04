@@ -1,0 +1,55 @@
+{
+  "$schema": "../schema/rule.schema.json",
+  "rules": [
+    {
+      "id": "customaction-deferred-impersonate",
+      "name": "Deferred custom actions should set Impersonate",
+      "description": "Deferred custom actions need explicit Impersonate setting for security",
+      "severity": "warning",
+      "element": "CustomAction",
+      "condition": "attributes.Execute === 'deferred' && !attributes.Impersonate",
+      "message": "Deferred custom action '{{attributes.Id}}' should explicitly set Impersonate=\"yes\" or \"no\".",
+      "fix": {
+        "action": "addAttribute",
+        "attribute": "Impersonate",
+        "value": "no"
+      }
+    },
+    {
+      "id": "customaction-avoid-immediate",
+      "name": "Prefer deferred for system changes",
+      "description": "Custom actions that modify the system should be deferred for proper rollback",
+      "severity": "info",
+      "element": "CustomAction",
+      "condition": "attributes.Execute === 'immediate' && !attributes.Return",
+      "message": "Consider using Execute=\"deferred\" if this custom action modifies the system."
+    },
+    {
+      "id": "customaction-hidden-recommended",
+      "name": "Custom actions with sensitive data should be Hidden",
+      "description": "Use HideTarget to prevent logging sensitive command line arguments",
+      "severity": "info",
+      "element": "CustomAction",
+      "condition": "attributes.ExeCommand && !attributes.HideTarget",
+      "message": "Consider HideTarget=\"yes\" if command line contains sensitive data."
+    },
+    {
+      "id": "customaction-naming-convention",
+      "name": "Custom action naming convention",
+      "description": "Custom actions should follow CA_ naming convention for clarity",
+      "severity": "info",
+      "element": "CustomAction",
+      "condition": "attributes.Id && !attributes.Id.startsWith('CA_')",
+      "message": "Consider naming custom action as 'CA_{{attributes.Id}}' for clarity."
+    },
+    {
+      "id": "customaction-rollback-pair",
+      "name": "Deferred actions should have rollback",
+      "description": "Deferred custom actions that modify system state should have a rollback action",
+      "severity": "info",
+      "element": "CustomAction",
+      "condition": "attributes.Execute === 'deferred' && !hasMatchingRollback(attributes.Id)",
+      "message": "Consider adding a rollback custom action for '{{attributes.Id}}' to handle installation failures."
+    }
+  ]
+}

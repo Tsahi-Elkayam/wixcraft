@@ -1,0 +1,35 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "Launch",
+  "namespace": "wix",
+  "since": "v4",
+  "description": "Launches an application after installation completes.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/launch/",
+  "parents": ["Package"],
+  "children": [],
+  "attributes": {
+    "FileRef": {
+      "type": "identifier",
+      "required": true,
+      "description": "Reference to the File element to launch."
+    },
+    "Arguments": {
+      "type": "string",
+      "required": false,
+      "description": "Command line arguments."
+    },
+    "Show": {
+      "type": "enum",
+      "required": false,
+      "values": ["normal", "minimized", "maximized", "hidden"],
+      "default": "normal",
+      "description": "Window state when launched."
+    }
+  },
+  "examples": [
+    {
+      "description": "Launch application after install",
+      "code": "<Launch FileRef=\"AppExe\" />"
+    }
+  ]
+}

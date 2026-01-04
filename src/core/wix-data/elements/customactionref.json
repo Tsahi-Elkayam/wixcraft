@@ -1,0 +1,23 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "CustomActionRef",
+  "namespace": "wix",
+  "since": "v3",
+  "description": "References a custom action defined elsewhere.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/customactionref/",
+  "parents": ["Package", "Fragment"],
+  "children": [],
+  "attributes": {
+    "Id": {
+      "type": "identifier",
+      "required": true,
+      "description": "The identifier of the custom action to reference."
+    }
+  },
+  "examples": [
+    {
+      "description": "Reference a custom action",
+      "code": "<CustomActionRef Id=\"CA_InstallService\" />"
+    }
+  ]
+}

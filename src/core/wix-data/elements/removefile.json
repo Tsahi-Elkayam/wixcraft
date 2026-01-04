@@ -1,0 +1,40 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "RemoveFile",
+  "namespace": "wix",
+  "since": "v3",
+  "description": "Removes a file during installation or uninstallation.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/removefile/",
+  "parents": ["Component"],
+  "children": [],
+  "attributes": {
+    "Id": {
+      "type": "identifier",
+      "required": true,
+      "description": "Unique identifier for the remove action."
+    },
+    "Name": {
+      "type": "string",
+      "required": false,
+      "description": "Name of the file to remove. Supports wildcards."
+    },
+    "Directory": {
+      "type": "identifier",
+      "required": false,
+      "description": "Directory containing the file. Defaults to parent directory."
+    },
+    "On": {
+      "type": "enum",
+      "required": true,
+      "values": ["install", "uninstall", "both"],
+      "description": "When to remove the file."
+    }
+  },
+  "msiTables": ["RemoveFile"],
+  "examples": [
+    {
+      "description": "Remove log files on uninstall",
+      "code": "<RemoveFile Id=\"RemoveLogs\" Name=\"*.log\" Directory=\"LogsFolder\" On=\"uninstall\" />"
+    }
+  ]
+}

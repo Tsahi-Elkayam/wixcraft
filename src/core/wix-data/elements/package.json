@@ -1,0 +1,96 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "Package",
+  "namespace": "wix",
+  "since": "v4",
+  "description": "The Package element is the root element for an installer package (.msi) definition.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/package/",
+  "parents": ["Wix"],
+  "children": [
+    "Component",
+    "ComponentGroup",
+    "ComponentGroupRef",
+    "ComponentRef",
+    "CustomAction",
+    "CustomActionRef",
+    "Directory",
+    "DirectoryRef",
+    "Feature",
+    "FeatureGroup",
+    "FeatureGroupRef",
+    "FeatureRef",
+    "Fragment",
+    "Media",
+    "MediaTemplate",
+    "Property",
+    "PropertyRef",
+    "StandardDirectory",
+    "UI",
+    "UIRef",
+    "Upgrade"
+  ],
+  "attributes": {
+    "Codepage": {
+      "type": "string",
+      "required": false,
+      "description": "The code page for the package."
+    },
+    "Compressed": {
+      "type": "yesno",
+      "required": false,
+      "default": "yes",
+      "description": "Whether files are compressed in the package."
+    },
+    "InstallerVersion": {
+      "type": "integer",
+      "required": false,
+      "default": 500,
+      "description": "The minimum Windows Installer version required."
+    },
+    "Language": {
+      "type": "string",
+      "required": false,
+      "default": "1033",
+      "description": "The decimal LCID of the package's language."
+    },
+    "Manufacturer": {
+      "type": "string",
+      "required": true,
+      "description": "The manufacturer of the package."
+    },
+    "Name": {
+      "type": "string",
+      "required": true,
+      "description": "The product name of the package."
+    },
+    "ProductCode": {
+      "type": "guid",
+      "required": false,
+      "description": "The product code GUID for the package. Auto-generated if not specified."
+    },
+    "Scope": {
+      "type": "enum",
+      "required": false,
+      "values": ["perMachine", "perUser"],
+      "default": "perMachine",
+      "description": "The installation scope of the package."
+    },
+    "UpgradeCode": {
+      "type": "guid",
+      "required": true,
+      "description": "The upgrade code GUID used to identify related packages."
+    },
+    "Version": {
+      "type": "version",
+      "required": true,
+      "description": "The version of the package (major.minor.patch.build)."
+    }
+  },
+  "msiTables": ["Property", "Summary"],
+  "examples": [
+    {
+      "description": "Basic package definition",
+      "code": "<Package Name=\"MyApp\" Manufacturer=\"Acme\" Version=\"1.0.0\" UpgradeCode=\"PUT-GUID-HERE\" />"
+    }
+  ]
+}

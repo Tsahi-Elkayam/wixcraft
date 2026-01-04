@@ -1,0 +1,24 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "Wix",
+  "namespace": "wix",
+  "since": "v3",
+  "description": "Root element for a WiX source file. Contains package, module, or fragment definitions.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/wix/",
+  "parents": [],
+  "children": ["Package", "Module", "Fragment", "Include"],
+  "attributes": {
+    "xmlns": {
+      "type": "string",
+      "required": true,
+      "default": "http://wixtoolset.org/schemas/v4/wxs",
+      "description": "The WiX XML namespace."
+    }
+  },
+  "examples": [
+    {
+      "description": "WiX v4 root element",
+      "code": "<Wix xmlns=\"http://wixtoolset.org/schemas/v4/wxs\">\n  <!-- content -->\n</Wix>"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "RegistryKey",
+  "namespace": "wix",
+  "since": "v3",
+  "description": "Creates a registry key and optionally sets values.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/registrykey/",
+  "parents": ["Component"],
+  "children": ["RegistryKey", "RegistryValue", "Permission"],
+  "attributes": {
+    "Id": {
+      "type": "identifier",
+      "required": false,
+      "description": "Unique identifier for this registry key."
+    },
+    "Root": {
+      "type": "enum",
+      "required": true,
+      "values": ["HKCR", "HKCU", "HKLM", "HKU", "HKMU"],
+      "description": "The registry hive."
+    },
+    "Key": {
+      "type": "string",
+      "required": true,
+      "description": "The path to the registry key."
+    },
+    "ForceCreateOnInstall": {
+      "type": "yesno",
+      "required": false,
+      "default": "no",
+      "description": "Create the key even if empty."
+    },
+    "ForceDeleteOnUninstall": {
+      "type": "yesno",
+      "required": false,
+      "default": "no",
+      "description": "Delete the key even if it has other values."
+    }
+  },
+  "msiTables": ["Registry"],
+  "examples": [
+    {
+      "description": "Registry key with values",
+      "code": "<RegistryKey Root=\"HKLM\" Key=\"Software\\MyCompany\\MyApp\">\n  <RegistryValue Name=\"Version\" Value=\"1.0\" Type=\"string\" />\n</RegistryKey>"
+    }
+  ]
+}

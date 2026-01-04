@@ -1,0 +1,29 @@
+{
+  "$schema": "../schema/element.schema.json",
+  "name": "Icon",
+  "namespace": "wix",
+  "since": "v3",
+  "description": "Defines an icon file for use in shortcuts or the Add/Remove Programs list.",
+  "documentation": "https://wixtoolset.org/docs/schema/wxs/icon/",
+  "parents": ["Package", "Module", "Fragment"],
+  "children": [],
+  "attributes": {
+    "Id": {
+      "type": "identifier",
+      "required": true,
+      "description": "Unique identifier for the icon."
+    },
+    "SourceFile": {
+      "type": "path",
+      "required": true,
+      "description": "Path to the icon file (.ico or .exe)."
+    }
+  },
+  "msiTables": ["Icon"],
+  "examples": [
+    {
+      "description": "Application icon for ARP",
+      "code": "<Icon Id=\"AppIcon.ico\" SourceFile=\"app.ico\" />"
+    }
+  ]
+}
