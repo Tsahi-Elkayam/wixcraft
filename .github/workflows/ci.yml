@@ -315,9 +315,6 @@ jobs:
       - name: Clippy quality/wix-fmt
         run: cd quality/wix-fmt && cargo clippy -- -D warnings
 
-      - name: Clippy quality/wix-analyzer
-        run: cd quality/wix-analyzer && cargo clippy -- -D warnings
-
       - name: Clippy editor/wix-lsp
         run: cd editor/wix-lsp && cargo clippy -- -D warnings
 

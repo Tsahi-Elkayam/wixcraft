@@ -2,9 +2,9 @@
 //!
 //! Groups diagnostics by file for better readability.
 
+use super::OutputFormatter;
 use crate::diagnostic::{Diagnostic, Severity};
 use crate::engine::LintResult;
-use super::OutputFormatter;
 use std::collections::HashMap;
 
 /// Formatter that groups diagnostics by file
@@ -56,7 +56,11 @@ impl GroupedFormatter {
     }
 
     fn reset_color(&self) -> &'static str {
-        if self.use_colors { "\x1b[0m" } else { "" }
+        if self.use_colors {
+            "\x1b[0m"
+        } else {
+            ""
+        }
     }
 }
 
@@ -104,10 +108,7 @@ impl OutputFormatter for GroupedFormatter {
         if !result.diagnostics.is_empty() {
             output.push_str(&format!(
                 "\n{} error(s), {} warning(s), {} info(s) in {} file(s)\n",
-                result.error_count,
-                result.warning_count,
-                result.info_count,
-                result.files_processed
+                result.error_count, result.warning_count, result.info_count, result.files_processed
             ));
         }
 

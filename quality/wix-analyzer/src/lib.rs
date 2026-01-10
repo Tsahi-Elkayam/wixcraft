@@ -26,48 +26,94 @@
 //! }
 //! ```
 
-pub mod core;
-pub mod analyzers;
-pub mod fixes;
-pub mod output;
-pub mod config;
-pub mod lsp;
-pub mod engine;
-pub mod plugins;
-pub mod deps;
 pub mod analytics;
+pub mod analyzers;
+pub mod config;
+pub mod core;
+pub mod deps;
+pub mod engine;
+pub mod fixes;
 pub mod licenses;
+pub mod lsp;
+pub mod output;
+pub mod plugins;
 
 // Re-export main types
-pub use crate::core::{
-    AnalysisResult, Category, Diagnostic, Fix, FixAction, InsertPosition,
-    Location, Position, Range, Severity, SymbolDefinition, SymbolIndex,
-    SymbolReference, WixDocument, SuppressionContext, IssueType, SecurityStandard,
-    RelatedInfo,
-    Baseline, BaselineEntry, BaselineError, BaselineStats, BASELINE_FILE_NAME, filter_baseline,
-    // Cache / Incremental analysis
-    AnalysisCache, CacheError, CacheStats, CACHE_DIR_NAME,
-    // Diff-aware analysis
-    DiffDetector, DiffError, DiffResult, DiffSource, filter_to_changed,
-    // New code period
-    NewCodeDetector, NewCodeError, NewCodePeriod, NewCodeResult, filter_to_new_code,
-    // Plugin system
-    PluginRegistry, PluginError, PluginManifest, PluginRule, RuleCondition,
-    DeprecatedRuleInfo, PluginCategory, PluginSeverity,
-    // Quality profiles
-    ProfileName, QualityProfile, available_profiles, profile_descriptions,
-    // Quality Gate
-    GateCondition, GateFailure, GateResult, QualityGate, RatingType,
-    // Watch mode
-    FileWatcher, WatchConfig, WatchError, WatchEvent,
-};
-pub use crate::lsp::{WixLanguageServer, run_server, CodeActionProvider};
 pub use crate::analyzers::Analyzer;
 pub use crate::config::Config;
+pub use crate::core::{
+    available_profiles,
+    filter_baseline,
+    filter_to_changed,
+    filter_to_new_code,
+    profile_descriptions,
+    // Cache / Incremental analysis
+    AnalysisCache,
+    AnalysisResult,
+    Baseline,
+    BaselineEntry,
+    BaselineError,
+    BaselineStats,
+    CacheError,
+    CacheStats,
+    Category,
+    DeprecatedRuleInfo,
+    Diagnostic,
+    // Diff-aware analysis
+    DiffDetector,
+    DiffError,
+    DiffResult,
+    DiffSource,
+    // Watch mode
+    FileWatcher,
+    Fix,
+    FixAction,
+    // Quality Gate
+    GateCondition,
+    GateFailure,
+    GateResult,
+    InsertPosition,
+    IssueType,
+    Location,
+    // New code period
+    NewCodeDetector,
+    NewCodeError,
+    NewCodePeriod,
+    NewCodeResult,
+    PluginCategory,
+    PluginError,
+    PluginManifest,
+    // Plugin system
+    PluginRegistry,
+    PluginRule,
+    PluginSeverity,
+    Position,
+    // Quality profiles
+    ProfileName,
+    QualityGate,
+    QualityProfile,
+    Range,
+    RatingType,
+    RelatedInfo,
+    RuleCondition,
+    SecurityStandard,
+    Severity,
+    SuppressionContext,
+    SymbolDefinition,
+    SymbolIndex,
+    SymbolReference,
+    WatchConfig,
+    WatchError,
+    WatchEvent,
+    WixDocument,
+    BASELINE_FILE_NAME,
+    CACHE_DIR_NAME,
+};
 pub use crate::fixes::FixEngine;
+pub use crate::lsp::{run_server, CodeActionProvider, WixLanguageServer};
 pub use crate::output::{
-    Formatter, OutputFormat, get_formatter, HtmlFormatter,
-    MetricsFormatter, MetricsSummary, SeverityCounts, TypeCounts, CategoryCounts, RuleCount,
+    get_formatter, CategoryCounts, Formatter, HtmlFormatter, MetricsFormatter, MetricsSummary,
+    OutputFormat, RuleCount, SeverityCounts, TypeCounts,
 };
 
 use std::path::Path;
@@ -109,15 +155,15 @@ pub fn analyze_with_source(
     }
 
     // Filter by enabled rules
-    result.diagnostics.retain(|d| config.is_rule_enabled(&d.rule_id));
+    result
+        .diagnostics
+        .retain(|d| config.is_rule_enabled(&d.rule_id));
 
     // Filter by minimum severity
-    result.diagnostics.retain(|d| {
-        match config.min_severity {
-            config::MinSeverity::Error => d.severity >= Severity::High,
-            config::MinSeverity::Warning => d.severity >= Severity::Medium,
-            config::MinSeverity::Info => true,
-        }
+    result.diagnostics.retain(|d| match config.min_severity {
+        config::MinSeverity::Error => d.severity >= Severity::High,
+        config::MinSeverity::Warning => d.severity >= Severity::Medium,
+        config::MinSeverity::Info => true,
     });
 
     // Apply inline suppressions if source is provided
@@ -134,10 +180,7 @@ pub fn analyze_with_source(
 }
 
 /// Analyze multiple files with cross-file reference resolution
-pub fn analyze_project(
-    files: &[&Path],
-    config: &Config,
-) -> Result<Vec<AnalysisResult>, String> {
+pub fn analyze_project(files: &[&Path], config: &Config) -> Result<Vec<AnalysisResult>, String> {
     // Build cross-file index
     let mut index = SymbolIndex::new();
 
@@ -149,7 +192,8 @@ pub fn analyze_project(
         let source = std::fs::read_to_string(file)
             .map_err(|e| format!("Failed to read {}: {}", file.display(), e))?;
 
-        index.index_source(&source, file)
+        index
+            .index_source(&source, file)
             .map_err(|e| format!("Failed to index {}: {}", file.display(), e))?;
     }
 
@@ -199,17 +243,15 @@ pub fn analyze_project_parallel(
         let source = std::fs::read_to_string(file)
             .map_err(|e| format!("Failed to read {}: {}", file.display(), e))?;
 
-        index.index_source(&source, file)
+        index
+            .index_source(&source, file)
             .map_err(|e| format!("Failed to index {}: {}", file.display(), e))?;
     }
 
     let index = Arc::new(index);
 
     // Filter out excluded files
-    let files_to_analyze: Vec<_> = files
-        .iter()
-        .filter(|f| !config.is_excluded(f))
-        .collect();
+    let files_to_analyze: Vec<_> = files.iter().filter(|f| !config.is_excluded(f)).collect();
 
     // Analyze files in parallel
     let results: Result<Vec<_>, String> = files_to_analyze
@@ -236,9 +278,9 @@ pub fn analyze_project_parallel(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use tempfile::TempDir;
     use std::fs::File;
     use std::io::Write;
+    use tempfile::TempDir;
 
     #[test]
     fn test_analyze_simple() {
@@ -263,7 +305,10 @@ mod tests {
 
         let result = analyze(&doc, &index, &config);
         // Should not have best practice warnings
-        assert!(result.diagnostics.iter().all(|d| !d.rule_id.starts_with("BP-")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| !d.rule_id.starts_with("BP-")));
     }
 
     #[test]
@@ -277,7 +322,10 @@ mod tests {
 
         let result = analyze(&doc, &index, &config);
         // Should not have the disabled rule
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-IDIOM-001"));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-IDIOM-001"));
     }
 
     #[test]
@@ -291,7 +339,10 @@ mod tests {
 
         let result = analyze(&doc, &index, &config);
         // Should only have High or Blocker severity
-        assert!(result.diagnostics.iter().all(|d| d.severity >= Severity::High));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.severity >= Severity::High));
     }
 
     #[test]
@@ -305,7 +356,10 @@ mod tests {
 
         let result = analyze(&doc, &index, &config);
         // Should only have Medium, High, or Blocker severity
-        assert!(result.diagnostics.iter().all(|d| d.severity >= Severity::Medium));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.severity >= Severity::Medium));
     }
 
     #[test]
@@ -423,7 +477,10 @@ mod tests {
 
         let result = analyze(&doc, &index, &config);
         // Should have security warnings
-        assert!(result.diagnostics.iter().any(|d| d.rule_id.starts_with("SEC-")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id.starts_with("SEC-")));
     }
 
     #[test]
@@ -441,6 +498,9 @@ mod tests {
 
         let result = analyze(&doc, &index, &config);
         // Should have dead code warnings
-        assert!(result.diagnostics.iter().any(|d| d.rule_id.starts_with("DEAD-")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id.starts_with("DEAD-")));
     }
 }

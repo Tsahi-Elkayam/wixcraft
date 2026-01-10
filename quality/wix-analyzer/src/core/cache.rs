@@ -171,7 +171,8 @@ impl AnalysisCache {
 
         if let Some(entry) = self.index.entries.get(&key) {
             // Check if hash matches
-            if entry.content_hash == content_hash && entry.tool_version == env!("CARGO_PKG_VERSION") {
+            if entry.content_hash == content_hash && entry.tool_version == env!("CARGO_PKG_VERSION")
+            {
                 // Load cached result
                 let result_path = self.cache_dir.join("results").join(&entry.result_file);
                 if let Ok(content) = fs::read_to_string(&result_path) {
@@ -202,8 +203,8 @@ impl AnalysisCache {
 
         // Write result file
         let result_path = self.cache_dir.join("results").join(&result_file);
-        let content = serde_json::to_string(result)
-            .map_err(|e| CacheError::SerializeError(e.to_string()))?;
+        let content =
+            serde_json::to_string(result).map_err(|e| CacheError::SerializeError(e.to_string()))?;
         fs::write(&result_path, content)
             .map_err(|e| CacheError::IoError(result_path, e.to_string()))?;
 
@@ -356,7 +357,9 @@ pub enum CacheError {
 impl std::fmt::Display for CacheError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::IoError(path, msg) => write!(f, "Cache I/O error at '{}': {}", path.display(), msg),
+            Self::IoError(path, msg) => {
+                write!(f, "Cache I/O error at '{}': {}", path.display(), msg)
+            }
             Self::ParseError(path, msg) => {
                 write!(f, "Cache parse error at '{}': {}", path.display(), msg)
             }
@@ -466,7 +469,9 @@ mod tests {
         {
             let mut cache = AnalysisCache::new(&cache_dir).unwrap();
             let result = make_result();
-            cache.put(Path::new("test.wxs"), "<Wix />", &result).unwrap();
+            cache
+                .put(Path::new("test.wxs"), "<Wix />", &result)
+                .unwrap();
             cache.save().unwrap();
         }
 
@@ -486,7 +491,9 @@ mod tests {
         let mut cache = AnalysisCache::new(temp_dir.path().join("cache")).unwrap();
 
         let result = make_result();
-        cache.put(Path::new("test.wxs"), "<Wix />", &result).unwrap();
+        cache
+            .put(Path::new("test.wxs"), "<Wix />", &result)
+            .unwrap();
         assert_eq!(cache.entry_count(), 1);
 
         cache.clear().unwrap();

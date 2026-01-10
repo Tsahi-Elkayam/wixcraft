@@ -2,9 +2,9 @@
 //!
 //! Outputs diagnostics in JUnit XML format for CI/CD integration.
 
+use super::OutputFormatter;
 use crate::diagnostic::{Diagnostic, Severity};
 use crate::engine::LintResult;
-use super::OutputFormatter;
 
 /// Formatter for JUnit XML output
 pub struct JUnitFormatter {
@@ -153,6 +153,9 @@ mod tests {
 
     #[test]
     fn test_xml_escaping() {
-        assert_eq!(JUnitFormatter::escape_xml("<>&\"'"), "&lt;&gt;&amp;&quot;&apos;");
+        assert_eq!(
+            JUnitFormatter::escape_xml("<>&\"'"),
+            "&lt;&gt;&amp;&quot;&apos;"
+        );
     }
 }

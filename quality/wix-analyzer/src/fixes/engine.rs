@@ -119,8 +119,18 @@ impl FixEngine {
         // Sort fixes by position (reverse order to apply from bottom to top)
         let mut sorted_fixes: Vec<_> = fixes.iter().collect();
         sorted_fixes.sort_by(|a, b| {
-            b.0.location.range.start.line.cmp(&a.0.location.range.start.line)
-                .then(b.0.location.range.start.character.cmp(&a.0.location.range.start.character))
+            b.0.location
+                .range
+                .start
+                .line
+                .cmp(&a.0.location.range.start.line)
+                .then(
+                    b.0.location
+                        .range
+                        .start
+                        .character
+                        .cmp(&a.0.location.range.start.character),
+                )
         });
 
         let mut content = source.to_string();
@@ -142,30 +152,29 @@ impl FixEngine {
 
     fn apply_fix(&self, source: &str, range: &Range, action: &FixAction) -> Option<String> {
         match action {
-            FixAction::ReplaceAttribute { name, new_value, .. } => {
-                self.replace_attribute(source, range, name, new_value)
-            }
+            FixAction::ReplaceAttribute {
+                name, new_value, ..
+            } => self.replace_attribute(source, range, name, new_value),
             FixAction::AddAttribute { name, value, .. } => {
                 self.add_attribute(source, range, name, value)
             }
-            FixAction::RemoveElement { range } => {
-                self.remove_range(source, range)
-            }
-            FixAction::AddElement { element, .. } => {
-                self.add_child_element(source, range, element)
-            }
-            FixAction::ReplaceText { new_text, .. } => {
-                self.replace_range(source, range, new_text)
-            }
-            FixAction::RemoveAttribute { name, .. } => {
-                self.remove_attribute(source, range, name)
-            }
+            FixAction::RemoveElement { range } => self.remove_range(source, range),
+            FixAction::AddElement { element, .. } => self.add_child_element(source, range, element),
+            FixAction::ReplaceText { new_text, .. } => self.replace_range(source, range, new_text),
+            FixAction::RemoveAttribute { name, .. } => self.remove_attribute(source, range, name),
         }
     }
 
-    fn apply_action_to_line(&self, line: &str, _range: &Range, action: &FixAction) -> Option<String> {
+    fn apply_action_to_line(
+        &self,
+        line: &str,
+        _range: &Range,
+        action: &FixAction,
+    ) -> Option<String> {
         match action {
-            FixAction::ReplaceAttribute { name, new_value, .. } => {
+            FixAction::ReplaceAttribute {
+                name, new_value, ..
+            } => {
                 // Simple regex replacement for preview
                 let pattern = format!(r#"{}="[^"]*""#, regex::escape(name));
                 let re = regex::Regex::new(&pattern).ok()?;
@@ -183,7 +192,13 @@ impl FixEngine {
         }
     }
 
-    fn replace_attribute(&self, source: &str, range: &Range, name: &str, new_value: &str) -> Option<String> {
+    fn replace_attribute(
+        &self,
+        source: &str,
+        range: &Range,
+        name: &str,
+        new_value: &str,
+    ) -> Option<String> {
         // Find the line containing the attribute
         let lines: Vec<&str> = source.lines().collect();
         let line_idx = range.start.line.saturating_sub(1);
@@ -221,7 +236,13 @@ impl FixEngine {
         Some(output)
     }
 
-    fn add_attribute(&self, source: &str, range: &Range, name: &str, value: &str) -> Option<String> {
+    fn add_attribute(
+        &self,
+        source: &str,
+        range: &Range,
+        name: &str,
+        value: &str,
+    ) -> Option<String> {
         let lines: Vec<&str> = source.lines().collect();
         let line_idx = range.start.line.saturating_sub(1);
 
@@ -474,9 +495,12 @@ mod tests {
         let diag = make_diagnostic(
             1,
             "TEST",
-            Fix::new("Test", FixAction::RemoveElement {
-                range: Range::new(Position::new(1, 1), Position::new(1, 10)),
-            }),
+            Fix::new(
+                "Test",
+                FixAction::RemoveElement {
+                    range: Range::new(Position::new(1, 1), Position::new(1, 10)),
+                },
+            ),
         );
 
         let mut engine = FixEngine::new();

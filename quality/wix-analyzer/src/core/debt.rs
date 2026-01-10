@@ -50,7 +50,9 @@ impl TechnicalDebt {
 
         for result in results {
             for diagnostic in &result.diagnostics {
-                let effort = diagnostic.effort_minutes.unwrap_or_else(|| default_effort(diagnostic));
+                let effort = diagnostic
+                    .effort_minutes
+                    .unwrap_or_else(|| default_effort(diagnostic));
                 debt.total_minutes += effort;
 
                 match diagnostic.issue_type {
@@ -168,11 +170,11 @@ impl TechnicalDebt {
 /// Default effort estimate based on issue type and severity
 fn default_effort(diagnostic: &Diagnostic) -> u32 {
     let base = match diagnostic.issue_type {
-        IssueType::Bug => 30,           // 30 min for bugs
-        IssueType::Vulnerability => 60, // 1 hour for vulnerabilities
-        IssueType::CodeSmell => 10,     // 10 min for code smells
+        IssueType::Bug => 30,             // 30 min for bugs
+        IssueType::Vulnerability => 60,   // 1 hour for vulnerabilities
+        IssueType::CodeSmell => 10,       // 10 min for code smells
         IssueType::SecurityHotspot => 45, // 45 min for security review
-        IssueType::Secret => 15,        // 15 min for secret removal
+        IssueType::Secret => 15,          // 15 min for secret removal
     };
 
     // Adjust by severity
@@ -273,8 +275,8 @@ pub struct DebtQualityGate {
 impl Default for DebtQualityGate {
     fn default() -> Self {
         Self {
-            max_debt_ratio: 10.0,  // Max 10% debt ratio
-            max_new_debt_minutes: 60, // Max 1 hour new debt
+            max_debt_ratio: 10.0,      // Max 10% debt ratio
+            max_new_debt_minutes: 60,  // Max 1 hour new debt
             min_rating: DebtRating::C, // At least C rating
             block_on_blockers: true,
             block_on_high: false,
@@ -357,8 +359,8 @@ mod tests {
     #[test]
     fn test_basic_debt_calculation() {
         let mut result = AnalysisResult::new();
-        let diag = Diagnostic::high("BUG-001", IssueType::Bug, "Bug", make_location())
-            .with_effort(30);
+        let diag =
+            Diagnostic::high("BUG-001", IssueType::Bug, "Bug", make_location()).with_effort(30);
         result.add(diag);
 
         let debt = TechnicalDebt::from_results(&[result], 100);
@@ -370,9 +372,17 @@ mod tests {
     #[test]
     fn test_debt_by_issue_type() {
         let mut result = AnalysisResult::new();
-        result.add(Diagnostic::high("BUG-001", IssueType::Bug, "Bug", make_location()).with_effort(30));
-        result.add(Diagnostic::high("SEC-001", IssueType::Vulnerability, "Vuln", make_location()).with_effort(60));
-        result.add(Diagnostic::medium("CS-001", IssueType::CodeSmell, "Smell", make_location()).with_effort(10));
+        result.add(
+            Diagnostic::high("BUG-001", IssueType::Bug, "Bug", make_location()).with_effort(30),
+        );
+        result.add(
+            Diagnostic::high("SEC-001", IssueType::Vulnerability, "Vuln", make_location())
+                .with_effort(60),
+        );
+        result.add(
+            Diagnostic::medium("CS-001", IssueType::CodeSmell, "Smell", make_location())
+                .with_effort(10),
+        );
 
         let debt = TechnicalDebt::from_results(&[result], 100);
 
@@ -416,7 +426,8 @@ mod tests {
 
         // E: > 50%
         let mut result2 = AnalysisResult::new();
-        result2.add(Diagnostic::high("B-1", IssueType::Bug, "B", make_location()).with_effort(2000));
+        result2
+            .add(Diagnostic::high("B-1", IssueType::Bug, "B", make_location()).with_effort(2000));
         let debt2 = TechnicalDebt::from_results(&[result2], 100);
         assert_eq!(debt2.rating, DebtRating::E);
     }
@@ -435,7 +446,9 @@ mod tests {
     fn test_breakdown() {
         let mut result = AnalysisResult::new();
         result.add(Diagnostic::high("B-1", IssueType::Bug, "B", make_location()).with_effort(50));
-        result.add(Diagnostic::high("S-1", IssueType::Vulnerability, "S", make_location()).with_effort(50));
+        result.add(
+            Diagnostic::high("S-1", IssueType::Vulnerability, "S", make_location()).with_effort(50),
+        );
 
         let debt = TechnicalDebt::from_results(&[result], 100);
         let breakdown = debt.breakdown();
@@ -448,7 +461,10 @@ mod tests {
     #[test]
     fn test_quality_gate_pass() {
         let mut result = AnalysisResult::new();
-        result.add(Diagnostic::medium("CS-1", IssueType::CodeSmell, "Smell", make_location()).with_effort(10));
+        result.add(
+            Diagnostic::medium("CS-1", IssueType::CodeSmell, "Smell", make_location())
+                .with_effort(10),
+        );
 
         let debt = TechnicalDebt::from_results(&[result], 1000);
         let gate = DebtQualityGate::default();
@@ -474,7 +490,9 @@ mod tests {
     #[test]
     fn test_quality_gate_fail_blocker() {
         let mut result = AnalysisResult::new();
-        result.add(Diagnostic::blocker("B-1", IssueType::Bug, "Blocker", make_location()).with_effort(10));
+        result.add(
+            Diagnostic::blocker("B-1", IssueType::Bug, "Blocker", make_location()).with_effort(10),
+        );
 
         let debt = TechnicalDebt::from_results(&[result], 1000);
         let gate = DebtQualityGate::default();
@@ -487,11 +505,36 @@ mod tests {
     #[test]
     fn test_severity_counts() {
         let mut result = AnalysisResult::new();
-        result.add(Diagnostic::blocker("B-1", IssueType::Bug, "B", make_location()));
-        result.add(Diagnostic::high("B-2", IssueType::Bug, "B", make_location()));
-        result.add(Diagnostic::medium("CS-1", IssueType::CodeSmell, "CS", make_location()));
-        result.add(Diagnostic::low("CS-2", IssueType::CodeSmell, "CS", make_location()));
-        result.add(Diagnostic::info("INFO-1", Category::BestPractice, "I", make_location()));
+        result.add(Diagnostic::blocker(
+            "B-1",
+            IssueType::Bug,
+            "B",
+            make_location(),
+        ));
+        result.add(Diagnostic::high(
+            "B-2",
+            IssueType::Bug,
+            "B",
+            make_location(),
+        ));
+        result.add(Diagnostic::medium(
+            "CS-1",
+            IssueType::CodeSmell,
+            "CS",
+            make_location(),
+        ));
+        result.add(Diagnostic::low(
+            "CS-2",
+            IssueType::CodeSmell,
+            "CS",
+            make_location(),
+        ));
+        result.add(Diagnostic::info(
+            "INFO-1",
+            Category::BestPractice,
+            "I",
+            make_location(),
+        ));
 
         let debt = TechnicalDebt::from_results(&[result], 100);
 

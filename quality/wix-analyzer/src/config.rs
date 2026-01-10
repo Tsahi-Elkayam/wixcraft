@@ -10,6 +10,7 @@ pub const CONFIG_FILE_NAME: &str = ".wixanalyzer.json";
 /// Main configuration structure
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
+#[derive(Default)]
 pub struct Config {
     /// Which analyzers to run
     #[serde(default)]
@@ -94,29 +95,15 @@ pub struct FixConfig {
 /// Minimum severity level
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
+#[derive(Default)]
 pub enum MinSeverity {
     Error,
     Warning,
+    #[default]
     Info,
 }
 
-impl Default for MinSeverity {
-    fn default() -> Self {
-        Self::Info
-    }
-}
 
-impl Default for Config {
-    fn default() -> Self {
-        Self {
-            analyzers: AnalyzerConfig::default(),
-            rules: RulesConfig::default(),
-            fix: FixConfig::default(),
-            exclude: Vec::new(),
-            min_severity: MinSeverity::default(),
-        }
-    }
-}
 
 impl Config {
     /// Load configuration from a file
@@ -216,10 +203,20 @@ impl std::fmt::Display for ConfigError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::ReadError(path, msg) => {
-                write!(f, "Failed to read config file '{}': {}", path.display(), msg)
+                write!(
+                    f,
+                    "Failed to read config file '{}': {}",
+                    path.display(),
+                    msg
+                )
             }
             Self::ParseError(path, msg) => {
-                write!(f, "Failed to parse config file '{}': {}", path.display(), msg)
+                write!(
+                    f,
+                    "Failed to parse config file '{}': {}",
+                    path.display(),
+                    msg
+                )
             }
         }
     }
@@ -306,7 +303,10 @@ mod tests {
     #[test]
     fn test_severity_override() {
         let mut config = Config::default();
-        config.rules.severity.insert("SEC-001".to_string(), "error".to_string());
+        config
+            .rules
+            .severity
+            .insert("SEC-001".to_string(), "error".to_string());
 
         assert_eq!(config.get_severity_override("SEC-001"), Some("error"));
         assert_eq!(config.get_severity_override("SEC-002"), None);
@@ -343,9 +343,9 @@ mod tests {
 
     #[test]
     fn test_find_and_load_found() {
-        use tempfile::TempDir;
         use std::fs::File;
         use std::io::Write;
+        use tempfile::TempDir;
 
         let temp_dir = TempDir::new().unwrap();
         let config_path = temp_dir.path().join(".wixanalyzer.json");
@@ -372,9 +372,9 @@ mod tests {
 
     #[test]
     fn test_find_and_load_in_parent() {
-        use tempfile::TempDir;
         use std::fs::{self, File};
         use std::io::Write;
+        use tempfile::TempDir;
 
         let temp_dir = TempDir::new().unwrap();
         let config_path = temp_dir.path().join(".wixanalyzer.json");

@@ -2,8 +2,8 @@
 //!
 //! Provides IDE integration via the Language Server Protocol (LSP).
 
-mod server;
 mod actions;
+mod server;
 
-pub use server::{WixLanguageServer, run_server};
 pub use actions::CodeActionProvider;
+pub use server::{run_server, WixLanguageServer};

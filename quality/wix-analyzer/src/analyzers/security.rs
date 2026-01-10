@@ -1,11 +1,9 @@
 //! Security analyzer - identifies potential security issues in WiX files
 
-use crate::core::{
-    AnalysisResult, Category, Diagnostic, Location, SymbolIndex, WixDocument,
-};
+use super::Analyzer;
+use crate::core::{AnalysisResult, Category, Diagnostic, Location, SymbolIndex, WixDocument};
 use regex::Regex;
 use std::sync::LazyLock;
-use super::Analyzer;
 
 /// Sensitive property name patterns
 static SENSITIVE_PATTERNS: LazyLock<Regex> = LazyLock::new(|| {
@@ -64,7 +62,9 @@ impl SecurityAnalyzer {
 
                     // Check if it's a driver or truly needs LocalSystem
                     let service_type = node.attribute("Type").unwrap_or("");
-                    if !service_type.contains("kernel") && !service_type.contains("filesystemDriver") {
+                    if !service_type.contains("kernel")
+                        && !service_type.contains("filesystemDriver")
+                    {
                         result.add(
                             Diagnostic::warning(
                                 "SEC-001",
@@ -96,11 +96,23 @@ impl SecurityAnalyzer {
 
                     if is_everyone {
                         // Check for write permissions
-                        let has_write = node.attribute("GenericWrite").map(|v| v == "yes").unwrap_or(false)
+                        let has_write = node
+                            .attribute("GenericWrite")
+                            .map(|v| v == "yes")
+                            .unwrap_or(false)
                             || node.attribute("Write").map(|v| v == "yes").unwrap_or(false)
-                            || node.attribute("Modify").map(|v| v == "yes").unwrap_or(false)
-                            || node.attribute("FullControl").map(|v| v == "yes").unwrap_or(false)
-                            || node.attribute("GenericAll").map(|v| v == "yes").unwrap_or(false);
+                            || node
+                                .attribute("Modify")
+                                .map(|v| v == "yes")
+                                .unwrap_or(false)
+                            || node
+                                .attribute("FullControl")
+                                .map(|v| v == "yes")
+                                .unwrap_or(false)
+                            || node
+                                .attribute("GenericAll")
+                                .map(|v| v == "yes")
+                                .unwrap_or(false);
 
                         if has_write {
                             let range = doc.node_range(&node);
@@ -113,7 +125,11 @@ impl SecurityAnalyzer {
                                     location,
                                 )
                                 .with_help("Restrict permissions to specific users or groups")
-                                .with_tags(["CWE-732", "CWE-276", "OWASP-A01:2021"]), // Incorrect Permission Assignment
+                                .with_tags([
+                                    "CWE-732",
+                                    "CWE-276",
+                                    "OWASP-A01:2021",
+                                ]), // Incorrect Permission Assignment
                             );
                         }
                     }
@@ -129,13 +145,22 @@ impl SecurityAnalyzer {
                         for child in node.children() {
                             if child.is_element() && child.tag_name().name() == "Permission" {
                                 if let Some(user) = child.attribute("User") {
-                                    if user.eq_ignore_ascii_case("Users") || user.eq_ignore_ascii_case("Everyone") {
-                                        let has_write = child.attribute("Write").map(|v| v == "yes").unwrap_or(false)
-                                            || child.attribute("FullControl").map(|v| v == "yes").unwrap_or(false);
+                                    if user.eq_ignore_ascii_case("Users")
+                                        || user.eq_ignore_ascii_case("Everyone")
+                                    {
+                                        let has_write = child
+                                            .attribute("Write")
+                                            .map(|v| v == "yes")
+                                            .unwrap_or(false)
+                                            || child
+                                                .attribute("FullControl")
+                                                .map(|v| v == "yes")
+                                                .unwrap_or(false);
 
                                         if has_write {
                                             let range = doc.node_range(&node);
-                                            let location = Location::new(doc.file().to_path_buf(), range);
+                                            let location =
+                                                Location::new(doc.file().to_path_buf(), range);
                                             result.add(
                                                 Diagnostic::warning(
                                                     "SEC-003",
@@ -164,7 +189,10 @@ impl SecurityAnalyzer {
                     if SENSITIVE_PATTERNS.is_match(id) {
                         // Check if it has a hardcoded value
                         if let Some(value) = node.attribute("Value") {
-                            if !value.is_empty() && !value.starts_with("[") && !value.starts_with("!(") {
+                            if !value.is_empty()
+                                && !value.starts_with("[")
+                                && !value.starts_with("!(")
+                            {
                                 let range = doc.node_range(&node);
                                 let location = Location::new(doc.file().to_path_buf(), range);
                                 result.add(
@@ -227,15 +255,28 @@ impl SecurityAnalyzer {
 
     fn check_directory_permissions(&self, doc: &WixDocument, result: &mut AnalysisResult) {
         for node in doc.root().descendants() {
-            if node.tag_name().name() == "Directory" || node.tag_name().name() == "StandardDirectory" {
+            if node.tag_name().name() == "Directory"
+                || node.tag_name().name() == "StandardDirectory"
+            {
                 // Check for permissions granting write to everyone
                 for child in node.children() {
                     if child.is_element() && child.tag_name().name() == "Permission" {
                         if let Some(user) = child.attribute("User") {
-                            if user.eq_ignore_ascii_case("Everyone") || user.eq_ignore_ascii_case("Users") {
-                                let has_write = child.attribute("GenericWrite").map(|v| v == "yes").unwrap_or(false)
-                                    || child.attribute("Write").map(|v| v == "yes").unwrap_or(false)
-                                    || child.attribute("Modify").map(|v| v == "yes").unwrap_or(false);
+                            if user.eq_ignore_ascii_case("Everyone")
+                                || user.eq_ignore_ascii_case("Users")
+                            {
+                                let has_write = child
+                                    .attribute("GenericWrite")
+                                    .map(|v| v == "yes")
+                                    .unwrap_or(false)
+                                    || child
+                                        .attribute("Write")
+                                        .map(|v| v == "yes")
+                                        .unwrap_or(false)
+                                    || child
+                                        .attribute("Modify")
+                                        .map(|v| v == "yes")
+                                        .unwrap_or(false);
 
                                 if has_write {
                                     let id = node.attribute("Id").unwrap_or("unknown");
@@ -308,20 +349,25 @@ mod tests {
     #[test]
     fn test_kernel_driver_localsystem_ok() {
         // Kernel drivers legitimately need LocalSystem
-        let result = analyze(r#"<Wix><ServiceInstall Name="MyDriver" Account="LocalSystem" Type="kernelDriver" /></Wix>"#);
+        let result = analyze(
+            r#"<Wix><ServiceInstall Name="MyDriver" Account="LocalSystem" Type="kernelDriver" /></Wix>"#,
+        );
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "SEC-001"));
     }
 
     #[test]
     fn test_filesystem_driver_localsystem_ok() {
         // File system drivers legitimately need LocalSystem
-        let result = analyze(r#"<Wix><ServiceInstall Name="MyDriver" Account="LocalSystem" Type="filesystemDriver" /></Wix>"#);
+        let result = analyze(
+            r#"<Wix><ServiceInstall Name="MyDriver" Account="LocalSystem" Type="filesystemDriver" /></Wix>"#,
+        );
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "SEC-001"));
     }
 
     #[test]
     fn test_localservice_ok() {
-        let result = analyze(r#"<Wix><ServiceInstall Name="MySvc" Account="LocalService" /></Wix>"#);
+        let result =
+            analyze(r#"<Wix><ServiceInstall Name="MySvc" Account="LocalService" /></Wix>"#);
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "SEC-001"));
     }
 
@@ -376,42 +422,50 @@ mod tests {
 
     #[test]
     fn test_registry_hklm_users_write() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <RegistryKey Root="HKLM" Key="Software\Test">
                 <Permission User="Users" Write="yes" />
             </RegistryKey>
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().any(|d| d.rule_id == "SEC-003"));
     }
 
     #[test]
     fn test_registry_hklm_everyone_fullcontrol() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <RegistryKey Root="HKLM" Key="Software\Test">
                 <Permission User="Everyone" FullControl="yes" />
             </RegistryKey>
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().any(|d| d.rule_id == "SEC-003"));
     }
 
     #[test]
     fn test_registry_value_hklm_weak_permission() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <RegistryValue Root="HKLM" Key="Software\Test" Name="Val">
                 <Permission User="Users" Write="yes" />
             </RegistryValue>
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().any(|d| d.rule_id == "SEC-003"));
     }
 
     #[test]
     fn test_registry_hkcu_ok() {
         // HKCU doesn't trigger SEC-003
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <RegistryKey Root="HKCU" Key="Software\Test">
                 <Permission User="Users" Write="yes" />
             </RegistryKey>
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "SEC-003"));
     }
 
@@ -424,9 +478,19 @@ mod tests {
     #[test]
     fn test_sensitive_property_various_patterns() {
         // Test various sensitive patterns
-        let patterns = ["SECRET", "API_KEY", "TOKEN", "CREDENTIAL", "APIKEY", "AUTH_TOKEN"];
+        let patterns = [
+            "SECRET",
+            "API_KEY",
+            "TOKEN",
+            "CREDENTIAL",
+            "APIKEY",
+            "AUTH_TOKEN",
+        ];
         for pattern in patterns {
-            let xml = format!(r#"<Wix><Property Id="{}" Value="hardcoded" /></Wix>"#, pattern);
+            let xml = format!(
+                r#"<Wix><Property Id="{}" Value="hardcoded" /></Wix>"#,
+                pattern
+            );
             let result = analyze(&xml);
             assert!(
                 result.diagnostics.iter().any(|d| d.rule_id == "SEC-005"),
@@ -451,7 +515,8 @@ mod tests {
     #[test]
     fn test_sensitive_property_reference_ok() {
         // Property references are OK
-        let result = analyze(r#"<Wix><Property Id="DB_PASSWORD" Value="[ACTUAL_PASSWORD]" /></Wix>"#);
+        let result =
+            analyze(r#"<Wix><Property Id="DB_PASSWORD" Value="[ACTUAL_PASSWORD]" /></Wix>"#);
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "SEC-005"));
     }
 
@@ -464,106 +529,131 @@ mod tests {
 
     #[test]
     fn test_normal_property_ok() {
-        let result = analyze(r#"<Wix><Property Id="INSTALLDIR" Value="C:\Program Files\App" /></Wix>"#);
+        let result =
+            analyze(r#"<Wix><Property Id="INSTALLDIR" Value="C:\Program Files\App" /></Wix>"#);
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "SEC-005"));
     }
 
     #[test]
     fn test_elevated_script_action() {
-        let result = analyze(r#"<Wix><CustomAction Id="CA1" Execute="deferred" Impersonate="no" Script="vbscript" /></Wix>"#);
+        let result = analyze(
+            r#"<Wix><CustomAction Id="CA1" Execute="deferred" Impersonate="no" Script="vbscript" /></Wix>"#,
+        );
         assert!(result.diagnostics.iter().any(|d| d.rule_id == "SEC-004"));
     }
 
     #[test]
     fn test_elevated_vbscriptcall_action() {
-        let result = analyze(r#"<Wix><CustomAction Id="CA1" Execute="deferred" Impersonate="no" VBScriptCall="MyFunc" /></Wix>"#);
+        let result = analyze(
+            r#"<Wix><CustomAction Id="CA1" Execute="deferred" Impersonate="no" VBScriptCall="MyFunc" /></Wix>"#,
+        );
         assert!(result.diagnostics.iter().any(|d| d.rule_id == "SEC-004"));
     }
 
     #[test]
     fn test_elevated_jscriptcall_action() {
-        let result = analyze(r#"<Wix><CustomAction Id="CA1" Execute="deferred" Impersonate="no" JScriptCall="MyFunc" /></Wix>"#);
+        let result = analyze(
+            r#"<Wix><CustomAction Id="CA1" Execute="deferred" Impersonate="no" JScriptCall="MyFunc" /></Wix>"#,
+        );
         assert!(result.diagnostics.iter().any(|d| d.rule_id == "SEC-004"));
     }
 
     #[test]
     fn test_elevated_exe_action_ok() {
         // Non-script elevated actions don't trigger SEC-004
-        let result = analyze(r#"<Wix><CustomAction Id="CA1" Execute="deferred" Impersonate="no" ExeCommand="cmd" /></Wix>"#);
+        let result = analyze(
+            r#"<Wix><CustomAction Id="CA1" Execute="deferred" Impersonate="no" ExeCommand="cmd" /></Wix>"#,
+        );
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "SEC-004"));
     }
 
     #[test]
     fn test_immediate_script_ok() {
         // Immediate actions don't trigger SEC-004
-        let result = analyze(r#"<Wix><CustomAction Id="CA1" Execute="immediate" Script="vbscript" /></Wix>"#);
+        let result = analyze(
+            r#"<Wix><CustomAction Id="CA1" Execute="immediate" Script="vbscript" /></Wix>"#,
+        );
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "SEC-004"));
     }
 
     #[test]
     fn test_deferred_impersonate_yes_ok() {
         // Impersonate="yes" doesn't run elevated
-        let result = analyze(r#"<Wix><CustomAction Id="CA1" Execute="deferred" Impersonate="yes" Script="vbscript" /></Wix>"#);
+        let result = analyze(
+            r#"<Wix><CustomAction Id="CA1" Execute="deferred" Impersonate="yes" Script="vbscript" /></Wix>"#,
+        );
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "SEC-004"));
     }
 
     #[test]
     fn test_world_writable_directory() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Directory Id="D1">
                 <Permission User="Everyone" GenericWrite="yes" />
             </Directory>
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().any(|d| d.rule_id == "SEC-007"));
     }
 
     #[test]
     fn test_world_writable_directory_write() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Directory Id="D1">
                 <Permission User="Everyone" Write="yes" />
             </Directory>
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().any(|d| d.rule_id == "SEC-007"));
     }
 
     #[test]
     fn test_world_writable_directory_modify() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Directory Id="D1">
                 <Permission User="Everyone" Modify="yes" />
             </Directory>
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().any(|d| d.rule_id == "SEC-007"));
     }
 
     #[test]
     fn test_users_writable_directory() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Directory Id="D1">
                 <Permission User="Users" GenericWrite="yes" />
             </Directory>
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().any(|d| d.rule_id == "SEC-007"));
     }
 
     #[test]
     fn test_standard_directory_world_writable() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <StandardDirectory Id="ProgramFilesFolder">
                 <Permission User="Everyone" GenericWrite="yes" />
             </StandardDirectory>
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().any(|d| d.rule_id == "SEC-007"));
     }
 
     #[test]
     fn test_directory_read_only_ok() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Directory Id="D1">
                 <Permission User="Everyone" Read="yes" />
             </Directory>
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "SEC-007"));
     }
 }

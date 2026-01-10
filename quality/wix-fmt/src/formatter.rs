@@ -182,8 +182,7 @@ impl Formatter {
                 matches!(
                     c.node_type(),
                     NodeType::Element | NodeType::Comment | NodeType::PI
-                ) || (c.node_type() == NodeType::Text
-                    && !c.text().unwrap_or("").trim().is_empty())
+                ) || (c.node_type() == NodeType::Text && !c.text().unwrap_or("").trim().is_empty())
             })
             .collect();
 
@@ -194,8 +193,7 @@ impl Formatter {
             writer.write_element_end();
 
             // Check if this is a text-only element
-            let text_only = children.len() == 1
-                && children[0].node_type() == NodeType::Text;
+            let text_only = children.len() == 1 && children[0].node_type() == NodeType::Text;
 
             if text_only {
                 // Keep text inline
@@ -585,7 +583,8 @@ mod tests {
         let elements_dir = temp.path().join("elements");
         fs::create_dir(&elements_dir).unwrap();
 
-        let element_json = r#"{"name": "Package", "children": ["Directory", "Component"], "attributes": {}}"#;
+        let element_json =
+            r#"{"name": "Package", "children": ["Directory", "Component"], "attributes": {}}"#;
         fs::write(elements_dir.join("package.json"), element_json).unwrap();
 
         let data = crate::loader::WixData::load(temp.path()).unwrap();
@@ -621,7 +620,7 @@ mod tests {
     fn test_format_error_display() {
         let io_err = FormatError::ReadFile(std::io::Error::new(
             std::io::ErrorKind::NotFound,
-            "file not found"
+            "file not found",
         ));
         assert!(io_err.to_string().contains("Failed to read file"));
 

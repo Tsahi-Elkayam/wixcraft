@@ -1,11 +1,10 @@
 //! Dead code analyzer - identifies unused elements
 
+use super::Analyzer;
 use crate::core::{
-    AnalysisResult, Category, Diagnostic, Fix, FixAction, Location, SymbolIndex,
-    WixDocument,
+    AnalysisResult, Category, Diagnostic, Fix, FixAction, Location, SymbolIndex, WixDocument,
 };
 use std::collections::{HashMap, HashSet};
-use super::Analyzer;
 
 /// Dead code analyzer
 pub struct DeadCodeAnalyzer;
@@ -126,7 +125,9 @@ impl DeadCodeAnalyzer {
                     )
                     .with_fix(Fix::new(
                         "Remove unused property",
-                        FixAction::RemoveElement { range: location.range },
+                        FixAction::RemoveElement {
+                            range: location.range,
+                        },
                     )),
                 );
             }
@@ -194,7 +195,12 @@ impl DeadCodeAnalyzer {
         }
     }
 
-    fn check_orphan_components(&self, doc: &WixDocument, index: &SymbolIndex, result: &mut AnalysisResult) {
+    fn check_orphan_components(
+        &self,
+        doc: &WixDocument,
+        index: &SymbolIndex,
+        result: &mut AnalysisResult,
+    ) {
         // Get all component definitions from this file
         let mut components: HashMap<String, Location> = HashMap::new();
 
@@ -245,17 +251,13 @@ impl DeadCodeAnalyzer {
                     // Check if directory has any meaningful children
                     let has_component = node.children().any(|n| {
                         n.is_element()
-                            && matches!(
-                                n.tag_name().name(),
-                                "Component" | "File" | "Directory"
-                            )
+                            && matches!(n.tag_name().name(), "Component" | "File" | "Directory")
                     });
 
                     if !has_component {
                         // Check if directory is referenced elsewhere
                         let is_referenced = doc.root().descendants().any(|n| {
-                            n.tag_name().name() == "DirectoryRef"
-                                && n.attribute("Id") == Some(id)
+                            n.tag_name().name() == "DirectoryRef" && n.attribute("Id") == Some(id)
                         });
 
                         if !is_referenced {
@@ -334,29 +336,44 @@ mod tests {
 
     #[test]
     fn test_used_property() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Property Id="myProp" Value="test" />
             <Component Id="C1" Condition="[myProp]" />
-        </Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "DEAD-001" || !d.message.contains("myProp")));
+        </Wix>"#,
+        );
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "DEAD-001" || !d.message.contains("myProp")));
     }
 
     #[test]
     fn test_property_ref_used() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Property Id="myProp" Value="test" />
             <PropertyRef Id="myProp" />
-        </Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "DEAD-001" || !d.message.contains("myProp")));
+        </Wix>"#,
+        );
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "DEAD-001" || !d.message.contains("myProp")));
     }
 
     #[test]
     fn test_set_property_used() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Property Id="myProp" Value="test" />
             <SetProperty Id="myProp" Value="new" />
-        </Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "DEAD-001" || !d.message.contains("myProp")));
+        </Wix>"#,
+        );
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "DEAD-001" || !d.message.contains("myProp")));
     }
 
     #[test]
@@ -381,25 +398,38 @@ mod tests {
 
     #[test]
     fn test_property_multiple_refs_in_value() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Property Id="propA" Value="a" />
             <Property Id="propB" Value="b" />
             <Property Id="combined" Value="[propA][propB]" />
-        </Wix>"#);
+        </Wix>"#,
+        );
         // propA and propB are referenced, combined is not
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "DEAD-001" || !d.message.contains("propA")));
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "DEAD-001" || !d.message.contains("propB")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "DEAD-001" || !d.message.contains("propA")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "DEAD-001" || !d.message.contains("propB")));
     }
 
     #[test]
     fn test_property_special_prefixes_ignored() {
         // [#FileId], [!ComponentId], [$ComponentId], [%EnvVar] should not be treated as property refs
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Property Id="fileRef" Value="test" />
             <Property Id="path" Value="[#FileId]" />
-        </Wix>"#);
+        </Wix>"#,
+        );
         // fileRef should still be flagged as unused
-        assert!(result.diagnostics.iter().any(|d| d.rule_id == "DEAD-001" && d.message.contains("fileRef")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id == "DEAD-001" && d.message.contains("fileRef")));
     }
 
     #[test]
@@ -410,30 +440,36 @@ mod tests {
 
     #[test]
     fn test_scheduled_custom_action() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <CustomAction Id="CA1" Script="vbscript" />
             <InstallExecuteSequence>
                 <Custom Action="CA1" After="InstallFiles" />
             </InstallExecuteSequence>
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "DEAD-002"));
     }
 
     #[test]
     fn test_custom_action_ref_scheduled() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <CustomAction Id="CA1" Script="vbscript" />
             <CustomActionRef Id="CA1" />
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "DEAD-002"));
     }
 
     #[test]
     fn test_custom_action_publish_doaction() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <CustomAction Id="CA1" Script="vbscript" />
             <Publish Event="DoAction" Value="CA1" />
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "DEAD-002"));
     }
 
@@ -451,20 +487,30 @@ mod tests {
 
     #[test]
     fn test_referenced_component() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Component Id="C1" />
             <Feature Id="F1"><ComponentRef Id="C1" /></Feature>
-        </Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "DEAD-003" || !d.message.contains("C1")));
+        </Wix>"#,
+        );
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "DEAD-003" || !d.message.contains("C1")));
     }
 
     #[test]
     fn test_referenced_component_group() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <ComponentGroup Id="CG1" />
             <Feature Id="F1"><ComponentGroupRef Id="CG1" /></Feature>
-        </Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "DEAD-003" || !d.message.contains("CG1")));
+        </Wix>"#,
+        );
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "DEAD-003" || !d.message.contains("CG1")));
     }
 
     #[test]
@@ -475,41 +521,52 @@ mod tests {
 
     #[test]
     fn test_directory_with_component() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Directory Id="MyDir">
                 <Component Id="C1" />
             </Directory>
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "DEAD-004"));
     }
 
     #[test]
     fn test_directory_with_file() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Directory Id="MyDir">
                 <File Id="F1" Source="test.txt" />
             </Directory>
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "DEAD-004"));
     }
 
     #[test]
     fn test_directory_with_subdirectory() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Directory Id="MyDir">
                 <Directory Id="SubDir" />
             </Directory>
-        </Wix>"#);
+        </Wix>"#,
+        );
         // MyDir is not empty because it has SubDir
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "DEAD-004" || !d.message.contains("MyDir")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "DEAD-004" || !d.message.contains("MyDir")));
     }
 
     #[test]
     fn test_empty_directory_referenced() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Directory Id="MyDir" />
             <DirectoryRef Id="MyDir" />
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "DEAD-004"));
     }
 
@@ -539,37 +596,51 @@ mod tests {
 
     #[test]
     fn test_feature_with_components() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Feature Id="F1"><ComponentRef Id="C1" /></Feature>
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "DEAD-005"));
     }
 
     #[test]
     fn test_feature_with_component_group_ref() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Feature Id="F1"><ComponentGroupRef Id="CG1" /></Feature>
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "DEAD-005"));
     }
 
     #[test]
     fn test_feature_with_nested_feature() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Feature Id="F1">
                 <Feature Id="F2" />
             </Feature>
-        </Wix>"#);
+        </Wix>"#,
+        );
         // F1 is not empty because it has F2; F2 is empty
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "DEAD-005" || !d.message.contains("F1")));
-        assert!(result.diagnostics.iter().any(|d| d.rule_id == "DEAD-005" && d.message.contains("F2")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "DEAD-005" || !d.message.contains("F1")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id == "DEAD-005" && d.message.contains("F2")));
     }
 
     #[test]
     fn test_feature_with_merge_ref() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Feature Id="F1"><MergeRef Id="M1" /></Feature>
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "DEAD-005"));
     }
 
@@ -590,10 +661,12 @@ mod tests {
     #[test]
     fn test_unclosed_bracket_in_attribute() {
         // Edge case: unclosed bracket
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Property Id="myProp" Value="test" />
             <Component Id="C1" Condition="[myProp" />
-        </Wix>"#);
+        </Wix>"#,
+        );
         // Should not crash, unclosed bracket is not a valid reference
         assert!(result.diagnostics.iter().any(|d| d.rule_id == "DEAD-001"));
     }

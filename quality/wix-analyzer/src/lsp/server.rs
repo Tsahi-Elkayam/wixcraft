@@ -7,7 +7,9 @@ use tower_lsp::jsonrpc::Result;
 use tower_lsp::lsp_types::*;
 use tower_lsp::{Client, LanguageServer};
 
-use crate::core::{SymbolIndex, WixDocument, SymbolAtPosition, extract_from_source, symbol_at_position};
+use crate::core::{
+    extract_from_source, symbol_at_position, SymbolAtPosition, SymbolIndex, WixDocument,
+};
 use crate::{analyze_with_source, Config, Diagnostic as WixDiagnostic, Severity};
 
 use super::actions::CodeActionProvider;
@@ -79,7 +81,7 @@ impl WixLanguageServer {
         // Publish diagnostics
         let lsp_diagnostics: Vec<Diagnostic> = diagnostics
             .iter()
-            .map(|d| wix_diagnostic_to_lsp(d))
+            .map(wix_diagnostic_to_lsp)
             .collect();
 
         self.client
@@ -131,7 +133,11 @@ impl LanguageServer for WixLanguageServer {
                 )),
                 hover_provider: Some(HoverProviderCapability::Simple(true)),
                 completion_provider: Some(CompletionOptions {
-                    trigger_characters: Some(vec!["<".to_string(), " ".to_string(), "\"".to_string()]),
+                    trigger_characters: Some(vec![
+                        "<".to_string(),
+                        " ".to_string(),
+                        "\"".to_string(),
+                    ]),
                     ..Default::default()
                 }),
                 definition_provider: Some(OneOf::Left(true)),
@@ -171,7 +177,8 @@ impl LanguageServer for WixLanguageServer {
 
     async fn did_save(&self, params: DidSaveTextDocumentParams) {
         if let Some(content) = params.text {
-            self.analyze_document(&params.text_document.uri, &content).await;
+            self.analyze_document(&params.text_document.uri, &content)
+                .await;
         }
     }
 
@@ -199,7 +206,9 @@ impl LanguageServer for WixLanguageServer {
             return Ok(None);
         };
 
-        let actions = self.action_provider.get_actions(uri, &diagnostics, &content);
+        let actions = self
+            .action_provider
+            .get_actions(uri, &diagnostics, &content);
 
         if actions.is_empty() {
             Ok(None)
@@ -406,12 +415,14 @@ impl LanguageServer for WixLanguageServer {
 
 /// Convert a URI to a PathBuf
 fn uri_to_path(uri: &Url) -> PathBuf {
-    uri.to_file_path().unwrap_or_else(|_| PathBuf::from(uri.path()))
+    uri.to_file_path()
+        .unwrap_or_else(|_| PathBuf::from(uri.path()))
 }
 
 /// Convert a PathBuf to a URI
 fn path_to_uri(path: &std::path::Path) -> Url {
-    Url::from_file_path(path).unwrap_or_else(|_| Url::parse(&format!("file://{}", path.display())).unwrap())
+    Url::from_file_path(path)
+        .unwrap_or_else(|_| Url::parse(&format!("file://{}", path.display())).unwrap())
 }
 
 /// Convert WiX diagnostic to LSP diagnostic
@@ -481,7 +492,9 @@ fn def_kind_to_symbol_kind(kind: &crate::core::DefinitionKind) -> SymbolKind {
         DefinitionKind::CustomAction => SymbolKind::FUNCTION,
         DefinitionKind::Binary => SymbolKind::FILE,
         DefinitionKind::Fragment => SymbolKind::PACKAGE,
-        DefinitionKind::Package | DefinitionKind::Module | DefinitionKind::Bundle => SymbolKind::PACKAGE,
+        DefinitionKind::Package | DefinitionKind::Module | DefinitionKind::Bundle => {
+            SymbolKind::PACKAGE
+        }
     }
 }
 
@@ -498,7 +511,7 @@ pub async fn run_server() {
     let stdin = tokio::io::stdin();
     let stdout = tokio::io::stdout();
 
-    let (service, socket) = tower_lsp::LspService::new(|client| WixLanguageServer::new(client));
+    let (service, socket) = tower_lsp::LspService::new(WixLanguageServer::new);
     tower_lsp::Server::new(stdin, stdout, socket)
         .serve(service)
         .await;
@@ -524,28 +537,61 @@ mod tests {
 
     #[test]
     fn test_wix_severity_to_lsp() {
-        assert_eq!(wix_severity_to_lsp(Severity::Blocker), DiagnosticSeverity::ERROR);
-        assert_eq!(wix_severity_to_lsp(Severity::High), DiagnosticSeverity::ERROR);
-        assert_eq!(wix_severity_to_lsp(Severity::Medium), DiagnosticSeverity::WARNING);
-        assert_eq!(wix_severity_to_lsp(Severity::Low), DiagnosticSeverity::INFORMATION);
-        assert_eq!(wix_severity_to_lsp(Severity::Info), DiagnosticSeverity::HINT);
+        assert_eq!(
+            wix_severity_to_lsp(Severity::Blocker),
+            DiagnosticSeverity::ERROR
+        );
+        assert_eq!(
+            wix_severity_to_lsp(Severity::High),
+            DiagnosticSeverity::ERROR
+        );
+        assert_eq!(
+            wix_severity_to_lsp(Severity::Medium),
+            DiagnosticSeverity::WARNING
+        );
+        assert_eq!(
+            wix_severity_to_lsp(Severity::Low),
+            DiagnosticSeverity::INFORMATION
+        );
+        assert_eq!(
+            wix_severity_to_lsp(Severity::Info),
+            DiagnosticSeverity::HINT
+        );
     }
 
     #[test]
     fn test_ranges_overlap() {
         let a = Range {
-            start: Position { line: 1, character: 0 },
-            end: Position { line: 1, character: 10 },
+            start: Position {
+                line: 1,
+                character: 0,
+            },
+            end: Position {
+                line: 1,
+                character: 10,
+            },
         };
         let b = Range {
-            start: Position { line: 1, character: 5 },
-            end: Position { line: 1, character: 15 },
+            start: Position {
+                line: 1,
+                character: 5,
+            },
+            end: Position {
+                line: 1,
+                character: 15,
+            },
         };
         assert!(ranges_overlap(&a, &b));
 
         let c = Range {
-            start: Position { line: 2, character: 0 },
-            end: Position { line: 2, character: 10 },
+            start: Position {
+                line: 2,
+                character: 0,
+            },
+            end: Position {
+                line: 2,
+                character: 10,
+            },
         };
         assert!(!ranges_overlap(&a, &c));
     }
@@ -560,10 +606,25 @@ mod tests {
     #[test]
     fn test_def_kind_to_symbol_kind() {
         use crate::core::DefinitionKind;
-        assert_eq!(def_kind_to_symbol_kind(&DefinitionKind::Component), SymbolKind::CLASS);
-        assert_eq!(def_kind_to_symbol_kind(&DefinitionKind::Directory), SymbolKind::NAMESPACE);
-        assert_eq!(def_kind_to_symbol_kind(&DefinitionKind::Feature), SymbolKind::MODULE);
-        assert_eq!(def_kind_to_symbol_kind(&DefinitionKind::Property), SymbolKind::PROPERTY);
-        assert_eq!(def_kind_to_symbol_kind(&DefinitionKind::CustomAction), SymbolKind::FUNCTION);
+        assert_eq!(
+            def_kind_to_symbol_kind(&DefinitionKind::Component),
+            SymbolKind::CLASS
+        );
+        assert_eq!(
+            def_kind_to_symbol_kind(&DefinitionKind::Directory),
+            SymbolKind::NAMESPACE
+        );
+        assert_eq!(
+            def_kind_to_symbol_kind(&DefinitionKind::Feature),
+            SymbolKind::MODULE
+        );
+        assert_eq!(
+            def_kind_to_symbol_kind(&DefinitionKind::Property),
+            SymbolKind::PROPERTY
+        );
+        assert_eq!(
+            def_kind_to_symbol_kind(&DefinitionKind::CustomAction),
+            SymbolKind::FUNCTION
+        );
     }
 }

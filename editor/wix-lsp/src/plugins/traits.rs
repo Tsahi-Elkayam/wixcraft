@@ -149,7 +149,12 @@ pub trait FormatProvider: Send + Sync {
 
 /// Combined trait for a full-featured plugin
 pub trait FullPlugin:
-    LanguagePlugin + CompletionProvider + HoverProvider + SymbolProvider + DiagnosticProvider + FormatProvider
+    LanguagePlugin
+    + CompletionProvider
+    + HoverProvider
+    + SymbolProvider
+    + DiagnosticProvider
+    + FormatProvider
 {
 }
 

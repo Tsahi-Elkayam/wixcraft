@@ -20,7 +20,9 @@
 //! }
 //! ```
 
-use notify::{Config, Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher as NotifyWatcher};
+use notify::{
+    Config, Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher as NotifyWatcher,
+};
 use std::path::{Path, PathBuf};
 use std::sync::mpsc::{self, Receiver, Sender};
 use std::time::Duration;
@@ -123,7 +125,11 @@ impl FileWatcher {
             .unwrap_or(false)
     }
 
-    fn handle_event(res: Result<Event, notify::Error>, tx: &Sender<WatchEvent>, extensions: &[String]) {
+    fn handle_event(
+        res: Result<Event, notify::Error>,
+        tx: &Sender<WatchEvent>,
+        extensions: &[String],
+    ) {
         match res {
             Ok(event) => {
                 for path in event.paths {
@@ -265,11 +271,26 @@ mod tests {
     fn test_is_watched_file() {
         let extensions = vec!["wxs".to_string(), "wxi".to_string()];
 
-        assert!(FileWatcher::is_watched_file(Path::new("test.wxs"), &extensions));
-        assert!(FileWatcher::is_watched_file(Path::new("test.WXS"), &extensions));
-        assert!(FileWatcher::is_watched_file(Path::new("test.wxi"), &extensions));
-        assert!(!FileWatcher::is_watched_file(Path::new("test.xml"), &extensions));
-        assert!(!FileWatcher::is_watched_file(Path::new("test"), &extensions));
+        assert!(FileWatcher::is_watched_file(
+            Path::new("test.wxs"),
+            &extensions
+        ));
+        assert!(FileWatcher::is_watched_file(
+            Path::new("test.WXS"),
+            &extensions
+        ));
+        assert!(FileWatcher::is_watched_file(
+            Path::new("test.wxi"),
+            &extensions
+        ));
+        assert!(!FileWatcher::is_watched_file(
+            Path::new("test.xml"),
+            &extensions
+        ));
+        assert!(!FileWatcher::is_watched_file(
+            Path::new("test"),
+            &extensions
+        ));
     }
 
     #[test]

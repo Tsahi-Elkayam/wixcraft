@@ -1,7 +1,7 @@
 //! Human-readable text output formatter
 
-use crate::core::{AnalysisResult, Diagnostic, Severity};
 use super::Formatter;
+use crate::core::{AnalysisResult, Diagnostic, Severity};
 
 /// Text formatter with optional color support
 pub struct TextFormatter {
@@ -37,15 +37,27 @@ impl TextFormatter {
     }
 
     fn reset(&self) -> &'static str {
-        if self.colored { "\x1b[0m" } else { "" }
+        if self.colored {
+            "\x1b[0m"
+        } else {
+            ""
+        }
     }
 
     fn bold(&self) -> &'static str {
-        if self.colored { "\x1b[1m" } else { "" }
+        if self.colored {
+            "\x1b[1m"
+        } else {
+            ""
+        }
     }
 
     fn dim(&self) -> &'static str {
-        if self.colored { "\x1b[2m" } else { "" }
+        if self.colored {
+            "\x1b[2m"
+        } else {
+            ""
+        }
     }
 }
 
@@ -236,13 +248,16 @@ mod tests {
     #[test]
     fn test_format_with_fix() {
         let formatter = TextFormatter::new(false);
-        let fix = Fix::new("Add missing attribute", FixAction::AddAttribute {
-            range: Range::new(Position::new(1, 1), Position::new(1, 10)),
-            name: "Id".to_string(),
-            value: "MyId".to_string(),
-        });
-        let diag = Diagnostic::error("E1", Category::Validation, "Error", make_location())
-            .with_fix(fix);
+        let fix = Fix::new(
+            "Add missing attribute",
+            FixAction::AddAttribute {
+                range: Range::new(Position::new(1, 1), Position::new(1, 10)),
+                name: "Id".to_string(),
+                value: "MyId".to_string(),
+            },
+        );
+        let diag =
+            Diagnostic::error("E1", Category::Validation, "Error", make_location()).with_fix(fix);
 
         let output = formatter.format_diagnostic(&diag);
         assert!(output.contains("fix: Add missing attribute"));
@@ -284,9 +299,12 @@ mod tests {
         let formatter = TextFormatter::new(false);
         let results = vec![AnalysisResult {
             files: Vec::new(),
-            diagnostics: vec![
-                Diagnostic::info("I1", Category::BestPractice, "Info 1", make_location()),
-            ],
+            diagnostics: vec![Diagnostic::info(
+                "I1",
+                Category::BestPractice,
+                "Info 1",
+                make_location(),
+            )],
         }];
 
         let output = formatter.format(&results);

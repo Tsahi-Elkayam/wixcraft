@@ -115,7 +115,10 @@ impl WixPlugin {
 
         let mut rule = Rule::new(&db_rule.rule_id, &condition, &db_rule.name)
             .with_severity(severity)
-            .with_target(db_rule.target_kind.as_deref(), db_rule.target_name.as_deref());
+            .with_target(
+                db_rule.target_kind.as_deref(),
+                db_rule.target_name.as_deref(),
+            );
 
         // Add description if available
         if let Some(desc) = db_rule.description {
@@ -134,7 +137,6 @@ impl WixPlugin {
 
         Some(rule)
     }
-
 }
 
 impl Plugin for WixPlugin {
@@ -178,12 +180,12 @@ impl Plugin for WixPlugin {
 
             let content = std::fs::read_to_string(&path)?;
             let rule_file: RuleFile = match ext {
-                "yaml" | "yml" => serde_yaml::from_str(&content).map_err(|e| {
-                    RuleLoadError::Parse {
+                "yaml" | "yml" => {
+                    serde_yaml::from_str(&content).map_err(|e| RuleLoadError::Parse {
                         file: path.display().to_string(),
                         message: e.to_string(),
-                    }
-                })?,
+                    })?
+                }
                 "json" => serde_json::from_str(&content).map_err(|e| RuleLoadError::Parse {
                     file: path.display().to_string(),
                     message: e.to_string(),

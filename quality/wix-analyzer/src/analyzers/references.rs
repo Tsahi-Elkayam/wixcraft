@@ -1,10 +1,9 @@
 //! Reference navigation - Go to Definition, Find References
 
-use crate::core::{
-    AnalysisResult, Location, SymbolIndex,
-    WixDocument, symbol_at_position, SymbolAtPosition,
-};
 use super::Analyzer;
+use crate::core::{
+    symbol_at_position, AnalysisResult, Location, SymbolAtPosition, SymbolIndex, WixDocument,
+};
 
 /// Analyzer for reference navigation (Go to Definition, Find References)
 pub struct ReferencesAnalyzer;

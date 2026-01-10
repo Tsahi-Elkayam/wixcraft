@@ -25,6 +25,7 @@ use std::process::Command;
 
 /// Diff source for determining changed files
 #[derive(Debug, Clone)]
+#[derive(Default)]
 pub enum DiffSource {
     /// Git diff against a branch/commit
     GitBranch(String),
@@ -35,14 +36,10 @@ pub enum DiffSource {
     /// Files newer than a timestamp
     ModifiedSince(std::time::SystemTime),
     /// All files (no filtering)
+    #[default]
     All,
 }
 
-impl Default for DiffSource {
-    fn default() -> Self {
-        Self::All
-    }
-}
 
 /// Result of diff detection
 #[derive(Debug, Clone)]
@@ -154,7 +151,9 @@ impl DiffDetector {
             )));
         }
 
-        let base_commit = String::from_utf8_lossy(&merge_base.stdout).trim().to_string();
+        let base_commit = String::from_utf8_lossy(&merge_base.stdout)
+            .trim()
+            .to_string();
 
         // Get diff against merge-base
         let output = Command::new("git")
@@ -164,10 +163,15 @@ impl DiffDetector {
             .map_err(|e| DiffError::GitError(e.to_string()))?;
 
         if !output.status.success() {
-            return Err(DiffError::GitError(String::from_utf8_lossy(&output.stderr).to_string()));
+            return Err(DiffError::GitError(
+                String::from_utf8_lossy(&output.stderr).to_string(),
+            ));
         }
 
-        self.parse_git_diff_output(&String::from_utf8_lossy(&output.stdout), Some(branch.to_string()))
+        self.parse_git_diff_output(
+            &String::from_utf8_lossy(&output.stdout),
+            Some(branch.to_string()),
+        )
     }
 
     /// Detect changes from HEAD~n
@@ -181,7 +185,9 @@ impl DiffDetector {
             .map_err(|e| DiffError::GitError(e.to_string()))?;
 
         if !output.status.success() {
-            return Err(DiffError::GitError(String::from_utf8_lossy(&output.stderr).to_string()));
+            return Err(DiffError::GitError(
+                String::from_utf8_lossy(&output.stderr).to_string(),
+            ));
         }
 
         self.parse_git_diff_output(
@@ -191,7 +197,11 @@ impl DiffDetector {
     }
 
     /// Parse git diff --name-status output
-    fn parse_git_diff_output(&self, output: &str, base_ref: Option<String>) -> Result<DiffResult, DiffError> {
+    fn parse_git_diff_output(
+        &self,
+        output: &str,
+        base_ref: Option<String>,
+    ) -> Result<DiffResult, DiffError> {
         let mut result = DiffResult {
             added: Vec::new(),
             modified: Vec::new(),
@@ -261,7 +271,10 @@ impl DiffDetector {
     }
 
     /// Detect files modified since a timestamp
-    fn detect_modified_since(&self, since: &std::time::SystemTime) -> Result<DiffResult, DiffError> {
+    fn detect_modified_since(
+        &self,
+        since: &std::time::SystemTime,
+    ) -> Result<DiffResult, DiffError> {
         let workdir = self.workdir.as_deref().unwrap_or(Path::new("."));
         let mut result = DiffResult::empty();
 
@@ -354,9 +367,9 @@ pub fn filter_to_changed(
     for result in results.iter_mut() {
         let original_len = result.diagnostics.len();
 
-        result.diagnostics.retain(|d| {
-            changed.contains(d.location.file.as_path())
-        });
+        result
+            .diagnostics
+            .retain(|d| changed.contains(d.location.file.as_path()));
 
         filtered += original_len - result.diagnostics.len();
     }
@@ -420,8 +433,8 @@ mod tests {
 
     #[test]
     fn test_detect_file_list() {
-        use tempfile::TempDir;
         use std::fs::File;
+        use tempfile::TempDir;
 
         let temp_dir = TempDir::new().unwrap();
         let existing = temp_dir.path().join("existing.wxs");
@@ -431,7 +444,10 @@ mod tests {
 
         let detector = DiffDetector::new();
         let result = detector
-            .detect(&DiffSource::FileList(vec![existing.clone(), missing.clone()]))
+            .detect(&DiffSource::FileList(vec![
+                existing.clone(),
+                missing.clone(),
+            ]))
             .unwrap();
 
         assert_eq!(result.modified.len(), 1);
@@ -459,7 +475,9 @@ mod tests {
         let detector = DiffDetector::new();
         let output = "A\tsrc/new.wxs\nM\tsrc/changed.wxs\nD\tsrc/deleted.wxs\nM\tsrc/other.txt\n";
 
-        let result = detector.parse_git_diff_output(output, Some("main".to_string())).unwrap();
+        let result = detector
+            .parse_git_diff_output(output, Some("main".to_string()))
+            .unwrap();
 
         assert_eq!(result.added.len(), 1);
         assert_eq!(result.modified.len(), 1); // other.txt filtered out

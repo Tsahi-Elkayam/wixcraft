@@ -3,9 +3,9 @@
 //! Outputs diagnostics in Azure DevOps logging command format:
 //! ##vso[task.logissue type=warning;sourcepath=...;linenumber=...;columnnumber=...;code=...]message
 
+use super::OutputFormatter;
 use crate::diagnostic::{Diagnostic, Severity};
 use crate::engine::LintResult;
-use super::OutputFormatter;
 
 /// Formatter for Azure DevOps logging commands
 pub struct AzureFormatter {
@@ -66,18 +66,11 @@ impl OutputFormatter for AzureFormatter {
         let col = diagnostic.location.column.max(1);
 
         // Escape special characters in message
-        let message = diagnostic.message
-            .replace('\r', "")
-            .replace('\n', " ");
+        let message = diagnostic.message.replace('\r', "").replace('\n', " ");
 
         format!(
             "##vso[task.logissue type={};sourcepath={};linenumber={};columnnumber={};code={}]{}",
-            issue_type,
-            file,
-            line,
-            col,
-            diagnostic.rule_id,
-            message
+            issue_type, file, line, col, diagnostic.rule_id, message
         )
     }
 }

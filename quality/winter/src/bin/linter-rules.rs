@@ -13,13 +13,23 @@
 //!   linter-rules delete <rule-id>  # Delete rule
 
 use clap::{Parser, Subcommand};
-use rusqlite::{Connection, params};
+use rusqlite::{params, Connection};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::path::PathBuf;
 
 /// Type alias for rule data from database sync
-type SyncRuleRow = (String, String, String, String, Option<String>, Option<String>, Option<String>, Option<String>, bool);
+type SyncRuleRow = (
+    String,
+    String,
+    String,
+    String,
+    Option<String>,
+    Option<String>,
+    Option<String>,
+    Option<String>,
+    bool,
+);
 
 /// Linter Rules Management CLI
 #[derive(Parser)]
@@ -225,32 +235,67 @@ fn main() -> anyhow::Result<()> {
     let config = load_config(&cli.config)?;
 
     // Get database path
-    let db_path = cli.database
-        .or(config.database.clone())
-        .unwrap_or_else(|| {
-            dirs::home_dir()
-                .map(|h| h.join(".wixcraft").join("wix.db"))
-                .unwrap_or_else(|| PathBuf::from("wix.db"))
-        });
+    let db_path = cli.database.or(config.database.clone()).unwrap_or_else(|| {
+        dirs::home_dir()
+            .map(|h| h.join(".wixcraft").join("wix.db"))
+            .unwrap_or_else(|| PathBuf::from("wix.db"))
+    });
 
     match cli.command {
         Commands::Sync { plugin } => cmd_sync(&db_path, &config, plugin.as_deref())?,
-        Commands::Export { format, output, plugin } => {
-            cmd_export(&db_path, &format, output.as_deref(), plugin.as_deref())?
-        }
-        Commands::List { category, severity, plugin, enabled_only } => {
-            cmd_list(&db_path, category.as_deref(), severity.as_deref(), plugin.as_deref(), enabled_only)?
-        }
+        Commands::Export {
+            format,
+            output,
+            plugin,
+        } => cmd_export(&db_path, &format, output.as_deref(), plugin.as_deref())?,
+        Commands::List {
+            category,
+            severity,
+            plugin,
+            enabled_only,
+        } => cmd_list(
+            &db_path,
+            category.as_deref(),
+            severity.as_deref(),
+            plugin.as_deref(),
+            enabled_only,
+        )?,
         Commands::Show { rule_id } => cmd_show(&db_path, &rule_id)?,
         Commands::Import { file, replace } => cmd_import(&db_path, &file, replace)?,
-        Commands::Create { id, category, severity, name, condition, description, target, tags } => {
-            cmd_create(&db_path, &id, &category, &severity, &name, &condition,
-                       description.as_deref(), target.as_deref(), tags.as_deref())?
-        }
-        Commands::Update { rule_id, severity, name, condition, enabled } => {
-            cmd_update(&db_path, &rule_id, severity.as_deref(), name.as_deref(),
-                       condition.as_deref(), enabled)?
-        }
+        Commands::Create {
+            id,
+            category,
+            severity,
+            name,
+            condition,
+            description,
+            target,
+            tags,
+        } => cmd_create(
+            &db_path,
+            &id,
+            &category,
+            &severity,
+            &name,
+            &condition,
+            description.as_deref(),
+            target.as_deref(),
+            tags.as_deref(),
+        )?,
+        Commands::Update {
+            rule_id,
+            severity,
+            name,
+            condition,
+            enabled,
+        } => cmd_update(
+            &db_path,
+            &rule_id,
+            severity.as_deref(),
+            name.as_deref(),
+            condition.as_deref(),
+            enabled,
+        )?,
         Commands::Delete { rule_id, force } => cmd_delete(&db_path, &rule_id, force)?,
         Commands::Stats => cmd_stats(&db_path)?,
     }
@@ -279,8 +324,8 @@ fn cmd_sync(db_path: &PathBuf, _config: &RulesConfig, plugin: Option<&str>) -> a
          FROM rules WHERE condition IS NOT NULL"
     )?;
 
-    let rules: Vec<SyncRuleRow> =
-        stmt.query_map([], |row| {
+    let rules: Vec<SyncRuleRow> = stmt
+        .query_map([], |row| {
             Ok((
                 row.get(0)?,
                 row.get(1)?,
@@ -292,7 +337,9 @@ fn cmd_sync(db_path: &PathBuf, _config: &RulesConfig, plugin: Option<&str>) -> a
                 row.get(7)?,
                 row.get::<_, i32>(8)? == 1,
             ))
-        })?.filter_map(|r| r.ok()).collect();
+        })?
+        .filter_map(|r| r.ok())
+        .collect();
 
     println!("Found {} rules with conditions", rules.len());
 
@@ -313,37 +360,49 @@ fn cmd_sync(db_path: &PathBuf, _config: &RulesConfig, plugin: Option<&str>) -> a
     Ok(())
 }
 
-fn cmd_export(db_path: &PathBuf, format: &str, output: Option<&std::path::Path>, plugin: Option<&str>) -> anyhow::Result<()> {
+fn cmd_export(
+    db_path: &PathBuf,
+    format: &str,
+    output: Option<&std::path::Path>,
+    plugin: Option<&str>,
+) -> anyhow::Result<()> {
     let conn = Connection::open(db_path)?;
 
     let query = if let Some(cat) = plugin {
-        format!("SELECT rule_id, category, severity, name, description, rationale, fix_suggestion,
+        format!(
+            "SELECT rule_id, category, severity, name, description, rationale, fix_suggestion,
                         enabled, auto_fixable, condition, target_kind, target_name, tags
-                 FROM rules WHERE category = '{}'", cat)
+                 FROM rules WHERE category = '{}'",
+            cat
+        )
     } else {
         "SELECT rule_id, category, severity, name, description, rationale, fix_suggestion,
                 enabled, auto_fixable, condition, target_kind, target_name, tags
-         FROM rules".to_string()
+         FROM rules"
+            .to_string()
     };
 
     let mut stmt = conn.prepare(&query)?;
-    let rules: Vec<DbRule> = stmt.query_map([], |row| {
-        Ok(DbRule {
-            rule_id: row.get(0)?,
-            category: row.get(1)?,
-            severity: row.get(2)?,
-            name: row.get(3)?,
-            description: row.get(4)?,
-            rationale: row.get(5)?,
-            fix_suggestion: row.get(6)?,
-            enabled: row.get::<_, i32>(7)? == 1,
-            auto_fixable: row.get::<_, i32>(8)? == 1,
-            condition: row.get(9)?,
-            target_kind: row.get(10)?,
-            target_name: row.get(11)?,
-            tags: row.get(12)?,
-        })
-    })?.filter_map(|r| r.ok()).collect();
+    let rules: Vec<DbRule> = stmt
+        .query_map([], |row| {
+            Ok(DbRule {
+                rule_id: row.get(0)?,
+                category: row.get(1)?,
+                severity: row.get(2)?,
+                name: row.get(3)?,
+                description: row.get(4)?,
+                rationale: row.get(5)?,
+                fix_suggestion: row.get(6)?,
+                enabled: row.get::<_, i32>(7)? == 1,
+                auto_fixable: row.get::<_, i32>(8)? == 1,
+                condition: row.get(9)?,
+                target_kind: row.get(10)?,
+                target_name: row.get(11)?,
+                tags: row.get(12)?,
+            })
+        })?
+        .filter_map(|r| r.ok())
+        .collect();
 
     let content = match format {
         "yaml" | "yml" => serde_yaml::to_string(&rules)?,
@@ -360,11 +419,17 @@ fn cmd_export(db_path: &PathBuf, format: &str, output: Option<&std::path::Path>,
     Ok(())
 }
 
-fn cmd_list(db_path: &PathBuf, category: Option<&str>, severity: Option<&str>,
-            _plugin: Option<&str>, enabled_only: bool) -> anyhow::Result<()> {
+fn cmd_list(
+    db_path: &PathBuf,
+    category: Option<&str>,
+    severity: Option<&str>,
+    _plugin: Option<&str>,
+    enabled_only: bool,
+) -> anyhow::Result<()> {
     let conn = Connection::open(db_path)?;
 
-    let mut query = "SELECT rule_id, category, severity, name, enabled FROM rules WHERE 1=1".to_string();
+    let mut query =
+        "SELECT rule_id, category, severity, name, enabled FROM rules WHERE 1=1".to_string();
 
     if let Some(cat) = category {
         query.push_str(&format!(" AND category = '{}'", cat));
@@ -379,23 +444,39 @@ fn cmd_list(db_path: &PathBuf, category: Option<&str>, severity: Option<&str>,
     query.push_str(" ORDER BY category, rule_id");
 
     let mut stmt = conn.prepare(&query)?;
-    let rules: Vec<(String, String, String, String, bool)> = stmt.query_map([], |row| {
-        Ok((
-            row.get(0)?,
-            row.get(1)?,
-            row.get(2)?,
-            row.get(3)?,
-            row.get::<_, i32>(4)? == 1,
-        ))
-    })?.filter_map(|r| r.ok()).collect();
+    let rules: Vec<(String, String, String, String, bool)> = stmt
+        .query_map([], |row| {
+            Ok((
+                row.get(0)?,
+                row.get(1)?,
+                row.get(2)?,
+                row.get(3)?,
+                row.get::<_, i32>(4)? == 1,
+            ))
+        })?
+        .filter_map(|r| r.ok())
+        .collect();
 
-    println!("{:<25} {:<15} {:<10} {:<6} NAME", "RULE_ID", "CATEGORY", "SEVERITY", "ON");
+    println!(
+        "{:<25} {:<15} {:<10} {:<6} NAME",
+        "RULE_ID", "CATEGORY", "SEVERITY", "ON"
+    );
     println!("{}", "-".repeat(80));
 
     for (rule_id, cat, sev, name, enabled) in rules {
-        let name_short = if name.len() > 35 { format!("{}...", &name[..32]) } else { name };
-        println!("{:<25} {:<15} {:<10} {:<6} {}",
-                 rule_id, cat, sev, if enabled { "yes" } else { "no" }, name_short);
+        let name_short = if name.len() > 35 {
+            format!("{}...", &name[..32])
+        } else {
+            name
+        };
+        println!(
+            "{:<25} {:<15} {:<10} {:<6} {}",
+            rule_id,
+            cat,
+            sev,
+            if enabled { "yes" } else { "no" },
+            name_short
+        );
     }
 
     Ok(())
@@ -425,7 +506,7 @@ fn cmd_show(db_path: &PathBuf, rule_id: &str) -> anyhow::Result<()> {
                 target_name: row.get(11)?,
                 tags: row.get(12)?,
             })
-        }
+        },
     )?;
 
     println!("Rule: {}", rule.rule_id);
@@ -440,7 +521,11 @@ fn cmd_show(db_path: &PathBuf, rule_id: &str) -> anyhow::Result<()> {
         println!("Condition: {}", cond);
     }
     if let Some(target) = &rule.target_name {
-        println!("Target: {} ({})", target, rule.target_kind.as_deref().unwrap_or("element"));
+        println!(
+            "Target: {} ({})",
+            target,
+            rule.target_kind.as_deref().unwrap_or("element")
+        );
     }
     if let Some(tags) = &rule.tags {
         println!("Tags: {}", tags);
@@ -455,7 +540,11 @@ fn cmd_show(db_path: &PathBuf, rule_id: &str) -> anyhow::Result<()> {
 fn cmd_import(db_path: &PathBuf, file: &PathBuf, replace: bool) -> anyhow::Result<()> {
     let content = std::fs::read_to_string(file)?;
 
-    let rules: Vec<DbRule> = if file.extension().map(|e| e == "yaml" || e == "yml").unwrap_or(false) {
+    let rules: Vec<DbRule> = if file
+        .extension()
+        .map(|e| e == "yaml" || e == "yml")
+        .unwrap_or(false)
+    {
         serde_yaml::from_str(&content)?
     } else {
         serde_json::from_str(&content)?
@@ -467,11 +556,13 @@ fn cmd_import(db_path: &PathBuf, file: &PathBuf, replace: bool) -> anyhow::Resul
     let mut updated = 0;
 
     for rule in &rules {
-        let exists: bool = conn.query_row(
-            "SELECT 1 FROM rules WHERE rule_id = ?",
-            params![rule.rule_id],
-            |_| Ok(true)
-        ).unwrap_or(false);
+        let exists: bool = conn
+            .query_row(
+                "SELECT 1 FROM rules WHERE rule_id = ?",
+                params![rule.rule_id],
+                |_| Ok(true),
+            )
+            .unwrap_or(false);
 
         if exists && !replace {
             continue;
@@ -499,17 +590,34 @@ fn cmd_import(db_path: &PathBuf, file: &PathBuf, replace: bool) -> anyhow::Resul
             ],
         )?;
 
-        if exists { updated += 1; } else { inserted += 1; }
+        if exists {
+            updated += 1;
+        } else {
+            inserted += 1;
+        }
     }
 
-    println!("Imported {} rules: {} new, {} updated", rules.len(), inserted, updated);
+    println!(
+        "Imported {} rules: {} new, {} updated",
+        rules.len(),
+        inserted,
+        updated
+    );
     Ok(())
 }
 
 #[allow(clippy::too_many_arguments)]
-fn cmd_create(db_path: &PathBuf, id: &str, category: &str, severity: &str, name: &str,
-              condition: &str, description: Option<&str>, target: Option<&str>,
-              tags: Option<&str>) -> anyhow::Result<()> {
+fn cmd_create(
+    db_path: &PathBuf,
+    id: &str,
+    category: &str,
+    severity: &str,
+    name: &str,
+    condition: &str,
+    description: Option<&str>,
+    target: Option<&str>,
+    tags: Option<&str>,
+) -> anyhow::Result<()> {
     let conn = Connection::open(db_path)?;
 
     conn.execute(
@@ -522,15 +630,29 @@ fn cmd_create(db_path: &PathBuf, id: &str, category: &str, severity: &str, name:
     Ok(())
 }
 
-fn cmd_update(db_path: &PathBuf, rule_id: &str, severity: Option<&str>, name: Option<&str>,
-              condition: Option<&str>, enabled: Option<bool>) -> anyhow::Result<()> {
+fn cmd_update(
+    db_path: &PathBuf,
+    rule_id: &str,
+    severity: Option<&str>,
+    name: Option<&str>,
+    condition: Option<&str>,
+    enabled: Option<bool>,
+) -> anyhow::Result<()> {
     let conn = Connection::open(db_path)?;
 
     let mut updates = Vec::new();
-    if let Some(s) = severity { updates.push(format!("severity = '{}'", s)); }
-    if let Some(n) = name { updates.push(format!("name = '{}'", n)); }
-    if let Some(c) = condition { updates.push(format!("condition = '{}'", c)); }
-    if let Some(e) = enabled { updates.push(format!("enabled = {}", if e { 1 } else { 0 })); }
+    if let Some(s) = severity {
+        updates.push(format!("severity = '{}'", s));
+    }
+    if let Some(n) = name {
+        updates.push(format!("name = '{}'", n));
+    }
+    if let Some(c) = condition {
+        updates.push(format!("condition = '{}'", c));
+    }
+    if let Some(e) = enabled {
+        updates.push(format!("enabled = {}", if e { 1 } else { 0 }));
+    }
 
     if updates.is_empty() {
         println!("Nothing to update");
@@ -576,7 +698,9 @@ fn cmd_stats(db_path: &PathBuf) -> anyhow::Result<()> {
     // Total rules
     let total: i32 = conn.query_row("SELECT COUNT(*) FROM rules", [], |r| r.get(0))?;
     let with_condition: i32 = conn.query_row(
-        "SELECT COUNT(*) FROM rules WHERE condition IS NOT NULL", [], |r| r.get(0)
+        "SELECT COUNT(*) FROM rules WHERE condition IS NOT NULL",
+        [],
+        |r| r.get(0),
     )?;
 
     println!("Total rules: {}", total);
@@ -585,9 +709,12 @@ fn cmd_stats(db_path: &PathBuf) -> anyhow::Result<()> {
 
     // By category
     println!("By category:");
-    let mut stmt = conn.prepare("SELECT category, COUNT(*) FROM rules GROUP BY category ORDER BY COUNT(*) DESC")?;
-    let cats: Vec<(String, i32)> = stmt.query_map([], |r| Ok((r.get(0)?, r.get(1)?)))?
-        .filter_map(|r| r.ok()).collect();
+    let mut stmt = conn
+        .prepare("SELECT category, COUNT(*) FROM rules GROUP BY category ORDER BY COUNT(*) DESC")?;
+    let cats: Vec<(String, i32)> = stmt
+        .query_map([], |r| Ok((r.get(0)?, r.get(1)?)))?
+        .filter_map(|r| r.ok())
+        .collect();
     for (cat, count) in cats {
         println!("  {:<20} {}", cat, count);
     }
@@ -596,8 +723,10 @@ fn cmd_stats(db_path: &PathBuf) -> anyhow::Result<()> {
     // By severity
     println!("By severity:");
     let mut stmt = conn.prepare("SELECT severity, COUNT(*) FROM rules GROUP BY severity")?;
-    let sevs: Vec<(String, i32)> = stmt.query_map([], |r| Ok((r.get(0)?, r.get(1)?)))?
-        .filter_map(|r| r.ok()).collect();
+    let sevs: Vec<(String, i32)> = stmt
+        .query_map([], |r| Ok((r.get(0)?, r.get(1)?)))?
+        .filter_map(|r| r.ok())
+        .collect();
     for (sev, count) in sevs {
         println!("  {:<20} {}", sev, count);
     }

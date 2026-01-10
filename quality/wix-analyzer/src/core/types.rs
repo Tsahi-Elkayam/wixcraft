@@ -101,9 +101,9 @@ impl Severity {
     pub fn to_lsp_severity(&self) -> u8 {
         match self {
             Severity::Blocker | Severity::High => 1, // Error
-            Severity::Medium => 2,                    // Warning
-            Severity::Low => 3,                       // Info
-            Severity::Info => 4,                      // Hint
+            Severity::Medium => 2,                   // Warning
+            Severity::Low => 3,                      // Info
+            Severity::Info => 4,                     // Hint
         }
     }
 
@@ -222,10 +222,7 @@ pub enum FixAction {
         value: String,
     },
     /// Remove an attribute from an element
-    RemoveAttribute {
-        range: Range,
-        name: String,
-    },
+    RemoveAttribute { range: Range, name: String },
     /// Replace an attribute value
     ReplaceAttribute {
         range: Range,
@@ -239,14 +236,9 @@ pub enum FixAction {
         position: InsertPosition,
     },
     /// Remove an element
-    RemoveElement {
-        range: Range,
-    },
+    RemoveElement { range: Range },
     /// Replace text in range
-    ReplaceText {
-        range: Range,
-        new_text: String,
-    },
+    ReplaceText { range: Range, new_text: String },
 }
 
 /// Position for inserting elements
@@ -405,7 +397,9 @@ impl Diagnostic {
         // Map issue_type back to legacy category for backwards compat
         let category = match issue_type {
             IssueType::Bug => Category::Validation,
-            IssueType::Vulnerability | IssueType::SecurityHotspot | IssueType::Secret => Category::Security,
+            IssueType::Vulnerability | IssueType::SecurityHotspot | IssueType::Secret => {
+                Category::Security
+            }
             IssueType::CodeSmell => Category::BestPractice,
         };
         Self {
@@ -571,7 +565,11 @@ impl Diagnostic {
         self.location.file.to_string_lossy().hash(&mut hasher);
         self.location.range.start.line.hash(&mut hasher);
         // Include message prefix for context (first 50 chars)
-        self.message.chars().take(50).collect::<String>().hash(&mut hasher);
+        self.message
+            .chars()
+            .take(50)
+            .collect::<String>()
+            .hash(&mut hasher);
         format!("{:016x}", hasher.finish())
     }
 }
@@ -620,64 +618,101 @@ impl AnalysisResult {
     // === Counts by new severity levels ===
 
     pub fn blocker_count(&self) -> usize {
-        self.diagnostics.iter().filter(|d| d.severity == Severity::Blocker).count()
+        self.diagnostics
+            .iter()
+            .filter(|d| d.severity == Severity::Blocker)
+            .count()
     }
 
     pub fn high_count(&self) -> usize {
-        self.diagnostics.iter().filter(|d| d.severity == Severity::High).count()
+        self.diagnostics
+            .iter()
+            .filter(|d| d.severity == Severity::High)
+            .count()
     }
 
     pub fn medium_count(&self) -> usize {
-        self.diagnostics.iter().filter(|d| d.severity == Severity::Medium).count()
+        self.diagnostics
+            .iter()
+            .filter(|d| d.severity == Severity::Medium)
+            .count()
     }
 
     pub fn low_count(&self) -> usize {
-        self.diagnostics.iter().filter(|d| d.severity == Severity::Low).count()
+        self.diagnostics
+            .iter()
+            .filter(|d| d.severity == Severity::Low)
+            .count()
     }
 
     pub fn info_count(&self) -> usize {
-        self.diagnostics.iter().filter(|d| d.severity == Severity::Info).count()
+        self.diagnostics
+            .iter()
+            .filter(|d| d.severity == Severity::Info)
+            .count()
     }
 
     // === Legacy counts (for backwards compatibility) ===
 
     /// Legacy: count of High + Blocker (was "error")
     pub fn error_count(&self) -> usize {
-        self.diagnostics.iter().filter(|d| d.severity >= Severity::High).count()
+        self.diagnostics
+            .iter()
+            .filter(|d| d.severity >= Severity::High)
+            .count()
     }
 
     /// Legacy: count of Medium (was "warning")
     pub fn warning_count(&self) -> usize {
-        self.diagnostics.iter().filter(|d| d.severity == Severity::Medium).count()
+        self.diagnostics
+            .iter()
+            .filter(|d| d.severity == Severity::Medium)
+            .count()
     }
 
     // === Counts by issue type ===
 
     pub fn bug_count(&self) -> usize {
-        self.diagnostics.iter().filter(|d| d.issue_type == IssueType::Bug).count()
+        self.diagnostics
+            .iter()
+            .filter(|d| d.issue_type == IssueType::Bug)
+            .count()
     }
 
     pub fn vulnerability_count(&self) -> usize {
-        self.diagnostics.iter().filter(|d| d.issue_type == IssueType::Vulnerability).count()
+        self.diagnostics
+            .iter()
+            .filter(|d| d.issue_type == IssueType::Vulnerability)
+            .count()
     }
 
     pub fn code_smell_count(&self) -> usize {
-        self.diagnostics.iter().filter(|d| d.issue_type == IssueType::CodeSmell).count()
+        self.diagnostics
+            .iter()
+            .filter(|d| d.issue_type == IssueType::CodeSmell)
+            .count()
     }
 
     pub fn security_hotspot_count(&self) -> usize {
-        self.diagnostics.iter().filter(|d| d.issue_type == IssueType::SecurityHotspot).count()
+        self.diagnostics
+            .iter()
+            .filter(|d| d.issue_type == IssueType::SecurityHotspot)
+            .count()
     }
 
     pub fn secret_count(&self) -> usize {
-        self.diagnostics.iter().filter(|d| d.issue_type == IssueType::Secret).count()
+        self.diagnostics
+            .iter()
+            .filter(|d| d.issue_type == IssueType::Secret)
+            .count()
     }
 
     // === Technical debt ===
 
     /// Total effort in minutes to fix all issues
     pub fn total_effort_minutes(&self) -> u32 {
-        self.diagnostics.iter()
+        self.diagnostics
+            .iter()
             .filter_map(|d| d.effort_minutes)
             .sum()
     }
@@ -709,11 +744,13 @@ impl AnalysisResult {
     }
 
     pub fn filter_by_category(&mut self, categories: &[Category]) {
-        self.diagnostics.retain(|d| categories.contains(&d.category));
+        self.diagnostics
+            .retain(|d| categories.contains(&d.category));
     }
 
     pub fn filter_by_issue_type(&mut self, issue_types: &[IssueType]) {
-        self.diagnostics.retain(|d| issue_types.contains(&d.issue_type));
+        self.diagnostics
+            .retain(|d| issue_types.contains(&d.issue_type));
     }
 
     pub fn filter_by_tag(&mut self, tag: &str) {
@@ -722,9 +759,23 @@ impl AnalysisResult {
 
     pub fn sort(&mut self) {
         self.diagnostics.sort_by(|a, b| {
-            a.location.file.cmp(&b.location.file)
-                .then(a.location.range.start.line.cmp(&b.location.range.start.line))
-                .then(a.location.range.start.character.cmp(&b.location.range.start.character))
+            a.location
+                .file
+                .cmp(&b.location.file)
+                .then(
+                    a.location
+                        .range
+                        .start
+                        .line
+                        .cmp(&b.location.range.start.line),
+                )
+                .then(
+                    a.location
+                        .range
+                        .start
+                        .character
+                        .cmp(&b.location.range.start.character),
+                )
         });
     }
 }
@@ -942,10 +993,10 @@ mod tests {
     #[test]
     fn test_severity_to_lsp() {
         assert_eq!(Severity::Blocker.to_lsp_severity(), 1); // Error
-        assert_eq!(Severity::High.to_lsp_severity(), 1);    // Error
-        assert_eq!(Severity::Medium.to_lsp_severity(), 2);  // Warning
-        assert_eq!(Severity::Low.to_lsp_severity(), 3);     // Info
-        assert_eq!(Severity::Info.to_lsp_severity(), 4);    // Hint
+        assert_eq!(Severity::High.to_lsp_severity(), 1); // Error
+        assert_eq!(Severity::Medium.to_lsp_severity(), 2); // Warning
+        assert_eq!(Severity::Low.to_lsp_severity(), 3); // Info
+        assert_eq!(Severity::Info.to_lsp_severity(), 4); // Hint
     }
 
     #[test]
@@ -970,7 +1021,10 @@ mod tests {
     fn test_issue_type_display_name() {
         assert_eq!(IssueType::Bug.display_name(), "Bug");
         assert_eq!(IssueType::CodeSmell.display_name(), "Code Smell");
-        assert_eq!(IssueType::SecurityHotspot.display_name(), "Security Hotspot");
+        assert_eq!(
+            IssueType::SecurityHotspot.display_name(),
+            "Security Hotspot"
+        );
     }
 
     #[test]
@@ -1012,7 +1066,12 @@ mod tests {
             Range::new(Position::new(1, 1), Position::new(1, 10)),
         );
 
-        let diag = Diagnostic::blocker("SEC-001", IssueType::Vulnerability, "Critical vuln", location.clone());
+        let diag = Diagnostic::blocker(
+            "SEC-001",
+            IssueType::Vulnerability,
+            "Critical vuln",
+            location.clone(),
+        );
         assert_eq!(diag.severity, Severity::Blocker);
         assert_eq!(diag.issue_type, IssueType::Vulnerability);
 
@@ -1020,7 +1079,12 @@ mod tests {
         assert_eq!(diag2.severity, Severity::High);
         assert_eq!(diag2.issue_type, IssueType::Bug);
 
-        let diag3 = Diagnostic::medium("CS-001", IssueType::CodeSmell, "Code smell", location.clone());
+        let diag3 = Diagnostic::medium(
+            "CS-001",
+            IssueType::CodeSmell,
+            "Code smell",
+            location.clone(),
+        );
         assert_eq!(diag3.severity, Severity::Medium);
         assert_eq!(diag3.issue_type, IssueType::CodeSmell);
 
@@ -1087,8 +1151,18 @@ mod tests {
             Range::new(Position::new(1, 1), Position::new(1, 10)),
         );
 
-        result.add(Diagnostic::error("VAL-001", Category::Validation, "Error", location.clone()));
-        result.add(Diagnostic::warning("BP-001", Category::BestPractice, "Warning", location));
+        result.add(Diagnostic::error(
+            "VAL-001",
+            Category::Validation,
+            "Error",
+            location.clone(),
+        ));
+        result.add(Diagnostic::warning(
+            "BP-001",
+            Category::BestPractice,
+            "Warning",
+            location,
+        ));
 
         assert_eq!(result.len(), 2);
         assert_eq!(result.error_count(), 1);
@@ -1103,7 +1177,12 @@ mod tests {
             Range::new(Position::new(1, 1), Position::new(1, 10)),
         );
 
-        result.add(Diagnostic::info("INFO-001", Category::BestPractice, "Info", location));
+        result.add(Diagnostic::info(
+            "INFO-001",
+            Category::BestPractice,
+            "Info",
+            location,
+        ));
         assert_eq!(result.info_count(), 1);
     }
 
@@ -1145,9 +1224,24 @@ mod tests {
             Range::new(Position::new(1, 1), Position::new(1, 10)),
         );
 
-        result.add(Diagnostic::info("INFO-001", Category::BestPractice, "Info", location.clone()));
-        result.add(Diagnostic::warning("WARN-001", Category::BestPractice, "Warn", location.clone()));
-        result.add(Diagnostic::error("ERR-001", Category::Validation, "Error", location));
+        result.add(Diagnostic::info(
+            "INFO-001",
+            Category::BestPractice,
+            "Info",
+            location.clone(),
+        ));
+        result.add(Diagnostic::warning(
+            "WARN-001",
+            Category::BestPractice,
+            "Warn",
+            location.clone(),
+        ));
+        result.add(Diagnostic::error(
+            "ERR-001",
+            Category::Validation,
+            "Error",
+            location,
+        ));
 
         result.filter_by_severity(Severity::Medium);
         assert_eq!(result.len(), 2); // Only Medium (warning) and High (error) remain
@@ -1161,9 +1255,24 @@ mod tests {
             Range::new(Position::new(1, 1), Position::new(1, 10)),
         );
 
-        result.add(Diagnostic::high("BUG-001", IssueType::Bug, "Bug", location.clone()));
-        result.add(Diagnostic::high("SEC-001", IssueType::Vulnerability, "Vuln", location.clone()));
-        result.add(Diagnostic::medium("CS-001", IssueType::CodeSmell, "Smell", location));
+        result.add(Diagnostic::high(
+            "BUG-001",
+            IssueType::Bug,
+            "Bug",
+            location.clone(),
+        ));
+        result.add(Diagnostic::high(
+            "SEC-001",
+            IssueType::Vulnerability,
+            "Vuln",
+            location.clone(),
+        ));
+        result.add(Diagnostic::medium(
+            "CS-001",
+            IssueType::CodeSmell,
+            "Smell",
+            location,
+        ));
 
         result.filter_by_issue_type(&[IssueType::Bug, IssueType::Vulnerability]);
         assert_eq!(result.len(), 2);
@@ -1177,9 +1286,24 @@ mod tests {
             Range::new(Position::new(1, 1), Position::new(1, 10)),
         );
 
-        result.add(Diagnostic::high("BUG-001", IssueType::Bug, "Bug", location.clone()));
-        result.add(Diagnostic::high("SEC-001", IssueType::Vulnerability, "Vuln", location.clone()));
-        result.add(Diagnostic::medium("CS-001", IssueType::CodeSmell, "Smell", location));
+        result.add(Diagnostic::high(
+            "BUG-001",
+            IssueType::Bug,
+            "Bug",
+            location.clone(),
+        ));
+        result.add(Diagnostic::high(
+            "SEC-001",
+            IssueType::Vulnerability,
+            "Vuln",
+            location.clone(),
+        ));
+        result.add(Diagnostic::medium(
+            "CS-001",
+            IssueType::CodeSmell,
+            "Smell",
+            location,
+        ));
 
         assert_eq!(result.bug_count(), 1);
         assert_eq!(result.vulnerability_count(), 1);
@@ -1196,9 +1320,18 @@ mod tests {
             Range::new(Position::new(1, 1), Position::new(1, 10)),
         );
 
-        result.add(Diagnostic::high("BUG-001", IssueType::Bug, "Bug", location.clone()).with_effort(30));
-        result.add(Diagnostic::high("BUG-002", IssueType::Bug, "Bug2", location.clone()).with_effort(60));
-        result.add(Diagnostic::medium("CS-001", IssueType::CodeSmell, "Smell", location)); // No effort
+        result.add(
+            Diagnostic::high("BUG-001", IssueType::Bug, "Bug", location.clone()).with_effort(30),
+        );
+        result.add(
+            Diagnostic::high("BUG-002", IssueType::Bug, "Bug2", location.clone()).with_effort(60),
+        );
+        result.add(Diagnostic::medium(
+            "CS-001",
+            IssueType::CodeSmell,
+            "Smell",
+            location,
+        )); // No effort
 
         assert_eq!(result.total_effort_minutes(), 90);
         assert_eq!(result.total_effort_display(), "1h 30min");
@@ -1236,8 +1369,18 @@ mod tests {
             Range::new(Position::new(1, 1), Position::new(1, 10)),
         );
 
-        result.add(Diagnostic::error("VAL-001", Category::Validation, "Validation", location.clone()));
-        result.add(Diagnostic::warning("SEC-001", Category::Security, "Security", location));
+        result.add(Diagnostic::error(
+            "VAL-001",
+            Category::Validation,
+            "Validation",
+            location.clone(),
+        ));
+        result.add(Diagnostic::warning(
+            "SEC-001",
+            Category::Security,
+            "Security",
+            location,
+        ));
 
         result.filter_by_category(&[Category::Security]);
         assert_eq!(result.len(), 1);
@@ -1256,11 +1399,24 @@ mod tests {
             Range::new(Position::new(1, 1), Position::new(1, 10)),
         );
 
-        result.add(Diagnostic::error("VAL-001", Category::Validation, "Error in b", loc_b));
-        result.add(Diagnostic::error("VAL-002", Category::Validation, "Error in a", loc_a));
+        result.add(Diagnostic::error(
+            "VAL-001",
+            Category::Validation,
+            "Error in b",
+            loc_b,
+        ));
+        result.add(Diagnostic::error(
+            "VAL-002",
+            Category::Validation,
+            "Error in a",
+            loc_a,
+        ));
 
         result.sort();
-        assert_eq!(result.diagnostics[0].location.file.to_str().unwrap(), "a.wxs");
+        assert_eq!(
+            result.diagnostics[0].location.file.to_str().unwrap(),
+            "a.wxs"
+        );
     }
 
     #[test]
@@ -1278,32 +1434,74 @@ mod tests {
     #[test]
     fn test_reference_kind_all_variants() {
         // Test all element names
-        assert_eq!(ReferenceKind::from_element_name("ComponentGroupRef"), Some(ReferenceKind::ComponentGroupRef));
-        assert_eq!(ReferenceKind::from_element_name("DirectoryRef"), Some(ReferenceKind::DirectoryRef));
-        assert_eq!(ReferenceKind::from_element_name("FeatureRef"), Some(ReferenceKind::FeatureRef));
-        assert_eq!(ReferenceKind::from_element_name("FeatureGroupRef"), Some(ReferenceKind::FeatureGroupRef));
-        assert_eq!(ReferenceKind::from_element_name("PropertyRef"), Some(ReferenceKind::PropertyRef));
-        assert_eq!(ReferenceKind::from_element_name("CustomActionRef"), Some(ReferenceKind::CustomActionRef));
-        assert_eq!(ReferenceKind::from_element_name("BinaryRef"), Some(ReferenceKind::BinaryRef));
+        assert_eq!(
+            ReferenceKind::from_element_name("ComponentGroupRef"),
+            Some(ReferenceKind::ComponentGroupRef)
+        );
+        assert_eq!(
+            ReferenceKind::from_element_name("DirectoryRef"),
+            Some(ReferenceKind::DirectoryRef)
+        );
+        assert_eq!(
+            ReferenceKind::from_element_name("FeatureRef"),
+            Some(ReferenceKind::FeatureRef)
+        );
+        assert_eq!(
+            ReferenceKind::from_element_name("FeatureGroupRef"),
+            Some(ReferenceKind::FeatureGroupRef)
+        );
+        assert_eq!(
+            ReferenceKind::from_element_name("PropertyRef"),
+            Some(ReferenceKind::PropertyRef)
+        );
+        assert_eq!(
+            ReferenceKind::from_element_name("CustomActionRef"),
+            Some(ReferenceKind::CustomActionRef)
+        );
+        assert_eq!(
+            ReferenceKind::from_element_name("BinaryRef"),
+            Some(ReferenceKind::BinaryRef)
+        );
         assert_eq!(ReferenceKind::from_element_name("Unknown"), None);
 
         // Test element_name for all variants
         assert_eq!(ReferenceKind::ComponentRef.element_name(), "ComponentRef");
-        assert_eq!(ReferenceKind::ComponentGroupRef.element_name(), "ComponentGroupRef");
+        assert_eq!(
+            ReferenceKind::ComponentGroupRef.element_name(),
+            "ComponentGroupRef"
+        );
         assert_eq!(ReferenceKind::DirectoryRef.element_name(), "DirectoryRef");
         assert_eq!(ReferenceKind::FeatureRef.element_name(), "FeatureRef");
-        assert_eq!(ReferenceKind::FeatureGroupRef.element_name(), "FeatureGroupRef");
+        assert_eq!(
+            ReferenceKind::FeatureGroupRef.element_name(),
+            "FeatureGroupRef"
+        );
         assert_eq!(ReferenceKind::PropertyRef.element_name(), "PropertyRef");
-        assert_eq!(ReferenceKind::CustomActionRef.element_name(), "CustomActionRef");
+        assert_eq!(
+            ReferenceKind::CustomActionRef.element_name(),
+            "CustomActionRef"
+        );
         assert_eq!(ReferenceKind::BinaryRef.element_name(), "BinaryRef");
 
         // Test definition_element for all variants
-        assert_eq!(ReferenceKind::ComponentGroupRef.definition_element(), "Component");
-        assert_eq!(ReferenceKind::DirectoryRef.definition_element(), "Directory");
+        assert_eq!(
+            ReferenceKind::ComponentGroupRef.definition_element(),
+            "Component"
+        );
+        assert_eq!(
+            ReferenceKind::DirectoryRef.definition_element(),
+            "Directory"
+        );
         assert_eq!(ReferenceKind::FeatureRef.definition_element(), "Feature");
-        assert_eq!(ReferenceKind::FeatureGroupRef.definition_element(), "Feature");
+        assert_eq!(
+            ReferenceKind::FeatureGroupRef.definition_element(),
+            "Feature"
+        );
         assert_eq!(ReferenceKind::PropertyRef.definition_element(), "Property");
-        assert_eq!(ReferenceKind::CustomActionRef.definition_element(), "CustomAction");
+        assert_eq!(
+            ReferenceKind::CustomActionRef.definition_element(),
+            "CustomAction"
+        );
         assert_eq!(ReferenceKind::BinaryRef.definition_element(), "Binary");
     }
 
@@ -1320,25 +1518,67 @@ mod tests {
     #[test]
     fn test_definition_kind_all_variants() {
         // Test all from_element_name
-        assert_eq!(DefinitionKind::from_element_name("ComponentGroup"), Some(DefinitionKind::ComponentGroup));
-        assert_eq!(DefinitionKind::from_element_name("Directory"), Some(DefinitionKind::Directory));
-        assert_eq!(DefinitionKind::from_element_name("StandardDirectory"), Some(DefinitionKind::StandardDirectory));
-        assert_eq!(DefinitionKind::from_element_name("Feature"), Some(DefinitionKind::Feature));
-        assert_eq!(DefinitionKind::from_element_name("FeatureGroup"), Some(DefinitionKind::FeatureGroup));
-        assert_eq!(DefinitionKind::from_element_name("Property"), Some(DefinitionKind::Property));
-        assert_eq!(DefinitionKind::from_element_name("CustomAction"), Some(DefinitionKind::CustomAction));
-        assert_eq!(DefinitionKind::from_element_name("Binary"), Some(DefinitionKind::Binary));
-        assert_eq!(DefinitionKind::from_element_name("Fragment"), Some(DefinitionKind::Fragment));
-        assert_eq!(DefinitionKind::from_element_name("Package"), Some(DefinitionKind::Package));
-        assert_eq!(DefinitionKind::from_element_name("Module"), Some(DefinitionKind::Module));
-        assert_eq!(DefinitionKind::from_element_name("Bundle"), Some(DefinitionKind::Bundle));
+        assert_eq!(
+            DefinitionKind::from_element_name("ComponentGroup"),
+            Some(DefinitionKind::ComponentGroup)
+        );
+        assert_eq!(
+            DefinitionKind::from_element_name("Directory"),
+            Some(DefinitionKind::Directory)
+        );
+        assert_eq!(
+            DefinitionKind::from_element_name("StandardDirectory"),
+            Some(DefinitionKind::StandardDirectory)
+        );
+        assert_eq!(
+            DefinitionKind::from_element_name("Feature"),
+            Some(DefinitionKind::Feature)
+        );
+        assert_eq!(
+            DefinitionKind::from_element_name("FeatureGroup"),
+            Some(DefinitionKind::FeatureGroup)
+        );
+        assert_eq!(
+            DefinitionKind::from_element_name("Property"),
+            Some(DefinitionKind::Property)
+        );
+        assert_eq!(
+            DefinitionKind::from_element_name("CustomAction"),
+            Some(DefinitionKind::CustomAction)
+        );
+        assert_eq!(
+            DefinitionKind::from_element_name("Binary"),
+            Some(DefinitionKind::Binary)
+        );
+        assert_eq!(
+            DefinitionKind::from_element_name("Fragment"),
+            Some(DefinitionKind::Fragment)
+        );
+        assert_eq!(
+            DefinitionKind::from_element_name("Package"),
+            Some(DefinitionKind::Package)
+        );
+        assert_eq!(
+            DefinitionKind::from_element_name("Module"),
+            Some(DefinitionKind::Module)
+        );
+        assert_eq!(
+            DefinitionKind::from_element_name("Bundle"),
+            Some(DefinitionKind::Bundle)
+        );
         assert_eq!(DefinitionKind::from_element_name("Unknown"), None);
 
         // Test element_name for all variants
         assert_eq!(DefinitionKind::Component.element_name(), "Component");
-        assert_eq!(DefinitionKind::ComponentGroup.element_name(), "ComponentGroup");
+        assert_eq!(
+            DefinitionKind::ComponentGroup.element_name(),
+            "ComponentGroup"
+        );
         assert_eq!(DefinitionKind::Directory.element_name(), "Directory");
-        assert_eq!(DefinitionKind::StandardDirectory.element_name(), "StandardDirectory");
+        assert_eq!(
+            DefinitionKind::StandardDirectory.element_name(),
+            "StandardDirectory"
+        );
         assert_eq!(DefinitionKind::Feature.element_name(), "Feature");
         assert_eq!(DefinitionKind::FeatureGroup.element_name(), "FeatureGroup");
         assert_eq!(DefinitionKind::Property.element_name(), "Property");
@@ -1351,11 +1591,17 @@ mod tests {
 
         // Test canonical_type for all variants
         assert_eq!(DefinitionKind::Directory.canonical_type(), "Directory");
-        assert_eq!(DefinitionKind::StandardDirectory.canonical_type(), "Directory");
+        assert_eq!(
+            DefinitionKind::StandardDirectory.canonical_type(),
+            "Directory"
+        );
         assert_eq!(DefinitionKind::Feature.canonical_type(), "Feature");
         assert_eq!(DefinitionKind::FeatureGroup.canonical_type(), "Feature");
         assert_eq!(DefinitionKind::Property.canonical_type(), "Property");
-        assert_eq!(DefinitionKind::CustomAction.canonical_type(), "CustomAction");
+        assert_eq!(
+            DefinitionKind::CustomAction.canonical_type(),
+            "CustomAction"
+        );
         assert_eq!(DefinitionKind::Binary.canonical_type(), "Binary");
         assert_eq!(DefinitionKind::Fragment.canonical_type(), "Fragment");
         assert_eq!(DefinitionKind::Package.canonical_type(), "Package");
@@ -1384,11 +1630,14 @@ mod tests {
     #[test]
     fn test_fix_creation() {
         let range = Range::new(Position::new(1, 1), Position::new(1, 10));
-        let fix = Fix::new("Add Id attribute", FixAction::AddAttribute {
-            range,
-            name: "Id".to_string(),
-            value: "MyId".to_string(),
-        });
+        let fix = Fix::new(
+            "Add Id attribute",
+            FixAction::AddAttribute {
+                range,
+                name: "Id".to_string(),
+                value: "MyId".to_string(),
+            },
+        );
 
         assert_eq!(fix.description, "Add Id attribute");
     }
@@ -1401,7 +1650,12 @@ mod tests {
             PathBuf::from("test1.wxs"),
             Range::new(Position::new(1, 1), Position::new(1, 10)),
         );
-        result1.add(Diagnostic::error("VAL-001", Category::Validation, "Error 1", location1));
+        result1.add(Diagnostic::error(
+            "VAL-001",
+            Category::Validation,
+            "Error 1",
+            location1,
+        ));
 
         let mut result2 = AnalysisResult::new();
         result2.add_file(PathBuf::from("test2.wxs"));
@@ -1409,7 +1663,12 @@ mod tests {
             PathBuf::from("test2.wxs"),
             Range::new(Position::new(1, 1), Position::new(1, 10)),
         );
-        result2.add(Diagnostic::error("VAL-002", Category::Validation, "Error 2", location2));
+        result2.add(Diagnostic::error(
+            "VAL-002",
+            Category::Validation,
+            "Error 2",
+            location2,
+        ));
 
         result1.merge(result2);
 
@@ -1430,8 +1689,18 @@ mod tests {
             Range::new(Position::new(5, 1), Position::new(5, 10)),
         );
 
-        result.add(Diagnostic::error("VAL-001", Category::Validation, "Error at line 10", loc_line_10));
-        result.add(Diagnostic::error("VAL-002", Category::Validation, "Error at line 5", loc_line_5));
+        result.add(Diagnostic::error(
+            "VAL-001",
+            Category::Validation,
+            "Error at line 10",
+            loc_line_10,
+        ));
+        result.add(Diagnostic::error(
+            "VAL-002",
+            Category::Validation,
+            "Error at line 5",
+            loc_line_5,
+        ));
 
         result.sort();
         assert_eq!(result.diagnostics[0].location.range.start.line, 5);
@@ -1451,8 +1720,18 @@ mod tests {
             Range::new(Position::new(5, 5), Position::new(5, 15)),
         );
 
-        result.add(Diagnostic::error("VAL-001", Category::Validation, "Error at col 20", loc_col_20));
-        result.add(Diagnostic::error("VAL-002", Category::Validation, "Error at col 5", loc_col_5));
+        result.add(Diagnostic::error(
+            "VAL-001",
+            Category::Validation,
+            "Error at col 20",
+            loc_col_20,
+        ));
+        result.add(Diagnostic::error(
+            "VAL-002",
+            Category::Validation,
+            "Error at col 5",
+            loc_col_5,
+        ));
 
         result.sort();
         assert_eq!(result.diagnostics[0].location.range.start.character, 5);

@@ -1,18 +1,20 @@
 //! Validation analyzer - references, relationships, attributes
 
+use super::Analyzer;
 use crate::core::{
-    AnalysisResult, Category, Diagnostic, Location, ReferenceKind, SymbolIndex,
-    WixDocument,
+    AnalysisResult, Category, Diagnostic, Location, ReferenceKind, SymbolIndex, WixDocument,
 };
 use regex::Regex;
 use roxmltree::Node;
 use std::collections::{HashMap, HashSet};
 use std::sync::LazyLock;
-use super::Analyzer;
 
 /// GUID regex pattern
 static GUID_REGEX: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"^(\*|\{?[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\}?)$").unwrap()
+    Regex::new(
+        r"^(\*|\{?[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\}?)$",
+    )
+    .unwrap()
 });
 
 /// Validation analyzer for WiX files
@@ -52,7 +54,12 @@ impl Analyzer for ValidationAnalyzer {
 }
 
 impl ValidationAnalyzer {
-    fn validate_references(&self, doc: &WixDocument, index: &SymbolIndex, result: &mut AnalysisResult) {
+    fn validate_references(
+        &self,
+        doc: &WixDocument,
+        index: &SymbolIndex,
+        result: &mut AnalysisResult,
+    ) {
         for node in doc.root().descendants() {
             if let Some(kind) = ReferenceKind::from_element_name(node.tag_name().name()) {
                 if let Some(id) = node.attribute("Id") {
@@ -99,19 +106,17 @@ impl ValidationAnalyzer {
                         let range = doc.node_range(&node);
                         let location = Location::new(doc.file().to_path_buf(), range);
                         let valid_list: Vec<_> = valid_parents.iter().copied().collect();
-                        result.add(
-                            Diagnostic::error(
-                                "VAL-REL-001",
-                                Category::Validation,
-                                format!(
-                                    "{} cannot be a child of {}. Valid parents: {}",
-                                    tag_name,
-                                    parent,
-                                    valid_list.join(", ")
-                                ),
-                                location,
+                        result.add(Diagnostic::error(
+                            "VAL-REL-001",
+                            Category::Validation,
+                            format!(
+                                "{} cannot be a child of {}. Valid parents: {}",
+                                tag_name,
+                                parent,
+                                valid_list.join(", ")
                             ),
-                        );
+                            location,
+                        ));
                     }
                 }
             }
@@ -201,17 +206,20 @@ impl ValidationAnalyzer {
                     if let Some(execute) = node.attribute("Execute") {
                         if !matches!(
                             execute,
-                            "immediate" | "deferred" | "rollback" | "commit" | "oncePerProcess" | "firstSequence" | "secondSequence"
+                            "immediate"
+                                | "deferred"
+                                | "rollback"
+                                | "commit"
+                                | "oncePerProcess"
+                                | "firstSequence"
+                                | "secondSequence"
                         ) {
                             let range = doc.node_range(&node);
                             let location = Location::new(doc.file().to_path_buf(), range);
                             result.add(Diagnostic::error(
                                 "VAL-ATTR-002",
                                 Category::Validation,
-                                format!(
-                                    "Invalid value '{}' for CustomAction.Execute",
-                                    execute
-                                ),
+                                format!("Invalid value '{}' for CustomAction.Execute", execute),
                                 location,
                             ));
                         }
@@ -223,14 +231,12 @@ impl ValidationAnalyzer {
                         if !GUID_REGEX.is_match(guid) {
                             let range = doc.node_range(&node);
                             let location = Location::new(doc.file().to_path_buf(), range);
-                            result.add(
-                                Diagnostic::error(
-                                    "VAL-ATTR-003",
-                                    Category::Validation,
-                                    "Invalid GUID format. Use '*' for auto-generation or a valid GUID",
-                                    location,
-                                ),
-                            );
+                            result.add(Diagnostic::error(
+                                "VAL-ATTR-003",
+                                Category::Validation,
+                                "Invalid GUID format. Use '*' for auto-generation or a valid GUID",
+                                location,
+                            ));
                         }
                     }
                 }
@@ -259,8 +265,8 @@ impl ValidationAnalyzer {
                 if matches!(
                     attr.name(),
                     "Vital" | "ReadOnly" | "Hidden" | "Secure" | "Transitive" | "Impersonate"
-                ) {
-                    if !matches!(attr.value(), "yes" | "no" | "true" | "false" | "1" | "0") {
+                )
+                    && !matches!(attr.value(), "yes" | "no" | "true" | "false" | "1" | "0") {
                         let range = doc.node_range(&node);
                         let location = Location::new(doc.file().to_path_buf(), range);
                         result.add(Diagnostic::error(
@@ -275,7 +281,6 @@ impl ValidationAnalyzer {
                             location,
                         ));
                     }
-                }
             }
         }
     }
@@ -285,10 +290,7 @@ impl ValidationAnalyzer {
 fn get_valid_parents() -> HashMap<&'static str, HashSet<&'static str>> {
     let mut map = HashMap::new();
 
-    map.insert(
-        "File",
-        ["Component"].iter().copied().collect(),
-    );
+    map.insert("File", ["Component"].iter().copied().collect());
 
     map.insert(
         "RegistryKey",
@@ -297,15 +299,25 @@ fn get_valid_parents() -> HashMap<&'static str, HashSet<&'static str>> {
 
     map.insert(
         "RegistryValue",
-        ["Component", "RegistryKey", "RegistryValue"].iter().copied().collect(),
+        ["Component", "RegistryKey", "RegistryValue"]
+            .iter()
+            .copied()
+            .collect(),
     );
 
     map.insert(
         "Component",
-        ["Directory", "DirectoryRef", "StandardDirectory", "Fragment", "ComponentGroup", "Wix"]
-            .iter()
-            .copied()
-            .collect(),
+        [
+            "Directory",
+            "DirectoryRef",
+            "StandardDirectory",
+            "Fragment",
+            "ComponentGroup",
+            "Wix",
+        ]
+        .iter()
+        .copied()
+        .collect(),
     );
 
     map.insert(
@@ -326,26 +338,25 @@ fn get_valid_parents() -> HashMap<&'static str, HashSet<&'static str>> {
 
     map.insert(
         "Directory",
-        ["Directory", "DirectoryRef", "StandardDirectory", "Fragment", "Package", "Module", "Wix"]
-            .iter()
-            .copied()
-            .collect(),
+        [
+            "Directory",
+            "DirectoryRef",
+            "StandardDirectory",
+            "Fragment",
+            "Package",
+            "Module",
+            "Wix",
+        ]
+        .iter()
+        .copied()
+        .collect(),
     );
 
-    map.insert(
-        "ServiceInstall",
-        ["Component"].iter().copied().collect(),
-    );
+    map.insert("ServiceInstall", ["Component"].iter().copied().collect());
 
-    map.insert(
-        "ServiceControl",
-        ["Component"].iter().copied().collect(),
-    );
+    map.insert("ServiceControl", ["Component"].iter().copied().collect());
 
-    map.insert(
-        "Shortcut",
-        ["Component", "File"].iter().copied().collect(),
-    );
+    map.insert("Shortcut", ["Component", "File"].iter().copied().collect());
 
     map
 }
@@ -381,13 +392,17 @@ mod tests {
 
     #[test]
     fn test_valid_reference() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Component Id="C1" />
             <Feature Id="F1"><ComponentRef Id="C1" /></Feature>
-        </Wix>"#);
+        </Wix>"#,
+        );
 
         // Should only have relationship warning (Component not in valid parent in test)
-        let ref_errors: Vec<_> = result.diagnostics.iter()
+        let ref_errors: Vec<_> = result
+            .diagnostics
+            .iter()
             .filter(|d| d.rule_id == "VAL-REF-001")
             .collect();
         assert!(ref_errors.is_empty());
@@ -396,102 +411,127 @@ mod tests {
     #[test]
     fn test_file_not_in_component() {
         let result = analyze(r#"<Wix><Directory Id="D1"><File Id="F1" /></Directory></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d| d.message.contains("cannot be a child of")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.message.contains("cannot be a child of")));
     }
 
     #[test]
     fn test_invalid_guid() {
         let result = analyze(r#"<Wix><Component Guid="not-a-guid" /></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d| d.message.contains("Invalid GUID")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.message.contains("Invalid GUID")));
     }
 
     #[test]
     fn test_valid_guid() {
         let result = analyze(r#"<Wix><Component Guid="*" /></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| !d.message.contains("Invalid GUID")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| !d.message.contains("Invalid GUID")));
     }
 
     #[test]
     fn test_missing_required_id() {
         let result = analyze(r#"<Wix><Directory Name="Test" /></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d| d.message.contains("requires 'Id'")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.message.contains("requires 'Id'")));
     }
 
     #[test]
     fn test_invalid_enum_value() {
         let result = analyze(r#"<Wix><Feature Id="F1" Display="invalid" /></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d| d.message.contains("Invalid value")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.message.contains("Invalid value")));
     }
 
     #[test]
     fn test_feature_missing_id() {
         let result = analyze(r#"<Wix><Feature Title="Test" /></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d|
-            d.message.contains("Feature requires 'Id'")
-        ));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.message.contains("Feature requires 'Id'")));
     }
 
     #[test]
     fn test_property_missing_id() {
         let result = analyze(r#"<Wix><Property Value="test" /></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d|
-            d.message.contains("Property requires 'Id'")
-        ));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.message.contains("Property requires 'Id'")));
     }
 
     #[test]
     fn test_custom_action_missing_id() {
         let result = analyze(r#"<Wix><CustomAction Script="vbscript" /></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d|
-            d.message.contains("CustomAction requires 'Id'")
-        ));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.message.contains("CustomAction requires 'Id'")));
     }
 
     #[test]
     fn test_custom_action_invalid_execute() {
         let result = analyze(r#"<Wix><CustomAction Id="CA1" Execute="invalid" /></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d|
-            d.message.contains("Invalid value 'invalid' for CustomAction.Execute")
-        ));
+        assert!(result.diagnostics.iter().any(|d| d
+            .message
+            .contains("Invalid value 'invalid' for CustomAction.Execute")));
     }
 
     #[test]
     fn test_custom_action_valid_execute() {
         let result = analyze(r#"<Wix><CustomAction Id="CA1" Execute="deferred" /></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d|
-            !d.message.contains("CustomAction.Execute")
-        ));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| !d.message.contains("CustomAction.Execute")));
     }
 
     #[test]
     fn test_registry_key_invalid_root() {
-        let result = analyze(r#"<Wix><Component Id="C1"><RegistryKey Root="INVALID" /></Component></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d|
-            d.message.contains("Invalid value 'INVALID' for RegistryKey.Root")
-        ));
+        let result =
+            analyze(r#"<Wix><Component Id="C1"><RegistryKey Root="INVALID" /></Component></Wix>"#);
+        assert!(result.diagnostics.iter().any(|d| d
+            .message
+            .contains("Invalid value 'INVALID' for RegistryKey.Root")));
     }
 
     #[test]
     fn test_registry_key_valid_root() {
-        let result = analyze(r#"<Wix><Component Id="C1"><RegistryKey Root="HKLM" /></Component></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d|
-            !d.message.contains("RegistryKey.Root")
-        ));
+        let result =
+            analyze(r#"<Wix><Component Id="C1"><RegistryKey Root="HKLM" /></Component></Wix>"#);
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| !d.message.contains("RegistryKey.Root")));
     }
 
     #[test]
     fn test_invalid_yesno_attribute() {
         let result = analyze(r#"<Wix><File Id="F1" Vital="maybe" /></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d|
-            d.message.contains("Invalid yes/no value 'maybe'")
-        ));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.message.contains("Invalid yes/no value 'maybe'")));
     }
 
     #[test]
     fn test_valid_yesno_attribute() {
-        let result = analyze(r#"<Wix><Component Id="C1"><File Id="F1" Vital="yes" /></Component></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d|
-            !d.message.contains("Invalid yes/no")
-        ));
+        let result =
+            analyze(r#"<Wix><Component Id="C1"><File Id="F1" Vital="yes" /></Component></Wix>"#);
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| !d.message.contains("Invalid yes/no")));
     }
 }

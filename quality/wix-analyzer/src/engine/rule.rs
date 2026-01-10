@@ -394,17 +394,35 @@ mod tests {
     fn test_severity_from_str() {
         assert_eq!(RuleSeverity::from_str("info"), Some(RuleSeverity::Info));
         assert_eq!(RuleSeverity::from_str("INFO"), Some(RuleSeverity::Info));
-        assert_eq!(RuleSeverity::from_str("warning"), Some(RuleSeverity::Medium));
-        assert_eq!(RuleSeverity::from_str("error"), Some(RuleSeverity::Critical));
+        assert_eq!(
+            RuleSeverity::from_str("warning"),
+            Some(RuleSeverity::Medium)
+        );
+        assert_eq!(
+            RuleSeverity::from_str("error"),
+            Some(RuleSeverity::Critical)
+        );
         assert_eq!(RuleSeverity::from_str("unknown"), None);
     }
 
     #[test]
     fn test_category_from_str() {
-        assert_eq!(RuleCategory::from_str("validation"), Some(RuleCategory::Validation));
-        assert_eq!(RuleCategory::from_str("best-practice"), Some(RuleCategory::BestPractice));
-        assert_eq!(RuleCategory::from_str("bp"), Some(RuleCategory::BestPractice));
-        assert_eq!(RuleCategory::from_str("security"), Some(RuleCategory::Security));
+        assert_eq!(
+            RuleCategory::from_str("validation"),
+            Some(RuleCategory::Validation)
+        );
+        assert_eq!(
+            RuleCategory::from_str("best-practice"),
+            Some(RuleCategory::BestPractice)
+        );
+        assert_eq!(
+            RuleCategory::from_str("bp"),
+            Some(RuleCategory::BestPractice)
+        );
+        assert_eq!(
+            RuleCategory::from_str("security"),
+            Some(RuleCategory::Security)
+        );
         assert_eq!(RuleCategory::from_str("unknown"), None);
     }
 
@@ -431,8 +449,7 @@ mod tests {
 
     #[test]
     fn test_rule_impl() {
-        let data_rule = DataRule::new("DATA-001", "data-rule")
-            .with_severity(RuleSeverity::Medium);
+        let data_rule = DataRule::new("DATA-001", "data-rule").with_severity(RuleSeverity::Medium);
 
         let rule = RuleImpl::Data(data_rule);
         assert_eq!(rule.id(), "DATA-001");

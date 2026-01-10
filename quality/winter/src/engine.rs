@@ -222,12 +222,7 @@ impl Engine {
                 .build()
                 .unwrap_or_else(|_| rayon::ThreadPoolBuilder::new().build().unwrap());
 
-            pool.install(|| {
-                files
-                    .par_iter()
-                    .map(|f| self.lint_file(f))
-                    .collect()
-            })
+            pool.install(|| files.par_iter().map(|f| self.lint_file(f)).collect())
         } else {
             files.iter().map(|f| self.lint_file(f)).collect()
         };
@@ -475,10 +470,8 @@ impl Engine {
         if let Some(name_pattern) = &target.name {
             let name = node.name();
             if name_pattern.contains('*') {
-                let regex_pattern = format!(
-                    "^{}$",
-                    name_pattern.replace("*", ".*").replace("?", ".")
-                );
+                let regex_pattern =
+                    format!("^{}$", name_pattern.replace("*", ".*").replace("?", "."));
                 if let Ok(re) = Regex::new(&regex_pattern) {
                     if !re.is_match(name) {
                         return false;
@@ -533,13 +526,19 @@ impl Engine {
         // Handle comparisons
         if let Some(idx) = condition.find("==") {
             let left = condition[..idx].trim();
-            let right = condition[idx + 2..].trim().trim_matches('"').trim_matches('\'');
+            let right = condition[idx + 2..]
+                .trim()
+                .trim_matches('"')
+                .trim_matches('\'');
             return self.get_value(left, node).is_some_and(|v| v == right);
         }
 
         if let Some(idx) = condition.find("!=") {
             let left = condition[..idx].trim();
-            let right = condition[idx + 2..].trim().trim_matches('"').trim_matches('\'');
+            let right = condition[idx + 2..]
+                .trim()
+                .trim_matches('"')
+                .trim_matches('\'');
             return self.get_value(left, node).is_none_or(|v| v != right);
         }
 
@@ -554,7 +553,9 @@ impl Engine {
 
         // Handle functions
         if condition.starts_with("countChildren(") && condition.ends_with(')') {
-            let arg = &condition[14..condition.len() - 1].trim_matches('\'').trim_matches('"');
+            let arg = &condition[14..condition.len() - 1]
+                .trim_matches('\'')
+                .trim_matches('"');
             let count = if *arg == "*" {
                 node.children().len()
             } else {
@@ -565,7 +566,9 @@ impl Engine {
         }
 
         if condition.starts_with("hasChild(") && condition.ends_with(')') {
-            let arg = &condition[9..condition.len() - 1].trim_matches('\'').trim_matches('"');
+            let arg = &condition[9..condition.len() - 1]
+                .trim_matches('\'')
+                .trim_matches('"');
             return node.children().iter().any(|c| c.name() == *arg);
         }
 
@@ -631,7 +634,12 @@ impl Engine {
     }
 
     /// Generate auto-fix for well-known rules
-    fn generate_fix(&self, rule_id: &str, node: &dyn Node, source_lines: &[&str]) -> Option<crate::diagnostic::Fix> {
+    fn generate_fix(
+        &self,
+        rule_id: &str,
+        node: &dyn Node,
+        source_lines: &[&str],
+    ) -> Option<crate::diagnostic::Fix> {
         use crate::diagnostic::Fix;
 
         match rule_id {
@@ -644,8 +652,8 @@ impl Engine {
                     if let Some(pos) = line.rfind('>') {
                         let before_close = &line[..pos];
                         // Check if it's self-closing or not
-                        if before_close.ends_with('/') {
-                            let replacement = format!("{} Guid=\"*\"/>", &before_close[..before_close.len()-1]);
+                        if let Some(stripped) = before_close.strip_suffix('/') {
+                            let replacement = format!("{} Guid=\"*\"/>", stripped);
                             return Some(Fix::safe("Add Guid=\"*\" attribute", &replacement));
                         } else {
                             let replacement = format!("{} Guid=\"*\">", before_close);
@@ -663,12 +671,18 @@ impl Engine {
                     let line = source_lines[line_idx];
                     if let Some(pos) = line.rfind('>') {
                         let before_close = &line[..pos];
-                        if before_close.ends_with('/') {
-                            let replacement = format!("{} Version=\"1.0.0.0\"/>", &before_close[..before_close.len()-1]);
-                            return Some(Fix::safe("Add Version=\"1.0.0.0\" attribute", &replacement));
+                        if let Some(stripped) = before_close.strip_suffix('/') {
+                            let replacement = format!("{} Version=\"1.0.0.0\"/>", stripped);
+                            return Some(Fix::safe(
+                                "Add Version=\"1.0.0.0\" attribute",
+                                &replacement,
+                            ));
                         } else {
                             let replacement = format!("{} Version=\"1.0.0.0\">", before_close);
-                            return Some(Fix::safe("Add Version=\"1.0.0.0\" attribute", &replacement));
+                            return Some(Fix::safe(
+                                "Add Version=\"1.0.0.0\" attribute",
+                                &replacement,
+                            ));
                         }
                     }
                 }
@@ -684,12 +698,18 @@ impl Engine {
                         let before_close = &line[..pos];
                         // Generate a placeholder GUID (user should replace)
                         let guid = "PUT-YOUR-GUID-HERE";
-                        if before_close.ends_with('/') {
-                            let replacement = format!("{} UpgradeCode=\"{}\"/>", &before_close[..before_close.len()-1], guid);
-                            return Some(Fix::unsafe_fix("Add UpgradeCode attribute (replace GUID)", &replacement));
+                        if let Some(stripped) = before_close.strip_suffix('/') {
+                            let replacement = format!("{} UpgradeCode=\"{}\"/>", stripped, guid);
+                            return Some(Fix::unsafe_fix(
+                                "Add UpgradeCode attribute (replace GUID)",
+                                &replacement,
+                            ));
                         } else {
                             let replacement = format!("{} UpgradeCode=\"{}\">", before_close, guid);
-                            return Some(Fix::unsafe_fix("Add UpgradeCode attribute (replace GUID)", &replacement));
+                            return Some(Fix::unsafe_fix(
+                                "Add UpgradeCode attribute (replace GUID)",
+                                &replacement,
+                            ));
                         }
                     }
                 }
@@ -705,7 +725,7 @@ impl Engine {
                         let replacement = format!("$(var.SourceDir)\\{}", filename);
                         return Some(Fix::unsafe_fix(
                             &format!("Replace hardcoded path with $(var.SourceDir)\\{}", filename),
-                            &replacement
+                            &replacement,
                         ));
                     }
                 }
@@ -719,8 +739,8 @@ impl Engine {
                     let line = source_lines[line_idx];
                     if let Some(pos) = line.rfind('>') {
                         let before_close = &line[..pos];
-                        if before_close.ends_with('/') {
-                            let replacement = format!("{} Type=\"string\"/>", &before_close[..before_close.len()-1]);
+                        if let Some(stripped) = before_close.strip_suffix('/') {
+                            let replacement = format!("{} Type=\"string\"/>", stripped);
                             return Some(Fix::safe("Add Type=\"string\" attribute", &replacement));
                         } else {
                             let replacement = format!("{} Type=\"string\">", before_close);
@@ -762,10 +782,9 @@ fn find_logical_operator(s: &str, op: &str) -> Option<usize> {
 
 /// Validate GUID format
 fn is_valid_guid(s: &str) -> bool {
-    let guid_re = Regex::new(
-        r"(?i)^\{?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\}?$",
-    )
-    .unwrap();
+    let guid_re =
+        Regex::new(r"(?i)^\{?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\}?$")
+            .unwrap();
     guid_re.is_match(s) || s == "*"
 }
 

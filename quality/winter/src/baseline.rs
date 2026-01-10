@@ -124,7 +124,11 @@ impl Baseline {
     }
 
     /// Check if a diagnostic is baselined
-    fn is_baselined(&self, diag: &Diagnostic, index: &HashMap<String, Vec<&BaselineIssue>>) -> bool {
+    fn is_baselined(
+        &self,
+        diag: &Diagnostic,
+        index: &HashMap<String, Vec<&BaselineIssue>>,
+    ) -> bool {
         let relative_file = diag
             .location
             .file
@@ -286,9 +290,7 @@ mod tests {
     #[test]
     fn test_filter_baselined() {
         let mut baseline = Baseline::new();
-        let diags = vec![
-            make_diagnostic("rule1", "file.wxs", 10, "test message"),
-        ];
+        let diags = vec![make_diagnostic("rule1", "file.wxs", 10, "test message")];
         baseline.add_diagnostics(&diags);
 
         // Same diagnostic should be filtered
@@ -296,9 +298,7 @@ mod tests {
         assert!(result.is_empty());
 
         // Different diagnostic should pass through
-        let new_diags = vec![
-            make_diagnostic("rule2", "file.wxs", 15, "new message"),
-        ];
+        let new_diags = vec![make_diagnostic("rule2", "file.wxs", 15, "new message")];
         let result = baseline.filter_diagnostics(new_diags);
         assert_eq!(result.len(), 1);
     }
@@ -359,9 +359,7 @@ mod tests {
     #[test]
     fn test_no_duplicates() {
         let mut baseline = Baseline::new();
-        let diags = vec![
-            make_diagnostic("rule1", "file.wxs", 10, "message"),
-        ];
+        let diags = vec![make_diagnostic("rule1", "file.wxs", 10, "message")];
 
         baseline.add_diagnostics(&diags);
         baseline.add_diagnostics(&diags); // Add same again

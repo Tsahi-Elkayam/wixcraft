@@ -2,8 +2,8 @@
 //!
 //! Generates self-contained HTML reports with styling and interactivity.
 
-use crate::core::{AnalysisResult, Diagnostic, Severity, IssueType};
 use super::Formatter;
+use crate::core::{AnalysisResult, Diagnostic, IssueType, Severity};
 
 /// HTML formatter
 pub struct HtmlFormatter {
@@ -35,30 +35,65 @@ impl Default for HtmlFormatter {
 
 impl Formatter for HtmlFormatter {
     fn format(&self, results: &[AnalysisResult]) -> String {
-        let mut all_diagnostics: Vec<&Diagnostic> = results
-            .iter()
-            .flat_map(|r| &r.diagnostics)
-            .collect();
+        let mut all_diagnostics: Vec<&Diagnostic> =
+            results.iter().flat_map(|r| &r.diagnostics).collect();
 
         // Sort by severity (highest first), then by file, then by line
         all_diagnostics.sort_by(|a, b| {
-            b.severity.cmp(&a.severity)
+            b.severity
+                .cmp(&a.severity)
                 .then_with(|| a.location.file.cmp(&b.location.file))
-                .then_with(|| a.location.range.start.line.cmp(&b.location.range.start.line))
+                .then_with(|| {
+                    a.location
+                        .range
+                        .start
+                        .line
+                        .cmp(&b.location.range.start.line)
+                })
         });
 
         let total = all_diagnostics.len();
-        let blockers = all_diagnostics.iter().filter(|d| d.severity == Severity::Blocker).count();
-        let high = all_diagnostics.iter().filter(|d| d.severity == Severity::High).count();
-        let medium = all_diagnostics.iter().filter(|d| d.severity == Severity::Medium).count();
-        let low = all_diagnostics.iter().filter(|d| d.severity == Severity::Low).count();
-        let info = all_diagnostics.iter().filter(|d| d.severity == Severity::Info).count();
+        let blockers = all_diagnostics
+            .iter()
+            .filter(|d| d.severity == Severity::Blocker)
+            .count();
+        let high = all_diagnostics
+            .iter()
+            .filter(|d| d.severity == Severity::High)
+            .count();
+        let medium = all_diagnostics
+            .iter()
+            .filter(|d| d.severity == Severity::Medium)
+            .count();
+        let low = all_diagnostics
+            .iter()
+            .filter(|d| d.severity == Severity::Low)
+            .count();
+        let info = all_diagnostics
+            .iter()
+            .filter(|d| d.severity == Severity::Info)
+            .count();
 
-        let bugs = all_diagnostics.iter().filter(|d| d.issue_type == IssueType::Bug).count();
-        let vulns = all_diagnostics.iter().filter(|d| d.issue_type == IssueType::Vulnerability).count();
-        let smells = all_diagnostics.iter().filter(|d| d.issue_type == IssueType::CodeSmell).count();
-        let hotspots = all_diagnostics.iter().filter(|d| d.issue_type == IssueType::SecurityHotspot).count();
-        let secrets = all_diagnostics.iter().filter(|d| d.issue_type == IssueType::Secret).count();
+        let bugs = all_diagnostics
+            .iter()
+            .filter(|d| d.issue_type == IssueType::Bug)
+            .count();
+        let vulns = all_diagnostics
+            .iter()
+            .filter(|d| d.issue_type == IssueType::Vulnerability)
+            .count();
+        let smells = all_diagnostics
+            .iter()
+            .filter(|d| d.issue_type == IssueType::CodeSmell)
+            .count();
+        let hotspots = all_diagnostics
+            .iter()
+            .filter(|d| d.issue_type == IssueType::SecurityHotspot)
+            .count();
+        let secrets = all_diagnostics
+            .iter()
+            .filter(|d| d.issue_type == IssueType::Secret)
+            .count();
 
         let files_count = results.iter().map(|r| r.files.len()).sum::<usize>();
 
@@ -147,7 +182,11 @@ impl Formatter for HtmlFormatter {
 </body>
 </html>"#,
             title = self.title,
-            css = if self.inline_css { format!("<style>{}</style>", CSS) } else { String::new() },
+            css = if self.inline_css {
+                format!("<style>{}</style>", CSS)
+            } else {
+                String::new()
+            },
             timestamp = chrono::Utc::now().format("%Y-%m-%d %H:%M:%S UTC"),
             total = total,
             files_count = files_count,
@@ -192,18 +231,34 @@ fn format_row(diag: &Diagnostic) -> String {
         IssueType::Secret => "secret",
     };
 
-    let doc_link = diag.doc_url.as_ref()
-        .map(|url| format!(r#"<a href="{}" target="_blank">{}</a>"#, html_escape(url), html_escape(&diag.rule_id)))
+    let doc_link = diag
+        .doc_url
+        .as_ref()
+        .map(|url| {
+            format!(
+                r#"<a href="{}" target="_blank">{}</a>"#,
+                html_escape(url),
+                html_escape(&diag.rule_id)
+            )
+        })
         .unwrap_or_else(|| html_escape(&diag.rule_id));
 
-    let security_tags = diag.security.as_ref()
+    let security_tags = diag
+        .security
+        .as_ref()
         .map(|sec| {
             let mut tags = Vec::new();
             if let Some(ref cwe) = sec.cwe {
-                tags.push(format!(r#"<span class="tag cwe">{}</span>"#, html_escape(cwe)));
+                tags.push(format!(
+                    r#"<span class="tag cwe">{}</span>"#,
+                    html_escape(cwe)
+                ));
             }
             if let Some(ref owasp) = sec.owasp {
-                tags.push(format!(r#"<span class="tag owasp">{}</span>"#, html_escape(owasp)));
+                tags.push(format!(
+                    r#"<span class="tag owasp">{}</span>"#,
+                    html_escape(owasp)
+                ));
             }
             tags.join(" ")
         })
@@ -535,8 +590,18 @@ mod tests {
         let results = vec![AnalysisResult {
             files: vec![PathBuf::from("test.wxs")],
             diagnostics: vec![
-                Diagnostic::error("VAL-001", Category::Validation, "Test error", make_location()),
-                Diagnostic::warning("BP-001", Category::BestPractice, "Test warning", make_location()),
+                Diagnostic::error(
+                    "VAL-001",
+                    Category::Validation,
+                    "Test error",
+                    make_location(),
+                ),
+                Diagnostic::warning(
+                    "BP-001",
+                    Category::BestPractice,
+                    "Test warning",
+                    make_location(),
+                ),
             ],
         }];
 
@@ -549,9 +614,14 @@ mod tests {
     #[test]
     fn test_html_with_cwe_owasp() {
         let formatter = HtmlFormatter::new();
-        let diag = Diagnostic::high("SEC-001", IssueType::Vulnerability, "Injection", make_location())
-            .with_cwe("CWE-89")
-            .with_owasp("A03:2021");
+        let diag = Diagnostic::high(
+            "SEC-001",
+            IssueType::Vulnerability,
+            "Injection",
+            make_location(),
+        )
+        .with_cwe("CWE-89")
+        .with_owasp("A03:2021");
 
         let results = vec![AnalysisResult {
             files: Vec::new(),

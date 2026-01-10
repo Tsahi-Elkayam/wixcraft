@@ -1,8 +1,8 @@
 //! JSON output formatter
 
+use super::Formatter;
 use crate::core::{AnalysisResult, Category, Diagnostic, IssueType, Severity};
 use serde::Serialize;
-use super::Formatter;
 
 /// JSON formatter
 pub struct JsonFormatter;
@@ -127,7 +127,9 @@ impl Formatter for JsonFormatter {
 
                 match diag.issue_type {
                     IssueType::Bug => bugs += 1,
-                    IssueType::Vulnerability | IssueType::SecurityHotspot | IssueType::Secret => vulnerabilities += 1,
+                    IssueType::Vulnerability | IssueType::SecurityHotspot | IssueType::Secret => {
+                        vulnerabilities += 1
+                    }
                     IssueType::CodeSmell => code_smells += 1,
                 }
 
@@ -281,8 +283,18 @@ mod tests {
         let results = vec![AnalysisResult {
             files: Vec::new(),
             diagnostics: vec![
-                Diagnostic::error("VAL-001", Category::Validation, "Validation", make_location()),
-                Diagnostic::warning("BP-001", Category::BestPractice, "Best practice", make_location()),
+                Diagnostic::error(
+                    "VAL-001",
+                    Category::Validation,
+                    "Validation",
+                    make_location(),
+                ),
+                Diagnostic::warning(
+                    "BP-001",
+                    Category::BestPractice,
+                    "Best practice",
+                    make_location(),
+                ),
                 Diagnostic::warning("SEC-001", Category::Security, "Security", make_location()),
                 Diagnostic::warning("DEAD-001", Category::DeadCode, "Dead code", make_location()),
             ],
@@ -300,9 +312,12 @@ mod tests {
         let formatter = JsonFormatter::new();
         let results = vec![AnalysisResult {
             files: Vec::new(),
-            diagnostics: vec![
-                Diagnostic::info("INFO-001", Category::BestPractice, "Info message", make_location()),
-            ],
+            diagnostics: vec![Diagnostic::info(
+                "INFO-001",
+                Category::BestPractice,
+                "Info message",
+                make_location(),
+            )],
         }];
 
         let output = formatter.format(&results);
@@ -315,10 +330,13 @@ mod tests {
         let formatter = JsonFormatter::new();
         let results = vec![AnalysisResult {
             files: Vec::new(),
-            diagnostics: vec![
-                Diagnostic::error("E1", Category::Validation, "Error", make_location())
-                    .with_help("This is help text"),
-            ],
+            diagnostics: vec![Diagnostic::error(
+                "E1",
+                Category::Validation,
+                "Error",
+                make_location(),
+            )
+            .with_help("This is help text")],
         }];
 
         let output = formatter.format(&results);
@@ -328,17 +346,23 @@ mod tests {
     #[test]
     fn test_json_with_fix() {
         let formatter = JsonFormatter::new();
-        let fix = Fix::new("Add missing attribute", FixAction::AddAttribute {
-            range: Range::new(Position::new(1, 1), Position::new(1, 10)),
-            name: "Id".to_string(),
-            value: "MyId".to_string(),
-        });
+        let fix = Fix::new(
+            "Add missing attribute",
+            FixAction::AddAttribute {
+                range: Range::new(Position::new(1, 1), Position::new(1, 10)),
+                name: "Id".to_string(),
+                value: "MyId".to_string(),
+            },
+        );
         let results = vec![AnalysisResult {
             files: Vec::new(),
-            diagnostics: vec![
-                Diagnostic::error("E1", Category::Validation, "Error", make_location())
-                    .with_fix(fix),
-            ],
+            diagnostics: vec![Diagnostic::error(
+                "E1",
+                Category::Validation,
+                "Error",
+                make_location(),
+            )
+            .with_fix(fix)],
         }];
 
         let output = formatter.format(&results);
@@ -355,10 +379,13 @@ mod tests {
         );
         let results = vec![AnalysisResult {
             files: Vec::new(),
-            diagnostics: vec![
-                Diagnostic::error("E1", Category::Validation, "Error", make_location())
-                    .with_related(RelatedInfo::new(related_loc, "Related info")),
-            ],
+            diagnostics: vec![Diagnostic::error(
+                "E1",
+                Category::Validation,
+                "Error",
+                make_location(),
+            )
+            .with_related(RelatedInfo::new(related_loc, "Related info"))],
         }];
 
         let output = formatter.format(&results);
@@ -384,9 +411,12 @@ mod tests {
             PathBuf::from("other.wxs"),
             Range::new(Position::new(5, 1), Position::new(5, 10)),
         );
-        let fix = Fix::new("Fix it", FixAction::RemoveElement {
-            range: Range::new(Position::new(1, 1), Position::new(1, 10)),
-        });
+        let fix = Fix::new(
+            "Fix it",
+            FixAction::RemoveElement {
+                range: Range::new(Position::new(1, 1), Position::new(1, 10)),
+            },
+        );
         let diag = Diagnostic::error("E1", Category::Security, "Security error", make_location())
             .with_help("Help text")
             .with_fix(fix)

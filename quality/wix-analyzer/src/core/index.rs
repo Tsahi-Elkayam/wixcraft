@@ -188,9 +188,9 @@ fn canonical_type_for_lookup(element_type: &str) -> &str {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use tempfile::TempDir;
     use std::fs::File;
     use std::io::Write;
+    use tempfile::TempDir;
 
     #[test]
     fn test_index_source() {
@@ -260,7 +260,11 @@ mod tests {
     #[test]
     fn test_add_definition_manually() {
         let mut index = SymbolIndex::new();
-        index.add_definition("TARGETDIR", DefinitionKind::Directory, Some("Standard directory".to_string()));
+        index.add_definition(
+            "TARGETDIR",
+            DefinitionKind::Directory,
+            Some("Standard directory".to_string()),
+        );
 
         assert!(index.has_definition("Directory", "TARGETDIR"));
     }
@@ -489,11 +493,19 @@ mod tests {
         assert_eq!(all_refs.len(), 6);
 
         // Verify reference kinds
-        assert!(all_refs.iter().any(|r| r.kind == ReferenceKind::DirectoryRef));
+        assert!(all_refs
+            .iter()
+            .any(|r| r.kind == ReferenceKind::DirectoryRef));
         assert!(all_refs.iter().any(|r| r.kind == ReferenceKind::FeatureRef));
-        assert!(all_refs.iter().any(|r| r.kind == ReferenceKind::FeatureGroupRef));
-        assert!(all_refs.iter().any(|r| r.kind == ReferenceKind::PropertyRef));
-        assert!(all_refs.iter().any(|r| r.kind == ReferenceKind::CustomActionRef));
+        assert!(all_refs
+            .iter()
+            .any(|r| r.kind == ReferenceKind::FeatureGroupRef));
+        assert!(all_refs
+            .iter()
+            .any(|r| r.kind == ReferenceKind::PropertyRef));
+        assert!(all_refs
+            .iter()
+            .any(|r| r.kind == ReferenceKind::CustomActionRef));
         assert!(all_refs.iter().any(|r| r.kind == ReferenceKind::BinaryRef));
     }
 

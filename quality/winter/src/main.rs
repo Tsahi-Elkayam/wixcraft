@@ -15,7 +15,7 @@ use winter::engine::Engine;
 use winter::fixer::Fixer;
 use winter::output::{
     AzureFormatter, CompactFormatter, GithubFormatter, GitlabFormatter, GroupedFormatter,
-    JsonFormatter, JUnitFormatter, OutputFormatter, SarifFormatter, TextFormatter,
+    JUnitFormatter, JsonFormatter, OutputFormatter, SarifFormatter, TextFormatter,
 };
 use winter::plugin_manager::PluginManager;
 use winter::plugins::wix::WixPlugin;
@@ -278,11 +278,15 @@ fn explain_rule(rule: &winter::Rule) {
         println!("  {}: {}", "Name".bold(), name);
     }
 
-    println!("  {}: {}", "Severity".bold(), match rule.severity {
-        winter::Severity::Error => "error".red(),
-        winter::Severity::Warning => "warning".yellow(),
-        winter::Severity::Info => "info".blue(),
-    });
+    println!(
+        "  {}: {}",
+        "Severity".bold(),
+        match rule.severity {
+            winter::Severity::Error => "error".red(),
+            winter::Severity::Warning => "warning".yellow(),
+            winter::Severity::Info => "info".blue(),
+        }
+    );
 
     println!("  {}: {}", "Category".bold(), rule.category);
     println!("  {}: {}", "Stability".bold(), rule.stability);
@@ -435,7 +439,11 @@ fn prompt_options(question: &str, options: &[&str], default: usize) -> usize {
     if input.is_empty() {
         default
     } else {
-        input.parse::<usize>().unwrap_or(default + 1).saturating_sub(1).min(options.len() - 1)
+        input
+            .parse::<usize>()
+            .unwrap_or(default + 1)
+            .saturating_sub(1)
+            .min(options.len() - 1)
     }
 }
 
@@ -489,7 +497,12 @@ fn handle_init(preset: &str, interactive: bool, output_format: &str) {
     };
 
     if let Err(e) = std::fs::write(filename, content) {
-        eprintln!("{}: Failed to write {}: {}", "error".red().bold(), filename, e);
+        eprintln!(
+            "{}: Failed to write {}: {}",
+            "error".red().bold(),
+            filename,
+            e
+        );
         std::process::exit(1);
     }
 
@@ -507,7 +520,11 @@ fn run_interactive_wizard() -> Config {
     println!();
 
     // 1. Choose preset as base
-    let presets = ["recommended (balanced defaults)", "strict (all rules)", "minimal (errors only)"];
+    let presets = [
+        "recommended (balanced defaults)",
+        "strict (all rules)",
+        "minimal (errors only)",
+    ];
     let preset_idx = prompt_options("Which preset do you want to start with?", &presets, 0);
     let preset_name = match preset_idx {
         0 => "recommended",
@@ -602,7 +619,11 @@ fn main() {
                 handle_explain(rule_id, &cli);
                 return;
             }
-            Commands::Init { preset, interactive, output_format } => {
+            Commands::Init {
+                preset,
+                interactive,
+                output_format,
+            } => {
                 handle_init(preset, *interactive, output_format);
                 return;
             }
@@ -707,7 +728,10 @@ fn main() {
     if cli.verbose {
         if let Some(ref wix) = wix_plugin {
             if wix.is_using_db_rules() {
-                eprintln!("WiX plugin: {} rules from wix-data database", wix.rules().len());
+                eprintln!(
+                    "WiX plugin: {} rules from wix-data database",
+                    wix.rules().len()
+                );
             } else {
                 eprintln!("WiX plugin: {} built-in rules", wix.rules().len());
             }
@@ -799,10 +823,20 @@ fn main() {
         // Built-in plugins
         println!("  {}", "Built-in:".cyan());
         if let Some(ref wix) = wix_plugin {
-            println!("    {} - {} ({} rules)", "wix".green(), wix.description(), wix.rules().len());
+            println!(
+                "    {} - {} ({} rules)",
+                "wix".green(),
+                wix.description(),
+                wix.rules().len()
+            );
         }
         if let Some(ref xml) = xml_plugin {
-            println!("    {} - {} ({} rules)", "xml".green(), xml.description(), xml.rules().len());
+            println!(
+                "    {} - {} ({} rules)",
+                "xml".green(),
+                xml.description(),
+                xml.rules().len()
+            );
         }
 
         // Dynamic plugins
@@ -850,7 +884,12 @@ fn main() {
             } else {
                 "built-in"
             };
-            println!("  {} ({} from {}):", "WiX Plugin".cyan(), wix.rules().len(), source);
+            println!(
+                "  {} ({} from {}):",
+                "WiX Plugin".cyan(),
+                wix.rules().len(),
+                source
+            );
             for rule in wix.rules() {
                 print_rule(rule);
             }
@@ -869,7 +908,11 @@ fn main() {
         // Dynamic plugin rules
         for plugin_id in plugin_manager.list_plugins() {
             if let Some(plugin) = plugin_manager.get_plugin(plugin_id) {
-                println!("  {} ({} rules):", format!("{} Plugin", plugin_id).cyan(), plugin.rules().len());
+                println!(
+                    "  {} ({} rules):",
+                    format!("{} Plugin", plugin_id).cyan(),
+                    plugin.rules().len()
+                );
                 for rule in plugin.rules() {
                     print_rule(rule);
                 }
@@ -951,7 +994,11 @@ fn main() {
                 }
             }
             Err(e) => {
-                eprintln!("{}: Failed to get git changed files: {}", "warning".yellow(), e);
+                eprintln!(
+                    "{}: Failed to get git changed files: {}",
+                    "warning".yellow(),
+                    e
+                );
             }
         }
     }
@@ -1209,15 +1256,25 @@ fn main() {
     // Watch mode
     if cli.watch {
         eprintln!();
-        eprintln!("{} Watching for changes... (press Ctrl+C to stop)", "[watch]".cyan().bold());
+        eprintln!(
+            "{} Watching for changes... (press Ctrl+C to stop)",
+            "[watch]".cyan().bold()
+        );
 
         // Get extensions from plugins
         let extensions: Vec<&str> = vec!["wxs", "wxi", "xml"];
 
         // Create watcher
-        let watch_paths: Vec<PathBuf> = files.iter().map(|f| {
-            f.parent().unwrap_or(std::path::Path::new(".")).to_path_buf()
-        }).collect::<std::collections::HashSet<_>>().into_iter().collect();
+        let watch_paths: Vec<PathBuf> = files
+            .iter()
+            .map(|f| {
+                f.parent()
+                    .unwrap_or(std::path::Path::new("."))
+                    .to_path_buf()
+            })
+            .collect::<std::collections::HashSet<_>>()
+            .into_iter()
+            .collect();
 
         match Watcher::new(&watch_paths, &extensions) {
             Ok(watcher) => {
@@ -1228,15 +1285,20 @@ fn main() {
                         }
 
                         eprintln!();
-                        eprintln!("{} Files changed: {:?}", "[watch]".cyan().bold(),
-                            event.paths.iter().map(|p| p.file_name().unwrap_or_default().to_string_lossy()).collect::<Vec<_>>()
+                        eprintln!(
+                            "{} Files changed: {:?}",
+                            "[watch]".cyan().bold(),
+                            event
+                                .paths
+                                .iter()
+                                .map(|p| p.file_name().unwrap_or_default().to_string_lossy())
+                                .collect::<Vec<_>>()
                         );
                         eprintln!();
 
                         // Re-lint changed files
-                        let lint_files: Vec<PathBuf> = event.paths.into_iter()
-                            .filter(|p| p.exists())
-                            .collect();
+                        let lint_files: Vec<PathBuf> =
+                            event.paths.into_iter().filter(|p| p.exists()).collect();
 
                         if !lint_files.is_empty() {
                             let result = engine.lint(&lint_files);
@@ -1251,7 +1313,11 @@ fn main() {
                 }
             }
             Err(e) => {
-                eprintln!("{}: Failed to start file watcher: {}", "error".red().bold(), e);
+                eprintln!(
+                    "{}: Failed to start file watcher: {}",
+                    "error".red().bold(),
+                    e
+                );
                 std::process::exit(1);
             }
         }

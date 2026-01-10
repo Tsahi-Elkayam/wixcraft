@@ -73,7 +73,7 @@ impl SimpleGenerator {
             .unwrap_or_else(|| format!("{{{}}}", Uuid::new_v4().to_string().to_uppercase()));
         let install_dir = config.install_dir.clone()
             .unwrap_or_else(|| config.name.clone());
-        let safe_name = sanitize_id(&config.name);
+        let _safe_name = sanitize_id(&config.name);
 
         // Header
         wix.push_str(&format!(r#"<?xml version="1.0" encoding="UTF-8"?>
@@ -119,8 +119,8 @@ impl SimpleGenerator {
             .collect();
 
         if !main_files.is_empty() {
-            wix.push_str(&format!(r#"        <Component Id="MainComponent" Guid="*">
-"#));
+            wix.push_str(r#"        <Component Id="MainComponent" Guid="*">
+"#);
             for (i, file) in main_files.iter().enumerate() {
                 let file_name = std::path::Path::new(&file.source)
                     .file_name()

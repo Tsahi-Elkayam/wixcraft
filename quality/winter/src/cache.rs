@@ -172,7 +172,12 @@ impl LintCache {
     }
 
     /// Store diagnostics for a file
-    pub fn put(&mut self, file: &Path, diagnostics: &[Diagnostic], rule_versions: HashMap<String, String>) {
+    pub fn put(
+        &mut self,
+        file: &Path,
+        diagnostics: &[Diagnostic],
+        rule_versions: HashMap<String, String>,
+    ) {
         let key = file.to_string_lossy().to_string();
 
         // Get file metadata
@@ -195,7 +200,10 @@ impl LintCache {
             content_hash,
             mtime,
             size,
-            diagnostics: diagnostics.iter().map(CachedDiagnostic::from_diagnostic).collect(),
+            diagnostics: diagnostics
+                .iter()
+                .map(CachedDiagnostic::from_diagnostic)
+                .collect(),
             rule_versions,
         };
 
@@ -356,13 +364,16 @@ mod tests {
         // Set initial config hash
         cache.set_config_hash("hash1");
 
-        cache.entries.insert("test".to_string(), CacheEntry {
-            content_hash: "abc".to_string(),
-            mtime: 0,
-            size: 0,
-            diagnostics: vec![],
-            rule_versions: HashMap::new(),
-        });
+        cache.entries.insert(
+            "test".to_string(),
+            CacheEntry {
+                content_hash: "abc".to_string(),
+                mtime: 0,
+                size: 0,
+                diagnostics: vec![],
+                rule_versions: HashMap::new(),
+            },
+        );
 
         // Same config hash - entries preserved
         cache.set_config_hash("hash1");
@@ -390,46 +401,50 @@ mod tests {
     #[test]
     fn test_stats() {
         let mut cache = LintCache::new();
-        cache.entries.insert("file1".to_string(), CacheEntry {
-            content_hash: "a".to_string(),
-            mtime: 0,
-            size: 0,
-            diagnostics: vec![
-                CachedDiagnostic {
+        cache.entries.insert(
+            "file1".to_string(),
+            CacheEntry {
+                content_hash: "a".to_string(),
+                mtime: 0,
+                size: 0,
+                diagnostics: vec![CachedDiagnostic {
                     rule_id: "r1".to_string(),
                     message: "m".to_string(),
                     severity: "warning".to_string(),
                     line: 1,
                     column: 0,
                     source_line: None,
-                },
-            ],
-            rule_versions: HashMap::new(),
-        });
-        cache.entries.insert("file2".to_string(), CacheEntry {
-            content_hash: "b".to_string(),
-            mtime: 0,
-            size: 0,
-            diagnostics: vec![
-                CachedDiagnostic {
-                    rule_id: "r1".to_string(),
-                    message: "m".to_string(),
-                    severity: "warning".to_string(),
-                    line: 1,
-                    column: 0,
-                    source_line: None,
-                },
-                CachedDiagnostic {
-                    rule_id: "r2".to_string(),
-                    message: "m".to_string(),
-                    severity: "error".to_string(),
-                    line: 2,
-                    column: 0,
-                    source_line: None,
-                },
-            ],
-            rule_versions: HashMap::new(),
-        });
+                }],
+                rule_versions: HashMap::new(),
+            },
+        );
+        cache.entries.insert(
+            "file2".to_string(),
+            CacheEntry {
+                content_hash: "b".to_string(),
+                mtime: 0,
+                size: 0,
+                diagnostics: vec![
+                    CachedDiagnostic {
+                        rule_id: "r1".to_string(),
+                        message: "m".to_string(),
+                        severity: "warning".to_string(),
+                        line: 1,
+                        column: 0,
+                        source_line: None,
+                    },
+                    CachedDiagnostic {
+                        rule_id: "r2".to_string(),
+                        message: "m".to_string(),
+                        severity: "error".to_string(),
+                        line: 2,
+                        column: 0,
+                        source_line: None,
+                    },
+                ],
+                rule_versions: HashMap::new(),
+            },
+        );
 
         let stats = cache.stats();
         assert_eq!(stats.total_entries, 2);

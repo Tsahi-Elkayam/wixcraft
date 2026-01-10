@@ -93,7 +93,11 @@ pub trait LanguagePlugin: Send + Sync {
         // Check extensions
         if let Some(ext) = path.extension().and_then(|e| e.to_str()) {
             let ext_with_dot = format!(".{}", ext);
-            if self.extensions().iter().any(|e| *e == ext_with_dot || *e == ext) {
+            if self
+                .extensions()
+                .iter()
+                .any(|e| *e == ext_with_dot || *e == ext)
+            {
                 return true;
             }
         }
@@ -128,11 +132,7 @@ pub trait LanguagePlugin: Send + Sync {
 
     /// Get all rules (data + code)
     fn rules(&self) -> Vec<RuleImpl> {
-        let mut rules: Vec<RuleImpl> = self
-            .data_rules()
-            .into_iter()
-            .map(RuleImpl::Data)
-            .collect();
+        let mut rules: Vec<RuleImpl> = self.data_rules().into_iter().map(RuleImpl::Data).collect();
 
         rules.extend(self.code_rules().into_iter().map(RuleImpl::Code));
 

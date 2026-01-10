@@ -221,7 +221,8 @@ impl Fixer {
             }
         }
         all_fixes.sort_by(|a, b| {
-            a.file.cmp(&b.file)
+            a.file
+                .cmp(&b.file)
                 .then(a.location.line.cmp(&b.location.line))
         });
         all_fixes
@@ -256,7 +257,10 @@ impl Fixer {
                 fix.location.line,
                 safety_marker,
                 fix.rule_id,
-                fix.suggestion.description.as_deref().unwrap_or("No description")
+                fix.suggestion
+                    .description
+                    .as_deref()
+                    .unwrap_or("No description")
             ));
         }
 
@@ -264,7 +268,12 @@ impl Fixer {
     }
 
     /// Apply fixes to a single file
-    fn apply_fixes_to_file(&self, file: &Path, fixes: &[Fix], result: &mut FixResult) -> Result<usize, std::io::Error> {
+    fn apply_fixes_to_file(
+        &self,
+        file: &Path,
+        fixes: &[Fix],
+        result: &mut FixResult,
+    ) -> Result<usize, std::io::Error> {
         if fixes.is_empty() {
             return Ok(0);
         }
@@ -326,7 +335,9 @@ impl Fixer {
         match &fix.suggestion.action {
             FixAction::AddAttribute => {
                 // Add attribute to element
-                if let (Some(attr), Some(value)) = (&fix.suggestion.attribute, &fix.suggestion.value) {
+                if let (Some(attr), Some(value)) =
+                    (&fix.suggestion.attribute, &fix.suggestion.value)
+                {
                     // Find the element closing > or />
                     if let Some(pos) = line.rfind("/>") {
                         let new_line = format!(
@@ -363,7 +374,9 @@ impl Fixer {
             }
             FixAction::SetAttribute => {
                 // Change attribute value
-                if let (Some(attr), Some(value)) = (&fix.suggestion.attribute, &fix.suggestion.value) {
+                if let (Some(attr), Some(value)) =
+                    (&fix.suggestion.attribute, &fix.suggestion.value)
+                {
                     let pattern = format!(r#"{}="[^"]*""#, attr);
                     if let Ok(re) = regex::Regex::new(&pattern) {
                         let replacement = format!("{}=\"{}\"", attr, value);
@@ -388,11 +401,15 @@ impl Fixer {
                     // Match opening tag
                     let open_pattern = r"<([a-zA-Z][a-zA-Z0-9]*)";
                     if let Ok(re) = regex::Regex::new(open_pattern) {
-                        let new_line = re.replace(line, format!("<{}", new_name).as_str()).to_string();
+                        let new_line = re
+                            .replace(line, format!("<{}", new_name).as_str())
+                            .to_string();
                         // Also rename closing tag if present
                         let close_pattern = r"</([a-zA-Z][a-zA-Z0-9]*)>";
                         if let Ok(re_close) = regex::Regex::new(close_pattern) {
-                            let new_line = re_close.replace(&new_line, format!("</{}>", new_name).as_str()).to_string();
+                            let new_line = re_close
+                                .replace(&new_line, format!("</{}>", new_name).as_str())
+                                .to_string();
                             return Some(new_line);
                         }
                         return Some(new_line);
@@ -439,7 +456,11 @@ impl Fixer {
         let mut output = String::new();
 
         for (file, diff) in &result.diffs {
-            output.push_str(&format!("diff --winter a/{} b/{}\n", file.display(), file.display()));
+            output.push_str(&format!(
+                "diff --winter a/{} b/{}\n",
+                file.display(),
+                file.display()
+            ));
             output.push_str(diff);
             output.push('\n');
         }

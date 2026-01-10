@@ -194,9 +194,7 @@ impl RuleEvaluator {
             }
 
             // Check max diagnostics
-            if self.config.max_diagnostics > 0
-                && diagnostics.len() >= self.config.max_diagnostics
-            {
+            if self.config.max_diagnostics > 0 && diagnostics.len() >= self.config.max_diagnostics {
                 break;
             }
         }
@@ -207,11 +205,7 @@ impl RuleEvaluator {
     }
 
     /// Evaluate a data rule against a document
-    fn evaluate_data_rule(
-        &mut self,
-        rule: &DataRule,
-        document: &dyn Document,
-    ) -> Vec<Diagnostic> {
+    fn evaluate_data_rule(&mut self, rule: &DataRule, document: &dyn Document) -> Vec<Diagnostic> {
         let mut diagnostics = Vec::new();
 
         // Get nodes to check
@@ -242,16 +236,8 @@ impl RuleEvaluator {
                     fix: rule.fix.as_ref().map(|f| self.create_fix(f, node)),
                 };
 
-                *self
-                    .stats
-                    .by_severity
-                    .entry(rule.severity)
-                    .or_insert(0) += 1;
-                *self
-                    .stats
-                    .by_rule
-                    .entry(rule.id.clone())
-                    .or_insert(0) += 1;
+                *self.stats.by_severity.entry(rule.severity).or_insert(0) += 1;
+                *self.stats.by_rule.entry(rule.id.clone()).or_insert(0) += 1;
 
                 diagnostics.push(diagnostic);
             }
@@ -291,11 +277,7 @@ impl RuleEvaluator {
     }
 
     /// Create a fix from a template
-    fn create_fix(
-        &self,
-        template: &super::rule::FixTemplate,
-        _node: &dyn Node,
-    ) -> Fix {
+    fn create_fix(&self, template: &super::rule::FixTemplate, _node: &dyn Node) -> Fix {
         // For now, return empty fix - full implementation would convert
         // FixAction to TextEdits based on node position
         Fix {
@@ -526,8 +508,7 @@ mod tests {
             root: MockNode::new("Package").with_child(MockNode::new("Component")),
         };
 
-        let config = EvaluatorConfig::new()
-            .with_disabled_rules(vec!["TEST-001".to_string()]);
+        let config = EvaluatorConfig::new().with_disabled_rules(vec!["TEST-001".to_string()]);
 
         let mut evaluator = RuleEvaluator::new().with_config(config);
         evaluator.register_plugin(Arc::new(plugin));

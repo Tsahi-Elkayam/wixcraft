@@ -1,10 +1,10 @@
 //! SARIF (Static Analysis Results Interchange Format) output
 //! https://docs.oasis-open.org/sarif/sarif/v2.1.0/sarif-v2.1.0.html
 
+use super::Formatter;
 use crate::core::{AnalysisResult, Category, Diagnostic, Severity};
 use serde::Serialize;
 use std::collections::HashMap;
-use super::Formatter;
 
 const SARIF_VERSION: &str = "2.1.0";
 const SARIF_SCHEMA: &str = "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json";
@@ -191,10 +191,16 @@ fn build_tags(diag: &Diagnostic) -> Vec<String> {
     // Add security standard tags
     if let Some(ref sec) = diag.security {
         if let Some(ref cwe) = sec.cwe {
-            tags.push(format!("external/cwe/{}", cwe.to_lowercase().replace("cwe-", "")));
+            tags.push(format!(
+                "external/cwe/{}",
+                cwe.to_lowercase().replace("cwe-", "")
+            ));
         }
         if let Some(ref owasp) = sec.owasp {
-            tags.push(format!("external/owasp/{}", owasp.to_lowercase().replace(":", "-")));
+            tags.push(format!(
+                "external/owasp/{}",
+                owasp.to_lowercase().replace(":", "-")
+            ));
         }
         if let Some(rank) = sec.sans_top25 {
             tags.push(format!("external/sans-top25/{}", rank));
@@ -219,7 +225,8 @@ impl Formatter for SarifFormatter {
                 // Collect unique rules
                 if !rules_map.contains_key(&diag.rule_id) {
                     let tags = build_tags(diag);
-                    let is_security = diag.category == Category::Security || diag.security.is_some();
+                    let is_security =
+                        diag.category == Category::Security || diag.security.is_some();
 
                     rules_map.insert(
                         diag.rule_id.clone(),
@@ -279,10 +286,8 @@ impl Formatter for SarifFormatter {
 
                 // Build partial fingerprints for issue tracking
                 let mut partial_fingerprints = HashMap::new();
-                partial_fingerprints.insert(
-                    "primaryLocationLineHash/v1".to_string(),
-                    diag.fingerprint(),
-                );
+                partial_fingerprints
+                    .insert("primaryLocationLineHash/v1".to_string(), diag.fingerprint());
 
                 // Build result properties
                 let has_props = diag.effort_minutes.is_some() || !diag.tags.is_empty();
@@ -441,9 +446,14 @@ mod tests {
     #[test]
     fn test_sarif_with_cwe_owasp() {
         let formatter = SarifFormatter::new();
-        let diag = Diagnostic::high("SEC-001", crate::core::IssueType::Vulnerability, "SQL Injection", make_location())
-            .with_cwe("CWE-89")
-            .with_owasp("A03:2021-Injection");
+        let diag = Diagnostic::high(
+            "SEC-001",
+            crate::core::IssueType::Vulnerability,
+            "SQL Injection",
+            make_location(),
+        )
+        .with_cwe("CWE-89")
+        .with_owasp("A03:2021-Injection");
 
         let results = vec![AnalysisResult {
             files: Vec::new(),
@@ -544,8 +554,13 @@ mod tests {
         let formatter = SarifFormatter::new();
         let results = vec![AnalysisResult {
             files: Vec::new(),
-            diagnostics: vec![Diagnostic::error("E1", Category::Validation, "Error", make_location())
-                .with_help("Help text here")],
+            diagnostics: vec![Diagnostic::error(
+                "E1",
+                Category::Validation,
+                "Error",
+                make_location(),
+            )
+            .with_help("Help text here")],
         }];
 
         let output = formatter.format(&results);
@@ -562,8 +577,13 @@ mod tests {
         );
         let results = vec![AnalysisResult {
             files: Vec::new(),
-            diagnostics: vec![Diagnostic::error("E1", Category::Validation, "Error", make_location())
-                .with_related(RelatedInfo::new(related_loc, "See definition"))],
+            diagnostics: vec![Diagnostic::error(
+                "E1",
+                Category::Validation,
+                "Error",
+                make_location(),
+            )
+            .with_related(RelatedInfo::new(related_loc, "See definition"))],
         }];
 
         let output = formatter.format(&results);
@@ -586,8 +606,8 @@ mod tests {
     #[test]
     fn test_sarif_with_effort() {
         let formatter = SarifFormatter::new();
-        let diag = Diagnostic::error("E1", Category::Validation, "Error", make_location())
-            .with_effort(30);
+        let diag =
+            Diagnostic::error("E1", Category::Validation, "Error", make_location()).with_effort(30);
 
         let results = vec![AnalysisResult {
             files: Vec::new(),

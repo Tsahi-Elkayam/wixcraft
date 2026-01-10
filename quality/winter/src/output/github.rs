@@ -3,9 +3,9 @@
 //! Outputs diagnostics in GitHub Actions workflow command format:
 //! ::warning file={name},line={line},col={col}::{message}
 
+use super::OutputFormatter;
 use crate::diagnostic::{Diagnostic, Severity};
 use crate::engine::LintResult;
-use super::OutputFormatter;
 
 /// Formatter for GitHub Actions annotations
 pub struct GithubFormatter {
@@ -78,7 +78,8 @@ impl OutputFormatter for GithubFormatter {
         let col = diagnostic.location.column;
 
         // Escape special characters in message
-        let message = diagnostic.message
+        let message = diagnostic
+            .message
             .replace('%', "%25")
             .replace('\r', "%0D")
             .replace('\n', "%0A");
@@ -102,7 +103,13 @@ mod tests {
     use crate::diagnostic::Location;
     use std::path::PathBuf;
 
-    fn make_diagnostic(severity: Severity, rule: &str, file: &str, line: usize, msg: &str) -> Diagnostic {
+    fn make_diagnostic(
+        severity: Severity,
+        rule: &str,
+        file: &str,
+        line: usize,
+        msg: &str,
+    ) -> Diagnostic {
         Diagnostic {
             rule_id: rule.to_string(),
             message: msg.to_string(),
@@ -120,7 +127,13 @@ mod tests {
     #[test]
     fn test_format_error() {
         let formatter = GithubFormatter::new();
-        let diag = make_diagnostic(Severity::Error, "test-rule", "src/test.wxs", 10, "Error message");
+        let diag = make_diagnostic(
+            Severity::Error,
+            "test-rule",
+            "src/test.wxs",
+            10,
+            "Error message",
+        );
 
         let output = formatter.format_diagnostic(&diag);
         assert!(output.starts_with("::error"));
@@ -133,7 +146,13 @@ mod tests {
     #[test]
     fn test_format_warning() {
         let formatter = GithubFormatter::new();
-        let diag = make_diagnostic(Severity::Warning, "test-rule", "src/test.wxs", 20, "Warning message");
+        let diag = make_diagnostic(
+            Severity::Warning,
+            "test-rule",
+            "src/test.wxs",
+            20,
+            "Warning message",
+        );
 
         let output = formatter.format_diagnostic(&diag);
         assert!(output.starts_with("::warning"));
@@ -142,7 +161,13 @@ mod tests {
     #[test]
     fn test_format_info() {
         let formatter = GithubFormatter::new();
-        let diag = make_diagnostic(Severity::Info, "test-rule", "src/test.wxs", 30, "Info message");
+        let diag = make_diagnostic(
+            Severity::Info,
+            "test-rule",
+            "src/test.wxs",
+            30,
+            "Info message",
+        );
 
         let output = formatter.format_diagnostic(&diag);
         assert!(output.starts_with("::notice"));

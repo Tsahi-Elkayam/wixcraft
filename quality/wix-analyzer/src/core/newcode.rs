@@ -29,8 +29,10 @@ use std::process::Command;
 /// New code period definition
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "snake_case")]
+#[derive(Default)]
 pub enum NewCodePeriod {
     /// All code - no new code filtering
+    #[default]
     AllCode,
     /// Code changed since last version/tag
     PreviousVersion {
@@ -55,11 +57,6 @@ pub enum NewCodePeriod {
     },
 }
 
-impl Default for NewCodePeriod {
-    fn default() -> Self {
-        Self::AllCode
-    }
-}
 
 impl std::str::FromStr for NewCodePeriod {
     type Err = String;
@@ -196,7 +193,9 @@ impl NewCodeDetector {
     pub fn detect(&self, period: &NewCodePeriod) -> Result<NewCodeResult, NewCodeError> {
         match period {
             NewCodePeriod::AllCode => Ok(NewCodeResult::all_code()),
-            NewCodePeriod::PreviousVersion { pattern } => self.detect_since_version(pattern.as_deref()),
+            NewCodePeriod::PreviousVersion { pattern } => {
+                self.detect_since_version(pattern.as_deref())
+            }
             NewCodePeriod::Days { days } => self.detect_since_days(*days),
             NewCodePeriod::ReferenceBranch { branch } => self.detect_since_branch(branch),
             NewCodePeriod::Date { since } => self.detect_since_date(since),
@@ -287,7 +286,11 @@ impl NewCodeDetector {
     }
 
     /// Detect code changed since a git ref (commit, tag, branch)
-    fn detect_since_ref(&self, git_ref: &str, reference: String) -> Result<NewCodeResult, NewCodeError> {
+    fn detect_since_ref(
+        &self,
+        git_ref: &str,
+        reference: String,
+    ) -> Result<NewCodeResult, NewCodeError> {
         // Get changed files
         let output = Command::new("git")
             .args(["diff", "--name-only", git_ref])
@@ -320,7 +323,10 @@ impl NewCodeDetector {
             .output()
             .map_err(|e| NewCodeError::GitError(e.to_string()))?;
 
-        self.parse_diff_for_lines(&String::from_utf8_lossy(&diff_output.stdout), &mut new_lines);
+        self.parse_diff_for_lines(
+            &String::from_utf8_lossy(&diff_output.stdout),
+            &mut new_lines,
+        );
 
         // Get ref date for since field
         let date_output = Command::new("git")
@@ -403,9 +409,9 @@ pub fn filter_to_new_code(
     for result in results.iter_mut() {
         let original_len = result.diagnostics.len();
 
-        result.diagnostics.retain(|d| {
-            new_code.is_new_code_line(&d.location.file, d.location.range.start.line)
-        });
+        result
+            .diagnostics
+            .retain(|d| new_code.is_new_code_line(&d.location.file, d.location.range.start.line));
 
         filtered += original_len - result.diagnostics.len();
     }
@@ -443,7 +449,10 @@ mod tests {
 
     #[test]
     fn test_new_code_period_from_str() {
-        assert!(matches!("all".parse::<NewCodePeriod>().unwrap(), NewCodePeriod::AllCode));
+        assert!(matches!(
+            "all".parse::<NewCodePeriod>().unwrap(),
+            NewCodePeriod::AllCode
+        ));
         assert!(matches!(
             "previous_version".parse::<NewCodePeriod>().unwrap(),
             NewCodePeriod::PreviousVersion { pattern: None }
@@ -479,7 +488,10 @@ mod tests {
         assert_eq!(NewCodePeriod::AllCode.to_string(), "all");
         assert_eq!(NewCodePeriod::Days { days: 30 }.to_string(), "days:30");
         assert_eq!(
-            NewCodePeriod::ReferenceBranch { branch: "main".to_string() }.to_string(),
+            NewCodePeriod::ReferenceBranch {
+                branch: "main".to_string()
+            }
+            .to_string(),
             "reference_branch:main"
         );
     }

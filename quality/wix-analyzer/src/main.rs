@@ -4,11 +4,12 @@ use clap::{Parser, Subcommand, ValueEnum};
 use std::path::PathBuf;
 use std::process::ExitCode;
 use wix_analyzer::{
-    analyze_project, Config, FixEngine, OutputFormat,
-    get_formatter,
-    deps::{Dependency, DependencyType, DependencyGraph, DependencyReport, WixExtensionHelper},
-    licenses::{LicenseDetector, FileLicenseInfo, LicenseReport, DetectedLicense, LicenseType},
     analytics::{AnalyticsConfig, AnalyticsGenerator},
+    analyze_project,
+    deps::{Dependency, DependencyGraph, DependencyReport, DependencyType, WixExtensionHelper},
+    get_formatter,
+    licenses::{DetectedLicense, FileLicenseInfo, LicenseDetector, LicenseReport, LicenseType},
+    Config, FixEngine, OutputFormat,
 };
 
 #[derive(Parser)]
@@ -194,22 +195,56 @@ fn main() -> ExitCode {
     let cli = Cli::parse();
 
     match &cli.command {
-        Some(Commands::Analyze { paths, errors, warnings, security, dead_code, all, min_severity, fix, fix_dry_run }) => {
-            run_analyze(&cli, paths.clone(), *errors, *warnings, *security, *dead_code, *all, min_severity.clone(), *fix, *fix_dry_run)
-        }
-        Some(Commands::Deps { paths, graph, check, extensions }) => {
-            run_deps(&cli, paths.clone(), *graph, *check, *extensions)
-        }
-        Some(Commands::Licenses { path, check, notice, types }) => {
-            run_licenses(&cli, path.clone(), *check, *notice, types.clone())
-        }
-        Some(Commands::Analytics { action }) => {
-            run_analytics(&cli, action)
-        }
+        Some(Commands::Analyze {
+            paths,
+            errors,
+            warnings,
+            security,
+            dead_code,
+            all,
+            min_severity,
+            fix,
+            fix_dry_run,
+        }) => run_analyze(
+            &cli,
+            paths.clone(),
+            *errors,
+            *warnings,
+            *security,
+            *dead_code,
+            *all,
+            min_severity.clone(),
+            *fix,
+            *fix_dry_run,
+        ),
+        Some(Commands::Deps {
+            paths,
+            graph,
+            check,
+            extensions,
+        }) => run_deps(&cli, paths.clone(), *graph, *check, *extensions),
+        Some(Commands::Licenses {
+            path,
+            check,
+            notice,
+            types,
+        }) => run_licenses(&cli, path.clone(), *check, *notice, types.clone()),
+        Some(Commands::Analytics { action }) => run_analytics(&cli, action),
         None => {
             // Default: run analyze if paths provided
             if !cli.paths.is_empty() {
-                run_analyze(&cli, cli.paths.clone(), cli.errors, cli.warnings, cli.security, cli.dead_code, cli.all, cli.min_severity.clone(), cli.fix, cli.fix_dry_run)
+                run_analyze(
+                    &cli,
+                    cli.paths.clone(),
+                    cli.errors,
+                    cli.warnings,
+                    cli.security,
+                    cli.dead_code,
+                    cli.all,
+                    cli.min_severity.clone(),
+                    cli.fix,
+                    cli.fix_dry_run,
+                )
             } else {
                 eprintln!("Usage: wix-analyzer [OPTIONS] <PATHS>... or wix-analyzer <COMMAND>");
                 eprintln!("\nFor more information, try '--help'");
@@ -288,13 +323,26 @@ fn run_analyze(
     let formatter = get_formatter(format, colored);
     println!("{}", formatter.format(&results));
 
-    let has_errors = results.iter()
-        .any(|r| r.diagnostics.iter().any(|d| d.severity >= wix_analyzer::Severity::High));
+    let has_errors = results.iter().any(|r| {
+        r.diagnostics
+            .iter()
+            .any(|d| d.severity >= wix_analyzer::Severity::High)
+    });
 
-    if has_errors { ExitCode::FAILURE } else { ExitCode::SUCCESS }
+    if has_errors {
+        ExitCode::FAILURE
+    } else {
+        ExitCode::SUCCESS
+    }
 }
 
-fn run_deps(cli: &Cli, paths: Vec<PathBuf>, graph: bool, check: bool, extensions: bool) -> ExitCode {
+fn run_deps(
+    cli: &Cli,
+    paths: Vec<PathBuf>,
+    graph: bool,
+    check: bool,
+    extensions: bool,
+) -> ExitCode {
     if cli.verbose {
         eprintln!("Analyzing dependencies...");
     }
@@ -302,13 +350,26 @@ fn run_deps(cli: &Cli, paths: Vec<PathBuf>, graph: bool, check: bool, extensions
     let mut dep_graph = DependencyGraph::new();
 
     // Add some example dependencies for demonstration
-    dep_graph.add_dependency(Dependency::new("WixUIExtension", DependencyType::WixExtension));
-    dep_graph.add_dependency(Dependency::new("WixUtilExtension", DependencyType::WixExtension));
-    dep_graph.add_dependency(Dependency::new("vcruntime140.dll", DependencyType::VCRuntime).with_version("14.0"));
+    dep_graph.add_dependency(Dependency::new(
+        "WixUIExtension",
+        DependencyType::WixExtension,
+    ));
+    dep_graph.add_dependency(Dependency::new(
+        "WixUtilExtension",
+        DependencyType::WixExtension,
+    ));
+    dep_graph.add_dependency(
+        Dependency::new("vcruntime140.dll", DependencyType::VCRuntime).with_version("14.0"),
+    );
 
     if extensions {
         println!("WiX Extensions:");
-        for name in ["WixUIExtension", "WixUtilExtension", "WixNetFxExtension", "WixFirewallExtension"] {
+        for name in [
+            "WixUIExtension",
+            "WixUtilExtension",
+            "WixNetFxExtension",
+            "WixFirewallExtension",
+        ] {
             if let Some((category, desc)) = WixExtensionHelper::get_extension_info(name) {
                 println!("  {} - {} ({})", name, desc, category);
             }
@@ -319,7 +380,10 @@ fn run_deps(cli: &Cli, paths: Vec<PathBuf>, graph: bool, check: bool, extensions
     if graph {
         println!("Dependency Graph:");
         for node in dep_graph.get_all() {
-            println!("  {} ({:?})", node.dependency.name, node.dependency.dep_type);
+            println!(
+                "  {} ({:?})",
+                node.dependency.name, node.dependency.dep_type
+            );
             for dep in &node.depends_on {
                 println!("    -> {}", dep);
             }
@@ -340,7 +404,11 @@ fn run_deps(cli: &Cli, paths: Vec<PathBuf>, graph: bool, check: bool, extensions
     }
 
     let report = DependencyReport::generate(
-        paths.first().map(|p| p.to_string_lossy().to_string()).as_deref().unwrap_or("Project"),
+        paths
+            .first()
+            .map(|p| p.to_string_lossy().to_string())
+            .as_deref()
+            .unwrap_or("Project"),
         &dep_graph,
     );
 
@@ -361,7 +429,13 @@ fn run_deps(cli: &Cli, paths: Vec<PathBuf>, graph: bool, check: bool, extensions
     ExitCode::SUCCESS
 }
 
-fn run_licenses(cli: &Cli, path: PathBuf, check: bool, notice: bool, _types: Vec<String>) -> ExitCode {
+fn run_licenses(
+    cli: &Cli,
+    path: PathBuf,
+    check: bool,
+    notice: bool,
+    _types: Vec<String>,
+) -> ExitCode {
     if cli.verbose {
         eprintln!("Scanning for licenses in {}...", path.display());
     }
@@ -373,15 +447,19 @@ fn run_licenses(cli: &Cli, path: PathBuf, check: bool, notice: bool, _types: Vec
     if path.is_dir() {
         // Demo: create sample file info
         let mut file_info = FileLicenseInfo::new(path.join("example.dll"));
-        file_info.add_license(DetectedLicense::new(LicenseType::MIT, 0.95)
-            .with_copyright("Example Corp", "2024"));
+        file_info.add_license(
+            DetectedLicense::new(LicenseType::MIT, 0.95).with_copyright("Example Corp", "2024"),
+        );
         files_info.push(file_info);
     } else if path.is_file() {
         files_info.push(detector.detect_from_file(&path));
     }
 
     let report = LicenseReport::generate(
-        path.file_name().map(|n| n.to_string_lossy().to_string()).as_deref().unwrap_or("Project"),
+        path.file_name()
+            .map(|n| n.to_string_lossy().to_string())
+            .as_deref()
+            .unwrap_or("Project"),
         &files_info,
     );
 
@@ -427,14 +505,18 @@ fn run_licenses(cli: &Cli, path: PathBuf, check: bool, notice: bool, _types: Vec
 
 fn run_analytics(cli: &Cli, action: &AnalyticsCommands) -> ExitCode {
     match action {
-        AnalyticsCommands::Generate { output, endpoint, disabled } => {
+        AnalyticsCommands::Generate {
+            output,
+            endpoint,
+            disabled,
+        } => {
             let mut config = AnalyticsConfig::default();
             config.enabled = !*disabled;
             config.endpoint = endpoint.clone();
 
             let fragment = AnalyticsGenerator::generate_fragment(&config);
 
-            if let Err(e) = std::fs::write(&output, &fragment) {
+            if let Err(e) = std::fs::write(output, &fragment) {
                 eprintln!("Error writing {}: {}", output.display(), e);
                 return ExitCode::FAILURE;
             }
@@ -464,8 +546,7 @@ fn load_config(cli: &Cli) -> Config {
     if let Some(config_path) = &cli.config {
         Config::load(config_path).unwrap_or_default()
     } else {
-        Config::find_and_load(&std::env::current_dir().unwrap_or_default())
-            .unwrap_or_default()
+        Config::find_and_load(&std::env::current_dir().unwrap_or_default()).unwrap_or_default()
     }
 }
 
@@ -495,7 +576,9 @@ fn collect_files(
                                 .map(|p| p.matches_path(file_path))
                                 .unwrap_or(false)
                         });
-                        if !matches { continue; }
+                        if !matches {
+                            continue;
+                        }
                     }
 
                     let excluded = exclude.iter().any(|pattern| {
@@ -503,7 +586,9 @@ fn collect_files(
                             .map(|p| p.matches_path(file_path))
                             .unwrap_or(false)
                     });
-                    if excluded { continue; }
+                    if excluded {
+                        continue;
+                    }
 
                     files.push(file_path.to_path_buf());
                 }
@@ -564,7 +649,11 @@ fn handle_fixes(
                         if let Err(e) = std::fs::write(file, &result.new_content) {
                             eprintln!("Error writing {}: {}", file.display(), e);
                         } else {
-                            println!("Applied {} fix(es) to {}", result.fixes_applied, file.display());
+                            println!(
+                                "Applied {} fix(es) to {}",
+                                result.fixes_applied,
+                                file.display()
+                            );
                         }
                     }
                 }

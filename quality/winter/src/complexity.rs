@@ -90,17 +90,18 @@ impl ComplexityAnalyzer {
             ],
             // Elements with conditional attributes
             condition_elements: vec![
-                "Feature".to_string(),        // Level attribute can be conditional
-                "Component".to_string(),      // Condition child
-                "CustomAction".to_string(),   // Conditional execution
-                "SetProperty".to_string(),    // Conditional property
+                "Feature".to_string(),      // Level attribute can be conditional
+                "Component".to_string(),    // Condition child
+                "CustomAction".to_string(), // Conditional execution
+                "SetProperty".to_string(),  // Conditional property
             ],
         }
     }
 
     /// Add custom decision elements
     pub fn with_decision_elements(mut self, elements: &[&str]) -> Self {
-        self.decision_elements.extend(elements.iter().map(|s| s.to_string()));
+        self.decision_elements
+            .extend(elements.iter().map(|s| s.to_string()));
         self
     }
 
@@ -200,13 +201,15 @@ fn analyze_element_recursive(
     distribution: &mut HashMap<String, ElementComplexity>,
 ) {
     let name = node.name().to_string();
-    let entry = distribution.entry(name.clone()).or_insert_with(|| ElementComplexity {
-        name,
-        count: 0,
-        total_children: 0,
-        total_attributes: 0,
-        max_depth: 0,
-    });
+    let entry = distribution
+        .entry(name.clone())
+        .or_insert_with(|| ElementComplexity {
+            name,
+            count: 0,
+            total_children: 0,
+            total_attributes: 0,
+            max_depth: 0,
+        });
 
     entry.count += 1;
     entry.total_children += node.children().len();
@@ -288,8 +291,7 @@ mod tests {
     #[test]
     fn test_simple_complexity() {
         let analyzer = ComplexityAnalyzer::new();
-        let root = MockNode::new("Wix")
-            .with_child(MockNode::new("Package"));
+        let root = MockNode::new("Wix").with_child(MockNode::new("Package"));
 
         let metrics = analyzer.analyze(&root);
         assert_eq!(metrics.cyclomatic, 1); // No decision points
@@ -300,10 +302,11 @@ mod tests {
     #[test]
     fn test_decision_points() {
         let analyzer = ComplexityAnalyzer::new();
-        let root = MockNode::new("Wix")
-            .with_child(MockNode::new("Package")
+        let root = MockNode::new("Wix").with_child(
+            MockNode::new("Package")
                 .with_child(MockNode::new("Condition"))
-                .with_child(MockNode::new("Condition")));
+                .with_child(MockNode::new("Condition")),
+        );
 
         let metrics = analyzer.analyze(&root);
         assert_eq!(metrics.decision_points, 2);
@@ -314,8 +317,7 @@ mod tests {
     fn test_logical_operators() {
         let analyzer = ComplexityAnalyzer::new();
         let root = MockNode::new("Wix")
-            .with_child(MockNode::new("Package")
-                .with_attr("Condition", "A AND B OR C"));
+            .with_child(MockNode::new("Package").with_attr("Condition", "A AND B OR C"));
 
         let metrics = analyzer.analyze(&root);
         assert!(metrics.decision_points >= 2); // AND and OR
@@ -341,10 +343,9 @@ mod tests {
     #[test]
     fn test_depth_calculation() {
         let analyzer = ComplexityAnalyzer::new();
-        let root = MockNode::new("A")
-            .with_child(MockNode::new("B")
-                .with_child(MockNode::new("C")
-                    .with_child(MockNode::new("D"))));
+        let root = MockNode::new("A").with_child(
+            MockNode::new("B").with_child(MockNode::new("C").with_child(MockNode::new("D"))),
+        );
 
         let metrics = analyzer.analyze(&root);
         assert_eq!(metrics.max_depth, 3);
@@ -352,10 +353,11 @@ mod tests {
 
     #[test]
     fn test_element_distribution() {
-        let root = MockNode::new("Wix")
-            .with_child(MockNode::new("Package")
+        let root = MockNode::new("Wix").with_child(
+            MockNode::new("Package")
                 .with_child(MockNode::new("Component"))
-                .with_child(MockNode::new("Component")));
+                .with_child(MockNode::new("Component")),
+        );
 
         let dist = analyze_element_distribution(&root);
         assert_eq!(dist.get("Component").map(|e| e.count), Some(2));

@@ -4,7 +4,9 @@ use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
 /// Severity level for diagnostics
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default, Serialize, Deserialize)]
+#[derive(
+    Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default, Serialize, Deserialize,
+)]
 #[serde(rename_all = "lowercase")]
 pub enum Severity {
     /// Informational message
@@ -202,13 +204,23 @@ impl Diagnostic {
         // Lines before
         let start = line_num.saturating_sub(context_count + 1);
         let end = line_num.saturating_sub(1);
-        for (i, line) in source_lines.iter().enumerate().skip(start).take(end.saturating_sub(start)) {
+        for (i, line) in source_lines
+            .iter()
+            .enumerate()
+            .skip(start)
+            .take(end.saturating_sub(start))
+        {
             self.context_before.push((i + 1, line.to_string()));
         }
 
         // Lines after
         let end = (line_num + context_count).min(source_lines.len());
-        for (i, line) in source_lines.iter().enumerate().skip(line_num).take(end.saturating_sub(line_num)) {
+        for (i, line) in source_lines
+            .iter()
+            .enumerate()
+            .skip(line_num)
+            .take(end.saturating_sub(line_num))
+        {
             self.context_after.push((i + 1, line.to_string()));
         }
 

@@ -36,10 +36,7 @@ pub trait Node: Send + Sync {
 
     /// Get the number of children with a specific kind
     fn count_children(&self, kind: &str) -> usize {
-        self.children()
-            .iter()
-            .filter(|c| c.kind() == kind)
-            .count()
+        self.children().iter().filter(|c| c.kind() == kind).count()
     }
 
     /// Check if node has a child with specific kind

@@ -55,7 +55,9 @@ impl BaselineEntry {
     /// Create a baseline entry from a diagnostic
     pub fn from_diagnostic(diag: &Diagnostic, base_path: Option<&Path>) -> Self {
         let file = match base_path {
-            Some(base) => diag.location.file
+            Some(base) => diag
+                .location
+                .file
                 .strip_prefix(base)
                 .unwrap_or(&diag.location.file)
                 .to_string_lossy()
@@ -148,7 +150,9 @@ impl Baseline {
 
         for result in results {
             for diag in &result.diagnostics {
-                baseline.issues.push(BaselineEntry::from_diagnostic(diag, base_path));
+                baseline
+                    .issues
+                    .push(BaselineEntry::from_diagnostic(diag, base_path));
             }
         }
 
@@ -284,7 +288,11 @@ impl std::fmt::Display for BaselineError {
                 write!(f, "Failed to serialize baseline: {}", msg)
             }
             Self::UnsupportedVersion(v) => {
-                write!(f, "Unsupported baseline version: {} (max supported: {})", v, BASELINE_VERSION)
+                write!(
+                    f,
+                    "Unsupported baseline version: {} (max supported: {})",
+                    v, BASELINE_VERSION
+                )
             }
         }
     }
@@ -473,10 +481,12 @@ mod tests {
 
     #[test]
     fn test_baseline_with_description() {
-        let baseline = Baseline::new()
-            .with_description("Initial baseline for legacy code");
+        let baseline = Baseline::new().with_description("Initial baseline for legacy code");
 
-        assert_eq!(baseline.description, Some("Initial baseline for legacy code".to_string()));
+        assert_eq!(
+            baseline.description,
+            Some("Initial baseline for legacy code".to_string())
+        );
     }
 
     #[test]
@@ -489,8 +499,7 @@ mod tests {
         let mut result = AnalysisResult::new();
         result.add(make_diagnostic("SEC-001", "test.wxs", 42, "Test error"));
 
-        let baseline = Baseline::from_results(&[result], None)
-            .with_description("Test baseline");
+        let baseline = Baseline::from_results(&[result], None).with_description("Test baseline");
 
         baseline.save(&path).unwrap();
 
@@ -511,9 +520,9 @@ mod tests {
 
     #[test]
     fn test_baseline_find_and_load() {
-        use tempfile::TempDir;
         use std::fs::File;
         use std::io::Write;
+        use tempfile::TempDir;
 
         let temp_dir = TempDir::new().unwrap();
         let baseline_path = temp_dir.path().join(BASELINE_FILE_NAME);

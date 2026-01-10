@@ -257,10 +257,7 @@ mod tests {
     fn test_sort_children_one_unknown_first() {
         // Test case where unknown element comes before known
         let (_temp, data) = create_test_data();
-        let mut children = vec![
-            ("Unknown".to_string(), 0),
-            ("Directory".to_string(), 1),
-        ];
+        let mut children = vec![("Unknown".to_string(), 0), ("Directory".to_string(), 1)];
 
         sort_children(&mut children, "Package", &data);
 
@@ -275,7 +272,7 @@ mod tests {
         let (_temp, data) = create_test_data();
         let mut children = vec![
             ("Component".to_string(), 0), // Known
-            ("Unknown".to_string(), 1),    // Unknown should stay after
+            ("Unknown".to_string(), 1),   // Unknown should stay after
         ];
 
         sort_children(&mut children, "Package", &data);
@@ -289,9 +286,9 @@ mod tests {
         // Test attribute sorting with mix of known and unknown attrs
         let (_temp, data) = create_test_data();
         let mut attrs = vec![
-            ("Unknown1".to_string(), "u1".to_string()),  // Not in priority
-            ("Guid".to_string(), "*".to_string()),       // In priority
-            ("Unknown2".to_string(), "u2".to_string()),  // Not in priority
+            ("Unknown1".to_string(), "u1".to_string()), // Not in priority
+            ("Guid".to_string(), "*".to_string()),      // In priority
+            ("Unknown2".to_string(), "u2".to_string()), // Not in priority
         ];
 
         sort_attributes(&mut attrs, "Package", Some(&data));
@@ -308,8 +305,8 @@ mod tests {
         // Only one attribute is in the priority list
         let (_temp, data) = create_test_data();
         let mut attrs = vec![
-            ("Zebra".to_string(), "z".to_string()),  // Not in priority
-            ("Name".to_string(), "n".to_string()),   // In priority
+            ("Zebra".to_string(), "z".to_string()), // Not in priority
+            ("Name".to_string(), "n".to_string()),  // In priority
         ];
 
         sort_attributes(&mut attrs, "Package", Some(&data));
@@ -324,8 +321,8 @@ mod tests {
         // Test the (None, Some(_)) => Ordering::Greater branch for attributes
         let (_temp, data) = create_test_data();
         let mut attrs = vec![
-            ("Alpha".to_string(), "a".to_string()),  // Not in priority (alphabetically first)
-            ("Guid".to_string(), "*".to_string()),   // In priority
+            ("Alpha".to_string(), "a".to_string()), // Not in priority (alphabetically first)
+            ("Guid".to_string(), "*".to_string()),  // In priority
         ];
 
         sort_attributes(&mut attrs, "Package", Some(&data));

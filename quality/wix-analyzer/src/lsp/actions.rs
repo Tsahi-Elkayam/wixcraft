@@ -1,7 +1,7 @@
 //! Code actions for LSP quick fixes
 
-use tower_lsp::lsp_types::*;
 use crate::{Diagnostic as WixDiagnostic, Fix, FixAction};
+use tower_lsp::lsp_types::*;
 
 /// Provides code actions (quick fixes) for diagnostics
 pub struct CodeActionProvider {
@@ -45,12 +45,7 @@ impl CodeActionProvider {
     }
 
     /// Convert a Fix to a CodeAction
-    fn fix_to_code_action(
-        &self,
-        uri: &Url,
-        diag: &WixDiagnostic,
-        fix: &Fix,
-    ) -> Option<CodeAction> {
+    fn fix_to_code_action(&self, uri: &Url, diag: &WixDiagnostic, fix: &Fix) -> Option<CodeAction> {
         let text_edit = match &fix.action {
             FixAction::ReplaceText { range, new_text } => TextEdit {
                 range: self.wix_range_to_lsp(range),
@@ -60,7 +55,10 @@ impl CodeActionProvider {
                 // Insert attribute at end of range (before >)
                 let lsp_range = self.wix_range_to_lsp(range);
                 TextEdit {
-                    range: Range { start: lsp_range.end, end: lsp_range.end },
+                    range: Range {
+                        start: lsp_range.end,
+                        end: lsp_range.end,
+                    },
                     new_text: format!(" {}=\"{}\"", name, value),
                 }
             }
@@ -68,15 +66,24 @@ impl CodeActionProvider {
                 range: self.wix_range_to_lsp(range),
                 new_text: String::new(),
             },
-            FixAction::ReplaceAttribute { range, new_value, .. } => TextEdit {
+            FixAction::ReplaceAttribute {
+                range, new_value, ..
+            } => TextEdit {
                 range: self.wix_range_to_lsp(range),
                 new_text: new_value.clone(),
             },
-            FixAction::AddElement { parent_range, element, .. } => {
+            FixAction::AddElement {
+                parent_range,
+                element,
+                ..
+            } => {
                 // Insert element after parent opening tag
                 let lsp_range = self.wix_range_to_lsp(parent_range);
                 TextEdit {
-                    range: Range { start: lsp_range.end, end: lsp_range.end },
+                    range: Range {
+                        start: lsp_range.end,
+                        end: lsp_range.end,
+                    },
                     new_text: format!("\n  <{} />", element),
                 }
             }
@@ -157,7 +164,12 @@ impl CodeActionProvider {
     }
 
     /// Create a "Disable rule" action
-    fn create_disable_rule_action(&self, uri: &Url, diag: &WixDiagnostic, content: &str) -> CodeAction {
+    fn create_disable_rule_action(
+        &self,
+        uri: &Url,
+        diag: &WixDiagnostic,
+        content: &str,
+    ) -> CodeAction {
         let line = diag.location.range.start.line;
         let indent = self.get_indent(content, line);
 
@@ -238,7 +250,12 @@ impl CodeActionProvider {
     }
 
     /// Create an action to add an Id
-    fn create_add_id_action(&self, uri: &Url, diag: &WixDiagnostic, content: &str) -> Option<CodeAction> {
+    fn create_add_id_action(
+        &self,
+        uri: &Url,
+        diag: &WixDiagnostic,
+        content: &str,
+    ) -> Option<CodeAction> {
         let line = diag.location.range.start.line;
         let element = self.get_element_name_at_line(content, line)?;
         let id = generate_id(&element);
@@ -250,11 +267,13 @@ impl CodeActionProvider {
                 range: Range {
                     start: Position {
                         line: line.saturating_sub(1) as u32,
-                        character: (diag.location.range.start.character + element.len()).saturating_sub(1) as u32,
+                        character: (diag.location.range.start.character + element.len())
+                            .saturating_sub(1) as u32,
                     },
                     end: Position {
                         line: line.saturating_sub(1) as u32,
-                        character: (diag.location.range.start.character + element.len()).saturating_sub(1) as u32,
+                        character: (diag.location.range.start.character + element.len())
+                            .saturating_sub(1) as u32,
                     },
                 },
                 new_text: format!(" Id=\"{}\"", id),
@@ -278,7 +297,11 @@ impl CodeActionProvider {
     }
 
     /// Create an action to add MajorUpgrade
-    fn create_add_major_upgrade_action(&self, uri: &Url, diag: &WixDiagnostic) -> Option<CodeAction> {
+    fn create_add_major_upgrade_action(
+        &self,
+        uri: &Url,
+        diag: &WixDiagnostic,
+    ) -> Option<CodeAction> {
         let line = diag.location.range.end.line;
 
         let mut changes = std::collections::HashMap::new();
@@ -316,7 +339,12 @@ impl CodeActionProvider {
     }
 
     /// Create an action to use a property instead of hardcoded path
-    fn create_use_property_action(&self, uri: &Url, diag: &WixDiagnostic, content: &str) -> Option<CodeAction> {
+    fn create_use_property_action(
+        &self,
+        uri: &Url,
+        diag: &WixDiagnostic,
+        content: &str,
+    ) -> Option<CodeAction> {
         let line = diag.location.range.start.line;
         let line_content = content.lines().nth(line.saturating_sub(1))?;
 
@@ -524,8 +552,14 @@ mod tests {
         let provider = CodeActionProvider::new();
         let content = "<Wix>\n  <Component Id=\"Test\" />\n</Wix>";
 
-        assert_eq!(provider.get_element_name_at_line(content, 1), Some("Wix".to_string()));
-        assert_eq!(provider.get_element_name_at_line(content, 2), Some("Component".to_string()));
+        assert_eq!(
+            provider.get_element_name_at_line(content, 1),
+            Some("Wix".to_string())
+        );
+        assert_eq!(
+            provider.get_element_name_at_line(content, 2),
+            Some("Component".to_string())
+        );
     }
 
     #[test]

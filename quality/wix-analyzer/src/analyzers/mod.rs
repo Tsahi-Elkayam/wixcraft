@@ -164,7 +164,10 @@ mod tests {
         let config = AnalyzerConfig::validation_only();
 
         let result = analyze_source(source, Path::new("test.wxs"), &index, &config).unwrap();
-        assert!(result.diagnostics.iter().any(|d| d.rule_id.starts_with("VAL-")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id.starts_with("VAL-")));
     }
 
     #[test]
@@ -190,7 +193,10 @@ mod tests {
         };
 
         let result = analyze_source(source, Path::new("test.wxs"), &index, &config).unwrap();
-        assert!(result.diagnostics.iter().any(|d| d.rule_id.starts_with("SEC-")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id.starts_with("SEC-")));
     }
 
     #[test]
@@ -206,6 +212,9 @@ mod tests {
         };
 
         let result = analyze_source(source, Path::new("test.wxs"), &index, &config).unwrap();
-        assert!(result.diagnostics.iter().any(|d| d.rule_id.starts_with("DEAD-")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id.starts_with("DEAD-")));
     }
 }

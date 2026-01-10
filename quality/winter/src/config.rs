@@ -318,10 +318,7 @@ impl Config {
 
         let content = std::fs::read_to_string(path)?;
 
-        let ext = path
-            .extension()
-            .and_then(|e| e.to_str())
-            .unwrap_or("");
+        let ext = path.extension().and_then(|e| e.to_str()).unwrap_or("");
 
         let mut config: Self = match ext {
             "yaml" | "yml" => serde_yaml::from_str(&content)?,
@@ -410,7 +407,11 @@ impl Config {
         self.rules.ignore.extend(other.rules.ignore);
         self.rules.severity.extend(other.rules.severity);
         for (pattern, rules) in other.rules.per_file {
-            self.rules.per_file.entry(pattern).or_default().extend(rules);
+            self.rules
+                .per_file
+                .entry(pattern)
+                .or_default()
+                .extend(rules);
         }
 
         // Preview and categories
@@ -562,8 +563,7 @@ impl Config {
             if let Ok(glob) = globset::Glob::new(pattern) {
                 let matcher = glob.compile_matcher();
                 if matcher.is_match(file_str.as_ref())
-                    && (rules.contains(&"all".to_string())
-                        || rules.contains(&rule_id.to_string()))
+                    && (rules.contains(&"all".to_string()) || rules.contains(&rule_id.to_string()))
                 {
                     return true;
                 }
@@ -591,7 +591,10 @@ mod tests {
     fn test_output_format_from_str() {
         assert_eq!("text".parse::<OutputFormat>().unwrap(), OutputFormat::Text);
         assert_eq!("json".parse::<OutputFormat>().unwrap(), OutputFormat::Json);
-        assert_eq!("sarif".parse::<OutputFormat>().unwrap(), OutputFormat::Sarif);
+        assert_eq!(
+            "sarif".parse::<OutputFormat>().unwrap(),
+            OutputFormat::Sarif
+        );
         assert!("invalid".parse::<OutputFormat>().is_err());
     }
 
@@ -634,7 +637,10 @@ mod tests {
     #[test]
     fn test_severity_override() {
         let mut config = Config::new();
-        config.rules.severity.insert("rule1".to_string(), Severity::Error);
+        config
+            .rules
+            .severity
+            .insert("rule1".to_string(), Severity::Error);
 
         assert_eq!(config.get_severity_override("rule1"), Some(Severity::Error));
         assert_eq!(config.get_severity_override("rule2"), None);

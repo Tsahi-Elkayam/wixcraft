@@ -20,9 +20,8 @@ static DISABLE_PATTERN: LazyLock<Regex> = LazyLock::new(|| {
 });
 
 /// Pattern to match enable comments
-static ENABLE_PATTERN: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"<!--\s*wix-analyzer-enable\s*-->").unwrap()
-});
+static ENABLE_PATTERN: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"<!--\s*wix-analyzer-enable\s*-->").unwrap());
 
 /// Type of suppression
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -124,11 +123,10 @@ impl SuppressionContext {
 
         // Check block suppressions
         for (start, end, rules) in &self.block_suppressions {
-            if line >= *start && line <= *end {
-                if rules.is_empty() || rules.contains(rule_id) {
+            if line >= *start && line <= *end
+                && (rules.is_empty() || rules.contains(rule_id)) {
                     return true;
                 }
-            }
         }
 
         false

@@ -77,7 +77,10 @@ impl WixNode {
 }
 
 /// Parse WiX XML content into a tree of nodes
-pub fn parse_xml(content: &str, file_path: &std::path::Path) -> Result<Vec<Arc<WixNode>>, ParseError> {
+pub fn parse_xml(
+    content: &str,
+    file_path: &std::path::Path,
+) -> Result<Vec<Arc<WixNode>>, ParseError> {
     let mut reader = Reader::from_str(content);
     reader.config_mut().trim_text(true);
 
@@ -231,7 +234,10 @@ impl Node for WixNode {
     }
 
     fn children(&self) -> Vec<&dyn Node> {
-        self.children.iter().map(|c| c.as_ref() as &dyn Node).collect()
+        self.children
+            .iter()
+            .map(|c| c.as_ref() as &dyn Node)
+            .collect()
     }
 
     fn parent(&self) -> Option<&dyn Node> {

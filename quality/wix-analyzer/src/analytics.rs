@@ -356,7 +356,11 @@ mod tests {
     #[test]
     fn test_analytics_collector_clear() {
         let mut collector = AnalyticsCollector::new();
-        collector.record_event(AnalyticsEvent::new(EventType::InstallStart, "{CODE}", "1.0"));
+        collector.record_event(AnalyticsEvent::new(
+            EventType::InstallStart,
+            "{CODE}",
+            "1.0",
+        ));
         collector.clear();
         assert!(collector.get_events().is_empty());
     }
@@ -408,7 +412,8 @@ mod tests {
         let mut config = AnalyticsConfig::default();
         config.endpoint = Some("https://analytics.example.com".to_string());
         let fragment = AnalyticsGenerator::generate_fragment(&config);
-        assert!(fragment.contains("<AnalyticsEndpoint>https://analytics.example.com</AnalyticsEndpoint>"));
+        assert!(fragment
+            .contains("<AnalyticsEndpoint>https://analytics.example.com</AnalyticsEndpoint>"));
     }
 
     #[test]

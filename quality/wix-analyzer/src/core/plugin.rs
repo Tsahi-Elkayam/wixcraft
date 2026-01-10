@@ -221,34 +221,19 @@ impl From<PluginSeverity> for Severity {
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum RuleCondition {
     /// Element is missing a required attribute
-    MissingAttribute {
-        attribute: String,
-    },
+    MissingAttribute { attribute: String },
     /// Attribute has a specific value
-    AttributeEquals {
-        attribute: String,
-        value: String,
-    },
+    AttributeEquals { attribute: String, value: String },
     /// Attribute matches a pattern
-    AttributeMatches {
-        attribute: String,
-        pattern: String,
-    },
+    AttributeMatches { attribute: String, pattern: String },
     /// Attribute does NOT match a pattern
-    AttributeNotMatches {
-        attribute: String,
-        pattern: String,
-    },
+    AttributeNotMatches { attribute: String, pattern: String },
     /// Element has no children
     NoChildren,
     /// Element has specific child element
-    HasChild {
-        element: String,
-    },
+    HasChild { element: String },
     /// Element is missing specific child element
-    MissingChild {
-        element: String,
-    },
+    MissingChild { element: String },
     /// Attribute value is in a forbidden list
     AttributeIn {
         attribute: String,
@@ -260,17 +245,11 @@ pub enum RuleCondition {
         values: Vec<String>,
     },
     /// Compound condition: all must match
-    All {
-        conditions: Vec<RuleCondition>,
-    },
+    All { conditions: Vec<RuleCondition> },
     /// Compound condition: any must match
-    Any {
-        conditions: Vec<RuleCondition>,
-    },
+    Any { conditions: Vec<RuleCondition> },
     /// Negation
-    Not {
-        condition: Box<RuleCondition>,
-    },
+    Not { condition: Box<RuleCondition> },
 }
 
 /// Plugin registry
@@ -278,7 +257,7 @@ pub enum RuleCondition {
 pub struct PluginRegistry {
     plugins: Vec<PluginManifest>,
     rules_by_element: HashMap<String, Vec<(usize, usize)>>, // (plugin_idx, rule_idx)
-    global_rules: Vec<(usize, usize)>, // Rules without element filter
+    global_rules: Vec<(usize, usize)>,                      // Rules without element filter
 }
 
 impl PluginRegistry {
@@ -347,7 +326,8 @@ impl PluginRegistry {
 
     /// Get count of deprecated rules
     pub fn deprecated_rule_count(&self) -> usize {
-        self.plugins.iter()
+        self.plugins
+            .iter()
             .flat_map(|p| &p.rules)
             .filter(|r| r.deprecated)
             .count()
@@ -355,7 +335,8 @@ impl PluginRegistry {
 
     /// Get all deprecated rules with their replacement info
     pub fn deprecated_rules(&self) -> Vec<DeprecatedRuleInfo> {
-        self.plugins.iter()
+        self.plugins
+            .iter()
             .flat_map(|p| p.rules.iter().map(move |r| (p, r)))
             .filter(|(_, r)| r.deprecated)
             .map(|(p, r)| DeprecatedRuleInfo {
@@ -366,8 +347,14 @@ impl PluginRegistry {
                 message: format!(
                     "Rule '{}' is deprecated{}{}",
                     r.id,
-                    r.deprecated_by.as_ref().map(|r| format!(", use '{}' instead", r)).unwrap_or_default(),
-                    r.deprecated_since.as_ref().map(|v| format!(" (since {})", v)).unwrap_or_default(),
+                    r.deprecated_by
+                        .as_ref()
+                        .map(|r| format!(", use '{}' instead", r))
+                        .unwrap_or_default(),
+                    r.deprecated_since
+                        .as_ref()
+                        .map(|v| format!(" (since {})", v))
+                        .unwrap_or_default(),
                 ),
             })
             .collect()
@@ -375,14 +362,16 @@ impl PluginRegistry {
 
     /// Check if a rule is deprecated
     pub fn is_rule_deprecated(&self, rule_id: &str) -> bool {
-        self.plugins.iter()
+        self.plugins
+            .iter()
             .flat_map(|p| &p.rules)
             .any(|r| r.id == rule_id && r.deprecated)
     }
 
     /// Get rule by ID
     pub fn get_rule(&self, rule_id: &str) -> Option<&PluginRule> {
-        self.plugins.iter()
+        self.plugins
+            .iter()
             .flat_map(|p| &p.rules)
             .find(|r| r.id == rule_id)
     }
@@ -452,15 +441,13 @@ impl PluginRegistry {
                     true
                 }
             }
-            RuleCondition::NoChildren => {
-                !node.children().any(|c| c.is_element())
-            }
-            RuleCondition::HasChild { element } => {
-                node.children().any(|c| c.is_element() && c.tag_name().name() == element)
-            }
-            RuleCondition::MissingChild { element } => {
-                !node.children().any(|c| c.is_element() && c.tag_name().name() == element)
-            }
+            RuleCondition::NoChildren => !node.children().any(|c| c.is_element()),
+            RuleCondition::HasChild { element } => node
+                .children()
+                .any(|c| c.is_element() && c.tag_name().name() == element),
+            RuleCondition::MissingChild { element } => !node
+                .children()
+                .any(|c| c.is_element() && c.tag_name().name() == element),
             RuleCondition::AttributeIn { attribute, values } => {
                 if let Some(val) = node.attribute(attribute.as_str()) {
                     values.iter().any(|v| v == val)
@@ -481,9 +468,7 @@ impl PluginRegistry {
             RuleCondition::Any { conditions } => {
                 conditions.iter().any(|c| self.check_condition(node, c))
             }
-            RuleCondition::Not { condition } => {
-                !self.check_condition(node, condition)
-            }
+            RuleCondition::Not { condition } => !self.check_condition(node, condition),
         }
     }
 
@@ -587,27 +572,25 @@ mod tests {
             version: "1.0.0".to_string(),
             description: Some("Test plugin".to_string()),
             author: None,
-            rules: vec![
-                PluginRule {
-                    id: "TEST-001".to_string(),
-                    name: "require-id".to_string(),
-                    description: "Components must have Id".to_string(),
-                    category: PluginCategory::Validation,
-                    severity: PluginSeverity::High,
-                    element: Some("Component".to_string()),
-                    condition: RuleCondition::MissingAttribute {
-                        attribute: "Id".to_string(),
-                    },
-                    message: "Component is missing Id attribute".to_string(),
-                    help: Some("Add an Id attribute".to_string()),
-                    effort_minutes: Some(5),
-                    tags: vec!["required".to_string()],
-                    deprecated: false,
-                    deprecated_by: None,
-                    deprecated_since: None,
-                    doc_url: None,
+            rules: vec![PluginRule {
+                id: "TEST-001".to_string(),
+                name: "require-id".to_string(),
+                description: "Components must have Id".to_string(),
+                category: PluginCategory::Validation,
+                severity: PluginSeverity::High,
+                element: Some("Component".to_string()),
+                condition: RuleCondition::MissingAttribute {
+                    attribute: "Id".to_string(),
                 },
-            ],
+                message: "Component is missing Id attribute".to_string(),
+                help: Some("Add an Id attribute".to_string()),
+                effort_minutes: Some(5),
+                tags: vec!["required".to_string()],
+                deprecated: false,
+                deprecated_by: None,
+                deprecated_since: None,
+                doc_url: None,
+            }],
         }
     }
 
@@ -647,21 +630,19 @@ mod tests {
             version: "1.0".to_string(),
             description: None,
             author: None,
-            rules: vec![
-                PluginRule::new(
-                    "TEST-002",
-                    "no-local-system",
-                    "No LocalSystem",
-                    RuleCondition::AttributeEquals {
-                        attribute: "Account".to_string(),
-                        value: "LocalSystem".to_string(),
-                    },
-                    "Service uses LocalSystem",
-                )
-                .for_element("ServiceInstall")
-                .with_category(PluginCategory::Security)
-                .with_severity(PluginSeverity::High),
-            ],
+            rules: vec![PluginRule::new(
+                "TEST-002",
+                "no-local-system",
+                "No LocalSystem",
+                RuleCondition::AttributeEquals {
+                    attribute: "Account".to_string(),
+                    value: "LocalSystem".to_string(),
+                },
+                "Service uses LocalSystem",
+            )
+            .for_element("ServiceInstall")
+            .with_category(PluginCategory::Security)
+            .with_severity(PluginSeverity::High)],
         });
 
         let source = r#"<Wix><ServiceInstall Account="LocalSystem" /></Wix>"#;
@@ -711,17 +692,15 @@ mod tests {
             version: "1.0".to_string(),
             description: None,
             author: None,
-            rules: vec![
-                PluginRule::new(
-                    "TEST-004",
-                    "empty-feature",
-                    "Empty feature",
-                    RuleCondition::NoChildren,
-                    "Feature has no children",
-                )
-                .for_element("Feature")
-                .with_severity(PluginSeverity::Medium),
-            ],
+            rules: vec![PluginRule::new(
+                "TEST-004",
+                "empty-feature",
+                "Empty feature",
+                RuleCondition::NoChildren,
+                "Feature has no children",
+            )
+            .for_element("Feature")
+            .with_severity(PluginSeverity::Medium)],
         });
 
         let source = r#"<Wix><Feature Id="Main" /></Wix>"#;
@@ -739,17 +718,17 @@ mod tests {
             version: "1.0".to_string(),
             description: None,
             author: None,
-            rules: vec![
-                PluginRule::new(
-                    "TEST-005",
-                    "has-condition",
-                    "Has condition",
-                    RuleCondition::HasChild { element: "Condition".to_string() },
-                    "Component has condition",
-                )
-                .for_element("Component")
-                .with_severity(PluginSeverity::Info),
-            ],
+            rules: vec![PluginRule::new(
+                "TEST-005",
+                "has-condition",
+                "Has condition",
+                RuleCondition::HasChild {
+                    element: "Condition".to_string(),
+                },
+                "Component has condition",
+            )
+            .for_element("Component")
+            .with_severity(PluginSeverity::Info)],
         });
 
         let source = r#"<Wix><Component Id="C1"><Condition>1</Condition></Component></Wix>"#;
@@ -767,18 +746,18 @@ mod tests {
             version: "1.0".to_string(),
             description: None,
             author: None,
-            rules: vec![
-                PluginRule::new(
-                    "TEST-006",
-                    "missing-file",
-                    "Missing file",
-                    RuleCondition::MissingChild { element: "File".to_string() },
-                    "Component has no File",
-                )
-                .for_element("Component")
-                .with_category(PluginCategory::Validation)
-                .with_severity(PluginSeverity::Medium),
-            ],
+            rules: vec![PluginRule::new(
+                "TEST-006",
+                "missing-file",
+                "Missing file",
+                RuleCondition::MissingChild {
+                    element: "File".to_string(),
+                },
+                "Component has no File",
+            )
+            .for_element("Component")
+            .with_category(PluginCategory::Validation)
+            .with_severity(PluginSeverity::Medium)],
         });
 
         let source = r#"<Wix><Component Id="C1" /></Wix>"#;
@@ -796,21 +775,19 @@ mod tests {
             version: "1.0".to_string(),
             description: None,
             author: None,
-            rules: vec![
-                PluginRule::new(
-                    "TEST-007",
-                    "forbidden-type",
-                    "Forbidden type",
-                    RuleCondition::AttributeIn {
-                        attribute: "Execute".to_string(),
-                        values: vec!["deferred".to_string(), "rollback".to_string()],
-                    },
-                    "Using elevated execution",
-                )
-                .for_element("CustomAction")
-                .with_category(PluginCategory::Security)
-                .with_severity(PluginSeverity::High),
-            ],
+            rules: vec![PluginRule::new(
+                "TEST-007",
+                "forbidden-type",
+                "Forbidden type",
+                RuleCondition::AttributeIn {
+                    attribute: "Execute".to_string(),
+                    values: vec!["deferred".to_string(), "rollback".to_string()],
+                },
+                "Using elevated execution",
+            )
+            .for_element("CustomAction")
+            .with_category(PluginCategory::Security)
+            .with_severity(PluginSeverity::High)],
         });
 
         let source = r#"<Wix><CustomAction Id="CA1" Execute="deferred" /></Wix>"#;
@@ -828,23 +805,25 @@ mod tests {
             version: "1.0".to_string(),
             description: None,
             author: None,
-            rules: vec![
-                PluginRule::new(
-                    "TEST-008",
-                    "compound",
-                    "Compound test",
-                    RuleCondition::All {
-                        conditions: vec![
-                            RuleCondition::MissingAttribute { attribute: "Id".to_string() },
-                            RuleCondition::MissingAttribute { attribute: "Guid".to_string() },
-                        ],
-                    },
-                    "Missing both Id and Guid",
-                )
-                .for_element("Component")
-                .with_category(PluginCategory::Validation)
-                .with_severity(PluginSeverity::High),
-            ],
+            rules: vec![PluginRule::new(
+                "TEST-008",
+                "compound",
+                "Compound test",
+                RuleCondition::All {
+                    conditions: vec![
+                        RuleCondition::MissingAttribute {
+                            attribute: "Id".to_string(),
+                        },
+                        RuleCondition::MissingAttribute {
+                            attribute: "Guid".to_string(),
+                        },
+                    ],
+                },
+                "Missing both Id and Guid",
+            )
+            .for_element("Component")
+            .with_category(PluginCategory::Validation)
+            .with_severity(PluginSeverity::High)],
         });
 
         let source = r#"<Wix><Component /></Wix>"#;
@@ -862,23 +841,25 @@ mod tests {
             version: "1.0".to_string(),
             description: None,
             author: None,
-            rules: vec![
-                PluginRule::new(
-                    "TEST-009",
-                    "any-missing",
-                    "Any missing",
-                    RuleCondition::Any {
-                        conditions: vec![
-                            RuleCondition::MissingAttribute { attribute: "Id".to_string() },
-                            RuleCondition::MissingAttribute { attribute: "Guid".to_string() },
-                        ],
-                    },
-                    "Missing Id or Guid",
-                )
-                .for_element("Component")
-                .with_category(PluginCategory::Validation)
-                .with_severity(PluginSeverity::Medium),
-            ],
+            rules: vec![PluginRule::new(
+                "TEST-009",
+                "any-missing",
+                "Any missing",
+                RuleCondition::Any {
+                    conditions: vec![
+                        RuleCondition::MissingAttribute {
+                            attribute: "Id".to_string(),
+                        },
+                        RuleCondition::MissingAttribute {
+                            attribute: "Guid".to_string(),
+                        },
+                    ],
+                },
+                "Missing Id or Guid",
+            )
+            .for_element("Component")
+            .with_category(PluginCategory::Validation)
+            .with_severity(PluginSeverity::Medium)],
         });
 
         let source = r#"<Wix><Component Id="C1" /></Wix>"#;
@@ -896,21 +877,19 @@ mod tests {
             version: "1.0".to_string(),
             description: None,
             author: None,
-            rules: vec![
-                PluginRule::new(
-                    "TEST-010",
-                    "has-id",
-                    "Has Id",
-                    RuleCondition::Not {
-                        condition: Box::new(RuleCondition::MissingAttribute {
-                            attribute: "Id".to_string(),
-                        }),
-                    },
-                    "Component has Id",
-                )
-                .for_element("Component")
-                .with_severity(PluginSeverity::Info),
-            ],
+            rules: vec![PluginRule::new(
+                "TEST-010",
+                "has-id",
+                "Has Id",
+                RuleCondition::Not {
+                    condition: Box::new(RuleCondition::MissingAttribute {
+                        attribute: "Id".to_string(),
+                    }),
+                },
+                "Component has Id",
+            )
+            .for_element("Component")
+            .with_severity(PluginSeverity::Info)],
         });
 
         let source = r#"<Wix><Component Id="C1" /></Wix>"#;
@@ -928,18 +907,18 @@ mod tests {
             version: "1.0".to_string(),
             description: None,
             author: None,
-            rules: vec![
-                PluginRule::new(
-                    "TEST-011",
-                    "template",
-                    "Template test",
-                    RuleCondition::MissingAttribute { attribute: "Guid".to_string() },
-                    "{element} '{attr:Id}' is missing Guid",
-                )
-                .for_element("Component")
-                .with_category(PluginCategory::Validation)
-                .with_severity(PluginSeverity::Medium),
-            ],
+            rules: vec![PluginRule::new(
+                "TEST-011",
+                "template",
+                "Template test",
+                RuleCondition::MissingAttribute {
+                    attribute: "Guid".to_string(),
+                },
+                "{element} '{attr:Id}' is missing Guid",
+            )
+            .for_element("Component")
+            .with_category(PluginCategory::Validation)
+            .with_severity(PluginSeverity::Medium)],
         });
 
         let source = r#"<Wix><Component Id="MyComp" /></Wix>"#;
@@ -964,7 +943,9 @@ mod tests {
                     "TEST-012",
                     "global",
                     "Global test",
-                    RuleCondition::MissingAttribute { attribute: "Id".to_string() },
+                    RuleCondition::MissingAttribute {
+                        attribute: "Id".to_string(),
+                    },
                     "Element missing Id",
                 )
                 .with_severity(PluginSeverity::Info),
@@ -1015,7 +996,9 @@ mod tests {
                     "OLD-001",
                     "old-rule",
                     "Old rule",
-                    RuleCondition::MissingAttribute { attribute: "Id".to_string() },
+                    RuleCondition::MissingAttribute {
+                        attribute: "Id".to_string(),
+                    },
                     "Missing Id",
                 )
                 .for_element("Component")
@@ -1025,7 +1008,9 @@ mod tests {
                     "NEW-001",
                     "new-rule",
                     "New rule",
-                    RuleCondition::MissingAttribute { attribute: "Id".to_string() },
+                    RuleCondition::MissingAttribute {
+                        attribute: "Id".to_string(),
+                    },
                     "Missing Id",
                 )
                 .for_element("Component"),
@@ -1080,6 +1065,9 @@ mod tests {
         assert!(matches!(rule.severity, PluginSeverity::High));
         assert!(rule.deprecated);
         assert_eq!(rule.deprecated_since, Some("1.0.0".to_string()));
-        assert_eq!(rule.doc_url, Some("https://example.com/rules/TEST-001".to_string()));
+        assert_eq!(
+            rule.doc_url,
+            Some("https://example.com/rules/TEST-001".to_string())
+        );
     }
 }

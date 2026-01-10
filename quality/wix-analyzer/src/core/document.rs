@@ -116,9 +116,7 @@ pub struct ElementIterator<'a, 'input> {
 
 impl<'a, 'input> ElementIterator<'a, 'input> {
     pub fn new(root: Node<'a, 'input>) -> Self {
-        Self {
-            stack: vec![root],
-        }
+        Self { stack: vec![root] }
     }
 }
 
@@ -333,7 +331,11 @@ mod tests {
         </Wix>"#;
         let doc = WixDocument::parse(source, Path::new("test.wxs")).unwrap();
 
-        let ref_count = doc.root().descendants().filter(|n| n.is_reference()).count();
+        let ref_count = doc
+            .root()
+            .descendants()
+            .filter(|n| n.is_reference())
+            .count();
         assert_eq!(ref_count, 8);
     }
 
@@ -380,7 +382,11 @@ mod tests {
         </Wix>"#;
         let doc = WixDocument::parse(source, Path::new("test.wxs")).unwrap();
 
-        let def_count = doc.root().descendants().filter(|n| n.is_definition()).count();
+        let def_count = doc
+            .root()
+            .descendants()
+            .filter(|n| n.is_definition())
+            .count();
         assert_eq!(def_count, 13);
     }
 
@@ -440,8 +446,13 @@ mod tests {
         let source = "<Wix><A><B /></A></Wix>";
         let doc = WixDocument::parse(source, Path::new("test.wxs")).unwrap();
 
-        let wix_node = doc.root().descendants().find(|n| n.tag_name().name() == "Wix").unwrap();
-        let descendants: Vec<_> = wix_node.descendants()
+        let wix_node = doc
+            .root()
+            .descendants()
+            .find(|n| n.tag_name().name() == "Wix")
+            .unwrap();
+        let descendants: Vec<_> = wix_node
+            .descendants()
             .map(|n| n.tag_name().name())
             .collect();
 
@@ -467,7 +478,7 @@ mod tests {
     #[test]
     fn test_element_at_position_last_line_without_newline() {
         // Test the edge case where position is at EOF with no trailing newline
-        let source = "<Wix />";  // Single line, no newline at end
+        let source = "<Wix />"; // Single line, no newline at end
         let doc = WixDocument::parse(source, Path::new("test.wxs")).unwrap();
 
         // Position at the end of the single line
@@ -479,7 +490,7 @@ mod tests {
     fn test_element_at_position_past_end_no_newline() {
         // Test position past end of last line when no trailing newline
         // This triggers the EOF branch (line 104-105: return Some(offset) after loop)
-        let source = "<Wix />";  // 7 chars, no trailing newline
+        let source = "<Wix />"; // 7 chars, no trailing newline
         let doc = WixDocument::parse(source, Path::new("test.wxs")).unwrap();
 
         // Request column 100, well past the 7 characters

@@ -3,9 +3,9 @@
 //! Outputs diagnostics in GitLab Code Quality format (JSON).
 //! https://docs.gitlab.com/ee/ci/testing/code_quality.html
 
+use super::OutputFormatter;
 use crate::diagnostic::{Diagnostic, Severity};
 use crate::engine::LintResult;
-use super::OutputFormatter;
 use serde::Serialize;
 
 /// GitLab Code Quality issue

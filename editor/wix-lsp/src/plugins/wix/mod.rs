@@ -4,9 +4,8 @@
 
 use crate::plugins::registry::FullPluginDyn;
 use crate::plugins::traits::{
-    Completion, CompletionProvider, Diagnostic, DiagnosticProvider,
-    FormatProvider, HoverInfo, HoverProvider, HoverRange, LanguagePlugin, Symbol, SymbolKind,
-    SymbolProvider, SymbolRange,
+    Completion, CompletionProvider, Diagnostic, DiagnosticProvider, FormatProvider, HoverInfo,
+    HoverProvider, HoverRange, LanguagePlugin, Symbol, SymbolKind, SymbolProvider, SymbolRange,
 };
 use std::path::Path;
 

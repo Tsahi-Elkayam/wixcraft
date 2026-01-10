@@ -25,8 +25,8 @@
 
 use serde::{Deserialize, Serialize};
 
-use crate::core::{AnalysisResult, IssueType, Severity};
 use crate::core::debt::{DebtRating, TechnicalDebt};
+use crate::core::{AnalysisResult, IssueType, Severity};
 
 /// Quality gate with configurable conditions
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -191,22 +191,13 @@ pub enum GateCondition {
         max: usize,
     },
     /// Minimum rating required (A, B, C, D, E)
-    MinRating {
-        rating_type: RatingType,
-        min: char,
-    },
+    MinRating { rating_type: RatingType, min: char },
     /// Maximum technical debt ratio (percentage)
-    MaxDebtRatio {
-        max_percent: f64,
-    },
+    MaxDebtRatio { max_percent: f64 },
     /// Maximum technical debt in minutes
-    MaxDebtMinutes {
-        max: u32,
-    },
+    MaxDebtMinutes { max: u32 },
     /// Maximum complexity rating
-    MaxComplexityRating {
-        max: char,
-    },
+    MaxComplexityRating { max: char },
 }
 
 impl GateCondition {
@@ -275,7 +266,11 @@ impl GateCondition {
     /// Check if condition passes, returns failure message if not
     fn check(&self, results: &[AnalysisResult], debt: &TechnicalDebt) -> Option<GateFailure> {
         match self {
-            Self::MaxIssueCount { severity, issue_type, max } => {
+            Self::MaxIssueCount {
+                severity,
+                issue_type,
+                max,
+            } => {
                 let count = count_issues(results, *severity, *issue_type);
                 if count > *max {
                     Some(GateFailure {
@@ -332,7 +327,11 @@ impl GateCondition {
     /// Get human-readable description of this condition
     pub fn description(&self) -> String {
         match self {
-            Self::MaxIssueCount { severity, issue_type, max } => {
+            Self::MaxIssueCount {
+                severity,
+                issue_type,
+                max,
+            } => {
                 let mut parts = Vec::new();
                 if let Some(s) = severity {
                     parts.push(s.as_str().to_string());
@@ -397,7 +396,11 @@ pub struct GateResult {
 impl GateResult {
     /// Get the exit code for CI (0 = pass, 1 = fail)
     pub fn exit_code(&self) -> i32 {
-        if self.passed { 0 } else { 1 }
+        if self.passed {
+            0
+        } else {
+            1
+        }
     }
 
     /// Get a summary message
@@ -405,9 +408,7 @@ impl GateResult {
         if self.passed {
             format!(
                 "Quality Gate '{}' PASSED ({}/{} conditions)",
-                self.gate_name,
-                self.conditions_checked,
-                self.conditions_checked
+                self.gate_name, self.conditions_checked, self.conditions_checked
             )
         } else {
             format!(
@@ -433,7 +434,11 @@ pub struct GateFailure {
 
 impl std::fmt::Display for GateFailure {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}: expected {}, got {}", self.condition, self.expected, self.actual)
+        write!(
+            f,
+            "{}: expected {}, got {}",
+            self.condition, self.expected, self.actual
+        )
     }
 }
 
@@ -448,8 +453,8 @@ fn count_issues(
         .iter()
         .flat_map(|r| &r.diagnostics)
         .filter(|d| {
-            severity.map_or(true, |s| d.severity >= s)
-                && issue_type.map_or(true, |t| d.issue_type == t)
+            severity.is_none_or(|s| d.severity >= s)
+                && issue_type.is_none_or(|t| d.issue_type == t)
         })
         .count()
 }
@@ -496,15 +501,13 @@ fn get_rating(results: &[AnalysisResult], debt: &TechnicalDebt, rating_type: Rat
                 'E'
             }
         }
-        RatingType::Maintainability => {
-            match debt.rating {
-                DebtRating::A => 'A',
-                DebtRating::B => 'B',
-                DebtRating::C => 'C',
-                DebtRating::D => 'D',
-                DebtRating::E => 'E',
-            }
-        }
+        RatingType::Maintainability => match debt.rating {
+            DebtRating::A => 'A',
+            DebtRating::B => 'B',
+            DebtRating::C => 'C',
+            DebtRating::D => 'D',
+            DebtRating::E => 'E',
+        },
     }
 }
 
@@ -548,9 +551,12 @@ mod tests {
     #[test]
     fn test_quality_gate_fails_on_blocker() {
         let gate = QualityGate::sonar_way();
-        let results = make_results(vec![
-            Diagnostic::blocker("BUG-001", IssueType::Bug, "Critical bug", make_location()),
-        ]);
+        let results = make_results(vec![Diagnostic::blocker(
+            "BUG-001",
+            IssueType::Bug,
+            "Critical bug",
+            make_location(),
+        )]);
         let result = gate.evaluate(&results, 100);
 
         assert!(!result.passed);
@@ -560,9 +566,12 @@ mod tests {
     #[test]
     fn test_quality_gate_fails_on_vulnerability() {
         let gate = QualityGate::sonar_way();
-        let results = make_results(vec![
-            Diagnostic::high("SEC-001", IssueType::Vulnerability, "Vulnerability", make_location()),
-        ]);
+        let results = make_results(vec![Diagnostic::high(
+            "SEC-001",
+            IssueType::Vulnerability,
+            "Vulnerability",
+            make_location(),
+        )]);
         let result = gate.evaluate(&results, 100);
 
         assert!(!result.passed);
@@ -573,7 +582,12 @@ mod tests {
         let gate = QualityGate::relaxed();
         let results = make_results(vec![
             Diagnostic::warning("BP-001", Category::BestPractice, "Warning", make_location()),
-            Diagnostic::warning("BP-002", Category::BestPractice, "Another warning", make_location()),
+            Diagnostic::warning(
+                "BP-002",
+                Category::BestPractice,
+                "Another warning",
+                make_location(),
+            ),
         ]);
         let result = gate.evaluate(&results, 100);
 
@@ -583,9 +597,12 @@ mod tests {
     #[test]
     fn test_quality_gate_strict() {
         let gate = QualityGate::strict();
-        let results = make_results(vec![
-            Diagnostic::high("BUG-001", IssueType::Bug, "Bug", make_location()),
-        ]);
+        let results = make_results(vec![Diagnostic::high(
+            "BUG-001",
+            IssueType::Bug,
+            "Bug",
+            make_location(),
+        )]);
         let result = gate.evaluate(&results, 100);
 
         assert!(!result.passed);
@@ -665,9 +682,13 @@ mod tests {
             .with_condition(GateCondition::MaxDebtRatio { max_percent: 5.0 });
 
         // With high debt (many issues with effort)
-        let results = make_results(vec![
-            Diagnostic::high("BUG-001", IssueType::Bug, "Bug", make_location()).with_effort(1000),
-        ]);
+        let results = make_results(vec![Diagnostic::high(
+            "BUG-001",
+            IssueType::Bug,
+            "Bug",
+            make_location(),
+        )
+        .with_effort(1000)]);
         let result = gate.evaluate(&results, 10); // Small codebase = high ratio
 
         // Should fail due to high debt ratio

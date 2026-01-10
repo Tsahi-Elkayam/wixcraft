@@ -75,41 +75,82 @@ pub struct RuleCount {
 impl MetricsSummary {
     /// Calculate metrics from analysis results
     pub fn from_results(results: &[AnalysisResult]) -> Self {
-        let files_analyzed = results.iter()
+        let files_analyzed = results
+            .iter()
             .flat_map(|r| &r.files)
             .collect::<std::collections::HashSet<_>>()
             .len();
 
-        let all_diagnostics: Vec<_> = results.iter()
-            .flat_map(|r| &r.diagnostics)
-            .collect();
+        let all_diagnostics: Vec<_> = results.iter().flat_map(|r| &r.diagnostics).collect();
 
         let total_issues = all_diagnostics.len();
 
         // Count by severity
         let by_severity = SeverityCounts {
-            blocker: all_diagnostics.iter().filter(|d| d.severity == Severity::Blocker).count(),
-            high: all_diagnostics.iter().filter(|d| d.severity == Severity::High).count(),
-            medium: all_diagnostics.iter().filter(|d| d.severity == Severity::Medium).count(),
-            low: all_diagnostics.iter().filter(|d| d.severity == Severity::Low).count(),
-            info: all_diagnostics.iter().filter(|d| d.severity == Severity::Info).count(),
+            blocker: all_diagnostics
+                .iter()
+                .filter(|d| d.severity == Severity::Blocker)
+                .count(),
+            high: all_diagnostics
+                .iter()
+                .filter(|d| d.severity == Severity::High)
+                .count(),
+            medium: all_diagnostics
+                .iter()
+                .filter(|d| d.severity == Severity::Medium)
+                .count(),
+            low: all_diagnostics
+                .iter()
+                .filter(|d| d.severity == Severity::Low)
+                .count(),
+            info: all_diagnostics
+                .iter()
+                .filter(|d| d.severity == Severity::Info)
+                .count(),
         };
 
         // Count by type
         let by_type = TypeCounts {
-            bug: all_diagnostics.iter().filter(|d| d.issue_type == IssueType::Bug).count(),
-            vulnerability: all_diagnostics.iter().filter(|d| d.issue_type == IssueType::Vulnerability).count(),
-            code_smell: all_diagnostics.iter().filter(|d| d.issue_type == IssueType::CodeSmell).count(),
-            security_hotspot: all_diagnostics.iter().filter(|d| d.issue_type == IssueType::SecurityHotspot).count(),
-            secret: all_diagnostics.iter().filter(|d| d.issue_type == IssueType::Secret).count(),
+            bug: all_diagnostics
+                .iter()
+                .filter(|d| d.issue_type == IssueType::Bug)
+                .count(),
+            vulnerability: all_diagnostics
+                .iter()
+                .filter(|d| d.issue_type == IssueType::Vulnerability)
+                .count(),
+            code_smell: all_diagnostics
+                .iter()
+                .filter(|d| d.issue_type == IssueType::CodeSmell)
+                .count(),
+            security_hotspot: all_diagnostics
+                .iter()
+                .filter(|d| d.issue_type == IssueType::SecurityHotspot)
+                .count(),
+            secret: all_diagnostics
+                .iter()
+                .filter(|d| d.issue_type == IssueType::Secret)
+                .count(),
         };
 
         // Count by category
         let by_category = CategoryCounts {
-            validation: all_diagnostics.iter().filter(|d| d.category == Category::Validation).count(),
-            best_practice: all_diagnostics.iter().filter(|d| d.category == Category::BestPractice).count(),
-            security: all_diagnostics.iter().filter(|d| d.category == Category::Security).count(),
-            dead_code: all_diagnostics.iter().filter(|d| d.category == Category::DeadCode).count(),
+            validation: all_diagnostics
+                .iter()
+                .filter(|d| d.category == Category::Validation)
+                .count(),
+            best_practice: all_diagnostics
+                .iter()
+                .filter(|d| d.category == Category::BestPractice)
+                .count(),
+            security: all_diagnostics
+                .iter()
+                .filter(|d| d.category == Category::Security)
+                .count(),
+            dead_code: all_diagnostics
+                .iter()
+                .filter(|d| d.category == Category::DeadCode)
+                .count(),
         };
 
         // Count by rule
@@ -125,7 +166,8 @@ impl MetricsSummary {
         top_rules.truncate(10); // Top 10 rules
 
         // Technical debt
-        let debt_minutes: u32 = all_diagnostics.iter()
+        let debt_minutes: u32 = all_diagnostics
+            .iter()
             .filter_map(|d| d.effort_minutes)
             .sum();
         let debt_display = format_debt(debt_minutes);
@@ -138,12 +180,11 @@ impl MetricsSummary {
         };
 
         // Calculate ratings
-        let maintainability_rating = calculate_maintainability_rating(by_type.code_smell, files_analyzed);
+        let maintainability_rating =
+            calculate_maintainability_rating(by_type.code_smell, files_analyzed);
         let reliability_rating = calculate_reliability_rating(by_type.bug, &by_severity);
-        let security_rating = calculate_security_rating(
-            by_type.vulnerability + by_type.secret,
-            &by_severity,
-        );
+        let security_rating =
+            calculate_security_rating(by_type.vulnerability + by_type.secret, &by_severity);
 
         Self {
             files_analyzed,
@@ -170,16 +211,28 @@ impl MetricsSummary {
         // Overview
         output.push_str(&format!("Files Analyzed: {}\n", self.files_analyzed));
         output.push_str(&format!("Total Issues:   {}\n", self.total_issues));
-        output.push_str(&format!("Issue Density:  {:.2} issues/file\n", self.issue_density));
+        output.push_str(&format!(
+            "Issue Density:  {:.2} issues/file\n",
+            self.issue_density
+        ));
         output.push_str(&format!("Tech Debt:      {}\n", self.debt_display));
-        output.push_str("\n");
+        output.push('\n');
 
         // Ratings
         output.push_str("--- Ratings ---\n");
-        output.push_str(&format!("Reliability:     {} (bugs)\n", self.reliability_rating));
-        output.push_str(&format!("Security:        {} (vulnerabilities)\n", self.security_rating));
-        output.push_str(&format!("Maintainability: {} (code smells)\n", self.maintainability_rating));
-        output.push_str("\n");
+        output.push_str(&format!(
+            "Reliability:     {} (bugs)\n",
+            self.reliability_rating
+        ));
+        output.push_str(&format!(
+            "Security:        {} (vulnerabilities)\n",
+            self.security_rating
+        ));
+        output.push_str(&format!(
+            "Maintainability: {} (code smells)\n",
+            self.maintainability_rating
+        ));
+        output.push('\n');
 
         // By severity
         output.push_str("--- By Severity ---\n");
@@ -188,16 +241,22 @@ impl MetricsSummary {
         output.push_str(&format!("Medium:  {}\n", self.by_severity.medium));
         output.push_str(&format!("Low:     {}\n", self.by_severity.low));
         output.push_str(&format!("Info:    {}\n", self.by_severity.info));
-        output.push_str("\n");
+        output.push('\n');
 
         // By type
         output.push_str("--- By Type ---\n");
         output.push_str(&format!("Bugs:             {}\n", self.by_type.bug));
-        output.push_str(&format!("Vulnerabilities:  {}\n", self.by_type.vulnerability));
+        output.push_str(&format!(
+            "Vulnerabilities:  {}\n",
+            self.by_type.vulnerability
+        ));
         output.push_str(&format!("Code Smells:      {}\n", self.by_type.code_smell));
-        output.push_str(&format!("Security Hotspots:{}\n", self.by_type.security_hotspot));
+        output.push_str(&format!(
+            "Security Hotspots:{}\n",
+            self.by_type.security_hotspot
+        ));
         output.push_str(&format!("Secrets:          {}\n", self.by_type.secret));
-        output.push_str("\n");
+        output.push('\n');
 
         // Top rules
         if !self.top_rules.is_empty() {
@@ -342,9 +401,24 @@ mod tests {
     fn test_metrics_summary_with_issues() {
         let mut result = AnalysisResult::new();
         result.add_file(PathBuf::from("test.wxs"));
-        result.add(Diagnostic::error("VAL-001", Category::Validation, "Error 1", make_location()));
-        result.add(Diagnostic::warning("BP-001", Category::BestPractice, "Warning 1", make_location()));
-        result.add(Diagnostic::info("INFO-001", Category::BestPractice, "Info 1", make_location()));
+        result.add(Diagnostic::error(
+            "VAL-001",
+            Category::Validation,
+            "Error 1",
+            make_location(),
+        ));
+        result.add(Diagnostic::warning(
+            "BP-001",
+            Category::BestPractice,
+            "Warning 1",
+            make_location(),
+        ));
+        result.add(Diagnostic::info(
+            "INFO-001",
+            Category::BestPractice,
+            "Info 1",
+            make_location(),
+        ));
 
         let summary = MetricsSummary::from_results(&[result]);
 
@@ -361,9 +435,24 @@ mod tests {
     fn test_metrics_summary_by_type() {
         let mut result = AnalysisResult::new();
         result.add_file(PathBuf::from("test.wxs"));
-        result.add(Diagnostic::high("BUG-001", IssueType::Bug, "Bug", make_location()));
-        result.add(Diagnostic::high("SEC-001", IssueType::Vulnerability, "Vuln", make_location()));
-        result.add(Diagnostic::medium("CS-001", IssueType::CodeSmell, "Smell", make_location()));
+        result.add(Diagnostic::high(
+            "BUG-001",
+            IssueType::Bug,
+            "Bug",
+            make_location(),
+        ));
+        result.add(Diagnostic::high(
+            "SEC-001",
+            IssueType::Vulnerability,
+            "Vuln",
+            make_location(),
+        ));
+        result.add(Diagnostic::medium(
+            "CS-001",
+            IssueType::CodeSmell,
+            "Smell",
+            make_location(),
+        ));
 
         let summary = MetricsSummary::from_results(&[result]);
 
@@ -379,10 +468,20 @@ mod tests {
 
         // Add multiple issues with same rule
         for _ in 0..5 {
-            result.add(Diagnostic::error("VAL-001", Category::Validation, "Error", make_location()));
+            result.add(Diagnostic::error(
+                "VAL-001",
+                Category::Validation,
+                "Error",
+                make_location(),
+            ));
         }
         for _ in 0..3 {
-            result.add(Diagnostic::warning("BP-001", Category::BestPractice, "Warning", make_location()));
+            result.add(Diagnostic::warning(
+                "BP-001",
+                Category::BestPractice,
+                "Warning",
+                make_location(),
+            ));
         }
 
         let summary = MetricsSummary::from_results(&[result]);
@@ -398,8 +497,14 @@ mod tests {
     fn test_metrics_summary_debt() {
         let mut result = AnalysisResult::new();
         result.add_file(PathBuf::from("test.wxs"));
-        result.add(Diagnostic::error("VAL-001", Category::Validation, "Error", make_location()).with_effort(30));
-        result.add(Diagnostic::warning("BP-001", Category::BestPractice, "Warning", make_location()).with_effort(60));
+        result.add(
+            Diagnostic::error("VAL-001", Category::Validation, "Error", make_location())
+                .with_effort(30),
+        );
+        result.add(
+            Diagnostic::warning("BP-001", Category::BestPractice, "Warning", make_location())
+                .with_effort(60),
+        );
 
         let summary = MetricsSummary::from_results(&[result]);
 
@@ -431,16 +536,28 @@ mod tests {
         let no_issues = SeverityCounts::default();
         assert_eq!(calculate_reliability_rating(0, &no_issues), 'A');
 
-        let minor = SeverityCounts { low: 1, ..Default::default() };
+        let minor = SeverityCounts {
+            low: 1,
+            ..Default::default()
+        };
         assert_eq!(calculate_reliability_rating(1, &minor), 'B');
 
-        let medium = SeverityCounts { medium: 1, ..Default::default() };
+        let medium = SeverityCounts {
+            medium: 1,
+            ..Default::default()
+        };
         assert_eq!(calculate_reliability_rating(2, &medium), 'C');
 
-        let high = SeverityCounts { high: 1, ..Default::default() };
+        let high = SeverityCounts {
+            high: 1,
+            ..Default::default()
+        };
         assert_eq!(calculate_reliability_rating(5, &high), 'D');
 
-        let blocker = SeverityCounts { blocker: 1, ..Default::default() };
+        let blocker = SeverityCounts {
+            blocker: 1,
+            ..Default::default()
+        };
         assert_eq!(calculate_reliability_rating(0, &blocker), 'E');
     }
 
@@ -449,13 +566,22 @@ mod tests {
         let no_issues = SeverityCounts::default();
         assert_eq!(calculate_security_rating(0, &no_issues), 'A');
 
-        let medium = SeverityCounts { medium: 1, ..Default::default() };
+        let medium = SeverityCounts {
+            medium: 1,
+            ..Default::default()
+        };
         assert_eq!(calculate_security_rating(1, &medium), 'C');
 
-        let high = SeverityCounts { high: 1, ..Default::default() };
+        let high = SeverityCounts {
+            high: 1,
+            ..Default::default()
+        };
         assert_eq!(calculate_security_rating(1, &high), 'D');
 
-        let blocker = SeverityCounts { blocker: 1, ..Default::default() };
+        let blocker = SeverityCounts {
+            blocker: 1,
+            ..Default::default()
+        };
         assert_eq!(calculate_security_rating(0, &blocker), 'E');
     }
 
@@ -502,7 +628,8 @@ mod tests {
     #[test]
     fn test_metrics_formatter_diagnostic() {
         let formatter = MetricsFormatter::text();
-        let diagnostic = Diagnostic::error("VAL-001", Category::Validation, "Error", make_location());
+        let diagnostic =
+            Diagnostic::error("VAL-001", Category::Validation, "Error", make_location());
         let output = formatter.format_diagnostic(&diagnostic);
 
         // Metrics formatter doesn't format individual diagnostics
@@ -514,13 +641,23 @@ mod tests {
         let mut result1 = AnalysisResult::new();
         result1.add_file(PathBuf::from("test1.wxs"));
         for _ in 0..10 {
-            result1.add(Diagnostic::error("VAL-001", Category::Validation, "Error", make_location()));
+            result1.add(Diagnostic::error(
+                "VAL-001",
+                Category::Validation,
+                "Error",
+                make_location(),
+            ));
         }
 
         let mut result2 = AnalysisResult::new();
         result2.add_file(PathBuf::from("test2.wxs"));
         for _ in 0..5 {
-            result2.add(Diagnostic::error("VAL-001", Category::Validation, "Error", make_location()));
+            result2.add(Diagnostic::error(
+                "VAL-001",
+                Category::Validation,
+                "Error",
+                make_location(),
+            ));
         }
 
         let summary = MetricsSummary::from_results(&[result1, result2]);

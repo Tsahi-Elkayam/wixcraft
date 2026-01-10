@@ -2,9 +2,9 @@
 //!
 //! One line per diagnostic, minimal output for scripting.
 
+use super::OutputFormatter;
 use crate::diagnostic::{Diagnostic, Severity};
 use crate::engine::LintResult;
-use super::OutputFormatter;
 
 /// Compact one-line-per-error formatter
 pub struct CompactFormatter {
@@ -115,9 +115,7 @@ mod tests {
 
     #[test]
     fn test_compact_minimal() {
-        let formatter = CompactFormatter::new()
-            .without_severity()
-            .without_rule();
+        let formatter = CompactFormatter::new().without_severity().without_rule();
         let diag = Diagnostic {
             rule_id: "test-rule".to_string(),
             message: "Error".to_string(),

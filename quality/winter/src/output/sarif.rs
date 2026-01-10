@@ -154,8 +154,9 @@ impl OutputFormatter for SarifFormatter {
         // Collect unique rules
         let mut rules_map = std::collections::HashMap::new();
         for diag in &result.diagnostics {
-            rules_map.entry(diag.rule_id.clone()).or_insert_with(|| {
-                SarifRule {
+            rules_map
+                .entry(diag.rule_id.clone())
+                .or_insert_with(|| SarifRule {
                     id: diag.rule_id.clone(),
                     short_description: SarifMessage {
                         text: diag.help.clone().unwrap_or_else(|| diag.message.clone()),
@@ -163,8 +164,7 @@ impl OutputFormatter for SarifFormatter {
                     default_configuration: SarifConfiguration {
                         level: severity_to_level(diag.severity),
                     },
-                }
-            });
+                });
         }
 
         let rules: Vec<SarifRule> = rules_map.into_values().collect();

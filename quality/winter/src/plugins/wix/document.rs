@@ -42,7 +42,10 @@ impl WixDocument {
     /// Parse inline disable comments from source
     fn parse_disable_comments(
         lines: &[String],
-    ) -> (std::collections::HashMap<String, HashSet<usize>>, HashSet<String>) {
+    ) -> (
+        std::collections::HashMap<String, HashSet<usize>>,
+        HashSet<String>,
+    ) {
         let mut disabled_lines: std::collections::HashMap<String, HashSet<usize>> =
             std::collections::HashMap::new();
         let mut disabled_file_rules: HashSet<String> = HashSet::new();

@@ -136,14 +136,18 @@ impl WixPlugin {
                 .with_category(RuleCategory::Security)
                 .with_element("ServiceInstall")
                 .with_condition(Condition::Any(vec![
-                    Condition::AttributeMissing { name: "Account".to_string() },
+                    Condition::AttributeMissing {
+                        name: "Account".to_string(),
+                    },
                     Condition::AttributeEquals {
                         name: "Account".to_string(),
                         value: "LocalSystem".to_string(),
                     },
                 ]))
                 .with_message("Service '{{id}}' runs as LocalSystem which has excessive privileges")
-                .with_help("Consider using LocalService, NetworkService, or a dedicated service account"),
+                .with_help(
+                    "Consider using LocalService, NetworkService, or a dedicated service account",
+                ),
         );
 
         // SEC-005: Hardcoded sensitive property
@@ -154,17 +158,23 @@ impl WixPlugin {
                 .with_category(RuleCategory::Security)
                 .with_element("Property")
                 .with_condition(Condition::All(vec![
-                    Condition::AttributeExists { name: "Value".to_string() },
+                    Condition::AttributeExists {
+                        name: "Value".to_string(),
+                    },
                     Condition::AttributeMatches {
                         name: "Id".to_string(),
                         pattern: r"(?i)(password|secret|key|token|credential)".to_string(),
                     },
                 ]))
                 .with_message("Property '{{id}}' appears to contain hardcoded sensitive data")
-                .with_help("Remove hardcoded values and require them to be provided at install time")
+                .with_help(
+                    "Remove hardcoded values and require them to be provided at install time",
+                )
                 .with_fix(FixTemplate {
                     description: "Remove hardcoded value".to_string(),
-                    action: FixAction::RemoveAttribute { name: "Value".to_string() },
+                    action: FixAction::RemoveAttribute {
+                        name: "Value".to_string(),
+                    },
                 }),
         );
 
@@ -176,10 +186,26 @@ impl WixPlugin {
                 .with_category(RuleCategory::DeadCode)
                 .with_element("Feature")
                 .with_condition(Condition::All(vec![
-                    Condition::ChildCount { element: "ComponentRef".to_string(), op: CompareOp::Eq, value: 0 },
-                    Condition::ChildCount { element: "ComponentGroupRef".to_string(), op: CompareOp::Eq, value: 0 },
-                    Condition::ChildCount { element: "FeatureRef".to_string(), op: CompareOp::Eq, value: 0 },
-                    Condition::ChildCount { element: "Feature".to_string(), op: CompareOp::Eq, value: 0 },
+                    Condition::ChildCount {
+                        element: "ComponentRef".to_string(),
+                        op: CompareOp::Eq,
+                        value: 0,
+                    },
+                    Condition::ChildCount {
+                        element: "ComponentGroupRef".to_string(),
+                        op: CompareOp::Eq,
+                        value: 0,
+                    },
+                    Condition::ChildCount {
+                        element: "FeatureRef".to_string(),
+                        op: CompareOp::Eq,
+                        value: 0,
+                    },
+                    Condition::ChildCount {
+                        element: "Feature".to_string(),
+                        op: CompareOp::Eq,
+                        value: 0,
+                    },
                 ]))
                 .with_message("Feature '{{id}}' has no content")
                 .with_help("Add components or remove the empty feature"),
@@ -245,13 +271,17 @@ impl WixPlugin {
                 .with_category(RuleCategory::Validation)
                 .with_element("Component")
                 .with_condition(Condition::All(vec![
-                    Condition::AttributeExists { name: "Permanent".to_string() },
+                    Condition::AttributeExists {
+                        name: "Permanent".to_string(),
+                    },
                     Condition::AttributeNotIn {
                         name: "Permanent".to_string(),
                         values: vec!["yes".to_string(), "no".to_string()],
                     },
                 ]))
-                .with_message("Component '{{id}}' has invalid Permanent value, must be 'yes' or 'no'"),
+                .with_message(
+                    "Component '{{id}}' has invalid Permanent value, must be 'yes' or 'no'",
+                ),
         );
 
         // =====================================================================
@@ -420,7 +450,9 @@ impl WixPlugin {
                 .with_category(RuleCategory::Maintainability)
                 .with_element("Component")
                 .with_condition(Condition::All(vec![
-                    Condition::AttributeExists { name: "Id".to_string() },
+                    Condition::AttributeExists {
+                        name: "Id".to_string(),
+                    },
                     Condition::AttributeNotMatches {
                         name: "Id".to_string(),
                         pattern: r"^(C_|cmp|Cmp|Component)".to_string(),
@@ -437,7 +469,9 @@ impl WixPlugin {
                 .with_category(RuleCategory::Maintainability)
                 .with_element("Feature")
                 .with_condition(Condition::All(vec![
-                    Condition::AttributeExists { name: "Id".to_string() },
+                    Condition::AttributeExists {
+                        name: "Id".to_string(),
+                    },
                     Condition::AttributeNotMatches {
                         name: "Id".to_string(),
                         pattern: r"^(F_|feat|Feat|Feature)".to_string(),
@@ -472,7 +506,9 @@ impl WixPlugin {
                 .with_category(RuleCategory::Maintainability)
                 .with_element("Property")
                 .with_condition(Condition::All(vec![
-                    Condition::AttributeExists { name: "Id".to_string() },
+                    Condition::AttributeExists {
+                        name: "Id".to_string(),
+                    },
                     // Property should be uppercase if it's meant to be public
                     Condition::AttributeMatches {
                         name: "Id".to_string(),
@@ -635,7 +671,9 @@ impl WixNode {
             range,
             attributes,
             children,
-            parent_phantom: parent_kind.map(|s| PhantomParent { kind: s.to_string() }),
+            parent_phantom: parent_kind.map(|s| PhantomParent {
+                kind: s.to_string(),
+            }),
         }
     }
 }
@@ -734,8 +772,8 @@ pub struct OwnedWixDocument {
 
 impl OwnedWixDocument {
     pub fn parse(source: &str, path: &Path) -> Result<Self, String> {
-        let doc = roxmltree::Document::parse(source)
-            .map_err(|e| format!("XML parse error: {}", e))?;
+        let doc =
+            roxmltree::Document::parse(source).map_err(|e| format!("XML parse error: {}", e))?;
 
         let root = WixNode::from_roxmltree(source, &doc);
 
@@ -761,7 +799,7 @@ impl Document for OwnedWixDocument {
     }
 
     fn node_at(&self, line: usize, column: usize) -> Option<&dyn Node> {
-        fn find_at<'a>(node: &'a WixNode, line: usize, col: usize) -> Option<&'a dyn Node> {
+        fn find_at(node: &WixNode, line: usize, col: usize) -> Option<&dyn Node> {
             let (sl, sc, el, ec) = node.range;
             if line >= sl && line <= el {
                 // Check children first (more specific)
@@ -771,7 +809,9 @@ impl Document for OwnedWixDocument {
                     }
                 }
                 // Check if within this node's range
-                if (line > sl || (line == sl && col >= sc)) && (line < el || (line == el && col <= ec)) {
+                if (line > sl || (line == sl && col >= sc))
+                    && (line < el || (line == el && col <= ec))
+                {
                     return Some(node);
                 }
             }
@@ -820,7 +860,10 @@ mod tests {
         let doc = OwnedWixDocument::parse(source, Path::new("test.wxs")).unwrap();
 
         assert_eq!(doc.source(), source);
-        assert_eq!(doc.path().file_name().unwrap().to_str().unwrap(), "test.wxs");
+        assert_eq!(
+            doc.path().file_name().unwrap().to_str().unwrap(),
+            "test.wxs"
+        );
     }
 
     #[test]

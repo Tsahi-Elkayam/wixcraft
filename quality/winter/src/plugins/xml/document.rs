@@ -11,9 +11,9 @@ use std::sync::Arc;
 
 /// Type alias for disable comment parsing result
 type DisableParseResult = (
-    HashMap<String, HashSet<usize>>,  // disabled_lines
-    HashSet<String>,                   // disabled_file_rules
-    HashMap<String, HashMap<usize, String>>,  // disable_reasons
+    HashMap<String, HashSet<usize>>,         // disabled_lines
+    HashSet<String>,                         // disabled_file_rules
+    HashMap<String, HashMap<usize, String>>, // disable_reasons
 );
 
 /// A node in the XML document
@@ -98,7 +98,10 @@ impl Node for XmlNode {
     }
 
     fn children(&self) -> Vec<&dyn Node> {
-        self.children.iter().map(|c| c.as_ref() as &dyn Node).collect()
+        self.children
+            .iter()
+            .map(|c| c.as_ref() as &dyn Node)
+            .collect()
     }
 
     fn parent(&self) -> Option<&dyn Node> {
@@ -187,10 +190,7 @@ impl XmlDocument {
                     .or_else(|| cap.get(3))
                     .map(|m| m.as_str().trim().to_string());
                 if let Some(r) = reason {
-                    disable_reasons
-                        .entry(rule_id)
-                        .or_default()
-                        .insert(0, r); // 0 means file-level
+                    disable_reasons.entry(rule_id).or_default().insert(0, r); // 0 means file-level
                 }
             }
 

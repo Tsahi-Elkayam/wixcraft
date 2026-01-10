@@ -124,11 +124,7 @@ impl OutputFormatter for TextFormatter {
                         "errors"
                     }
                 );
-                counts.push(if self.colored {
-                    s.red().to_string()
-                } else {
-                    s
-                });
+                counts.push(if self.colored { s.red().to_string() } else { s });
             }
             if result.warning_count > 0 {
                 let s = format!(
@@ -150,7 +146,11 @@ impl OutputFormatter for TextFormatter {
                 let s = format!(
                     "{} {}",
                     result.info_count,
-                    if result.info_count == 1 { "info" } else { "infos" }
+                    if result.info_count == 1 {
+                        "info"
+                    } else {
+                        "infos"
+                    }
                 );
                 counts.push(if self.colored {
                     s.blue().to_string()

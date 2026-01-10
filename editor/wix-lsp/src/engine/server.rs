@@ -121,10 +121,8 @@ impl LspServer {
                 .unwrap_or_else(|_| PathBuf::from("document.wxs"));
 
             let diagnostics = plugin.as_diagnostic().diagnose(content, &path);
-            let lsp_diagnostics: Vec<_> = diagnostics
-                .iter()
-                .map(convert::to_lsp_diagnostic)
-                .collect();
+            let lsp_diagnostics: Vec<_> =
+                diagnostics.iter().map(convert::to_lsp_diagnostic).collect();
 
             self.client
                 .publish_diagnostics(uri.clone(), lsp_diagnostics, None)
@@ -212,10 +210,7 @@ impl LanguageServer for LspServer {
                     position.character + 1,
                 );
 
-                let items: Vec<_> = completions
-                    .iter()
-                    .map(convert::to_lsp_completion)
-                    .collect();
+                let items: Vec<_> = completions.iter().map(convert::to_lsp_completion).collect();
 
                 return Ok(Some(CompletionResponse::Array(items)));
             }
@@ -230,9 +225,10 @@ impl LanguageServer for LspServer {
 
         if let Some(plugin) = self.plugins.plugin_for_uri(uri.as_str()) {
             if let Some(content) = self.documents.get_content(uri) {
-                if let Some(info) = plugin
-                    .as_hover()
-                    .hover(&content, position.line + 1, position.character + 1)
+                if let Some(info) =
+                    plugin
+                        .as_hover()
+                        .hover(&content, position.line + 1, position.character + 1)
                 {
                     return Ok(Some(convert::to_lsp_hover(&info)));
                 }

@@ -145,11 +145,11 @@ impl ConditionEvaluator {
             Condition::AttributeMissing { name } => node.attribute(name).is_none(),
 
             Condition::AttributeEquals { name, value } => {
-                node.attribute(name).map_or(false, |v| v == value)
+                node.attribute(name).is_some_and(|v| v == value)
             }
 
             Condition::AttributeNotEquals { name, value } => {
-                node.attribute(name).map_or(true, |v| v != value)
+                node.attribute(name).is_none_or(|v| v != value)
             }
 
             Condition::AttributeMatches { name, pattern } => {
@@ -168,13 +168,13 @@ impl ConditionEvaluator {
                 }
             }
 
-            Condition::AttributeIn { name, values } => {
-                node.attribute(name).map_or(false, |v| values.iter().any(|val| val == v))
-            }
+            Condition::AttributeIn { name, values } => node
+                .attribute(name)
+                .is_some_and(|v| values.iter().any(|val| val == v)),
 
-            Condition::AttributeNotIn { name, values } => {
-                node.attribute(name).map_or(true, |v| !values.iter().any(|val| val == v))
-            }
+            Condition::AttributeNotIn { name, values } => node
+                .attribute(name)
+                .is_none_or(|v| !values.iter().any(|val| val == v)),
 
             Condition::AttributeExists { name } => node.attribute(name).is_some(),
 
@@ -187,23 +187,17 @@ impl ConditionEvaluator {
                 op.evaluate(count, *value)
             }
 
-            Condition::ParentIs { element } => {
-                node.parent().map_or(false, |p| p.kind() == element)
-            }
+            Condition::ParentIs { element } => node.parent().is_some_and(|p| p.kind() == element),
 
-            Condition::ParentNot { element } => {
-                node.parent().map_or(true, |p| p.kind() != element)
-            }
+            Condition::ParentNot { element } => node.parent().is_none_or(|p| p.kind() != element),
 
-            Condition::ParentIn { elements } => {
-                node.parent()
-                    .map_or(false, |p| elements.iter().any(|e| e == p.kind()))
-            }
+            Condition::ParentIn { elements } => node
+                .parent()
+                .is_some_and(|p| elements.iter().any(|e| e == p.kind())),
 
-            Condition::ParentNotIn { elements } => {
-                node.parent()
-                    .map_or(false, |p| !elements.iter().any(|e| e == p.kind()))
-            }
+            Condition::ParentNotIn { elements } => node
+                .parent()
+                .is_some_and(|p| !elements.iter().any(|e| e == p.kind())),
 
             Condition::DepthExceeds { max } => {
                 let depth = self.calculate_depth(node);
@@ -214,13 +208,9 @@ impl ConditionEvaluator {
 
             Condition::TextContains { substring } => node.text().contains(substring),
 
-            Condition::All(conditions) => {
-                conditions.iter().all(|c| self.evaluate(c, node))
-            }
+            Condition::All(conditions) => conditions.iter().all(|c| self.evaluate(c, node)),
 
-            Condition::Any(conditions) => {
-                conditions.iter().any(|c| self.evaluate(c, node))
-            }
+            Condition::Any(conditions) => conditions.iter().any(|c| self.evaluate(c, node)),
 
             Condition::Not(condition) => !self.evaluate(condition, node),
 
@@ -419,8 +409,7 @@ mod tests {
         };
         assert!(evaluator.evaluate(&cond, &node));
 
-        let node_with_upgrade =
-            MockNode::new("Package").with_child(MockNode::new("MajorUpgrade"));
+        let node_with_upgrade = MockNode::new("Package").with_child(MockNode::new("MajorUpgrade"));
         assert!(!evaluator.evaluate(&cond, &node_with_upgrade));
     }
 

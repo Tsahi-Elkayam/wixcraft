@@ -464,11 +464,7 @@ mod tests {
 
     #[test]
     fn test_rule_creation() {
-        let rule = Rule::new(
-            "test-rule",
-            "!attributes.Id",
-            "Missing Id attribute",
-        );
+        let rule = Rule::new("test-rule", "!attributes.Id", "Missing Id attribute");
 
         assert_eq!(rule.id, "test-rule");
         assert_eq!(rule.condition, "!attributes.Id");
@@ -542,16 +538,14 @@ rules:
         assert!(!rule.applies_to_context("shell")); // No context means main only
 
         // Rule with specific context
-        let rule2 = Rule::new("test2", "cond", "msg")
-            .with_context(&["shell", "powershell"]);
+        let rule2 = Rule::new("test2", "cond", "msg").with_context(&["shell", "powershell"]);
         assert!(rule2.applies_to_context("shell"));
         assert!(rule2.applies_to_context("powershell"));
         assert!(!rule2.applies_to_context("groovy"));
         assert!(!rule2.applies_to_context("main"));
 
         // Rule with wildcard context
-        let rule3 = Rule::new("test3", "cond", "msg")
-            .with_context(&["*"]);
+        let rule3 = Rule::new("test3", "cond", "msg").with_context(&["*"]);
         assert!(rule3.applies_to_context("shell"));
         assert!(rule3.applies_to_context("powershell"));
         assert!(rule3.applies_to_context("groovy"));

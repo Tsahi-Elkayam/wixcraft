@@ -283,7 +283,7 @@ mod tests {
         assert_eq!(config.attr_threshold, 3); // default_attr_threshold()
         assert!(config.trim_trailing_whitespace); // default_true()
         assert!(config.insert_final_newline); // default_true()
-        // This was explicitly set
+                                              // This was explicitly set
         assert!(config.sort_elements);
     }
 

@@ -156,11 +156,7 @@ impl XmlWriter {
     /// Get current line length (for wrapping decisions)
     #[allow(dead_code)]
     pub fn current_line_len(&self) -> usize {
-        self.output
-            .lines()
-            .last()
-            .map(|l| l.len())
-            .unwrap_or(0)
+        self.output.lines().last().map(|l| l.len()).unwrap_or(0)
     }
 }
 

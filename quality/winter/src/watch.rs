@@ -56,7 +56,9 @@ impl Watcher {
                 path.as_path()
             };
 
-            debouncer.watcher().watch(watch_path, RecursiveMode::Recursive)?;
+            debouncer
+                .watcher()
+                .watch(watch_path, RecursiveMode::Recursive)?;
         }
 
         Ok(Self {

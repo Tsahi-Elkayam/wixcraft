@@ -232,7 +232,10 @@ pub struct DynamicPlugin {
 
 impl DynamicPlugin {
     /// Create a new dynamic plugin from manifest
-    pub fn from_manifest(manifest: PluginManifest, manifest_dir: &Path) -> Result<Self, PluginLoadError> {
+    pub fn from_manifest(
+        manifest: PluginManifest,
+        manifest_dir: &Path,
+    ) -> Result<Self, PluginLoadError> {
         let mut rules = Vec::new();
 
         // Load inline rules
@@ -376,10 +379,7 @@ impl Default for PluginManager {
 impl PluginManager {
     /// Create a new plugin manager
     pub fn new() -> Self {
-        let mut search_paths = vec![
-            PathBuf::from(".winter/plugins"),
-            PathBuf::from("plugins"),
-        ];
+        let mut search_paths = vec![PathBuf::from(".winter/plugins"), PathBuf::from("plugins")];
 
         // Add user config directory
         if let Some(config_dir) = dirs::config_dir() {
@@ -407,12 +407,17 @@ impl PluginManager {
     pub fn load_plugin(&mut self, manifest_path: &Path) -> Result<String, PluginLoadError> {
         let content = std::fs::read_to_string(manifest_path)?;
 
-        let ext = manifest_path.extension().and_then(|e| e.to_str()).unwrap_or("");
+        let ext = manifest_path
+            .extension()
+            .and_then(|e| e.to_str())
+            .unwrap_or("");
         let manifest: PluginManifest = match ext {
-            "yaml" | "yml" => serde_yaml::from_str(&content).map_err(|e| PluginLoadError::Parse {
-                file: manifest_path.display().to_string(),
-                message: e.to_string(),
-            })?,
+            "yaml" | "yml" => {
+                serde_yaml::from_str(&content).map_err(|e| PluginLoadError::Parse {
+                    file: manifest_path.display().to_string(),
+                    message: e.to_string(),
+                })?
+            }
             "json" => serde_json::from_str(&content).map_err(|e| PluginLoadError::Parse {
                 file: manifest_path.display().to_string(),
                 message: e.to_string(),
@@ -1003,7 +1008,11 @@ rules:
         let mut engine = Engine::new(config);
 
         for plugin in manager.all_plugins() {
-            println!("Registering plugin: {} with {} extensions", plugin.id(), plugin.extensions().len());
+            println!(
+                "Registering plugin: {} with {} extensions",
+                plugin.id(),
+                plugin.extensions().len()
+            );
             engine.register_plugin(plugin);
         }
 

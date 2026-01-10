@@ -221,10 +221,7 @@ fn expand_files(patterns: &[String]) -> Result<Vec<String>, Box<dyn std::error::
     Ok(files)
 }
 
-fn process_stdin(
-    formatter: &Formatter,
-    cli: &Cli,
-) -> Result<bool, Box<dyn std::error::Error>> {
+fn process_stdin(formatter: &Formatter, cli: &Cli) -> Result<bool, Box<dyn std::error::Error>> {
     let mut source = String::new();
     io::stdin().read_to_string(&mut source)?;
 

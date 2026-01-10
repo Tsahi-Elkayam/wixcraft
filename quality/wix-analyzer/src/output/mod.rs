@@ -1,16 +1,18 @@
 //! Output formatters for analysis results
 
-mod text;
-mod json;
-mod sarif;
 mod html;
+mod json;
 mod metrics;
+mod sarif;
+mod text;
 
-pub use text::TextFormatter;
-pub use json::JsonFormatter;
-pub use sarif::SarifFormatter;
 pub use html::HtmlFormatter;
-pub use metrics::{MetricsFormatter, MetricsSummary, SeverityCounts, TypeCounts, CategoryCounts, RuleCount};
+pub use json::JsonFormatter;
+pub use metrics::{
+    CategoryCounts, MetricsFormatter, MetricsSummary, RuleCount, SeverityCounts, TypeCounts,
+};
+pub use sarif::SarifFormatter;
+pub use text::TextFormatter;
 
 use crate::core::{AnalysisResult, Diagnostic};
 
@@ -70,14 +72,26 @@ mod tests {
     fn test_output_format_from_str() {
         assert_eq!("text".parse::<OutputFormat>().unwrap(), OutputFormat::Text);
         assert_eq!("json".parse::<OutputFormat>().unwrap(), OutputFormat::Json);
-        assert_eq!("sarif".parse::<OutputFormat>().unwrap(), OutputFormat::Sarif);
+        assert_eq!(
+            "sarif".parse::<OutputFormat>().unwrap(),
+            OutputFormat::Sarif
+        );
         assert_eq!("html".parse::<OutputFormat>().unwrap(), OutputFormat::Html);
-        assert_eq!("metrics".parse::<OutputFormat>().unwrap(), OutputFormat::Metrics);
-        assert_eq!("metrics-json".parse::<OutputFormat>().unwrap(), OutputFormat::MetricsJson);
+        assert_eq!(
+            "metrics".parse::<OutputFormat>().unwrap(),
+            OutputFormat::Metrics
+        );
+        assert_eq!(
+            "metrics-json".parse::<OutputFormat>().unwrap(),
+            OutputFormat::MetricsJson
+        );
         assert_eq!("TEXT".parse::<OutputFormat>().unwrap(), OutputFormat::Text);
         assert_eq!("JSON".parse::<OutputFormat>().unwrap(), OutputFormat::Json);
         assert_eq!("HTML".parse::<OutputFormat>().unwrap(), OutputFormat::Html);
-        assert_eq!("METRICS".parse::<OutputFormat>().unwrap(), OutputFormat::Metrics);
+        assert_eq!(
+            "METRICS".parse::<OutputFormat>().unwrap(),
+            OutputFormat::Metrics
+        );
     }
 
     #[test]

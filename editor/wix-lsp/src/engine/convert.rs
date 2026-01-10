@@ -68,13 +68,7 @@ pub fn to_lsp_document_symbol(symbol: &Symbol) -> LspDocumentSymbol {
         children: if symbol.children.is_empty() {
             None
         } else {
-            Some(
-                symbol
-                    .children
-                    .iter()
-                    .map(to_lsp_document_symbol)
-                    .collect(),
-            )
+            Some(symbol.children.iter().map(to_lsp_document_symbol).collect())
         },
         tags: None,
         deprecated: None,

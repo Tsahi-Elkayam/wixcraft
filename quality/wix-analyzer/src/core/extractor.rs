@@ -76,7 +76,9 @@ fn extract_from_node(node: Node, doc: &WixDocument, result: &mut ExtractionResul
             if let Some(id) = node.attribute("Id") {
                 let range = doc.node_range(&node);
                 let location = Location::new(doc.file().to_path_buf(), range);
-                result.references.push(SymbolReference::new(id, kind, location));
+                result
+                    .references
+                    .push(SymbolReference::new(id, kind, location));
             }
         }
     }
@@ -206,7 +208,11 @@ mod tests {
         let result = extract_from_source(source, Path::new("test.wxs")).unwrap();
 
         assert_eq!(result.definitions.len(), 1);
-        assert!(result.definitions[0].detail.as_ref().unwrap().contains("Guid: *"));
+        assert!(result.definitions[0]
+            .detail
+            .as_ref()
+            .unwrap()
+            .contains("Guid: *"));
     }
 
     #[test]

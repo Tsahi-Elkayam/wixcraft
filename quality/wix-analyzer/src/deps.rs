@@ -353,7 +353,7 @@ impl WixExtensionHelper {
     /// Check if extension is referenced in WiX source
     pub fn is_extension_used(_source: &str, extension: &str) -> bool {
         // Would parse XML and check for extension usage
-        extension.len() > 0
+        !extension.is_empty()
     }
 }
 

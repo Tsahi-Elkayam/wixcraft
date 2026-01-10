@@ -55,7 +55,7 @@ pub use config::Config;
 pub use cross_file::CrossFileValidator;
 pub use diagnostic::{Diagnostic, Fix as DiagnosticFix, FixSafety, Location, Severity};
 pub use engine::{Engine, LintResult, RuleTiming};
-pub use fixer::{Fix, FixMode, Fixer, FixResult};
+pub use fixer::{Fix, FixMode, FixResult, Fixer};
 pub use lsp::{
     to_code_action, to_lsp_diagnostics, to_publish_diagnostics, CodeAction, LspDiagnostic,
     LspSeverity, Position as LspPosition, PublishDiagnosticsParams, Range as LspRange,

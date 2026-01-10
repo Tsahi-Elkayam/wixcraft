@@ -333,7 +333,9 @@ impl LicenseCompatibility {
         let mut issues = Vec::new();
 
         // Check for copyleft contamination
-        let has_gpl = licenses.iter().any(|l| matches!(l, LicenseType::GPL2 | LicenseType::GPL3));
+        let has_gpl = licenses
+            .iter()
+            .any(|l| matches!(l, LicenseType::GPL2 | LicenseType::GPL3));
         let has_proprietary = licenses.contains(&LicenseType::Proprietary);
 
         if has_gpl && has_proprietary {
@@ -467,15 +469,15 @@ mod tests {
 
     #[test]
     fn test_detected_license_with_source() {
-        let license = DetectedLicense::new(LicenseType::MIT, 0.95)
-            .with_source(PathBuf::from("LICENSE"));
+        let license =
+            DetectedLicense::new(LicenseType::MIT, 0.95).with_source(PathBuf::from("LICENSE"));
         assert!(license.source_file.is_some());
     }
 
     #[test]
     fn test_detected_license_with_copyright() {
-        let license = DetectedLicense::new(LicenseType::MIT, 0.95)
-            .with_copyright("Acme Inc", "2024");
+        let license =
+            DetectedLicense::new(LicenseType::MIT, 0.95).with_copyright("Acme Inc", "2024");
         assert_eq!(license.copyright_holder, Some("Acme Inc".to_string()));
         assert_eq!(license.year, Some("2024".to_string()));
     }

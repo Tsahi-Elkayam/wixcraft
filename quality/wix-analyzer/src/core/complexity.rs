@@ -189,8 +189,11 @@ impl ComplexityCalculator {
                 self.result.cognitive += 1;
             }
             // Sequences add complexity
-            "InstallExecuteSequence" | "InstallUISequence" | "AdminExecuteSequence"
-            | "AdminUISequence" | "AdvertiseExecuteSequence" => {
+            "InstallExecuteSequence"
+            | "InstallUISequence"
+            | "AdminExecuteSequence"
+            | "AdminUISequence"
+            | "AdvertiseExecuteSequence" => {
                 self.result.cognitive += 2;
             }
             // Nested structures add cognitive load
@@ -296,7 +299,10 @@ impl ProjectComplexity {
     }
 
     /// Get files exceeding threshold
-    pub fn files_exceeding_threshold(&self, threshold: &ComplexityThreshold) -> Vec<&FileComplexity> {
+    pub fn files_exceeding_threshold(
+        &self,
+        threshold: &ComplexityThreshold,
+    ) -> Vec<&FileComplexity> {
         self.files
             .iter()
             .filter(|f| f.exceeds_threshold(threshold))

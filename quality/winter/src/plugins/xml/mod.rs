@@ -74,12 +74,12 @@ impl Plugin for XmlPlugin {
 
             let content = std::fs::read_to_string(&path)?;
             let rule_file: crate::rule::RuleFile = match ext {
-                "yaml" | "yml" => serde_yaml::from_str(&content).map_err(|e| {
-                    RuleLoadError::Parse {
+                "yaml" | "yml" => {
+                    serde_yaml::from_str(&content).map_err(|e| RuleLoadError::Parse {
                         file: path.display().to_string(),
                         message: e.to_string(),
-                    }
-                })?,
+                    })?
+                }
                 "json" => serde_json::from_str(&content).map_err(|e| RuleLoadError::Parse {
                     file: path.display().to_string(),
                     message: e.to_string(),

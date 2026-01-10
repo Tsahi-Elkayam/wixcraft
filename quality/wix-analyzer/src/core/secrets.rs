@@ -437,10 +437,7 @@ mod tests {
     #[test]
     fn test_detect_private_key() {
         let detector = SecretsDetector::new();
-        let secrets = detector.scan_file(
-            "test.wxs",
-            r#"-----BEGIN RSA PRIVATE KEY-----"#,
-        );
+        let secrets = detector.scan_file("test.wxs", r#"-----BEGIN RSA PRIVATE KEY-----"#);
 
         assert!(!secrets.is_empty());
         assert_eq!(secrets[0].secret_type, SecretType::PrivateKey);
@@ -474,10 +471,8 @@ mod tests {
     #[test]
     fn test_exclude_variables() {
         let detector = SecretsDetector::new();
-        let secrets = detector.scan_file(
-            "test.wxs",
-            r#"<Property Id="KEY" Value="$(var.ApiKey)" />"#,
-        );
+        let secrets =
+            detector.scan_file("test.wxs", r#"<Property Id="KEY" Value="$(var.ApiKey)" />"#);
 
         assert!(secrets.is_empty());
     }
@@ -534,7 +529,10 @@ mod tests {
 
     #[test]
     fn test_secret_type_severity() {
-        assert_eq!(SecretType::AwsAccessKey.severity(), SecretSeverity::Critical);
+        assert_eq!(
+            SecretType::AwsAccessKey.severity(),
+            SecretSeverity::Critical
+        );
         assert_eq!(SecretType::Password.severity(), SecretSeverity::High);
         assert_eq!(SecretType::ApiKey.severity(), SecretSeverity::Medium);
         assert_eq!(SecretType::GenericSecret.severity(), SecretSeverity::Low);

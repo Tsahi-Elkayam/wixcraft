@@ -1,24 +1,26 @@
 //! Best practices analyzer - efficiency, idioms, performance, maintainability
 
+use super::Analyzer;
 use crate::core::{
-    AnalysisResult, Category, Diagnostic, Fix, FixAction, InsertPosition, Location,
-    SymbolIndex, WixDocument,
+    AnalysisResult, Category, Diagnostic, Fix, FixAction, InsertPosition, Location, SymbolIndex,
+    WixDocument,
 };
 use regex::Regex;
 use roxmltree::Node;
 use std::collections::{HashMap, HashSet};
 use std::sync::LazyLock;
-use super::Analyzer;
 
 /// GUID pattern
 static GUID_REGEX: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"^\{?[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\}?$").unwrap()
+    Regex::new(
+        r"^\{?[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\}?$",
+    )
+    .unwrap()
 });
 
 /// Windows absolute path pattern
-static WINDOWS_ABSOLUTE_PATH: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"^[A-Za-z]:\\").unwrap()
-});
+static WINDOWS_ABSOLUTE_PATH: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"^[A-Za-z]:\\").unwrap());
 
 /// Best practices analyzer
 pub struct BestPracticesAnalyzer {
@@ -174,9 +176,9 @@ impl BestPracticesAnalyzer {
     fn check_major_upgrade(&self, doc: &WixDocument, result: &mut AnalysisResult) {
         for node in doc.root().descendants() {
             if node.tag_name().name() == "Package" {
-                let has_major_upgrade = node.children().any(|child| {
-                    child.is_element() && child.tag_name().name() == "MajorUpgrade"
-                });
+                let has_major_upgrade = node
+                    .children()
+                    .any(|child| child.is_element() && child.tag_name().name() == "MajorUpgrade");
 
                 if !has_major_upgrade {
                     let range = doc.node_range(&node);
@@ -214,7 +216,10 @@ impl BestPracticesAnalyzer {
                             Diagnostic::warning(
                                 "BP-IDIOM-002",
                                 Category::BestPractice,
-                                format!("Component uses hardcoded GUID '{}'. Consider using Guid=\"*\"", guid),
+                                format!(
+                                    "Component uses hardcoded GUID '{}'. Consider using Guid=\"*\"",
+                                    guid
+                                ),
                                 location.clone(),
                             )
                             .with_fix(Fix::new(
@@ -237,22 +242,20 @@ impl BestPracticesAnalyzer {
             if node.tag_name().name() == "Product" {
                 let range = doc.node_range(&node);
                 let location = Location::new(doc.file().to_path_buf(), range);
-                result.add(
-                    Diagnostic::warning(
-                        "BP-IDIOM-003",
-                        Category::BestPractice,
-                        "Product element is deprecated in WiX v4. Use Package instead",
-                        location,
-                    ),
-                );
+                result.add(Diagnostic::warning(
+                    "BP-IDIOM-003",
+                    Category::BestPractice,
+                    "Product element is deprecated in WiX v4. Use Package instead",
+                    location,
+                ));
             }
         }
     }
 
     fn check_upgrade_code(&self, doc: &WixDocument, result: &mut AnalysisResult) {
         for node in doc.root().descendants() {
-            if node.tag_name().name() == "Package" {
-                if node.attribute("UpgradeCode").is_none() {
+            if node.tag_name().name() == "Package"
+                && node.attribute("UpgradeCode").is_none() {
                     let range = doc.node_range(&node);
                     let location = Location::new(doc.file().to_path_buf(), range);
                     result.add(
@@ -265,7 +268,6 @@ impl BestPracticesAnalyzer {
                         .with_help("Generate a GUID and use it consistently across versions"),
                     );
                 }
-            }
         }
     }
 
@@ -304,7 +306,13 @@ impl BestPracticesAnalyzer {
         self.check_depth_recursive(doc.root(), doc, 0, result);
     }
 
-    fn check_depth_recursive(&self, node: Node, doc: &WixDocument, depth: usize, result: &mut AnalysisResult) {
+    fn check_depth_recursive(
+        &self,
+        node: Node,
+        doc: &WixDocument,
+        depth: usize,
+        result: &mut AnalysisResult,
+    ) {
         let new_depth = if node.is_element()
             && matches!(node.tag_name().name(), "Directory" | "StandardDirectory")
         {
@@ -372,7 +380,12 @@ impl BestPracticesAnalyzer {
                     "Component" if !id.starts_with("C_") && !id.starts_with("cmp") => {
                         Some("Consider prefixing Component IDs with 'C_' or 'cmp'")
                     }
-                    "Directory" if !id.starts_with("D_") && !id.starts_with("dir") && id != "TARGETDIR" && !id.starts_with("INSTALL") => {
+                    "Directory"
+                        if !id.starts_with("D_")
+                            && !id.starts_with("dir")
+                            && id != "TARGETDIR"
+                            && !id.starts_with("INSTALL") =>
+                    {
                         Some("Consider prefixing Directory IDs with 'D_' or 'dir'")
                     }
                     "Feature" if !id.starts_with("F_") && !id.starts_with("feat") => {
@@ -432,37 +445,47 @@ mod tests {
         // 3 files per component allowed, no warning
         let result = analyze_with_thresholds(
             r#"<Wix><Component Id="C1"><File Id="F1" /><File Id="F2" /><File Id="F3" /></Component></Wix>"#,
-            3, 10
+            3,
+            10,
         );
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-PERF-001"));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-PERF-001"));
     }
 
     // === Efficiency Tests ===
 
     #[test]
     fn test_duplicate_component() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Component Id="C1" />
             <Component Id="C1" />
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().any(|d| d.rule_id == "BP-EFF-001"));
     }
 
     #[test]
     fn test_duplicate_component_group() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <ComponentGroup Id="CG1" />
             <ComponentGroup Id="CG1" />
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().any(|d| d.rule_id == "BP-EFF-001"));
     }
 
     #[test]
     fn test_no_duplicate_component() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Component Id="C1" />
             <Component Id="C2" />
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-EFF-001"));
     }
 
@@ -474,37 +497,51 @@ mod tests {
 
     #[test]
     fn test_used_component() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Component Id="C1" />
             <Feature Id="F1"><ComponentRef Id="C1" /></Feature>
-        </Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-EFF-002" || !d.message.contains("C1")));
+        </Wix>"#,
+        );
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-EFF-002" || !d.message.contains("C1")));
     }
 
     #[test]
     fn test_used_component_group() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <ComponentGroup Id="CG1" />
             <Feature Id="F1"><ComponentGroupRef Id="CG1" /></Feature>
-        </Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-EFF-002" || !d.message.contains("CG1")));
+        </Wix>"#,
+        );
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-EFF-002" || !d.message.contains("CG1")));
     }
 
     #[test]
     fn test_duplicate_property() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Property Id="P1" Value="a" />
             <Property Id="P1" Value="b" />
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().any(|d| d.rule_id == "BP-EFF-003"));
     }
 
     #[test]
     fn test_no_duplicate_property() {
-        let result = analyze(r#"<Wix>
+        let result = analyze(
+            r#"<Wix>
             <Property Id="P1" Value="a" />
             <Property Id="P2" Value="b" />
-        </Wix>"#);
+        </Wix>"#,
+        );
         assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-EFF-003"));
     }
 
@@ -513,63 +550,101 @@ mod tests {
     #[test]
     fn test_missing_major_upgrade() {
         let result = analyze(r#"<Wix><Package Name="Test" Version="1.0" /></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d| d.rule_id == "BP-IDIOM-001"));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id == "BP-IDIOM-001"));
     }
 
     #[test]
     fn test_has_major_upgrade() {
         let result = analyze(r#"<Wix><Package Name="Test"><MajorUpgrade /></Package></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-IDIOM-001"));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-IDIOM-001"));
     }
 
     #[test]
     fn test_hardcoded_guid() {
-        let result = analyze(r#"<Wix><Component Id="C1" Guid="{12345678-1234-1234-1234-123456789ABC}" /></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d| d.rule_id == "BP-IDIOM-002"));
+        let result = analyze(
+            r#"<Wix><Component Id="C1" Guid="{12345678-1234-1234-1234-123456789ABC}" /></Wix>"#,
+        );
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id == "BP-IDIOM-002"));
     }
 
     #[test]
     fn test_auto_guid_ok() {
         let result = analyze(r#"<Wix><Component Id="C1" Guid="*" /></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-IDIOM-002"));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-IDIOM-002"));
     }
 
     #[test]
     fn test_guid_without_braces() {
-        let result = analyze(r#"<Wix><Component Id="C1" Guid="12345678-1234-1234-1234-123456789ABC" /></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d| d.rule_id == "BP-IDIOM-002"));
+        let result = analyze(
+            r#"<Wix><Component Id="C1" Guid="12345678-1234-1234-1234-123456789ABC" /></Wix>"#,
+        );
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id == "BP-IDIOM-002"));
     }
 
     #[test]
     fn test_deprecated_product() {
         let result = analyze(r#"<Wix><Product Id="*" Name="Test" /></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d| d.rule_id == "BP-IDIOM-003"));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id == "BP-IDIOM-003"));
     }
 
     #[test]
     fn test_missing_upgrade_code() {
         let result = analyze(r#"<Wix><Package Name="Test" /></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d| d.rule_id == "BP-IDIOM-004"));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id == "BP-IDIOM-004"));
     }
 
     #[test]
     fn test_has_upgrade_code() {
-        let result = analyze(r#"<Wix><Package Name="Test" UpgradeCode="{12345678-1234-1234-1234-123456789ABC}" /></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-IDIOM-004"));
+        let result = analyze(
+            r#"<Wix><Package Name="Test" UpgradeCode="{12345678-1234-1234-1234-123456789ABC}" /></Wix>"#,
+        );
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-IDIOM-004"));
     }
 
     // === Performance Tests ===
 
     #[test]
     fn test_multi_file_component() {
-        let result = analyze(r#"<Wix><Component Id="C1"><File Id="F1" /><File Id="F2" /></Component></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d| d.rule_id == "BP-PERF-001"));
+        let result = analyze(
+            r#"<Wix><Component Id="C1"><File Id="F1" /><File Id="F2" /></Component></Wix>"#,
+        );
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id == "BP-PERF-001"));
     }
 
     #[test]
     fn test_single_file_component_ok() {
         let result = analyze(r#"<Wix><Component Id="C1"><File Id="F1" /></Component></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-PERF-001"));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-PERF-001"));
     }
 
     #[test]
@@ -599,9 +674,13 @@ mod tests {
                     </Directory>
                 </Directory>
             </Wix>"#,
-            1, 10
+            1,
+            10,
         );
-        assert!(result.diagnostics.iter().any(|d| d.rule_id == "BP-PERF-002"));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id == "BP-PERF-002"));
     }
 
     #[test]
@@ -615,9 +694,13 @@ mod tests {
                     </Directory>
                 </StandardDirectory>
             </Wix>"#,
-            1, 2
+            1,
+            2,
         );
-        assert!(result.diagnostics.iter().any(|d| d.rule_id == "BP-PERF-002"));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id == "BP-PERF-002"));
     }
 
     #[test]
@@ -628,9 +711,13 @@ mod tests {
                     <Directory Id="D2" />
                 </Directory>
             </Wix>"#,
-            1, 10
+            1,
+            10,
         );
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-PERF-002"));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-PERF-002"));
     }
 
     // === Maintainability Tests ===
@@ -638,111 +725,165 @@ mod tests {
     #[test]
     fn test_hardcoded_path() {
         let result = analyze(r#"<Wix><File Id="F1" Source="C:\Build\app.exe" /></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d| d.rule_id == "BP-MAINT-001"));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id == "BP-MAINT-001"));
     }
 
     #[test]
     fn test_relative_path_ok() {
         let result = analyze(r#"<Wix><File Id="F1" Source="$(var.SourceDir)\app.exe" /></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-MAINT-001"));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-MAINT-001"));
     }
 
     #[test]
     fn test_lowercase_drive_path() {
         let result = analyze(r#"<Wix><File Id="F1" Source="d:\projects\app.exe" /></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d| d.rule_id == "BP-MAINT-001"));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id == "BP-MAINT-001"));
     }
 
     #[test]
     fn test_component_naming_convention() {
         let result = analyze(r#"<Wix><Component Id="BadName" /></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d| d.rule_id == "BP-MAINT-002" && d.message.contains("Component")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id == "BP-MAINT-002" && d.message.contains("Component")));
     }
 
     #[test]
     fn test_component_cmp_prefix_ok() {
         let result = analyze(r#"<Wix><Component Id="cmpMyComponent" /></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-MAINT-002" || !d.message.contains("Component")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-MAINT-002" || !d.message.contains("Component")));
     }
 
     #[test]
     fn test_component_c_prefix_ok() {
         let result = analyze(r#"<Wix><Component Id="C_MyComponent" /></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-MAINT-002" || !d.message.contains("Component")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-MAINT-002" || !d.message.contains("Component")));
     }
 
     #[test]
     fn test_directory_naming_convention() {
         let result = analyze(r#"<Wix><Directory Id="BadDirName" /></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d| d.rule_id == "BP-MAINT-002" && d.message.contains("Directory")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id == "BP-MAINT-002" && d.message.contains("Directory")));
     }
 
     #[test]
     fn test_directory_dir_prefix_ok() {
         let result = analyze(r#"<Wix><Directory Id="dirMyDir" /></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-MAINT-002" || !d.message.contains("Directory")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-MAINT-002" || !d.message.contains("Directory")));
     }
 
     #[test]
     fn test_directory_targetdir_ok() {
         let result = analyze(r#"<Wix><Directory Id="TARGETDIR" /></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-MAINT-002" || !d.message.contains("Directory")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-MAINT-002" || !d.message.contains("Directory")));
     }
 
     #[test]
     fn test_directory_installdir_ok() {
         let result = analyze(r#"<Wix><Directory Id="INSTALLDIR" /></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-MAINT-002" || !d.message.contains("Directory")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-MAINT-002" || !d.message.contains("Directory")));
     }
 
     #[test]
     fn test_feature_naming_convention() {
         let result = analyze(r#"<Wix><Feature Id="BadFeatureName" /></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d| d.rule_id == "BP-MAINT-002" && d.message.contains("Feature")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id == "BP-MAINT-002" && d.message.contains("Feature")));
     }
 
     #[test]
     fn test_feature_feat_prefix_ok() {
         let result = analyze(r#"<Wix><Feature Id="featMain" /></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-MAINT-002" || !d.message.contains("Feature")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-MAINT-002" || !d.message.contains("Feature")));
     }
 
     #[test]
     fn test_feature_f_prefix_ok() {
         let result = analyze(r#"<Wix><Feature Id="F_Main" /></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-MAINT-002" || !d.message.contains("Feature")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-MAINT-002" || !d.message.contains("Feature")));
     }
 
     #[test]
     fn test_property_lowercase_warning() {
         let result = analyze(r#"<Wix><Property Id="myProperty" Value="test" /></Wix>"#);
-        assert!(result.diagnostics.iter().any(|d| d.rule_id == "BP-MAINT-002" && d.message.contains("Property")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .any(|d| d.rule_id == "BP-MAINT-002" && d.message.contains("Property")));
     }
 
     #[test]
     fn test_property_all_uppercase_ok() {
         let result = analyze(r#"<Wix><Property Id="MY_PROPERTY" Value="test" /></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-MAINT-002" || !d.message.contains("Property")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-MAINT-002" || !d.message.contains("Property")));
     }
 
     #[test]
     fn test_property_underscore_prefix_ok() {
         let result = analyze(r#"<Wix><Property Id="_internalProp" Value="test" /></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-MAINT-002" || !d.message.contains("Property")));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-MAINT-002" || !d.message.contains("Property")));
     }
 
     #[test]
     fn test_id_auto_generated_skipped() {
         // Id="*" should not trigger naming convention warnings
         let result = analyze(r#"<Wix><Component Id="*" /></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-MAINT-002"));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-MAINT-002"));
     }
 
     #[test]
     fn test_id_binding_expression_skipped() {
         // Id="!(bind.xxx)" should not trigger naming convention warnings
         let result = analyze(r#"<Wix><Component Id="!(bind.ComponentId)" /></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-MAINT-002"));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-MAINT-002"));
     }
 
     #[test]
@@ -764,13 +905,19 @@ mod tests {
     fn test_component_without_guid() {
         // Component without Guid should not crash hardcoded guid check
         let result = analyze(r#"<Wix><Component Id="C1" /></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-IDIOM-002"));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-IDIOM-002"));
     }
 
     #[test]
     fn test_file_without_source() {
         // File without Source should not crash
         let result = analyze(r#"<Wix><File Id="F1" /></Wix>"#);
-        assert!(result.diagnostics.iter().all(|d| d.rule_id != "BP-MAINT-001"));
+        assert!(result
+            .diagnostics
+            .iter()
+            .all(|d| d.rule_id != "BP-MAINT-001"));
     }
 }

@@ -8,6 +8,7 @@ use std::path::{Path, PathBuf};
 /// Main engine configuration
 #[derive(Debug, Clone, Deserialize)]
 #[serde(default)]
+#[derive(Default)]
 pub struct EngineConfig {
     /// Engine settings
     pub engine: EngineSettings,
@@ -39,14 +40,6 @@ pub struct PluginSettings {
     pub enabled: Vec<String>,
 }
 
-impl Default for EngineConfig {
-    fn default() -> Self {
-        Self {
-            engine: EngineSettings::default(),
-            plugins: PluginSettings::default(),
-        }
-    }
-}
 
 impl Default for EngineSettings {
     fn default() -> Self {
@@ -184,8 +177,8 @@ impl Default for CapabilityConfig {
 impl PluginManifest {
     /// Load plugin manifest from YAML
     pub fn load(path: &Path) -> Result<Self, String> {
-        let content = std::fs::read_to_string(path)
-            .map_err(|e| format!("Failed to read manifest: {}", e))?;
+        let content =
+            std::fs::read_to_string(path).map_err(|e| format!("Failed to read manifest: {}", e))?;
 
         serde_yaml::from_str(&content).map_err(|e| format!("Failed to parse manifest: {}", e))
     }

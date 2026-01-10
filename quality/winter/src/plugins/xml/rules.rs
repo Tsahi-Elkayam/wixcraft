@@ -18,9 +18,7 @@ pub fn builtin_rules() -> Vec<Rule> {
         )
         .with_severity(Severity::Info)
         .with_target(Some("element"), None)
-        .with_tag("best-practice")
-        ,
-
+        .with_tag("best-practice"),
         Rule::new(
             "xml-default-namespace",
             "!attributes.xmlns && name != \"#text\" && name != \"#comment\"",
@@ -28,9 +26,7 @@ pub fn builtin_rules() -> Vec<Rule> {
         )
         .with_severity(Severity::Info)
         .with_target(Some("element"), None)
-        .with_tag("best-practice")
-        ,
-
+        .with_tag("best-practice"),
         Rule::new(
             "xml-empty-attribute",
             "attributes.Id == \"\" || attributes.Name == \"\" || attributes.Value == \"\"",
@@ -38,9 +34,7 @@ pub fn builtin_rules() -> Vec<Rule> {
         )
         .with_severity(Severity::Warning)
         .with_target(Some("element"), None)
-        .with_tag("validation")
-        ,
-
+        .with_tag("validation"),
         Rule::new(
             "xml-encoding-missing",
             "name == \"?xml\" && !attributes.encoding",
@@ -48,9 +42,7 @@ pub fn builtin_rules() -> Vec<Rule> {
         )
         .with_severity(Severity::Info)
         .with_target(Some("element"), None)
-        .with_tag("best-practice")
-        ,
-
+        .with_tag("best-practice"),
         Rule::new(
             "xml-mixed-content",
             "kind == \"element\" && hasChild('#text') && countChildren('*') > 1",
@@ -58,9 +50,7 @@ pub fn builtin_rules() -> Vec<Rule> {
         )
         .with_severity(Severity::Info)
         .with_target(Some("element"), None)
-        .with_tag("style")
-        ,
-
+        .with_tag("style"),
         Rule::new(
             "xml-todo-comment",
             "kind == \"comment\" && attributes.text =~ /TODO|FIXME|HACK|XXX/i",
@@ -68,9 +58,7 @@ pub fn builtin_rules() -> Vec<Rule> {
         )
         .with_severity(Severity::Info)
         .with_target(Some("comment"), None)
-        .with_tag("awareness")
-        ,
-
+        .with_tag("awareness"),
         Rule::new(
             "xml-trailing-whitespace",
             "kind == \"text\" && attributes.value =~ /\\s+$/",
@@ -78,8 +66,6 @@ pub fn builtin_rules() -> Vec<Rule> {
         )
         .with_severity(Severity::Info)
         .with_target(Some("text"), None)
-        .with_tag("style")
-        ,
-
+        .with_tag("style"),
     ]
 }

@@ -267,8 +267,8 @@ impl QualityProfile {
 
     fn relaxed_disabled_rules() -> HashSet<String> {
         [
-            "BP-*",      // All best practice rules
-            "DEAD-*",    // All dead code rules
+            "BP-*",       // All best practice rules
+            "DEAD-*",     // All dead code rules
             "VAL-INFO-*", // Info-level validation
         ]
         .iter()
@@ -278,7 +278,7 @@ impl QualityProfile {
 
     fn security_rules() -> HashSet<String> {
         [
-            "SEC-*",     // All security rules
+            "SEC-*", // All security rules
         ]
         .iter()
         .map(|s| s.to_string())
@@ -321,7 +321,10 @@ pub fn profile_descriptions() -> Vec<(&'static str, &'static str)> {
         ("strict", "Maximum coverage with all rules enabled"),
         ("relaxed", "Minimal rules for legacy or prototype projects"),
         ("security", "Security-focused analysis only"),
-        ("ci", "Optimized for CI pipelines - fast checks, critical issues"),
+        (
+            "ci",
+            "Optimized for CI pipelines - fast checks, critical issues",
+        ),
     ]
 }
 
@@ -331,10 +334,22 @@ mod tests {
 
     #[test]
     fn test_profile_name_from_str() {
-        assert_eq!("default".parse::<ProfileName>().unwrap(), ProfileName::Default);
-        assert_eq!("strict".parse::<ProfileName>().unwrap(), ProfileName::Strict);
-        assert_eq!("relaxed".parse::<ProfileName>().unwrap(), ProfileName::Relaxed);
-        assert_eq!("security".parse::<ProfileName>().unwrap(), ProfileName::Security);
+        assert_eq!(
+            "default".parse::<ProfileName>().unwrap(),
+            ProfileName::Default
+        );
+        assert_eq!(
+            "strict".parse::<ProfileName>().unwrap(),
+            ProfileName::Strict
+        );
+        assert_eq!(
+            "relaxed".parse::<ProfileName>().unwrap(),
+            ProfileName::Relaxed
+        );
+        assert_eq!(
+            "security".parse::<ProfileName>().unwrap(),
+            ProfileName::Security
+        );
         assert_eq!("ci".parse::<ProfileName>().unwrap(), ProfileName::Ci);
         assert!("unknown".parse::<ProfileName>().is_err());
     }
@@ -397,8 +412,14 @@ mod tests {
 
     #[test]
     fn test_by_name() {
-        assert_eq!(QualityProfile::by_name(ProfileName::Strict).name, ProfileName::Strict);
-        assert_eq!(QualityProfile::by_name(ProfileName::Relaxed).name, ProfileName::Relaxed);
+        assert_eq!(
+            QualityProfile::by_name(ProfileName::Strict).name,
+            ProfileName::Strict
+        );
+        assert_eq!(
+            QualityProfile::by_name(ProfileName::Relaxed).name,
+            ProfileName::Relaxed
+        );
     }
 
     #[test]
