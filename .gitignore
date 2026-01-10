@@ -1,20 +1,95 @@
 # Build artifacts
 target/
+dist/
+build/
+*.exe
+*.msi
+*.wixobj
+*.wixpdb
+
+# Rust
+*.rlib
+*.rmeta
+*.d
+**/*.rs.bk
+Cargo.lock
+!**/Cargo.lock
+
+# Python
 *.pyc
+*.pyo
 __pycache__/
+*.egg-info/
+.eggs/
+venv/
+.venv/
 
 # IDE
 .idea/
 .vscode/
 *.swp
 *.swo
+*~
+*.sublime-workspace
 
 # OS
 .DS_Store
+.DS_Store?
+._*
 Thumbs.db
-
-# Rust - keep Cargo.lock for binaries
+ehthumbs.db
+Desktop.ini
 
 # Environment
 .env
 .env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+
+# WiX Knowledge Base
+common/wixkb/database/*.db
+common/wixkb/.cache/
+*.cache
+
+# Test artifacts
+*.tmp
+*.temp
+test-output/
+coverage/
+.coverage
+htmlcov/
+.tarpaulin/
+tarpaulin-report.html
+
+# Package managers
+node_modules/
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Documentation build
+docs/_build/
+site/
+
+# Profiling
+*.profraw
+*.profdata
+perf.data
+flamegraph.svg
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Local configuration
+.wixlintrc.local.json
+.wixfmtrc.local.json
+local.settings.json

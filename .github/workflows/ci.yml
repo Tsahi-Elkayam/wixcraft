@@ -1,0 +1,349 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
+jobs:
+  build:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-action@stable
+        with:
+          components: clippy, rustfmt
+
+      - name: Cache cargo registry
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-registry-
+
+      - name: Cache cargo build
+        uses: actions/cache@v4
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-build-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-build-
+
+      # Core tools
+      - name: Build core/wixcraft
+        run: cd core/wixcraft && cargo build --release
+
+      - name: Build core/wix-msi
+        run: cd core/wix-msi && cargo build --release
+
+      - name: Build core/schema-loader
+        run: cd core/schema-loader && cargo build --release
+
+      - name: Build core/code-detector
+        run: cd core/code-detector && cargo build --release
+
+      - name: Build core/project-map
+        run: cd core/project-map && cargo build --release
+
+      # Common libraries
+      - name: Build common/wix-data
+        run: cd common/wix-data && cargo build --release
+
+      - name: Build common/wixkb
+        run: cd common/wixkb && cargo build --release
+
+      - name: Build common/ice-validator
+        run: cd common/ice-validator && cargo build --release
+
+      # Quality tools
+      - name: Build quality/winter
+        run: cd quality/winter && cargo build --release
+
+      - name: Build quality/wix-analyzer
+        run: cd quality/wix-analyzer && cargo build --release
+
+      - name: Build quality/wix-fmt
+        run: cd quality/wix-fmt && cargo build --release
+
+      - name: Build quality/wix-wdac
+        run: cd quality/wix-wdac && cargo build --release
+
+      - name: Build quality/wix-compat
+        run: cd quality/wix-compat && cargo build --release
+
+      - name: Build quality/wix-security
+        run: cd quality/wix-security && cargo build --release
+
+      - name: Build quality/wix-upgrade
+        run: cd quality/wix-upgrade && cargo build --release
+
+      # Editor tools
+      - name: Build editor/wix-lsp
+        run: cd editor/wix-lsp && cargo build --release
+
+      - name: Build editor/wintellisense
+        run: cd editor/wintellisense && cargo build --release
+
+      - name: Build editor/wix-hover
+        run: cd editor/wix-hover && cargo build --release
+
+      - name: Build editor/wix-symbols
+        run: cd editor/wix-symbols && cargo build --release
+
+      - name: Build editor/wix-references
+        run: cd editor/wix-references && cargo build --release
+
+      - name: Build editor/wix-snippets
+        run: cd editor/wix-snippets && cargo build --release
+
+      - name: Build editor/wix-ai
+        run: cd editor/wix-ai && cargo build --release
+
+      - name: Build editor/wix-syntax
+        run: cd editor/wix-syntax && cargo build --release
+
+      # Authoring tools
+      - name: Build authoring/wix-init
+        run: cd authoring/wix-init && cargo build --release
+
+      - name: Build authoring/wix-harvest
+        run: cd authoring/wix-harvest && cargo build --release
+
+      - name: Build authoring/wix-simple
+        run: cd authoring/wix-simple && cargo build --release
+
+      - name: Build authoring/wix-easy
+        run: cd authoring/wix-easy && cargo build --release
+
+      - name: Build authoring/wix-ui
+        run: cd authoring/wix-ui && cargo build --release
+
+      - name: Build authoring/wix-prereq
+        run: cd authoring/wix-prereq && cargo build --release
+
+      - name: Build authoring/wix-patch
+        run: cd authoring/wix-patch && cargo build --release
+
+      - name: Build authoring/wix-license
+        run: cd authoring/wix-license && cargo build --release
+
+      - name: Build authoring/wix-env
+        run: cd authoring/wix-env && cargo build --release
+
+      # Build tools
+      - name: Build build/wix-build
+        run: cd build/wix-build && cargo build --release
+
+      - name: Build build/wix-bundle
+        run: cd build/wix-bundle && cargo build --release
+
+      - name: Build build/wix-ci
+        run: cd build/wix-ci && cargo build --release
+
+      - name: Build build/wix-intune
+        run: cd build/wix-intune && cargo build --release
+
+      - name: Build build/wix-arm64
+        run: cd build/wix-arm64 && cargo build --release
+
+      - name: Build build/wix-ext
+        run: cd build/wix-ext && cargo build --release
+
+      # Debug tools
+      - name: Build debug/wix-doctor
+        run: cd debug/wix-doctor && cargo build --release
+
+      - name: Build debug/wix-diff
+        run: cd debug/wix-diff && cargo build --release
+
+      - name: Build debug/wix-test
+        run: cd debug/wix-test && cargo build --release
+
+      - name: Build debug/wix-repl
+        run: cd debug/wix-repl && cargo build --release
+
+      - name: Build debug/wix-ca-debug
+        run: cd debug/wix-ca-debug && cargo build --release
+
+      # Migration tools
+      - name: Build migration/wix-import
+        run: cd migration/wix-import && cargo build --release
+
+      # Localization tools
+      - name: Build localization/wix-i18n
+        run: cd localization/wix-i18n && cargo build --release
+
+      # Signing tools
+      - name: Build signing/wix-sign
+        run: cd signing/wix-sign && cargo build --release
+
+      # General tools
+      - name: Build tools/msi-explorer
+        run: cd tools/msi-explorer && cargo build --release
+
+      - name: Build tools/msi-repair
+        run: cd tools/msi-repair && cargo build --release
+
+      - name: Build tools/wix-migrate
+        run: cd tools/wix-migrate && cargo build --release
+
+      - name: Build tools/wix-guid
+        run: cd tools/wix-guid && cargo build --release
+
+      - name: Build tools/wix-silent
+        run: cd tools/wix-silent && cargo build --release
+
+      - name: Build tools/wix-msix
+        run: cd tools/wix-msix && cargo build --release
+
+      - name: Build tools/wix-install
+        run: cd tools/wix-install && cargo build --release
+
+      - name: Build tools/wix-uninstall
+        run: cd tools/wix-uninstall && cargo build --release
+
+      - name: Build tools/wix-update
+        run: cd tools/wix-update && cargo build --release
+
+      - name: Build tools/wix-preview
+        run: cd tools/wix-preview && cargo build --release
+
+      - name: Build tools/wix-analytics
+        run: cd tools/wix-analytics && cargo build --release
+
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-action@stable
+
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-test-${{ hashFiles('**/Cargo.lock') }}
+
+      # Run tests for key tools
+      - name: Test quality/winter
+        run: cd quality/winter && cargo test
+
+      - name: Test quality/wix-fmt
+        run: cd quality/wix-fmt && cargo test
+
+      - name: Test quality/wix-analyzer
+        run: cd quality/wix-analyzer && cargo test
+
+      - name: Test quality/wix-wdac
+        run: cd quality/wix-wdac && cargo test
+
+      - name: Test quality/wix-compat
+        run: cd quality/wix-compat && cargo test
+
+      - name: Test editor/wix-ai
+        run: cd editor/wix-ai && cargo test
+
+      - name: Test editor/wix-hover
+        run: cd editor/wix-hover && cargo test
+
+      - name: Test editor/wix-symbols
+        run: cd editor/wix-symbols && cargo test
+
+      - name: Test editor/wix-references
+        run: cd editor/wix-references && cargo test
+
+      - name: Test authoring/wix-simple
+        run: cd authoring/wix-simple && cargo test
+
+      - name: Test authoring/wix-init
+        run: cd authoring/wix-init && cargo test
+
+      - name: Test build/wix-intune
+        run: cd build/wix-intune && cargo test
+
+      - name: Test build/wix-arm64
+        run: cd build/wix-arm64 && cargo test
+
+      - name: Test tools/msi-explorer
+        run: cd tools/msi-explorer && cargo test
+
+      - name: Test tools/wix-migrate
+        run: cd tools/wix-migrate && cargo test
+
+  clippy:
+    name: Clippy Lints
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-action@stable
+        with:
+          components: clippy
+
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-cargo-clippy-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Clippy quality/winter
+        run: cd quality/winter && cargo clippy -- -D warnings
+
+      - name: Clippy quality/wix-fmt
+        run: cd quality/wix-fmt && cargo clippy -- -D warnings
+
+      - name: Clippy quality/wix-analyzer
+        run: cd quality/wix-analyzer && cargo clippy -- -D warnings
+
+      - name: Clippy editor/wix-lsp
+        run: cd editor/wix-lsp && cargo clippy -- -D warnings
+
+      - name: Clippy authoring/wix-simple
+        run: cd authoring/wix-simple && cargo clippy -- -D warnings
+
+  fmt:
+    name: Format Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-action@stable
+        with:
+          components: rustfmt
+
+      - name: Check formatting quality/winter
+        run: cd quality/winter && cargo fmt -- --check
+
+      - name: Check formatting quality/wix-fmt
+        run: cd quality/wix-fmt && cargo fmt -- --check
+
+      - name: Check formatting editor/wix-lsp
+        run: cd editor/wix-lsp && cargo fmt -- --check
+
+      - name: Check formatting authoring/wix-simple
+        run: cd authoring/wix-simple && cargo fmt -- --check

@@ -1,0 +1,287 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-linux:
+    name: Build Linux
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-action@stable
+
+      - name: Build all tools
+        run: |
+          mkdir -p dist/linux
+
+          # Quality tools
+          for tool in winter wix-analyzer wix-fmt wix-wdac wix-compat wix-security wix-upgrade; do
+            echo "Building quality/$tool..."
+            cd quality/$tool && cargo build --release && cd ../..
+            cp quality/$tool/target/release/$tool dist/linux/ 2>/dev/null || true
+          done
+
+          # Editor tools
+          for tool in wix-lsp wintellisense wix-hover wix-symbols wix-references wix-snippets wix-ai wix-syntax; do
+            echo "Building editor/$tool..."
+            cd editor/$tool && cargo build --release && cd ../..
+            cp editor/$tool/target/release/$tool dist/linux/ 2>/dev/null || true
+          done
+
+          # Authoring tools
+          for tool in wix-init wix-harvest wix-simple wix-easy wix-ui wix-prereq wix-patch wix-license wix-env; do
+            echo "Building authoring/$tool..."
+            cd authoring/$tool && cargo build --release && cd ../..
+            cp authoring/$tool/target/release/$tool dist/linux/ 2>/dev/null || true
+          done
+
+          # Build tools
+          for tool in wix-build wix-bundle wix-ci wix-intune wix-arm64 wix-ext; do
+            echo "Building build/$tool..."
+            cd build/$tool && cargo build --release && cd ../..
+            cp build/$tool/target/release/$tool dist/linux/ 2>/dev/null || true
+          done
+
+          # Core tools
+          for tool in wixcraft wix-msi schema-loader code-detector project-map; do
+            echo "Building core/$tool..."
+            cd core/$tool && cargo build --release && cd ../..
+            cp core/$tool/target/release/$tool dist/linux/ 2>/dev/null || true
+          done
+
+          # Debug tools
+          for tool in wix-doctor wix-diff wix-test wix-repl wix-ca-debug; do
+            echo "Building debug/$tool..."
+            cd debug/$tool && cargo build --release && cd ../..
+            cp debug/$tool/target/release/$tool dist/linux/ 2>/dev/null || true
+          done
+
+          # Other tools
+          for tool in msi-explorer msi-repair wix-migrate wix-guid wix-silent wix-msix wix-install wix-uninstall wix-update wix-preview wix-analytics; do
+            echo "Building tools/$tool..."
+            cd tools/$tool && cargo build --release && cd ../..
+            cp tools/$tool/target/release/$tool dist/linux/ 2>/dev/null || true
+          done
+
+          cd migration/wix-import && cargo build --release && cd ../..
+          cp migration/wix-import/target/release/wix-import dist/linux/ 2>/dev/null || true
+
+          cd localization/wix-i18n && cargo build --release && cd ../..
+          cp localization/wix-i18n/target/release/wix-i18n dist/linux/ 2>/dev/null || true
+
+          cd signing/wix-sign && cargo build --release && cd ../..
+          cp signing/wix-sign/target/release/wix-sign dist/linux/ 2>/dev/null || true
+
+          # List built binaries
+          echo "Built binaries:"
+          ls -la dist/linux/
+
+      - name: Create Linux archive
+        run: |
+          cd dist
+          tar -czvf wixcraft-linux-x64.tar.gz linux/
+          sha256sum wixcraft-linux-x64.tar.gz > wixcraft-linux-x64.tar.gz.sha256
+
+      - name: Upload Linux artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-binaries
+          path: dist/wixcraft-linux-x64.tar.gz*
+
+  build-macos:
+    name: Build macOS
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-action@stable
+
+      - name: Build all tools
+        run: |
+          mkdir -p dist/macos
+
+          # Quality tools
+          for tool in winter wix-analyzer wix-fmt wix-wdac wix-compat wix-security wix-upgrade; do
+            echo "Building quality/$tool..."
+            cd quality/$tool && cargo build --release && cd ../..
+            cp quality/$tool/target/release/$tool dist/macos/ 2>/dev/null || true
+          done
+
+          # Editor tools
+          for tool in wix-lsp wintellisense wix-hover wix-symbols wix-references wix-snippets wix-ai wix-syntax; do
+            echo "Building editor/$tool..."
+            cd editor/$tool && cargo build --release && cd ../..
+            cp editor/$tool/target/release/$tool dist/macos/ 2>/dev/null || true
+          done
+
+          # Authoring tools
+          for tool in wix-init wix-harvest wix-simple wix-easy wix-ui wix-prereq wix-patch wix-license wix-env; do
+            echo "Building authoring/$tool..."
+            cd authoring/$tool && cargo build --release && cd ../..
+            cp authoring/$tool/target/release/$tool dist/macos/ 2>/dev/null || true
+          done
+
+          # Build tools
+          for tool in wix-build wix-bundle wix-ci wix-intune wix-arm64 wix-ext; do
+            echo "Building build/$tool..."
+            cd build/$tool && cargo build --release && cd ../..
+            cp build/$tool/target/release/$tool dist/macos/ 2>/dev/null || true
+          done
+
+          # Core tools
+          for tool in wixcraft wix-msi schema-loader code-detector project-map; do
+            echo "Building core/$tool..."
+            cd core/$tool && cargo build --release && cd ../..
+            cp core/$tool/target/release/$tool dist/macos/ 2>/dev/null || true
+          done
+
+          # Debug tools
+          for tool in wix-doctor wix-diff wix-test wix-repl wix-ca-debug; do
+            echo "Building debug/$tool..."
+            cd debug/$tool && cargo build --release && cd ../..
+            cp debug/$tool/target/release/$tool dist/macos/ 2>/dev/null || true
+          done
+
+          # Other tools
+          for tool in msi-explorer msi-repair wix-migrate wix-guid wix-silent wix-msix wix-install wix-uninstall wix-update wix-preview wix-analytics; do
+            echo "Building tools/$tool..."
+            cd tools/$tool && cargo build --release && cd ../..
+            cp tools/$tool/target/release/$tool dist/macos/ 2>/dev/null || true
+          done
+
+          cd migration/wix-import && cargo build --release && cd ../..
+          cp migration/wix-import/target/release/wix-import dist/macos/ 2>/dev/null || true
+
+          cd localization/wix-i18n && cargo build --release && cd ../..
+          cp localization/wix-i18n/target/release/wix-i18n dist/macos/ 2>/dev/null || true
+
+          cd signing/wix-sign && cargo build --release && cd ../..
+          cp signing/wix-sign/target/release/wix-sign dist/macos/ 2>/dev/null || true
+
+          echo "Built binaries:"
+          ls -la dist/macos/
+
+      - name: Create macOS archive
+        run: |
+          cd dist
+          tar -czvf wixcraft-macos-x64.tar.gz macos/
+          shasum -a 256 wixcraft-macos-x64.tar.gz > wixcraft-macos-x64.tar.gz.sha256
+
+      - name: Upload macOS artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-binaries
+          path: dist/wixcraft-macos-x64.tar.gz*
+
+  build-windows:
+    name: Build Windows
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-action@stable
+
+      - name: Build all tools
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path dist\windows
+
+          $tools = @(
+            @{path="quality"; tools=@("winter","wix-analyzer","wix-fmt","wix-wdac","wix-compat","wix-security","wix-upgrade")},
+            @{path="editor"; tools=@("wix-lsp","wintellisense","wix-hover","wix-symbols","wix-references","wix-snippets","wix-ai","wix-syntax")},
+            @{path="authoring"; tools=@("wix-init","wix-harvest","wix-simple","wix-easy","wix-ui","wix-prereq","wix-patch","wix-license","wix-env")},
+            @{path="build"; tools=@("wix-build","wix-bundle","wix-ci","wix-intune","wix-arm64","wix-ext")},
+            @{path="core"; tools=@("wixcraft","wix-msi","schema-loader","code-detector","project-map")},
+            @{path="debug"; tools=@("wix-doctor","wix-diff","wix-test","wix-repl","wix-ca-debug")},
+            @{path="tools"; tools=@("msi-explorer","msi-repair","wix-migrate","wix-guid","wix-silent","wix-msix","wix-install","wix-uninstall","wix-update","wix-preview","wix-analytics")}
+          )
+
+          foreach ($category in $tools) {
+            foreach ($tool in $category.tools) {
+              $toolPath = "$($category.path)/$tool"
+              if (Test-Path $toolPath) {
+                Write-Host "Building $toolPath..."
+                Push-Location $toolPath
+                cargo build --release
+                Pop-Location
+                $binary = "$toolPath/target/release/$tool.exe"
+                if (Test-Path $binary) {
+                  Copy-Item $binary dist\windows\
+                }
+              }
+            }
+          }
+
+          # Single-tool directories
+          $singles = @(
+            @{path="migration/wix-import"; name="wix-import"},
+            @{path="localization/wix-i18n"; name="wix-i18n"},
+            @{path="signing/wix-sign"; name="wix-sign"}
+          )
+
+          foreach ($single in $singles) {
+            if (Test-Path $single.path) {
+              Write-Host "Building $($single.path)..."
+              Push-Location $single.path
+              cargo build --release
+              Pop-Location
+              $binary = "$($single.path)/target/release/$($single.name).exe"
+              if (Test-Path $binary) {
+                Copy-Item $binary dist\windows\
+              }
+            }
+          }
+
+          Write-Host "Built binaries:"
+          Get-ChildItem dist\windows\
+
+      - name: Create Windows archive
+        shell: pwsh
+        run: |
+          Compress-Archive -Path dist\windows\* -DestinationPath dist\wixcraft-windows-x64.zip
+          Get-FileHash dist\wixcraft-windows-x64.zip -Algorithm SHA256 | Format-List > dist\wixcraft-windows-x64.zip.sha256
+
+      - name: Upload Windows artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-binaries
+          path: dist/wixcraft-windows-x64.zip*
+
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    needs: [build-linux, build-macos, build-windows]
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            artifacts/linux-binaries/*
+            artifacts/macos-binaries/*
+            artifacts/windows-binaries/*
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
