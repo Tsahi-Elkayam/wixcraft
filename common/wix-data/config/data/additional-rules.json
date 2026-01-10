@@ -1,0 +1,324 @@
+{
+  "rules": [
+    {
+      "id": "SEC001",
+      "category": "security",
+      "severity": "error",
+      "name": "Hardcoded credentials in Property",
+      "description": "Properties containing passwords or credentials should not be hardcoded",
+      "rationale": "Credentials in MSI files can be extracted, posing security risks"
+    },
+    {
+      "id": "SEC002",
+      "category": "security",
+      "severity": "warning",
+      "name": "Insecure custom action execution",
+      "description": "Custom actions running with elevated privileges should be reviewed",
+      "rationale": "Deferred custom actions run as SYSTEM and can be security risks"
+    },
+    {
+      "id": "SEC003",
+      "category": "security",
+      "severity": "error",
+      "name": "World-writable permissions",
+      "description": "PermissionEx granting write access to Everyone is dangerous",
+      "rationale": "Allowing all users write access can lead to privilege escalation"
+    },
+    {
+      "id": "SEC004",
+      "category": "security",
+      "severity": "warning",
+      "name": "Missing digital signature",
+      "description": "MSI package should be digitally signed",
+      "rationale": "Unsigned packages may trigger security warnings and are harder to trust"
+    },
+    {
+      "id": "PERF001",
+      "category": "performance",
+      "severity": "warning",
+      "name": "Too many components in feature",
+      "description": "Feature has more than 1600 components",
+      "rationale": "Large features can slow down installation and UI responsiveness"
+    },
+    {
+      "id": "PERF002",
+      "category": "performance",
+      "severity": "info",
+      "name": "Uncompressed files",
+      "description": "Files not stored in cabinet may increase package size",
+      "rationale": "Cabinet compression reduces package size and download time"
+    },
+    {
+      "id": "PERF003",
+      "category": "performance",
+      "severity": "warning",
+      "name": "Multiple files per component",
+      "description": "Component contains multiple files, consider splitting",
+      "rationale": "One file per component improves patching and repair efficiency"
+    },
+    {
+      "id": "COMP005",
+      "category": "component",
+      "severity": "error",
+      "name": "Missing Component GUID",
+      "description": "Component must have a GUID for proper reference counting",
+      "rationale": "Components without GUIDs cannot be properly tracked or upgraded"
+    },
+    {
+      "id": "COMP006",
+      "category": "component",
+      "severity": "warning",
+      "name": "Permanent component without GUID",
+      "description": "Permanent components should have a GUID",
+      "rationale": "ICE92 validation will fail for permanent components without GUIDs"
+    },
+    {
+      "id": "COMP007",
+      "category": "component",
+      "severity": "error",
+      "name": "Mixed per-user and per-machine data",
+      "description": "Component mixes per-user and per-machine resources",
+      "rationale": "ICE57 requires components to not mix installation contexts"
+    },
+    {
+      "id": "COMP008",
+      "category": "component",
+      "severity": "warning",
+      "name": "Duplicate file in multiple components",
+      "description": "Same file appears in multiple components",
+      "rationale": "Can cause ICE30 errors and unpredictable installation behavior"
+    },
+    {
+      "id": "COMP009",
+      "category": "component",
+      "severity": "warning",
+      "name": "User profile component without HKCU KeyPath",
+      "description": "Component in user profile should use HKCU registry as KeyPath",
+      "rationale": "ICE38 requires components in user profile to have HKCU KeyPath"
+    },
+    {
+      "id": "FILE004",
+      "category": "file",
+      "severity": "warning",
+      "name": "Font not in FontsFolder",
+      "description": "Font files should be installed to FontsFolder",
+      "rationale": "ICE07 validates that fonts are installed to the correct location"
+    },
+    {
+      "id": "FILE005",
+      "category": "file",
+      "severity": "info",
+      "name": "Missing file version",
+      "description": "Non-font versioned file should have a language",
+      "rationale": "ICE60 requires versioned files to have language information"
+    },
+    {
+      "id": "FILE006",
+      "category": "file",
+      "severity": "warning",
+      "name": "Companion file as KeyPath",
+      "description": "Companion files should not be used as KeyPath",
+      "rationale": "ICE54 warns against using companion files as key paths"
+    },
+    {
+      "id": "DIR004",
+      "category": "directory",
+      "severity": "error",
+      "name": "Invalid directory structure",
+      "description": "Directory structure must have a single valid root",
+      "rationale": "ICE56 validates proper directory tree structure"
+    },
+    {
+      "id": "DIR005",
+      "category": "directory",
+      "severity": "warning",
+      "name": "Directory in user profile without roaming cleanup",
+      "description": "New directories in user profile should be removed in roaming scenarios",
+      "rationale": "ICE64 ensures proper cleanup for roaming profiles"
+    },
+    {
+      "id": "REG001",
+      "category": "registry",
+      "severity": "warning",
+      "name": "Registry entries belong in other tables",
+      "description": "Some registry entries should use specialized tables instead",
+      "rationale": "ICE33 identifies registry entries that belong in Class, TypeLib, etc."
+    },
+    {
+      "id": "REG002",
+      "category": "registry",
+      "severity": "warning",
+      "name": "Non-REG_SZ default value",
+      "description": "Default registry values should be REG_SZ type",
+      "rationale": "ICE49 validates registry default value types"
+    },
+    {
+      "id": "REG003",
+      "category": "registry",
+      "severity": "error",
+      "name": "Invalid integer registry value format",
+      "description": "Integer registry values must be formatted correctly",
+      "rationale": "ICE70 verifies integer registry value specifications"
+    },
+    {
+      "id": "FEAT001",
+      "category": "feature",
+      "severity": "warning",
+      "name": "Feature name too long",
+      "description": "Feature name exceeds 38 characters",
+      "rationale": "ICE101 limits feature names to 38 characters"
+    },
+    {
+      "id": "FEAT002",
+      "category": "feature",
+      "severity": "warning",
+      "name": "Invalid FollowParent on parent feature",
+      "description": "Parent features should not have FollowParent attribute",
+      "rationale": "ICE14 validates feature parent relationships"
+    },
+    {
+      "id": "FEAT003",
+      "category": "feature",
+      "severity": "error",
+      "name": "Component not mapped to feature",
+      "description": "All components must be assigned to a feature",
+      "rationale": "ICE21 ensures components are mapped to features"
+    },
+    {
+      "id": "CA001",
+      "category": "customaction",
+      "severity": "warning",
+      "name": "Custom action name matches standard action",
+      "description": "Custom action should not use standard action names",
+      "rationale": "ICE93 warns about naming conflicts with standard actions"
+    },
+    {
+      "id": "CA002",
+      "category": "customaction",
+      "severity": "error",
+      "name": "Invalid custom action in AdvtExecuteSequence",
+      "description": "Only type 19, 35, 51 custom actions allowed in AdvtExecuteSequence",
+      "rationale": "ICE72 restricts custom action types in advertisement sequence"
+    },
+    {
+      "id": "CA003",
+      "category": "customaction",
+      "severity": "error",
+      "name": "In-script CA outside transaction",
+      "description": "In-script custom actions must be between InstallInitialize and InstallFinalize",
+      "rationale": "ICE77 validates custom action sequencing"
+    },
+    {
+      "id": "CA004",
+      "category": "customaction",
+      "severity": "warning",
+      "name": "File-based CA before CostFinalize",
+      "description": "Custom actions using installed files must be after CostFinalize",
+      "rationale": "ICE75 ensures file availability before custom action execution"
+    },
+    {
+      "id": "UPGRADE001",
+      "category": "package",
+      "severity": "warning",
+      "name": "RemoveExistingProducts sequencing",
+      "description": "RemoveExistingProducts should be properly sequenced for major upgrades",
+      "rationale": "ICE63 validates upgrade action sequencing"
+    },
+    {
+      "id": "UPGRADE002",
+      "category": "package",
+      "severity": "error",
+      "name": "Invalid Upgrade table entry",
+      "description": "Upgrade table has validation errors",
+      "rationale": "ICE61 validates the Upgrade table structure"
+    },
+    {
+      "id": "BUNDLE001",
+      "category": "bundle",
+      "severity": "warning",
+      "name": "MSI elements in bundle",
+      "description": "MSI-only elements should not be used in bundles",
+      "rationale": "WiX v4 generates warnings for MSI elements misused in bundles"
+    },
+    {
+      "id": "BUNDLE002",
+      "category": "bundle",
+      "severity": "warning",
+      "name": "ExePackage missing detection or uninstall",
+      "description": "ExePackage should have DetectCondition and UninstallArguments or be Permanent",
+      "rationale": "Ensures proper detection and clean uninstallation"
+    },
+    {
+      "id": "BUNDLE003",
+      "category": "bundle",
+      "severity": "info",
+      "name": "Consider using Protocol=burn for VC++ redist",
+      "description": "VC++ redistributables support burn protocol for better progress",
+      "rationale": "Using Protocol=burn enables better install progress tracking"
+    },
+    {
+      "id": "SHORT001",
+      "category": "shortcut",
+      "severity": "warning",
+      "name": "Non-advertised shortcut target mismatch",
+      "description": "Non-advertised shortcut target should be in same component",
+      "rationale": "ICE67 validates shortcut and target component relationships"
+    },
+    {
+      "id": "SHORT002",
+      "category": "shortcut",
+      "severity": "warning",
+      "name": "Unadvertised shortcut to GAC assembly",
+      "description": "Shortcuts to GAC assemblies should be advertised",
+      "rationale": "ICE94 warns about unadvertised shortcuts to GAC"
+    },
+    {
+      "id": "SHORT003",
+      "category": "shortcut",
+      "severity": "warning",
+      "name": "Shortcut directory as public property",
+      "description": "Shortcut directory should not be a public property",
+      "rationale": "ICE90 warns about shortcut directory resolution issues"
+    },
+    {
+      "id": "MEDIA001",
+      "category": "package",
+      "severity": "error",
+      "name": "Missing Media entry for DiskId 1",
+      "description": "Media table must contain an entry with DiskId 1",
+      "rationale": "ICE71 requires at least one media entry with DiskId 1"
+    },
+    {
+      "id": "MEDIA002",
+      "category": "package",
+      "severity": "warning",
+      "name": "Too many media entries",
+      "description": "Media table should not have more than 80 rows",
+      "rationale": "ICE58 limits media entries for compatibility"
+    },
+    {
+      "id": "SUMMARY001",
+      "category": "package",
+      "severity": "warning",
+      "name": "Product name too long",
+      "description": "ProductName should not exceed 63 characters",
+      "rationale": "ICE16 validates product name length"
+    },
+    {
+      "id": "SUMMARY002",
+      "category": "package",
+      "severity": "warning",
+      "name": "Invalid Summary Information",
+      "description": "Summary Information stream has validation errors",
+      "rationale": "ICE39 validates package summary information"
+    },
+    {
+      "id": "64BIT001",
+      "category": "package",
+      "severity": "warning",
+      "name": "64-bit component mismatch",
+      "description": "Template and Page Count must correctly indicate 64-bit components",
+      "rationale": "ICE80 validates 64-bit package configuration"
+    }
+  ]
+}

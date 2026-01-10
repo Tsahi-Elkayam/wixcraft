@@ -1,0 +1,25 @@
+[package]
+name = "wix-fmt"
+version = "0.1.0"
+edition = "2021"
+description = "WiX XML formatter with data-driven element ordering"
+license = "MIT"
+
+[[bin]]
+name = "wix-fmt"
+path = "src/main.rs"
+
+[lib]
+name = "wix_fmt"
+path = "src/lib.rs"
+
+[dependencies]
+roxmltree = "0.20"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+clap = { version = "4", features = ["derive"] }
+glob = "0.3"
+
+[dev-dependencies]
+tempfile = "3"

@@ -1,0 +1,2382 @@
+{
+  "_source": "Attribute enum value descriptions",
+  "_description": "Descriptions for enum attribute values",
+  "enum_descriptions": [
+    {
+      "element": "BootstrapperApplicationDll",
+      "attribute": "DpiAwareness",
+      "value": "gdiScaled",
+      "description": "Corresponds to the .exe manifest element 'gdiScaling' with content of 'true'. Windows does not support combining this with other DPI awareness modes."
+    },
+    {
+      "element": "BootstrapperApplicationDll",
+      "attribute": "DpiAwareness",
+      "value": "perMonitor",
+      "description": "Corresponds to the .exe manifest element 'dpiAware' with content of 'true/pm'."
+    },
+    {
+      "element": "BootstrapperApplicationDll",
+      "attribute": "DpiAwareness",
+      "value": "perMonitorV2",
+      "description": "Corresponds to the .exe manifest element 'dpiAwareness' with content of 'PerMonitorV2, PerMonitor' and the manifest element 'dpiAware' with content of 'true/pm'."
+    },
+    {
+      "element": "BootstrapperApplicationDll",
+      "attribute": "DpiAwareness",
+      "value": "system",
+      "description": "Corresponds to the .exe manifest element 'dpiAware' with content of 'true'."
+    },
+    {
+      "element": "BootstrapperApplicationDll",
+      "attribute": "DpiAwareness",
+      "value": "unaware",
+      "description": "Application is not DPI aware; Windows scales content."
+    },
+    {
+      "element": "Bundle",
+      "attribute": "Compressed",
+      "value": "no",
+      "description": "Keep payloads external."
+    },
+    {
+      "element": "Bundle",
+      "attribute": "Compressed",
+      "value": "yes",
+      "description": "Embed payloads in bundle. Default."
+    },
+    {
+      "element": "Bundle",
+      "attribute": "DisableModify",
+      "value": "button",
+      "description": "Single Uninstall/Change button."
+    },
+    {
+      "element": "Bundle",
+      "attribute": "DisableModify",
+      "value": "no",
+      "description": "Show Modify button. Default."
+    },
+    {
+      "element": "Bundle",
+      "attribute": "DisableModify",
+      "value": "yes",
+      "description": "Hide Modify button in ARP."
+    },
+    {
+      "element": "BundleCustomData",
+      "attribute": "Type",
+      "value": "BootstrapperApplication",
+      "description": "Data passed to the bootstrapper application."
+    },
+    {
+      "element": "BundleCustomData",
+      "attribute": "Type",
+      "value": "BootstrapperExtension",
+      "description": "Data passed to a bootstrapper extension."
+    },
+    {
+      "element": "BundleCustomData",
+      "attribute": "Type",
+      "value": "BundleExtension",
+      "description": "Data passed to a bundle extension."
+    },
+    {
+      "element": "BundlePackagePayload",
+      "attribute": "PayloadGeneration",
+      "value": "all",
+      "description": "All detached containers from the bundle are included as payloads for the package,\n                  as well as all other payloads that are not compressed into the detached containers.\n                  This option normally requires extra work to use since it requires all attached containers to have been extracted."
+    },
+    {
+      "element": "BundlePackagePayload",
+      "attribute": "PayloadGeneration",
+      "value": "external",
+      "description": "All detached containers from the bundle are included as payloads for the package,\n                  as well as all external payloads from the bundle."
+    },
+    {
+      "element": "BundlePackagePayload",
+      "attribute": "PayloadGeneration",
+      "value": "externalWithoutDownloadUrl",
+      "description": "All detached containers from the bundle that have no download url are included as payloads for the package,\n                  as well as all external payloads from the bundle that have no download url."
+    },
+    {
+      "element": "BundlePackagePayload",
+      "attribute": "PayloadGeneration",
+      "value": "none",
+      "description": "None of the bundle's payloads or containers are automatically included as payloads for the package."
+    },
+    {
+      "element": "Certificate",
+      "attribute": "StoreLocation",
+      "value": "currentUser",
+      "description": "Certificate store for the current user (HKCU)."
+    },
+    {
+      "element": "Certificate",
+      "attribute": "StoreLocation",
+      "value": "localMachine",
+      "description": "Certificate store for the local machine (HKLM)."
+    },
+    {
+      "element": "Certificate",
+      "attribute": "StoreLocation",
+      "value": "localMachineEnterprise",
+      "description": "Enterprise trust store for local machine."
+    },
+    {
+      "element": "Certificate",
+      "attribute": "StoreLocation",
+      "value": "localMachinePolicy",
+      "description": "Group Policy store for local machine."
+    },
+    {
+      "element": "Certificate",
+      "attribute": "StoreLocation",
+      "value": "services",
+      "description": "Certificate store for services."
+    },
+    {
+      "element": "Certificate",
+      "attribute": "StoreLocation",
+      "value": "userPolicy",
+      "description": "Group Policy store for current user."
+    },
+    {
+      "element": "Certificate",
+      "attribute": "StoreLocation",
+      "value": "users",
+      "description": "Certificate store for all users."
+    },
+    {
+      "element": "Certificate",
+      "attribute": "StoreName",
+      "value": "ca",
+      "description": "Contains the certificates of certificate authorities that the user trusts to issue certificates to others. Certificates in these stores are normally supplied with the operating system or by the user's network administrator."
+    },
+    {
+      "element": "Certificate",
+      "attribute": "StoreName",
+      "value": "my",
+      "description": "Use the \"personal\" value instead."
+    },
+    {
+      "element": "Certificate",
+      "attribute": "StoreName",
+      "value": "otherPeople",
+      "description": "Contains the certificates of those that the user normally sends enveloped messages to or receives signed messages from.\n                  See"
+    },
+    {
+      "element": "Certificate",
+      "attribute": "StoreName",
+      "value": "personal",
+      "description": "Contains personal certificates. These certificates will usually have an associated private key. This store is often\n                  referred to as the \"MY\" certificate store."
+    },
+    {
+      "element": "Certificate",
+      "attribute": "StoreName",
+      "value": "request",
+      "description": "Certificate request store for pending requests."
+    },
+    {
+      "element": "Certificate",
+      "attribute": "StoreName",
+      "value": "root",
+      "description": "Contains the certificates of certificate authorities that the user trusts to issue certificates to others. Certificates in these stores are normally supplied with the operating system or by the user's network administrator. Certificates in this store are typically self-signed."
+    },
+    {
+      "element": "Certificate",
+      "attribute": "StoreName",
+      "value": "trustedPeople",
+      "description": "Contains the certificates of those directly trusted people and resources.\n                  See"
+    },
+    {
+      "element": "Certificate",
+      "attribute": "StoreName",
+      "value": "trustedPublisher",
+      "description": "Contains the certificates of those publishers who are trusted.\n                  See"
+    },
+    {
+      "element": "Class",
+      "attribute": "Context",
+      "value": "InprocServer",
+      "description": "A 16-bit in-process server DLL."
+    },
+    {
+      "element": "Class",
+      "attribute": "Context",
+      "value": "InprocServer32",
+      "description": "A 32-bit in-process server DLL."
+    },
+    {
+      "element": "Class",
+      "attribute": "Context",
+      "value": "LocalServer",
+      "description": "A 16-bit local server application."
+    },
+    {
+      "element": "Class",
+      "attribute": "Context",
+      "value": "LocalServer32",
+      "description": "A 32-bit local server application."
+    },
+    {
+      "element": "Class",
+      "attribute": "ThreadingModel",
+      "value": "apartment",
+      "description": "Single-threaded apartment (STA) model."
+    },
+    {
+      "element": "Class",
+      "attribute": "ThreadingModel",
+      "value": "both",
+      "description": "Supports both STA and MTA."
+    },
+    {
+      "element": "Class",
+      "attribute": "ThreadingModel",
+      "value": "free",
+      "description": "Multi-threaded apartment (MTA) model."
+    },
+    {
+      "element": "Class",
+      "attribute": "ThreadingModel",
+      "value": "neutral",
+      "description": "Neutral threading model; no thread affinity."
+    },
+    {
+      "element": "Class",
+      "attribute": "ThreadingModel",
+      "value": "rental",
+      "description": "Rental threading model for pooled objects."
+    },
+    {
+      "element": "Class",
+      "attribute": "ThreadingModel",
+      "value": "single",
+      "description": "Single-threaded; all calls on main thread."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "anyPath",
+      "description": "Any valid file system path."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "binary",
+      "description": "Binary stream data."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "cabinet",
+      "description": "Cabinet file name."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "condition",
+      "description": "Conditional expression string."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "customSource",
+      "description": "Custom action source reference."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "defaultDir",
+      "description": "Default directory path in installer format."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "doubleInteger",
+      "description": "32-bit signed integer value."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "filename",
+      "description": "File name with optional short name."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "formatted",
+      "description": "Formatted string with property references."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "formattedSddl",
+      "description": "Formatted SDDL security descriptor."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "guid",
+      "description": "Globally unique identifier (GUID)."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "identifier",
+      "description": "MSI identifier (up to 72 characters)."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "integer",
+      "description": "16-bit signed integer value."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "language",
+      "description": "Language ID (LCID)."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "lowerCase",
+      "description": "Lowercase text string."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "path",
+      "description": "File system path."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "paths",
+      "description": "Semicolon-separated list of paths."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "property",
+      "description": "Property name reference."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "regPath",
+      "description": "Registry key path."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "shortcut",
+      "description": "Shortcut target reference."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "template",
+      "description": "Summary Information template string."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "text",
+      "description": "Arbitrary text string."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "timeDate",
+      "description": "Date/time value."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "upperCase",
+      "description": "Uppercase text string."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "version",
+      "description": "Version string (major.minor.build.revision)."
+    },
+    {
+      "element": "Column",
+      "attribute": "Category",
+      "value": "wildCardFilename",
+      "description": "Filename pattern with wildcards."
+    },
+    {
+      "element": "Column",
+      "attribute": "Modularize",
+      "value": "column",
+      "description": "Column should be modularized."
+    },
+    {
+      "element": "Column",
+      "attribute": "Modularize",
+      "value": "condition",
+      "description": "Column is a condition and should be modularized."
+    },
+    {
+      "element": "Column",
+      "attribute": "Modularize",
+      "value": "icon",
+      "description": "When the column is an primary or foreign key to the Icon table it should be modularized special."
+    },
+    {
+      "element": "Column",
+      "attribute": "Modularize",
+      "value": "none",
+      "description": "Column should not be modularized. This is the default value."
+    },
+    {
+      "element": "Column",
+      "attribute": "Modularize",
+      "value": "property",
+      "description": "Any Properties in the column should be modularized."
+    },
+    {
+      "element": "Column",
+      "attribute": "Modularize",
+      "value": "semicolonDelimited",
+      "description": "Semi-colon list of keys, all of which need to be modularized."
+    },
+    {
+      "element": "Column",
+      "attribute": "Type",
+      "value": "binary",
+      "description": "Column contains a path to a file that will be inserted into the column as a binary object.\n                  If this value is set, the Category attribute must also be set with a value of 'Binary' to pass ICE validation."
+    },
+    {
+      "element": "Column",
+      "attribute": "Type",
+      "value": "int",
+      "description": "Column contains an integer or datetime value (the MinValue and MaxValue attributes should also be set)."
+    },
+    {
+      "element": "Column",
+      "attribute": "Type",
+      "value": "string",
+      "description": "Column contains a non-localizable string value."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "AccessChecksLevel",
+      "value": "applicationComponentLevel",
+      "description": "Access checks at both application and component level."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "AccessChecksLevel",
+      "value": "applicationLevel",
+      "description": "Access checks only at application level."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "Activation",
+      "value": "inproc",
+      "description": "In-process activation (library application)."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "Activation",
+      "value": "local",
+      "description": "Local server activation (server application)."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "Authentication",
+      "value": "call",
+      "description": "Authenticate each call."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "Authentication",
+      "value": "connect",
+      "description": "Authenticate at connection time."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "Authentication",
+      "value": "default",
+      "description": "Use default authentication level."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "Authentication",
+      "value": "integrity",
+      "description": "Authenticate and verify data integrity."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "Authentication",
+      "value": "none",
+      "description": "No authentication required."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "Authentication",
+      "value": "packet",
+      "description": "Authenticate each packet."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "Authentication",
+      "value": "privacy",
+      "description": "Authenticate and encrypt data."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "AuthenticationCapability",
+      "value": "dynamicCloaking",
+      "description": "Dynamic identity cloaking."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "AuthenticationCapability",
+      "value": "none",
+      "description": "No authentication capabilities."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "AuthenticationCapability",
+      "value": "secureReference",
+      "description": "Secure reference tracking."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "AuthenticationCapability",
+      "value": "staticCloaking",
+      "description": "Static identity cloaking."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "ImpersonationLevel",
+      "value": "anonymous",
+      "description": "Client identity is anonymous."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "ImpersonationLevel",
+      "value": "delegate",
+      "description": "Server can delegate client identity."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "ImpersonationLevel",
+      "value": "identify",
+      "description": "Server can identify client but not impersonate."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "ImpersonationLevel",
+      "value": "impersonate",
+      "description": "Server can impersonate client locally."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "QCAuthenticateMsgs",
+      "value": "off",
+      "description": "No message authentication."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "QCAuthenticateMsgs",
+      "value": "on",
+      "description": "Always authenticate messages."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "QCAuthenticateMsgs",
+      "value": "secureApps",
+      "description": "Authenticate only for secure applications."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "SRPTrustLevel",
+      "value": "disallowed",
+      "description": "Software is not trusted to run."
+    },
+    {
+      "element": "ComPlusApplication",
+      "attribute": "SRPTrustLevel",
+      "value": "fullyTrusted",
+      "description": "Software is fully trusted."
+    },
+    {
+      "element": "ComPlusAssembly",
+      "attribute": "Type",
+      "value": ".net",
+      "description": ".NET managed assembly."
+    },
+    {
+      "element": "ComPlusAssembly",
+      "attribute": "Type",
+      "value": "native",
+      "description": "Native COM component."
+    },
+    {
+      "element": "ComPlusComponent",
+      "attribute": "Synchronization",
+      "value": "ignored",
+      "description": "Synchronization attribute is ignored."
+    },
+    {
+      "element": "ComPlusComponent",
+      "attribute": "Synchronization",
+      "value": "none",
+      "description": "No synchronization support."
+    },
+    {
+      "element": "ComPlusComponent",
+      "attribute": "Synchronization",
+      "value": "required",
+      "description": "Component requires synchronization."
+    },
+    {
+      "element": "ComPlusComponent",
+      "attribute": "Synchronization",
+      "value": "requiresNew",
+      "description": "Component requires new synchronization domain."
+    },
+    {
+      "element": "ComPlusComponent",
+      "attribute": "Synchronization",
+      "value": "supported",
+      "description": "Synchronization is supported but not required."
+    },
+    {
+      "element": "ComPlusComponent",
+      "attribute": "Transaction",
+      "value": "ignored",
+      "description": "Transaction attribute is ignored."
+    },
+    {
+      "element": "ComPlusComponent",
+      "attribute": "Transaction",
+      "value": "none",
+      "description": "Component does not use transactions."
+    },
+    {
+      "element": "ComPlusComponent",
+      "attribute": "Transaction",
+      "value": "required",
+      "description": "Component requires a transaction."
+    },
+    {
+      "element": "ComPlusComponent",
+      "attribute": "Transaction",
+      "value": "requiresNew",
+      "description": "Component requires a new transaction."
+    },
+    {
+      "element": "ComPlusComponent",
+      "attribute": "Transaction",
+      "value": "supported",
+      "description": "Transaction is supported but not required."
+    },
+    {
+      "element": "ComPlusComponent",
+      "attribute": "TxIsolationLevel",
+      "value": "any",
+      "description": "Any isolation level is acceptable."
+    },
+    {
+      "element": "ComPlusComponent",
+      "attribute": "TxIsolationLevel",
+      "value": "readCommitted",
+      "description": "Read only committed data."
+    },
+    {
+      "element": "ComPlusComponent",
+      "attribute": "TxIsolationLevel",
+      "value": "readUnCommitted",
+      "description": "Read uncommitted data allowed."
+    },
+    {
+      "element": "ComPlusComponent",
+      "attribute": "TxIsolationLevel",
+      "value": "repeatableRead",
+      "description": "Repeatable reads guaranteed."
+    },
+    {
+      "element": "ComPlusComponent",
+      "attribute": "TxIsolationLevel",
+      "value": "serializable",
+      "description": "Fully serializable transactions."
+    },
+    {
+      "element": "Component",
+      "attribute": "Bitness",
+      "value": "always32",
+      "description": "Force 32-bit component."
+    },
+    {
+      "element": "Component",
+      "attribute": "Bitness",
+      "value": "always64",
+      "description": "Force 64-bit component."
+    },
+    {
+      "element": "Component",
+      "attribute": "Bitness",
+      "value": "default",
+      "description": "Match package bitness. Default."
+    },
+    {
+      "element": "Component",
+      "attribute": "Location",
+      "value": "either",
+      "description": "Component can run from either location."
+    },
+    {
+      "element": "Component",
+      "attribute": "Location",
+      "value": "local",
+      "description": "Component runs from local installation."
+    },
+    {
+      "element": "Component",
+      "attribute": "Location",
+      "value": "source",
+      "description": "Component runs from source media."
+    },
+    {
+      "element": "ComponentSearch",
+      "attribute": "Result",
+      "value": "directory",
+      "description": "Saves the parent directory for the component's file key path; other types of key path are returned unmodified."
+    },
+    {
+      "element": "ComponentSearch",
+      "attribute": "Result",
+      "value": "keyPath",
+      "description": "Saves the key path of the component if installed. This is the default."
+    },
+    {
+      "element": "ComponentSearch",
+      "attribute": "Result",
+      "value": "state",
+      "description": "Saves the state of the component: absent (2), locally installed (3), will run from source (4), or installed in default location (either local or from source) (5)"
+    },
+    {
+      "element": "Configuration",
+      "attribute": "Format",
+      "value": "Bitfield",
+      "description": "Bitfield value with named flags."
+    },
+    {
+      "element": "Configuration",
+      "attribute": "Format",
+      "value": "Integer",
+      "description": "Integer numeric value."
+    },
+    {
+      "element": "Configuration",
+      "attribute": "Format",
+      "value": "Key",
+      "description": "Key reference to another table."
+    },
+    {
+      "element": "Configuration",
+      "attribute": "Format",
+      "value": "Text",
+      "description": "Text string value."
+    },
+    {
+      "element": "Control",
+      "attribute": "IconSize",
+      "value": "16",
+      "description": "16x16 pixel icon (small)."
+    },
+    {
+      "element": "Control",
+      "attribute": "IconSize",
+      "value": "32",
+      "description": "32x32 pixel icon (standard)."
+    },
+    {
+      "element": "Control",
+      "attribute": "IconSize",
+      "value": "48",
+      "description": "48x48 pixel icon (large)."
+    },
+    {
+      "element": "CustomAction",
+      "attribute": "Execute",
+      "value": "commit",
+      "description": "Run after successful installation."
+    },
+    {
+      "element": "CustomAction",
+      "attribute": "Execute",
+      "value": "deferred",
+      "description": "Run during installation, SYSTEM context."
+    },
+    {
+      "element": "CustomAction",
+      "attribute": "Execute",
+      "value": "firstSequence",
+      "description": "Indicates that the custom action will only run in the first sequence that runs it."
+    },
+    {
+      "element": "CustomAction",
+      "attribute": "Execute",
+      "value": "immediate",
+      "description": "Run immediately, can access properties."
+    },
+    {
+      "element": "CustomAction",
+      "attribute": "Execute",
+      "value": "oncePerProcess",
+      "description": "Indicates that the custom action will only run in the first sequence that runs it in the same process."
+    },
+    {
+      "element": "CustomAction",
+      "attribute": "Execute",
+      "value": "rollback",
+      "description": "Run on installation rollback."
+    },
+    {
+      "element": "CustomAction",
+      "attribute": "Execute",
+      "value": "secondSequence",
+      "description": "Indicates that a custom action should be run a second time if it was previously run in an earlier sequence."
+    },
+    {
+      "element": "CustomAction",
+      "attribute": "Impersonate",
+      "value": "no",
+      "description": "Run as SYSTEM. Required for deferred system changes."
+    },
+    {
+      "element": "CustomAction",
+      "attribute": "Impersonate",
+      "value": "yes",
+      "description": "Run as installing user. Default for immediate."
+    },
+    {
+      "element": "CustomAction",
+      "attribute": "Return",
+      "value": "asyncNoWait",
+      "description": "Run async, don't wait."
+    },
+    {
+      "element": "CustomAction",
+      "attribute": "Return",
+      "value": "asyncWait",
+      "description": "Run async, wait for completion."
+    },
+    {
+      "element": "CustomAction",
+      "attribute": "Return",
+      "value": "check",
+      "description": "Check return value, fail on error. Default."
+    },
+    {
+      "element": "CustomAction",
+      "attribute": "Return",
+      "value": "ignore",
+      "description": "Ignore return value."
+    },
+    {
+      "element": "CustomAction",
+      "attribute": "Script",
+      "value": "jscript",
+      "description": "JScript (JavaScript) script."
+    },
+    {
+      "element": "CustomAction",
+      "attribute": "Script",
+      "value": "vbscript",
+      "description": "VBScript script."
+    },
+    {
+      "element": "DirectorySearch",
+      "attribute": "Result",
+      "value": "exists",
+      "description": "Saves true if a matching directory is found; false otherwise."
+    },
+    {
+      "element": "DotNetCompatibilityCheck",
+      "attribute": "RollForward",
+      "value": "disable",
+      "description": "Disable roll-forward; exact version match required."
+    },
+    {
+      "element": "DotNetCompatibilityCheck",
+      "attribute": "RollForward",
+      "value": "latestMajor",
+      "description": "Roll forward to latest major version."
+    },
+    {
+      "element": "DotNetCompatibilityCheck",
+      "attribute": "RollForward",
+      "value": "latestMinor",
+      "description": "Roll forward to latest minor version."
+    },
+    {
+      "element": "DotNetCompatibilityCheck",
+      "attribute": "RollForward",
+      "value": "latestPatch",
+      "description": "Roll forward to latest patch version."
+    },
+    {
+      "element": "DotNetCompatibilityCheck",
+      "attribute": "RollForward",
+      "value": "major",
+      "description": "Roll forward to next major version if needed."
+    },
+    {
+      "element": "DotNetCompatibilityCheck",
+      "attribute": "RollForward",
+      "value": "minor",
+      "description": "Roll forward to next minor version if needed."
+    },
+    {
+      "element": "DotNetCompatibilityCheck",
+      "attribute": "RuntimeType",
+      "value": "aspnet",
+      "description": "ASP.NET Core runtime."
+    },
+    {
+      "element": "DotNetCompatibilityCheck",
+      "attribute": "RuntimeType",
+      "value": "core",
+      "description": ".NET Core runtime."
+    },
+    {
+      "element": "DotNetCompatibilityCheck",
+      "attribute": "RuntimeType",
+      "value": "desktop",
+      "description": ".NET Desktop runtime (WPF/WinForms)."
+    },
+    {
+      "element": "DotNetCoreSearch",
+      "attribute": "RuntimeType",
+      "value": "aspnet",
+      "description": "Attempt to check for an ASP.NET Core type runtime.\n                  The ASP.NET Core Runtime enables you to run web/server applications."
+    },
+    {
+      "element": "DotNetCoreSearch",
+      "attribute": "RuntimeType",
+      "value": "core",
+      "description": "Attempt to check for a .NET type runtime.\n                  The .NET Core Runtime contains just the components needed to run a console app."
+    },
+    {
+      "element": "DotNetCoreSearch",
+      "attribute": "RuntimeType",
+      "value": "desktop",
+      "description": "Attempt to check for a .NET Desktop type runtime.\n                  The .NET Desktop Runtime enables you to run Windows desktop applications."
+    },
+    {
+      "element": "Environment",
+      "attribute": "Action",
+      "value": "create",
+      "description": "Create only if doesn't exist."
+    },
+    {
+      "element": "Environment",
+      "attribute": "Action",
+      "value": "remove",
+      "description": "Remove the variable."
+    },
+    {
+      "element": "Environment",
+      "attribute": "Action",
+      "value": "set",
+      "description": "Set the environment variable."
+    },
+    {
+      "element": "Environment",
+      "attribute": "Part",
+      "value": "all",
+      "description": "Replace entire value."
+    },
+    {
+      "element": "Environment",
+      "attribute": "Part",
+      "value": "first",
+      "description": "Prepend to existing value."
+    },
+    {
+      "element": "Environment",
+      "attribute": "Part",
+      "value": "last",
+      "description": "Append to existing value."
+    },
+    {
+      "element": "ExitCode",
+      "attribute": "Behavior",
+      "value": "error",
+      "description": "The process failed."
+    },
+    {
+      "element": "ExitCode",
+      "attribute": "Behavior",
+      "value": "errorForceReboot",
+      "description": "The process failed and initiated a restart."
+    },
+    {
+      "element": "ExitCode",
+      "attribute": "Behavior",
+      "value": "errorScheduleReboot",
+      "description": "The process failed and requires the machine to be restarted."
+    },
+    {
+      "element": "ExitCode",
+      "attribute": "Behavior",
+      "value": "forceReboot",
+      "description": "The process completed successfully and initiated a restart."
+    },
+    {
+      "element": "ExitCode",
+      "attribute": "Behavior",
+      "value": "scheduleReboot",
+      "description": "The process completed successfully and requires the machine to be restarted."
+    },
+    {
+      "element": "ExitCode",
+      "attribute": "Behavior",
+      "value": "success",
+      "description": "The process completed successfully."
+    },
+    {
+      "element": "Feature",
+      "attribute": "AllowAbsent",
+      "value": "no",
+      "description": "Feature is required, cannot be deselected."
+    },
+    {
+      "element": "Feature",
+      "attribute": "AllowAbsent",
+      "value": "yes",
+      "description": "User can choose not to install. Default."
+    },
+    {
+      "element": "Feature",
+      "attribute": "AllowAdvertise",
+      "value": "no",
+      "description": "Feature cannot be advertised."
+    },
+    {
+      "element": "Feature",
+      "attribute": "AllowAdvertise",
+      "value": "system",
+      "description": "Feature can be advertised if OS supports."
+    },
+    {
+      "element": "Feature",
+      "attribute": "AllowAdvertise",
+      "value": "yes",
+      "description": "Feature can be advertised. Default."
+    },
+    {
+      "element": "Feature",
+      "attribute": "Display",
+      "value": "collapse",
+      "description": "Feature shown collapsed in tree. Default."
+    },
+    {
+      "element": "Feature",
+      "attribute": "Display",
+      "value": "expand",
+      "description": "Feature shown expanded in tree."
+    },
+    {
+      "element": "Feature",
+      "attribute": "Display",
+      "value": "hidden",
+      "description": "Feature hidden from user interface."
+    },
+    {
+      "element": "Feature",
+      "attribute": "InstallDefault",
+      "value": "followParent",
+      "description": "Same install state as parent feature."
+    },
+    {
+      "element": "Feature",
+      "attribute": "InstallDefault",
+      "value": "local",
+      "description": "Install feature locally. Default."
+    },
+    {
+      "element": "Feature",
+      "attribute": "InstallDefault",
+      "value": "source",
+      "description": "Run feature from source media."
+    },
+    {
+      "element": "Feature",
+      "attribute": "TypicalDefault",
+      "value": "advertise",
+      "description": "Feature advertised in Typical setup."
+    },
+    {
+      "element": "Feature",
+      "attribute": "TypicalDefault",
+      "value": "install",
+      "description": "Feature installed in Typical setup. Default."
+    },
+    {
+      "element": "File",
+      "attribute": "Assembly",
+      "value": ".net",
+      "description": ".NET Framework assembly for GAC."
+    },
+    {
+      "element": "File",
+      "attribute": "Assembly",
+      "value": "no",
+      "description": "Not an assembly. Default."
+    },
+    {
+      "element": "File",
+      "attribute": "Assembly",
+      "value": "win32",
+      "description": "Win32 side-by-side assembly."
+    },
+    {
+      "element": "File",
+      "attribute": "Compressed",
+      "value": "default",
+      "description": "Use package compression setting."
+    },
+    {
+      "element": "File",
+      "attribute": "Compressed",
+      "value": "no",
+      "description": "Do not compress this file."
+    },
+    {
+      "element": "File",
+      "attribute": "Compressed",
+      "value": "yes",
+      "description": "Compress this file."
+    },
+    {
+      "element": "File",
+      "attribute": "ProcessorArchitecture",
+      "value": "arm",
+      "description": "ARM assembly."
+    },
+    {
+      "element": "File",
+      "attribute": "ProcessorArchitecture",
+      "value": "arm64",
+      "description": "ARM64 assembly."
+    },
+    {
+      "element": "File",
+      "attribute": "ProcessorArchitecture",
+      "value": "ia64",
+      "description": "Itanium assembly (legacy)."
+    },
+    {
+      "element": "File",
+      "attribute": "ProcessorArchitecture",
+      "value": "msil",
+      "description": "Processor-neutral .NET assembly."
+    },
+    {
+      "element": "File",
+      "attribute": "ProcessorArchitecture",
+      "value": "x64",
+      "description": "64-bit x64 assembly."
+    },
+    {
+      "element": "File",
+      "attribute": "ProcessorArchitecture",
+      "value": "x86",
+      "description": "32-bit x86 assembly."
+    },
+    {
+      "element": "FileSearch",
+      "attribute": "Result",
+      "value": "exists",
+      "description": "Saves true if a matching file is found; false otherwise."
+    },
+    {
+      "element": "FileSearch",
+      "attribute": "Result",
+      "value": "version",
+      "description": "Saves the version information for files that have it (.exe, .dll); zero-version (0.0.0.0) otherwise."
+    },
+    {
+      "element": "IniFile",
+      "attribute": "Action",
+      "value": "addLine",
+      "description": "Creates or updates an .ini entry."
+    },
+    {
+      "element": "IniFile",
+      "attribute": "Action",
+      "value": "addTag",
+      "description": "Creates a new entry or appends a new comma-separated value to an existing entry."
+    },
+    {
+      "element": "IniFile",
+      "attribute": "Action",
+      "value": "createLine",
+      "description": "Creates an .ini entry only if the entry does no already exist."
+    },
+    {
+      "element": "IniFile",
+      "attribute": "Action",
+      "value": "removeLine",
+      "description": "Removes an .ini entry."
+    },
+    {
+      "element": "IniFile",
+      "attribute": "Action",
+      "value": "removeTag",
+      "description": "Removes a tag from an .ini entry."
+    },
+    {
+      "element": "IniFileSearch",
+      "attribute": "Type",
+      "value": "directory",
+      "description": "A directory location."
+    },
+    {
+      "element": "IniFileSearch",
+      "attribute": "Type",
+      "value": "file",
+      "description": "A file location. This is the default value."
+    },
+    {
+      "element": "IniFileSearch",
+      "attribute": "Type",
+      "value": "raw",
+      "description": "A raw .ini value."
+    },
+    {
+      "element": "InternetShortcut",
+      "attribute": "Type",
+      "value": "link",
+      "description": "Creates .lnk files using IShellLinkW (default)."
+    },
+    {
+      "element": "InternetShortcut",
+      "attribute": "Type",
+      "value": "url",
+      "description": "Creates .url files using IUniformResourceLocatorW."
+    },
+    {
+      "element": "MajorUpgrade",
+      "attribute": "AllowDowngrades",
+      "value": "no",
+      "description": "Block downgrade with error. Default."
+    },
+    {
+      "element": "MajorUpgrade",
+      "attribute": "AllowDowngrades",
+      "value": "yes",
+      "description": "Allow installing older version."
+    },
+    {
+      "element": "MajorUpgrade",
+      "attribute": "AllowSameVersionUpgrades",
+      "value": "no",
+      "description": "Block same version reinstall. Default."
+    },
+    {
+      "element": "MajorUpgrade",
+      "attribute": "AllowSameVersionUpgrades",
+      "value": "yes",
+      "description": "Allow reinstall of same version."
+    },
+    {
+      "element": "MajorUpgrade",
+      "attribute": "Schedule",
+      "value": "afterInstallExecute",
+      "description": "Remove after new files installed."
+    },
+    {
+      "element": "MajorUpgrade",
+      "attribute": "Schedule",
+      "value": "afterInstallExecuteAgain",
+      "description": "Remove after retry."
+    },
+    {
+      "element": "MajorUpgrade",
+      "attribute": "Schedule",
+      "value": "afterInstallFinalize",
+      "description": "Remove at end of install."
+    },
+    {
+      "element": "MajorUpgrade",
+      "attribute": "Schedule",
+      "value": "afterInstallInitialize",
+      "description": "Remove after transaction starts."
+    },
+    {
+      "element": "MajorUpgrade",
+      "attribute": "Schedule",
+      "value": "afterInstallValidate",
+      "description": "Remove old version early. Default."
+    },
+    {
+      "element": "MessageQueue",
+      "attribute": "PrivLevel",
+      "value": "body",
+      "description": "Encrypt message body only."
+    },
+    {
+      "element": "MessageQueue",
+      "attribute": "PrivLevel",
+      "value": "none",
+      "description": "No message encryption."
+    },
+    {
+      "element": "MessageQueue",
+      "attribute": "PrivLevel",
+      "value": "optional",
+      "description": "Encryption optional; accepts both."
+    },
+    {
+      "element": "NativeImage",
+      "attribute": "Priority",
+      "value": "0",
+      "description": "This is the highest priority, it means that image generation occurs\n                  and completes during setup. This option ensures images are generated\n                  by the time setup is complete."
+    },
+    {
+      "element": "NativeImage",
+      "attribute": "Priority",
+      "value": "1",
+      "description": "This will queue image generation to the NGen service to occur immediately.\n                  This option will slow down setup performance."
+    },
+    {
+      "element": "NativeImage",
+      "attribute": "Priority",
+      "value": "2",
+      "description": "This will queue image generation to the NGen service to occur after all priority 1\n                  assemblies have completed.\n                  This option will slow down setup performance."
+    },
+    {
+      "element": "NativeImage",
+      "attribute": "Priority",
+      "value": "3",
+      "description": "This is the lowest priority, it will queue image generation to occur when the\n                  machine is idle.\n                  This option should not slow down setup performance.\n                  This is the default value."
+    },
+    {
+      "element": "ODBCDataSource",
+      "attribute": "Registration",
+      "value": "machine",
+      "description": "Data source is registered per machine."
+    },
+    {
+      "element": "ODBCDataSource",
+      "attribute": "Registration",
+      "value": "user",
+      "description": "Data source is registered per user."
+    },
+    {
+      "element": "Package",
+      "attribute": "Compressed",
+      "value": "no",
+      "description": "Files remain uncompressed alongside MSI."
+    },
+    {
+      "element": "Package",
+      "attribute": "Compressed",
+      "value": "yes",
+      "description": "Compress files into cabinet. Default."
+    },
+    {
+      "element": "Package",
+      "attribute": "Scope",
+      "value": "perMachine",
+      "description": "Install for all users (requires admin). Default."
+    },
+    {
+      "element": "Package",
+      "attribute": "Scope",
+      "value": "perUser",
+      "description": "Install for current user only, no admin required."
+    },
+    {
+      "element": "Package",
+      "attribute": "Scope",
+      "value": "perUserOrMachine",
+      "description": "Let user choose during installation."
+    },
+    {
+      "element": "Package",
+      "attribute": "ShortNames",
+      "value": "no",
+      "description": "Use long filenames. Default."
+    },
+    {
+      "element": "Package",
+      "attribute": "ShortNames",
+      "value": "yes",
+      "description": "Use 8.3 short filenames."
+    },
+    {
+      "element": "Payload",
+      "attribute": "Compressed",
+      "value": "default",
+      "description": "Use container's setting."
+    },
+    {
+      "element": "Payload",
+      "attribute": "Compressed",
+      "value": "no",
+      "description": "Don't compress this payload."
+    },
+    {
+      "element": "Payload",
+      "attribute": "Compressed",
+      "value": "yes",
+      "description": "Compress this payload."
+    },
+    {
+      "element": "ProductSearch",
+      "attribute": "Result",
+      "value": "assignment",
+      "description": "Saves the assignment type of the product: per-user (0), or per-machine (1)."
+    },
+    {
+      "element": "ProductSearch",
+      "attribute": "Result",
+      "value": "exists",
+      "description": "[WiX v7 and later]\n                  Saves true if a matching product entry is found (non-absent); false otherwise."
+    },
+    {
+      "element": "ProductSearch",
+      "attribute": "Result",
+      "value": "language",
+      "description": "Saves the language of a matching product if found; empty otherwise."
+    },
+    {
+      "element": "ProductSearch",
+      "attribute": "Result",
+      "value": "state",
+      "description": "Saves the state of the product: advertised (1), absent (2), or locally installed (5)."
+    },
+    {
+      "element": "ProductSearch",
+      "attribute": "Result",
+      "value": "version",
+      "description": "Saves the version of a matching product if found; 0.0.0.0 otherwise. This is the default."
+    },
+    {
+      "element": "RegistryKey",
+      "attribute": "Action",
+      "value": "create",
+      "description": "Create key if not exists. Default."
+    },
+    {
+      "element": "RegistryKey",
+      "attribute": "Action",
+      "value": "createAndRemoveOnUninstall",
+      "description": "Create and remove on uninstall."
+    },
+    {
+      "element": "RegistryKey",
+      "attribute": "Action",
+      "value": "none",
+      "description": "Don't create, just reference."
+    },
+    {
+      "element": "RegistryKey",
+      "attribute": "Root",
+      "value": "HKCR",
+      "description": "HKEY_CLASSES_ROOT"
+    },
+    {
+      "element": "RegistryKey",
+      "attribute": "Root",
+      "value": "HKCU",
+      "description": "HKEY_CURRENT_USER"
+    },
+    {
+      "element": "RegistryKey",
+      "attribute": "Root",
+      "value": "HKLM",
+      "description": "HKEY_LOCAL_MACHINE"
+    },
+    {
+      "element": "RegistryKey",
+      "attribute": "Root",
+      "value": "HKMU",
+      "description": "HKLM for per-machine, HKCU for per-user"
+    },
+    {
+      "element": "RegistryKey",
+      "attribute": "Root",
+      "value": "HKU",
+      "description": "HKEY_USERS"
+    },
+    {
+      "element": "RegistrySearch",
+      "attribute": "Result",
+      "value": "exists",
+      "description": "Saves true if a matching registry entry is found; false otherwise."
+    },
+    {
+      "element": "RegistrySearch",
+      "attribute": "Result",
+      "value": "value",
+      "description": "Saves the value of the registry key in the variable. This is the default."
+    },
+    {
+      "element": "RegistrySearch",
+      "attribute": "Root",
+      "value": "HKCR",
+      "description": "HKEY_CLASSES_ROOT"
+    },
+    {
+      "element": "RegistrySearch",
+      "attribute": "Root",
+      "value": "HKCU",
+      "description": "HKEY_CURRENT_USER"
+    },
+    {
+      "element": "RegistrySearch",
+      "attribute": "Root",
+      "value": "HKLM",
+      "description": "HKEY_LOCAL_MACHINE"
+    },
+    {
+      "element": "RegistrySearch",
+      "attribute": "Root",
+      "value": "HKU",
+      "description": "HKEY_USERS"
+    },
+    {
+      "element": "RegistryValue",
+      "attribute": "Action",
+      "value": "append",
+      "description": "Append to existing multi-string."
+    },
+    {
+      "element": "RegistryValue",
+      "attribute": "Action",
+      "value": "prepend",
+      "description": "Prepend to existing multi-string."
+    },
+    {
+      "element": "RegistryValue",
+      "attribute": "Action",
+      "value": "write",
+      "description": "Write the value. Default."
+    },
+    {
+      "element": "RegistryValue",
+      "attribute": "Type",
+      "value": "binary",
+      "description": "REG_BINARY binary data."
+    },
+    {
+      "element": "RegistryValue",
+      "attribute": "Type",
+      "value": "expandable",
+      "description": "REG_EXPAND_SZ expandable string."
+    },
+    {
+      "element": "RegistryValue",
+      "attribute": "Type",
+      "value": "integer",
+      "description": "REG_DWORD 32-bit integer."
+    },
+    {
+      "element": "RegistryValue",
+      "attribute": "Type",
+      "value": "multiString",
+      "description": "REG_MULTI_SZ multi-string value."
+    },
+    {
+      "element": "RegistryValue",
+      "attribute": "Type",
+      "value": "string",
+      "description": "REG_SZ string value."
+    },
+    {
+      "element": "RelatedBundle",
+      "attribute": "Action",
+      "value": "addon",
+      "description": "Related bundle is an addon to this bundle."
+    },
+    {
+      "element": "RelatedBundle",
+      "attribute": "Action",
+      "value": "detect",
+      "description": "Only detect the related bundle."
+    },
+    {
+      "element": "RelatedBundle",
+      "attribute": "Action",
+      "value": "patch",
+      "description": "Related bundle is a patch."
+    },
+    {
+      "element": "RelatedBundle",
+      "attribute": "Action",
+      "value": "upgrade",
+      "description": "Related bundle upgrades this bundle."
+    },
+    {
+      "element": "RemoteRelatedBundle",
+      "attribute": "Action",
+      "value": "addon",
+      "description": "Remote bundle is an addon."
+    },
+    {
+      "element": "RemoteRelatedBundle",
+      "attribute": "Action",
+      "value": "detect",
+      "description": "Only detect the remote bundle."
+    },
+    {
+      "element": "RemoteRelatedBundle",
+      "attribute": "Action",
+      "value": "patch",
+      "description": "Remote bundle is a patch."
+    },
+    {
+      "element": "RemoteRelatedBundle",
+      "attribute": "Action",
+      "value": "upgrade",
+      "description": "Remote bundle provides upgrade."
+    },
+    {
+      "element": "RemoveFile",
+      "attribute": "On",
+      "value": "both",
+      "description": "Remove on both install and uninstall."
+    },
+    {
+      "element": "RemoveFile",
+      "attribute": "On",
+      "value": "install",
+      "description": "Remove file on install."
+    },
+    {
+      "element": "RemoveFile",
+      "attribute": "On",
+      "value": "uninstall",
+      "description": "Remove file on uninstall."
+    },
+    {
+      "element": "RemoveFolder",
+      "attribute": "On",
+      "value": "both",
+      "description": "Remove on both install and uninstall."
+    },
+    {
+      "element": "RemoveFolder",
+      "attribute": "On",
+      "value": "install",
+      "description": "Remove folder on install."
+    },
+    {
+      "element": "RemoveFolder",
+      "attribute": "On",
+      "value": "uninstall",
+      "description": "Remove folder on uninstall."
+    },
+    {
+      "element": "RemoveFolderEx",
+      "attribute": "On",
+      "value": "both",
+      "description": "Removes the folder when the parent component is being installed or removed."
+    },
+    {
+      "element": "RemoveFolderEx",
+      "attribute": "On",
+      "value": "install",
+      "description": "Removes the folder only when the parent component is being installed (msiInstallStateLocal or msiInstallStateSource)."
+    },
+    {
+      "element": "RemoveFolderEx",
+      "attribute": "On",
+      "value": "uninstall",
+      "description": "Removes the folder only when the parent component is being removed (msiInstallStateAbsent). This is the default if the On attribute is not specified."
+    },
+    {
+      "element": "RemoveRegistryKey",
+      "attribute": "Action",
+      "value": "removeOnInstall",
+      "description": "Removes a key with all its values and subkeys when the parent component is installed."
+    },
+    {
+      "element": "RemoveRegistryKey",
+      "attribute": "Action",
+      "value": "removeOnUninstall",
+      "description": "Removes a key with all its values and subkeys when the parent component is uninstalled."
+    },
+    {
+      "element": "ServiceConfig",
+      "attribute": "FirstFailureActionType",
+      "value": "none",
+      "description": "No action on first failure."
+    },
+    {
+      "element": "ServiceConfig",
+      "attribute": "FirstFailureActionType",
+      "value": "reboot",
+      "description": "Reboot system on first failure."
+    },
+    {
+      "element": "ServiceConfig",
+      "attribute": "FirstFailureActionType",
+      "value": "restart",
+      "description": "Restart service on first failure."
+    },
+    {
+      "element": "ServiceConfig",
+      "attribute": "FirstFailureActionType",
+      "value": "runCommand",
+      "description": "Run command on first failure."
+    },
+    {
+      "element": "ServiceConfig",
+      "attribute": "SecondFailureActionType",
+      "value": "none",
+      "description": "No action on second failure."
+    },
+    {
+      "element": "ServiceConfig",
+      "attribute": "SecondFailureActionType",
+      "value": "reboot",
+      "description": "Reboot system on second failure."
+    },
+    {
+      "element": "ServiceConfig",
+      "attribute": "SecondFailureActionType",
+      "value": "restart",
+      "description": "Restart service on second failure."
+    },
+    {
+      "element": "ServiceConfig",
+      "attribute": "SecondFailureActionType",
+      "value": "runCommand",
+      "description": "Run command on second failure."
+    },
+    {
+      "element": "ServiceConfig",
+      "attribute": "ThirdFailureActionType",
+      "value": "none",
+      "description": "No action on third failure."
+    },
+    {
+      "element": "ServiceConfig",
+      "attribute": "ThirdFailureActionType",
+      "value": "reboot",
+      "description": "Reboot system on third failure."
+    },
+    {
+      "element": "ServiceConfig",
+      "attribute": "ThirdFailureActionType",
+      "value": "restart",
+      "description": "Restart service on third failure."
+    },
+    {
+      "element": "ServiceConfig",
+      "attribute": "ThirdFailureActionType",
+      "value": "runCommand",
+      "description": "Run command on third failure."
+    },
+    {
+      "element": "ServiceControl",
+      "attribute": "Remove",
+      "value": "both",
+      "description": "Remove on install and uninstall."
+    },
+    {
+      "element": "ServiceControl",
+      "attribute": "Remove",
+      "value": "install",
+      "description": "Remove service on install."
+    },
+    {
+      "element": "ServiceControl",
+      "attribute": "Remove",
+      "value": "uninstall",
+      "description": "Remove service on uninstall."
+    },
+    {
+      "element": "ServiceControl",
+      "attribute": "Start",
+      "value": "both",
+      "description": "Start on install and uninstall."
+    },
+    {
+      "element": "ServiceControl",
+      "attribute": "Start",
+      "value": "install",
+      "description": "Start service on install."
+    },
+    {
+      "element": "ServiceControl",
+      "attribute": "Start",
+      "value": "uninstall",
+      "description": "Start service on uninstall."
+    },
+    {
+      "element": "ServiceControl",
+      "attribute": "Stop",
+      "value": "both",
+      "description": "Stop on install and uninstall."
+    },
+    {
+      "element": "ServiceControl",
+      "attribute": "Stop",
+      "value": "install",
+      "description": "Stop service on install."
+    },
+    {
+      "element": "ServiceControl",
+      "attribute": "Stop",
+      "value": "uninstall",
+      "description": "Stop service on uninstall."
+    },
+    {
+      "element": "ServiceInstall",
+      "attribute": "Account",
+      "value": "LocalService",
+      "description": "Limited local privileges, anonymous network."
+    },
+    {
+      "element": "ServiceInstall",
+      "attribute": "Account",
+      "value": "LocalSystem",
+      "description": "Highest privileges, no network identity."
+    },
+    {
+      "element": "ServiceInstall",
+      "attribute": "Account",
+      "value": "NetworkService",
+      "description": "Limited local privileges, machine network identity."
+    },
+    {
+      "element": "ServiceInstall",
+      "attribute": "Account",
+      "value": "[username]",
+      "description": "Custom account (requires ServiceConfig for password)."
+    },
+    {
+      "element": "ServiceInstall",
+      "attribute": "ErrorControl",
+      "value": "critical",
+      "description": "Log error, restart with last-known-good."
+    },
+    {
+      "element": "ServiceInstall",
+      "attribute": "ErrorControl",
+      "value": "ignore",
+      "description": "Log error, continue startup."
+    },
+    {
+      "element": "ServiceInstall",
+      "attribute": "ErrorControl",
+      "value": "normal",
+      "description": "Log error, display message, continue."
+    },
+    {
+      "element": "ServiceInstall",
+      "attribute": "Start",
+      "value": "auto",
+      "description": "Start automatically at boot."
+    },
+    {
+      "element": "ServiceInstall",
+      "attribute": "Start",
+      "value": "boot",
+      "description": "Started by system loader (drivers)."
+    },
+    {
+      "element": "ServiceInstall",
+      "attribute": "Start",
+      "value": "demand",
+      "description": "Start manually on demand."
+    },
+    {
+      "element": "ServiceInstall",
+      "attribute": "Start",
+      "value": "disabled",
+      "description": "Service is disabled."
+    },
+    {
+      "element": "ServiceInstall",
+      "attribute": "Start",
+      "value": "system",
+      "description": "Started during kernel init (drivers)."
+    },
+    {
+      "element": "ServiceInstall",
+      "attribute": "Type",
+      "value": "kernelDriver",
+      "description": "Kernel device driver."
+    },
+    {
+      "element": "ServiceInstall",
+      "attribute": "Type",
+      "value": "ownProcess",
+      "description": "Runs in its own process. Most common."
+    },
+    {
+      "element": "ServiceInstall",
+      "attribute": "Type",
+      "value": "shareProcess",
+      "description": "Shares process with other services."
+    },
+    {
+      "element": "ServiceInstall",
+      "attribute": "Type",
+      "value": "systemDriver",
+      "description": "File system driver."
+    },
+    {
+      "element": "Shortcut",
+      "attribute": "Show",
+      "value": "maximized",
+      "description": "Start maximized."
+    },
+    {
+      "element": "Shortcut",
+      "attribute": "Show",
+      "value": "minimized",
+      "description": "Start minimized."
+    },
+    {
+      "element": "Shortcut",
+      "attribute": "Show",
+      "value": "normal",
+      "description": "Normal window. Default."
+    },
+    {
+      "element": "SniSslCertificate",
+      "attribute": "HandleExisting",
+      "value": "fail",
+      "description": "Fail if binding already exists."
+    },
+    {
+      "element": "SniSslCertificate",
+      "attribute": "HandleExisting",
+      "value": "ignore",
+      "description": "Ignore if binding already exists."
+    },
+    {
+      "element": "SniSslCertificate",
+      "attribute": "HandleExisting",
+      "value": "replace",
+      "description": "Replace existing binding."
+    },
+    {
+      "element": "UrlAce",
+      "attribute": "Rights",
+      "value": "all",
+      "description": "All URL rights (register and delegate)."
+    },
+    {
+      "element": "UrlAce",
+      "attribute": "Rights",
+      "value": "delegate",
+      "description": "Can delegate URL to others."
+    },
+    {
+      "element": "UrlAce",
+      "attribute": "Rights",
+      "value": "register",
+      "description": "Can register to listen on URL."
+    },
+    {
+      "element": "UrlReservation",
+      "attribute": "HandleExisting",
+      "value": "fail",
+      "description": "The installation fails."
+    },
+    {
+      "element": "UrlReservation",
+      "attribute": "HandleExisting",
+      "value": "ignore",
+      "description": "Keeps the existing URL reservation."
+    },
+    {
+      "element": "UrlReservation",
+      "attribute": "HandleExisting",
+      "value": "replace",
+      "description": "Replaces the existing URL reservation (the default)."
+    },
+    {
+      "element": "Validate",
+      "attribute": "ProductVersion",
+      "value": "Major",
+      "description": "Checks the major version."
+    },
+    {
+      "element": "Validate",
+      "attribute": "ProductVersion",
+      "value": "Minor",
+      "description": "Checks the major and minor versions."
+    },
+    {
+      "element": "Validate",
+      "attribute": "ProductVersion",
+      "value": "Update",
+      "description": "Checks the major, minor, and update versions."
+    },
+    {
+      "element": "Validate",
+      "attribute": "ProductVersionOperator",
+      "value": "Equal",
+      "description": "Installed ProductVersion = target ProductVersion."
+    },
+    {
+      "element": "Validate",
+      "attribute": "ProductVersionOperator",
+      "value": "Greater",
+      "description": "Installed ProductVersion > target ProductVersion."
+    },
+    {
+      "element": "Validate",
+      "attribute": "ProductVersionOperator",
+      "value": "GreaterOrEqual",
+      "description": "Installed ProductVersion >= target ProductVersion."
+    },
+    {
+      "element": "Validate",
+      "attribute": "ProductVersionOperator",
+      "value": "Lesser",
+      "description": "Installed ProductVersion < target ProductVersion."
+    },
+    {
+      "element": "Validate",
+      "attribute": "ProductVersionOperator",
+      "value": "LesserOrEqual",
+      "description": "Installed ProductVersion <= target ProductVersion."
+    },
+    {
+      "element": "Variable",
+      "attribute": "Persisted",
+      "value": "no",
+      "description": "Don't persist value. Default."
+    },
+    {
+      "element": "Variable",
+      "attribute": "Persisted",
+      "value": "yes",
+      "description": "Save value for repair/uninstall."
+    },
+    {
+      "element": "Variable",
+      "attribute": "Type",
+      "value": "numeric",
+      "description": "Numeric variable."
+    },
+    {
+      "element": "Variable",
+      "attribute": "Type",
+      "value": "string",
+      "description": "String variable. Default."
+    },
+    {
+      "element": "Variable",
+      "attribute": "Type",
+      "value": "version",
+      "description": "Version (major.minor.build.rev)."
+    },
+    {
+      "element": "WebAppPool",
+      "attribute": "CpuAction",
+      "value": "none",
+      "description": "No action when CPU limit exceeded."
+    },
+    {
+      "element": "WebAppPool",
+      "attribute": "CpuAction",
+      "value": "shutdown",
+      "description": "Shut down worker process when CPU limit exceeded."
+    },
+    {
+      "element": "WebAppPool",
+      "attribute": "Identity",
+      "value": "applicationPoolIdentity",
+      "description": "Built-in ApplicationPoolIdentity account."
+    },
+    {
+      "element": "WebAppPool",
+      "attribute": "Identity",
+      "value": "localService",
+      "description": "LocalService account (limited privileges)."
+    },
+    {
+      "element": "WebAppPool",
+      "attribute": "Identity",
+      "value": "localSystem",
+      "description": "LocalSystem account (full privileges)."
+    },
+    {
+      "element": "WebAppPool",
+      "attribute": "Identity",
+      "value": "networkService",
+      "description": "NetworkService account (network access)."
+    },
+    {
+      "element": "WebAppPool",
+      "attribute": "Identity",
+      "value": "other",
+      "description": "Custom user account."
+    },
+    {
+      "element": "WebApplication",
+      "attribute": "DefaultScript",
+      "value": "JScript",
+      "description": "JScript as default scripting language."
+    },
+    {
+      "element": "WebApplication",
+      "attribute": "DefaultScript",
+      "value": "VBScript",
+      "description": "VBScript as default scripting language."
+    },
+    {
+      "element": "WebApplication",
+      "attribute": "Isolation",
+      "value": "high",
+      "description": "Means execution alone in a separate process."
+    },
+    {
+      "element": "WebApplication",
+      "attribute": "Isolation",
+      "value": "low",
+      "description": "Means the application executes within the IIS process."
+    },
+    {
+      "element": "WebApplication",
+      "attribute": "Isolation",
+      "value": "medium",
+      "description": "Executes pooled in a separate process."
+    },
+    {
+      "element": "WebLog",
+      "attribute": "Type",
+      "value": "IIS",
+      "description": "Microsoft IIS Log File Format"
+    },
+    {
+      "element": "WebLog",
+      "attribute": "Type",
+      "value": "NCSA",
+      "description": "NCSA Common Log File Format"
+    },
+    {
+      "element": "WebLog",
+      "attribute": "Type",
+      "value": "ODBC",
+      "description": "ODBC Logging"
+    },
+    {
+      "element": "WebLog",
+      "attribute": "Type",
+      "value": "W3C",
+      "description": "W3C Extended Log File Format"
+    },
+    {
+      "element": "WebLog",
+      "attribute": "Type",
+      "value": "none",
+      "description": "Disables logging."
+    },
+    {
+      "element": "WebProperty",
+      "attribute": "Id",
+      "value": "ETagChangeNumber",
+      "description": "ETag change number for cache validation."
+    },
+    {
+      "element": "WebProperty",
+      "attribute": "Id",
+      "value": "IIs5IsolationMode",
+      "description": "IIS 5 isolation mode compatibility."
+    },
+    {
+      "element": "WebProperty",
+      "attribute": "Id",
+      "value": "LogInUTF8",
+      "description": "Log files in UTF-8 encoding."
+    },
+    {
+      "element": "WebProperty",
+      "attribute": "Id",
+      "value": "MaxGlobalBandwidth",
+      "description": "Maximum global bandwidth limit."
+    },
+    {
+      "element": "WindowsFeatureSearch",
+      "attribute": "Feature",
+      "value": "sha2CodeSigning",
+      "description": "The oldest OS with this feature is Win7 SP1 with KB3033929."
+    },
+    {
+      "element": "WixDotNetCoreBootstrapperApplicationHost",
+      "attribute": "Theme",
+      "value": "none",
+      "description": "No built-in theme; custom UI only."
+    },
+    {
+      "element": "WixDotNetCoreBootstrapperApplicationHost",
+      "attribute": "Theme",
+      "value": "standard",
+      "description": "Standard WiX bootstrapper theme."
+    },
+    {
+      "element": "WixInternalUIBootstrapperApplication",
+      "attribute": "Theme",
+      "value": "none",
+      "description": "No theme; MSI internal UI only."
+    },
+    {
+      "element": "WixInternalUIBootstrapperApplication",
+      "attribute": "Theme",
+      "value": "standard",
+      "description": "Standard progress theme."
+    },
+    {
+      "element": "WixManagedBootstrapperApplicationHost",
+      "attribute": "Theme",
+      "value": "none",
+      "description": "No built-in theme; custom managed UI."
+    },
+    {
+      "element": "WixManagedBootstrapperApplicationHost",
+      "attribute": "Theme",
+      "value": "standard",
+      "description": "Standard WiX managed BA theme."
+    },
+    {
+      "element": "WixPrerequisiteBootstrapperApplication",
+      "attribute": "Theme",
+      "value": "none",
+      "description": "No theme; silent prerequisite check."
+    },
+    {
+      "element": "WixPrerequisiteBootstrapperApplication",
+      "attribute": "Theme",
+      "value": "standard",
+      "description": "Standard prerequisite theme."
+    },
+    {
+      "element": "WixStandardBootstrapperApplication",
+      "attribute": "Theme",
+      "value": "hyperlinkLargeLicense",
+      "description": "Large license with clickable hyperlink."
+    },
+    {
+      "element": "WixStandardBootstrapperApplication",
+      "attribute": "Theme",
+      "value": "hyperlinkLicense",
+      "description": "License with clickable hyperlink."
+    },
+    {
+      "element": "WixStandardBootstrapperApplication",
+      "attribute": "Theme",
+      "value": "hyperlinkSidebarLicense",
+      "description": "Sidebar layout with license hyperlink."
+    },
+    {
+      "element": "WixStandardBootstrapperApplication",
+      "attribute": "Theme",
+      "value": "none",
+      "description": "No built-in UI; silent install."
+    },
+    {
+      "element": "WixStandardBootstrapperApplication",
+      "attribute": "Theme",
+      "value": "rtfLargeLicense",
+      "description": "Large RTF license display."
+    },
+    {
+      "element": "WixStandardBootstrapperApplication",
+      "attribute": "Theme",
+      "value": "rtfLicense",
+      "description": "Standard RTF license display."
+    },
+    {
+      "element": "XmlConfig",
+      "attribute": "Action",
+      "value": "create",
+      "description": "Create the XML element or attribute."
+    },
+    {
+      "element": "XmlConfig",
+      "attribute": "Action",
+      "value": "delete",
+      "description": "Delete the XML element or attribute."
+    },
+    {
+      "element": "XmlConfig",
+      "attribute": "Node",
+      "value": "document",
+      "description": "Apply to the document node."
+    },
+    {
+      "element": "XmlConfig",
+      "attribute": "Node",
+      "value": "element",
+      "description": "Apply to an element node."
+    },
+    {
+      "element": "XmlConfig",
+      "attribute": "Node",
+      "value": "value",
+      "description": "Apply to the element value."
+    },
+    {
+      "element": "XmlConfig",
+      "attribute": "On",
+      "value": "install",
+      "description": "Apply during installation."
+    },
+    {
+      "element": "XmlConfig",
+      "attribute": "On",
+      "value": "uninstall",
+      "description": "Apply during uninstallation."
+    },
+    {
+      "element": "XmlFile",
+      "attribute": "Action",
+      "value": "bulkSetValue",
+      "description": "Sets all the values in the elements that match the ElementPath.  If Name is specified, attributes with that name are set to the same value specified in Value.  If Name is not specified, the text values of the elements are set.  Value is a required attribute if setBulkValue is the action specified."
+    },
+    {
+      "element": "XmlFile",
+      "attribute": "Action",
+      "value": "createElement",
+      "description": "Creates a new element under the element specified in ElementPath.  The Name attribute is required in this case and specifies the name of the new element.  The Value attribute is not necessary when createElement is specified as the action.  If the Value attribute is set, it will cause the new element's text value to be set."
+    },
+    {
+      "element": "XmlFile",
+      "attribute": "Action",
+      "value": "deleteValue",
+      "description": "Deletes a value from the element specified in the ElementPath.  If Name is specified, the attribute with that name is deleted.  If Name is not specified, the text value of the element specified in the ElementPath is deleted.  The Value attribute is ignored if deleteValue is the action specified."
+    },
+    {
+      "element": "XmlFile",
+      "attribute": "Action",
+      "value": "setValue",
+      "description": "Sets a value in the element specified in the ElementPath.  If Name is specified, and attribute with that name is set to the value specified in Value.  If Name is not specified, the text value of the element is set.  Value is a required attribute if setValue is the action specified."
+    },
+    {
+      "element": "XmlFile",
+      "attribute": "SelectionLanguage",
+      "value": "XPath",
+      "description": "Use XPath for node selection."
+    },
+    {
+      "element": "XmlFile",
+      "attribute": "SelectionLanguage",
+      "value": "XSLPattern",
+      "description": "Use XSL Pattern for node selection."
+    }
+  ]
+}

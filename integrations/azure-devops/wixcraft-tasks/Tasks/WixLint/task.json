@@ -1,0 +1,77 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+  "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "name": "WixLint",
+  "friendlyName": "WiX Lint",
+  "description": "Lint WiX source files for common issues and best practices",
+  "helpMarkDown": "[Learn more](https://github.com/wixcraft/wixcraft)",
+  "category": "Build",
+  "visibility": ["Build", "Release"],
+  "author": "WixCraft",
+  "version": {
+    "Major": 0,
+    "Minor": 1,
+    "Patch": 0
+  },
+  "instanceNameFormat": "WiX Lint $(files)",
+  "groups": [
+    {
+      "name": "output",
+      "displayName": "Output Options",
+      "isExpanded": false
+    }
+  ],
+  "inputs": [
+    {
+      "name": "files",
+      "type": "filePath",
+      "label": "WiX Files",
+      "defaultValue": "**/*.wxs",
+      "required": true,
+      "helpMarkDown": "Glob pattern for WiX files to lint"
+    },
+    {
+      "name": "wixDataPath",
+      "type": "filePath",
+      "label": "WiX Data Path",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Path to wix-data directory (optional)"
+    },
+    {
+      "name": "failOnWarning",
+      "type": "boolean",
+      "label": "Fail on Warning",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Fail the task if any warnings are found"
+    },
+    {
+      "name": "outputFormat",
+      "type": "pickList",
+      "label": "Output Format",
+      "defaultValue": "text",
+      "options": {
+        "text": "Text",
+        "json": "JSON",
+        "sarif": "SARIF"
+      },
+      "groupName": "output",
+      "helpMarkDown": "Output format for results"
+    },
+    {
+      "name": "sarifOutput",
+      "type": "filePath",
+      "label": "SARIF Output File",
+      "defaultValue": "$(Build.ArtifactStagingDirectory)/wix-lint.sarif",
+      "required": false,
+      "groupName": "output",
+      "helpMarkDown": "Path to write SARIF output"
+    }
+  ],
+  "execution": {
+    "PowerShell3": {
+      "target": "wix-lint.ps1"
+    }
+  }
+}

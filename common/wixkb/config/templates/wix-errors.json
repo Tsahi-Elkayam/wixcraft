@@ -1,0 +1,98 @@
+{
+  "$schema": "../schema/errors.schema.json",
+  "errors": [
+    {
+      "code": "WIX0001",
+      "severity": "error",
+      "message": "The {0} element cannot be the child of the {1} element.",
+      "description": "An element was placed inside an invalid parent element.",
+      "resolution": "Check the allowed parent elements in the schema documentation."
+    },
+    {
+      "code": "WIX0002",
+      "severity": "error",
+      "message": "The {0} attribute is required on the {1} element.",
+      "description": "A required attribute is missing from an element.",
+      "resolution": "Add the missing required attribute to the element."
+    },
+    {
+      "code": "WIX0003",
+      "severity": "error",
+      "message": "Duplicate symbol '{0}' found.",
+      "description": "Two elements have the same identifier.",
+      "resolution": "Ensure all Id attributes are unique across the project."
+    },
+    {
+      "code": "WIX0094",
+      "severity": "error",
+      "message": "The Component/@Guid attribute's value is not a valid GUID.",
+      "description": "The GUID format is incorrect.",
+      "resolution": "Use a valid GUID format (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx) or use '*' for auto-generation."
+    },
+    {
+      "code": "WIX0204",
+      "severity": "error",
+      "message": "ICE error: {0}",
+      "description": "An ICE validation error occurred.",
+      "resolution": "See the specific ICE error message for resolution steps."
+    },
+    {
+      "code": "WIX0301",
+      "severity": "warning",
+      "message": "The file '{0}' cannot be found.",
+      "description": "A source file referenced in the project was not found.",
+      "resolution": "Verify the file path is correct and the file exists."
+    }
+  ],
+  "iceErrors": [
+    {
+      "code": "ICE03",
+      "severity": "error",
+      "description": "Basic validation of the MSI database schema.",
+      "tables": ["_Validation"],
+      "resolution": "Ensure database tables conform to the schema."
+    },
+    {
+      "code": "ICE08",
+      "severity": "error",
+      "description": "Validates that no duplicate component GUIDs exist.",
+      "tables": ["Component"],
+      "resolution": "Ensure each component has a unique GUID."
+    },
+    {
+      "code": "ICE30",
+      "severity": "warning",
+      "description": "Validates that file key paths are unique.",
+      "tables": ["File", "Component"],
+      "resolution": "Ensure key path files are not shared between components."
+    },
+    {
+      "code": "ICE38",
+      "severity": "error",
+      "description": "Validates that components have proper key paths.",
+      "tables": ["Component"],
+      "resolution": "Ensure each component has exactly one key path."
+    },
+    {
+      "code": "ICE43",
+      "severity": "warning",
+      "description": "Validates that non-advertised shortcuts have proper targets.",
+      "tables": ["Shortcut"],
+      "resolution": "Use advertised shortcuts or ensure targets exist."
+    },
+    {
+      "code": "ICE57",
+      "severity": "warning",
+      "description": "Validates per-user and per-machine component mixing.",
+      "tables": ["Component"],
+      "resolution": "Don't mix per-user and per-machine components in the same package."
+    },
+    {
+      "code": "ICE80",
+      "severity": "error",
+      "description": "Validates 32-bit/64-bit component consistency.",
+      "tables": ["Component", "Directory"],
+      "resolution": "Ensure 64-bit components use 64-bit directories."
+    }
+  ]
+}

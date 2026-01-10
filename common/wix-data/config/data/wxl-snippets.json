@@ -1,0 +1,145 @@
+{
+  "_description": "Code snippets for WiX localization files (.wxl)",
+  "snippets": [
+    {
+      "prefix": "wxl",
+      "name": "WXL File Template",
+      "description": "Complete WXL localization file template",
+      "scope": "wxl",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<WixLocalization xmlns=\"http://wixtoolset.org/schemas/v4/wxl\" Culture=\"${1:en-US}\">\n  <String Id=\"${2:ProductName}\">${3:My Application}</String>\n  $0\n</WixLocalization>"
+    },
+    {
+      "prefix": "wxl-string",
+      "name": "Localized String",
+      "description": "Single localized string element",
+      "scope": "wxl",
+      "body": "<String Id=\"${1:StringId}\">${2:Localized text}</String>"
+    },
+    {
+      "prefix": "wxl-string-overridable",
+      "name": "Overridable String",
+      "description": "Localized string that can be overridden",
+      "scope": "wxl",
+      "body": "<String Id=\"${1:StringId}\" Overridable=\"yes\">${2:Default text}</String>"
+    },
+    {
+      "prefix": "wxl-ui",
+      "name": "UI Control Localization",
+      "description": "Localize a specific dialog control",
+      "scope": "wxl",
+      "body": "<UI Dialog=\"${1:DialogName}\" Control=\"${2:ControlName}\" Text=\"${3:Localized text}\" />"
+    },
+    {
+      "prefix": "wxl-product",
+      "name": "Product Strings",
+      "description": "Common product localization strings",
+      "scope": "wxl",
+      "body": "<String Id=\"ProductName\">${1:My Application}</String>\n<String Id=\"ProductDescription\">${2:Application description}</String>\n<String Id=\"Manufacturer\">${3:Company Name}</String>\n<String Id=\"ProductVersion\">${4:1.0.0}</String>"
+    },
+    {
+      "prefix": "wxl-buttons",
+      "name": "Button Text Strings",
+      "description": "Common button text localizations",
+      "scope": "wxl",
+      "body": "<String Id=\"ButtonText_Back\">${1:Back}</String>\n<String Id=\"ButtonText_Next\">${2:Next}</String>\n<String Id=\"ButtonText_Cancel\">${3:Cancel}</String>\n<String Id=\"ButtonText_Install\">${4:Install}</String>\n<String Id=\"ButtonText_Finish\">${5:Finish}</String>"
+    },
+    {
+      "prefix": "wxl-welcome",
+      "name": "Welcome Dialog Strings",
+      "description": "Welcome dialog localization strings",
+      "scope": "wxl",
+      "body": "<String Id=\"WelcomeDlgTitle\">${1:Welcome to [ProductName] Setup}</String>\n<String Id=\"WelcomeDlgDescription\">${2:The Setup Wizard will install [ProductName] on your computer. Click Next to continue or Cancel to exit the Setup Wizard.}</String>"
+    },
+    {
+      "prefix": "wxl-license",
+      "name": "License Dialog Strings",
+      "description": "License agreement dialog strings",
+      "scope": "wxl",
+      "body": "<String Id=\"LicenseAgreementDlgTitle\">${1:License Agreement}</String>\n<String Id=\"LicenseAgreementDlgDescription\">${2:Please read the following license agreement carefully.}</String>\n<String Id=\"LicenseAcceptText\">${3:I accept the terms in the License Agreement}</String>"
+    },
+    {
+      "prefix": "wxl-installdir",
+      "name": "Install Directory Strings",
+      "description": "Installation directory dialog strings",
+      "scope": "wxl",
+      "body": "<String Id=\"InstallDirDlgTitle\">${1:Destination Folder}</String>\n<String Id=\"InstallDirDlgDescription\">${2:Click Next to install to the default folder or click Change to choose another.}</String>\n<String Id=\"InstallDirDlgChange\">${3:Change...}</String>"
+    },
+    {
+      "prefix": "wxl-progress",
+      "name": "Progress Dialog Strings",
+      "description": "Progress dialog localization strings",
+      "scope": "wxl",
+      "body": "<String Id=\"ProgressDlgTitleInstalling\">${1:Installing [ProductName]}</String>\n<String Id=\"ProgressDlgTitleRemoving\">${2:Removing [ProductName]}</String>\n<String Id=\"ProgressDlgTitleRepairing\">${3:Repairing [ProductName]}</String>\n<String Id=\"ProgressDlgStatusLabel\">${4:Status:}</String>"
+    },
+    {
+      "prefix": "wxl-exit",
+      "name": "Exit Dialog Strings",
+      "description": "Exit/completion dialog strings",
+      "scope": "wxl",
+      "body": "<String Id=\"ExitDlgTitle\">${1:Completed the [ProductName] Setup Wizard}</String>\n<String Id=\"ExitDlgDescription\">${2:Click the Finish button to exit the Setup Wizard.}</String>\n<String Id=\"ExitDlgLaunchText\">${3:Launch [ProductName]}</String>"
+    },
+    {
+      "prefix": "wxl-maintenance",
+      "name": "Maintenance Dialog Strings",
+      "description": "Maintenance/modify dialog strings",
+      "scope": "wxl",
+      "body": "<String Id=\"MaintenanceTypeDlgTitle\">${1:Change, repair, or remove installation}</String>\n<String Id=\"MaintenanceTypeDlgChangeButton\">${2:Change}</String>\n<String Id=\"MaintenanceTypeDlgChangeText\">${3:Change which features are installed.}</String>\n<String Id=\"MaintenanceTypeDlgRepairButton\">${4:Repair}</String>\n<String Id=\"MaintenanceTypeDlgRepairText\">${5:Repair installation errors.}</String>\n<String Id=\"MaintenanceTypeDlgRemoveButton\">${6:Remove}</String>\n<String Id=\"MaintenanceTypeDlgRemoveText\">${7:Remove [ProductName] from your computer.}</String>"
+    },
+    {
+      "prefix": "wxl-error",
+      "name": "Error Message Strings",
+      "description": "Common error message localizations",
+      "scope": "wxl",
+      "body": "<String Id=\"Error_AdminRequired\">${1:Administrator privileges are required to install this application.}</String>\n<String Id=\"Error_OSVersion\">${2:This application requires a newer version of Windows.}</String>\n<String Id=\"Error_AlreadyInstalled\">${3:[ProductName] is already installed.}</String>"
+    },
+    {
+      "prefix": "wxl-feature",
+      "name": "Feature Description Strings",
+      "description": "Feature selection dialog strings",
+      "scope": "wxl",
+      "body": "<String Id=\"Feature_${1:FeatureName}_Title\">${2:Feature Title}</String>\n<String Id=\"Feature_${1:FeatureName}_Description\">${3:Feature description text.}</String>"
+    },
+    {
+      "prefix": "wxl-action",
+      "name": "Action Text Strings",
+      "description": "Progress action text localizations",
+      "scope": "wxl",
+      "body": "<String Id=\"ActionText_Installing\">${1:Installing files...}</String>\n<String Id=\"ActionText_Configuring\">${2:Configuring components...}</String>\n<String Id=\"ActionText_Registering\">${3:Registering product...}</String>\n<String Id=\"ActionText_Removing\">${4:Removing files...}</String>"
+    },
+    {
+      "prefix": "wxl-de",
+      "name": "German Localization Template",
+      "description": "German (de-DE) localization template",
+      "scope": "wxl",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<WixLocalization xmlns=\"http://wixtoolset.org/schemas/v4/wxl\" Culture=\"de-DE\">\n  <String Id=\"ProductName\">${1:Meine Anwendung}</String>\n  <String Id=\"ButtonText_Back\">Zuruck</String>\n  <String Id=\"ButtonText_Next\">Weiter</String>\n  <String Id=\"ButtonText_Cancel\">Abbrechen</String>\n  <String Id=\"ButtonText_Install\">Installieren</String>\n  <String Id=\"ButtonText_Finish\">Fertig stellen</String>\n  $0\n</WixLocalization>"
+    },
+    {
+      "prefix": "wxl-fr",
+      "name": "French Localization Template",
+      "description": "French (fr-FR) localization template",
+      "scope": "wxl",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<WixLocalization xmlns=\"http://wixtoolset.org/schemas/v4/wxl\" Culture=\"fr-FR\">\n  <String Id=\"ProductName\">${1:Mon Application}</String>\n  <String Id=\"ButtonText_Back\">Precedent</String>\n  <String Id=\"ButtonText_Next\">Suivant</String>\n  <String Id=\"ButtonText_Cancel\">Annuler</String>\n  <String Id=\"ButtonText_Install\">Installer</String>\n  <String Id=\"ButtonText_Finish\">Terminer</String>\n  $0\n</WixLocalization>"
+    },
+    {
+      "prefix": "wxl-es",
+      "name": "Spanish Localization Template",
+      "description": "Spanish (es-ES) localization template",
+      "scope": "wxl",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<WixLocalization xmlns=\"http://wixtoolset.org/schemas/v4/wxl\" Culture=\"es-ES\">\n  <String Id=\"ProductName\">${1:Mi Aplicacion}</String>\n  <String Id=\"ButtonText_Back\">Atras</String>\n  <String Id=\"ButtonText_Next\">Siguiente</String>\n  <String Id=\"ButtonText_Cancel\">Cancelar</String>\n  <String Id=\"ButtonText_Install\">Instalar</String>\n  <String Id=\"ButtonText_Finish\">Finalizar</String>\n  $0\n</WixLocalization>"
+    },
+    {
+      "prefix": "wxl-ja",
+      "name": "Japanese Localization Template",
+      "description": "Japanese (ja-JP) localization template",
+      "scope": "wxl",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<WixLocalization xmlns=\"http://wixtoolset.org/schemas/v4/wxl\" Culture=\"ja-JP\">\n  <String Id=\"ProductName\">${1:Application Name}</String>\n  <String Id=\"ButtonText_Back\">戻る</String>\n  <String Id=\"ButtonText_Next\">次へ</String>\n  <String Id=\"ButtonText_Cancel\">キャンセル</String>\n  <String Id=\"ButtonText_Install\">インストール</String>\n  <String Id=\"ButtonText_Finish\">完了</String>\n  $0\n</WixLocalization>"
+    },
+    {
+      "prefix": "wxl-zh",
+      "name": "Chinese Localization Template",
+      "description": "Chinese Simplified (zh-CN) localization template",
+      "scope": "wxl",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<WixLocalization xmlns=\"http://wixtoolset.org/schemas/v4/wxl\" Culture=\"zh-CN\">\n  <String Id=\"ProductName\">${1:Application Name}</String>\n  <String Id=\"ButtonText_Back\">上一步</String>\n  <String Id=\"ButtonText_Next\">下一步</String>\n  <String Id=\"ButtonText_Cancel\">取消</String>\n  <String Id=\"ButtonText_Install\">安装</String>\n  <String Id=\"ButtonText_Finish\">完成</String>\n  $0\n</WixLocalization>"
+    }
+  ]
+}

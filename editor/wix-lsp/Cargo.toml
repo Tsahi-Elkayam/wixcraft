@@ -1,0 +1,37 @@
+[package]
+name = "wix-lsp"
+version = "0.1.0"
+edition = "2021"
+description = "Language Server Protocol implementation for WiX"
+license = "MIT"
+
+[[bin]]
+name = "wix-lsp"
+path = "src/main.rs"
+
+[lib]
+name = "wix_lsp"
+path = "src/lib.rs"
+
+[dependencies]
+# LSP framework
+tower-lsp = "0.20"
+tokio = { version = "1", features = ["full"] }
+
+# WiX tools
+wix-hover = { path = "../wix-hover" }
+wix-symbols = { path = "../wix-symbols" }
+wix-fmt = { path = "../../quality/wix-fmt" }
+
+# Configuration
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+
+# Utilities
+dashmap = "5"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+[dev-dependencies]
+tempfile = "3"

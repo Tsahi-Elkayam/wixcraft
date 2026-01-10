@@ -1,0 +1,282 @@
+{
+  "_source": "Data provenance tracking",
+  "_description": "Sources used to build the WiX knowledge base",
+  "sources": [
+    {
+      "name": "bal-extension",
+      "url": "https://wixtoolset.org/docs/schema/bal/",
+      "source_type": "documentation",
+      "enabled": true
+    },
+    {
+      "name": "bundle-schema",
+      "url": "https://wixtoolset.org/docs/schema/wxs/bundle/",
+      "source_type": "documentation",
+      "enabled": true
+    },
+    {
+      "name": "burn-reference",
+      "url": "https://wixtoolset.org/docs/tools/burn/",
+      "source_type": "documentation",
+      "enabled": true
+    },
+    {
+      "name": "firegiant-howtos",
+      "url": "https://www.firegiant.com/docs/wix/howtos/",
+      "source_type": "documentation",
+      "enabled": true
+    },
+    {
+      "name": "firegiant-tutorials",
+      "url": "https://www.firegiant.com/docs/wix/tutorial/",
+      "source_type": "documentation",
+      "enabled": true
+    },
+    {
+      "name": "firewall-extension",
+      "url": "https://wixtoolset.org/docs/schema/firewall/",
+      "source_type": "documentation",
+      "enabled": true
+    },
+    {
+      "name": "iis-extension",
+      "url": "https://wixtoolset.org/docs/schema/iis/",
+      "source_type": "documentation",
+      "enabled": true
+    },
+    {
+      "name": "netfx-extension",
+      "url": "https://wixtoolset.org/docs/schema/netfx/",
+      "source_type": "documentation",
+      "enabled": true
+    },
+    {
+      "name": "sql-extension",
+      "url": "https://wixtoolset.org/docs/schema/sql/",
+      "source_type": "documentation",
+      "enabled": true
+    },
+    {
+      "name": "util-extension",
+      "url": "https://wixtoolset.org/docs/schema/util/",
+      "source_type": "documentation",
+      "enabled": true
+    },
+    {
+      "name": "v3-v4-migration",
+      "url": "https://wixtoolset.org/docs/fourthree/",
+      "source_type": "documentation",
+      "enabled": true
+    },
+    {
+      "name": "v4-v5-conversion",
+      "url": "https://wixtoolset.org/docs/fivefour/",
+      "source_type": "documentation",
+      "enabled": true
+    },
+    {
+      "name": "wix-docs-main",
+      "url": "https://wixtoolset.org/docs/",
+      "source_type": "documentation",
+      "enabled": true
+    },
+    {
+      "name": "wix-docs-reference",
+      "url": "https://wixtoolset.org/docs/reference/",
+      "source_type": "documentation",
+      "enabled": true
+    },
+    {
+      "name": "wix-docs-schema",
+      "url": "https://wixtoolset.org/docs/schema/",
+      "source_type": "documentation",
+      "enabled": true
+    },
+    {
+      "name": "wix-docs-tools",
+      "url": "https://wixtoolset.org/docs/tools/",
+      "source_type": "documentation",
+      "enabled": true
+    },
+    {
+      "name": "wix-github-repo",
+      "url": "https://github.com/wixtoolset/wix",
+      "source_type": "documentation",
+      "enabled": true
+    },
+    {
+      "name": "wix-issues",
+      "url": "https://github.com/wixtoolset/issues/issues",
+      "source_type": "documentation",
+      "enabled": true
+    },
+    {
+      "name": "ice-01-32",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/msi/ice01",
+      "source_type": "ice",
+      "enabled": true
+    },
+    {
+      "name": "ice-33-64",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/msi/ice33",
+      "source_type": "ice",
+      "enabled": true
+    },
+    {
+      "name": "ice-65-99",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/msi/ice65",
+      "source_type": "ice",
+      "enabled": true
+    },
+    {
+      "name": "ice-reference",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/msi/ice-reference",
+      "source_type": "ice",
+      "enabled": true
+    },
+    {
+      "name": "msi-conditions",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/msi/conditional-statement-syntax",
+      "source_type": "msi",
+      "enabled": true
+    },
+    {
+      "name": "msi-custom-actions",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/msi/custom-actions",
+      "source_type": "msi",
+      "enabled": true
+    },
+    {
+      "name": "msi-database-reference",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/msi/database-tables",
+      "source_type": "msi",
+      "enabled": true
+    },
+    {
+      "name": "msi-error-reference",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/msi/error-codes",
+      "source_type": "msi",
+      "enabled": true
+    },
+    {
+      "name": "msi-property-reference",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/msi/property-reference",
+      "source_type": "msi",
+      "enabled": true
+    },
+    {
+      "name": "msi-standard-actions",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/msi/standard-actions-reference",
+      "source_type": "msi",
+      "enabled": true
+    },
+    {
+      "name": "msiexec-reference",
+      "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/msiexec",
+      "source_type": "msi",
+      "enabled": true
+    },
+    {
+      "name": "sdk-tools",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/msi/windows-installer-development-tools",
+      "source_type": "msi",
+      "enabled": true
+    },
+    {
+      "name": "bal.xsd",
+      "url": "https://wixtoolset.org/schemas/v4/wxs/bal.xsd",
+      "source_type": "xsd",
+      "enabled": true
+    },
+    {
+      "name": "complus.xsd",
+      "url": "https://wixtoolset.org/schemas/v4/wxs/complus.xsd",
+      "source_type": "xsd",
+      "enabled": true
+    },
+    {
+      "name": "dependency.xsd",
+      "url": "https://wixtoolset.org/schemas/v4/wxs/dependency.xsd",
+      "source_type": "xsd",
+      "enabled": true
+    },
+    {
+      "name": "difxapp.xsd",
+      "url": "https://wixtoolset.org/schemas/v4/wxs/difxapp.xsd",
+      "source_type": "xsd",
+      "enabled": true
+    },
+    {
+      "name": "directx.xsd",
+      "url": "https://wixtoolset.org/schemas/v4/wxs/directx.xsd",
+      "source_type": "xsd",
+      "enabled": true
+    },
+    {
+      "name": "firewall.xsd",
+      "url": "https://wixtoolset.org/schemas/v4/wxs/firewall.xsd",
+      "source_type": "xsd",
+      "enabled": true
+    },
+    {
+      "name": "http.xsd",
+      "url": "https://wixtoolset.org/schemas/v4/wxs/http.xsd",
+      "source_type": "xsd",
+      "enabled": true
+    },
+    {
+      "name": "iis.xsd",
+      "url": "https://wixtoolset.org/schemas/v4/wxs/iis.xsd",
+      "source_type": "xsd",
+      "enabled": true
+    },
+    {
+      "name": "msmq.xsd",
+      "url": "https://wixtoolset.org/schemas/v4/wxs/msmq.xsd",
+      "source_type": "xsd",
+      "enabled": true
+    },
+    {
+      "name": "netfx.xsd",
+      "url": "https://wixtoolset.org/schemas/v4/wxs/netfx.xsd",
+      "source_type": "xsd",
+      "enabled": true
+    },
+    {
+      "name": "powershell.xsd",
+      "url": "https://wixtoolset.org/schemas/v4/wxs/powershell.xsd",
+      "source_type": "xsd",
+      "enabled": true
+    },
+    {
+      "name": "sql.xsd",
+      "url": "https://wixtoolset.org/schemas/v4/wxs/sql.xsd",
+      "source_type": "xsd",
+      "enabled": true
+    },
+    {
+      "name": "ui.xsd",
+      "url": "https://wixtoolset.org/schemas/v4/wxs/ui.xsd",
+      "source_type": "xsd",
+      "enabled": true
+    },
+    {
+      "name": "util.xsd",
+      "url": "https://wixtoolset.org/schemas/v4/wxs/util.xsd",
+      "source_type": "xsd",
+      "enabled": true
+    },
+    {
+      "name": "vs.xsd",
+      "url": "https://wixtoolset.org/schemas/v4/wxs/vs.xsd",
+      "source_type": "xsd",
+      "enabled": true
+    },
+    {
+      "name": "wix.xsd",
+      "url": "https://wixtoolset.org/schemas/v4/wxs/wix.xsd",
+      "source_type": "xsd",
+      "enabled": true
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "_source": "Microsoft Learn - Custom Action Types Reference",
+  "_url": "https://learn.microsoft.com/en-us/windows/win32/msi/summary-list-of-all-custom-action-types",
+  "custom_action_types": [
+    {"type": 1, "source": "Binary", "target": "DLL entry point", "description": "DLL stored in Binary table, called via entry point. Receives MSI handle.", "execution": "immediate", "example": "CustomAction Id='CA1' BinaryRef='MyDll' DllEntry='MyFunction'"},
+    {"type": 2, "source": "Binary", "target": "EXE command line", "description": "EXE stored in Binary table, executed with command line args.", "execution": "immediate", "example": "CustomAction Id='CA2' BinaryRef='MyExe' ExeCommand='/silent'"},
+    {"type": 5, "source": "Binary", "target": "JScript code", "description": "JScript stored in Binary table. Has access to Session object.", "execution": "immediate", "example": "CustomAction Id='CA5' BinaryRef='MyScript' JScriptCall='MyFunction'"},
+    {"type": 6, "source": "Binary", "target": "VBScript code", "description": "VBScript stored in Binary table. Has access to Session object.", "execution": "immediate", "example": "CustomAction Id='CA6' BinaryRef='MyScript' VBScriptCall='MyFunction'"},
+    {"type": 17, "source": "File", "target": "DLL entry point", "description": "DLL installed with application, called via entry point. Must sequence after InstallFiles.", "execution": "deferred", "example": "CustomAction Id='CA17' FileRef='InstalledDll' DllEntry='MyFunction'"},
+    {"type": 18, "source": "File", "target": "EXE command line", "description": "EXE installed with application. Must sequence after InstallFiles.", "execution": "deferred", "example": "CustomAction Id='CA18' FileRef='InstalledExe' ExeCommand='/configure'"},
+    {"type": 21, "source": "File", "target": "JScript code", "description": "JScript file installed with application.", "execution": "deferred", "example": "CustomAction Id='CA21' FileRef='Script.js' JScriptCall='Configure'"},
+    {"type": 22, "source": "File", "target": "VBScript code", "description": "VBScript file installed with application.", "execution": "deferred", "example": "CustomAction Id='CA22' FileRef='Script.vbs' VBScriptCall='Configure'"},
+    {"type": 33, "source": "Directory", "target": "EXE path", "description": "EXE referenced by path in Directory table.", "execution": "immediate", "example": "CustomAction Id='CA33' Directory='INSTALLDIR' ExeCommand='[INSTALLDIR]setup.exe'"},
+    {"type": 34, "source": "Directory", "target": "EXE command line", "description": "EXE in directory with command line arguments.", "execution": "immediate", "example": "CustomAction Id='CA34' Directory='SystemFolder' ExeCommand='cmd.exe /c echo test'"},
+    {"type": 35, "source": "Directory", "target": "Working directory for concurrent install", "description": "Sets working directory for nested installation.", "execution": "immediate", "example": "Used with concurrent installations"},
+    {"type": 37, "source": "Directory", "target": "JScript text", "description": "Inline JScript code with directory context.", "execution": "immediate", "example": "CustomAction Id='CA37' Directory='INSTALLDIR' JScriptCall='inline script'"},
+    {"type": 38, "source": "Directory", "target": "VBScript text", "description": "Inline VBScript code with directory context.", "execution": "immediate", "example": "CustomAction Id='CA38' Directory='INSTALLDIR' VBScriptCall='inline script'"},
+    {"type": 50, "source": "Property", "target": "EXE path with args", "description": "EXE path stored in property, executed with command line.", "execution": "immediate", "example": "CustomAction Id='CA50' Property='MYEXE' ExeCommand='[MYEXE] /install'"},
+    {"type": 51, "source": "Property", "target": "Formatted text value", "description": "Sets property value using formatted text. Most common type for setting properties.", "execution": "immediate", "example": "SetProperty Id='MYPROP' Value='[INSTALLDIR]' Before='InstallInitialize'"},
+    {"type": 53, "source": "Property", "target": "JScript text", "description": "Inline JScript with property as context.", "execution": "immediate", "example": "CustomAction Id='CA53' Property='RESULT' JScriptCall='return value'"},
+    {"type": 54, "source": "Property", "target": "VBScript text", "description": "Inline VBScript with property as context.", "execution": "immediate", "example": "CustomAction Id='CA54' Property='RESULT' VBScriptCall='return value'"},
+    {"type": 7, "source": "Nested install", "target": "Product code", "description": "Concurrent installation of another MSI by product code.", "execution": "immediate", "example": "Runs another MSI installation concurrently"},
+    {"type": 23, "source": "Nested install", "target": "Package path", "description": "Concurrent installation of MSI at specified path.", "execution": "immediate", "example": "Runs MSI from specified path"},
+    {"type": 39, "source": "Nested install", "target": "Advertised product", "description": "Installs advertised product.", "execution": "immediate", "example": "Completes advertised installation"}
+  ],
+  "execution_options": [
+    {"flag": 0, "name": "msidbCustomActionTypeFirstSequence", "value": 0, "description": "Run only in first sequence (UI or Execute, not both)"},
+    {"flag": 64, "name": "msidbCustomActionTypeContinue", "value": 64, "description": "Ignore return value, continue on failure"},
+    {"flag": 128, "name": "msidbCustomActionTypeAsync", "value": 128, "description": "Run asynchronously"},
+    {"flag": 192, "name": "msidbCustomActionTypeAsyncNoWait", "value": 192, "description": "Run async, don't wait for completion"},
+    {"flag": 256, "name": "msidbCustomActionTypeInScript", "value": 256, "description": "Deferred execution - runs during InstallExecute"},
+    {"flag": 512, "name": "msidbCustomActionTypeRollback", "value": 512, "description": "Rollback custom action - runs on failure"},
+    {"flag": 768, "name": "msidbCustomActionTypeCommit", "value": 768, "description": "Commit custom action - runs on success"},
+    {"flag": 1024, "name": "msidbCustomActionTypeNoImpersonate", "value": 1024, "description": "Run with elevated privileges (no impersonation)"},
+    {"flag": 2048, "name": "msidbCustomActionTypeTSAware", "value": 2048, "description": "Terminal Services aware"},
+    {"flag": 4096, "name": "msidbCustomActionType64BitScript", "value": 4096, "description": "64-bit script custom action"},
+    {"flag": 8192, "name": "msidbCustomActionTypeHideTarget", "value": 8192, "description": "Hide target in log (for passwords)"},
+    {"flag": 16384, "name": "msidbCustomActionTypePatchUninstall", "value": 16384, "description": "Run during patch uninstall"}
+  ],
+  "return_values": [
+    {"value": 0, "name": "ERROR_SUCCESS", "description": "Action completed successfully"},
+    {"value": 1602, "name": "ERROR_INSTALL_USEREXIT", "description": "User canceled installation"},
+    {"value": 1603, "name": "ERROR_INSTALL_FAILURE", "description": "Fatal error during installation"},
+    {"value": 1622, "name": "ERROR_INSTALL_LOG_FAILURE", "description": "Error opening installation log"},
+    {"value": 1625, "name": "ERROR_INSTALL_PACKAGE_REJECTED", "description": "Installation prohibited by policy"},
+    {"value": 3010, "name": "ERROR_SUCCESS_REBOOT_REQUIRED", "description": "Reboot required to complete"}
+  ],
+  "wix_execute_values": [
+    {"value": "immediate", "description": "Runs during sequence table processing. Has access to Session object and properties."},
+    {"value": "deferred", "description": "Runs during script execution phase. No Session access, use CustomActionData."},
+    {"value": "rollback", "description": "Runs if installation fails. Used to undo deferred actions."},
+    {"value": "commit", "description": "Runs after successful InstallFinalize. Used for cleanup."},
+    {"value": "oncePerProcess", "description": "Runs once per process, even if sequence runs multiple times."},
+    {"value": "secondSequence", "description": "Runs only in second sequence (InstallExecute after InstallUI)."}
+  ],
+  "wix_return_values": [
+    {"value": "check", "description": "Check return value, fail installation if non-zero (default)"},
+    {"value": "ignore", "description": "Ignore return value, continue regardless"},
+    {"value": "asyncWait", "description": "Run async, wait for completion before continuing"},
+    {"value": "asyncNoWait", "description": "Run async, don't wait (fire and forget)"}
+  ],
+  "common_patterns": [
+    {"name": "Set Property", "description": "Set a property value", "wix": "<SetProperty Id='MYPROP' Value='MyValue' Before='InstallInitialize' Sequence='execute' />"},
+    {"name": "Set Directory", "description": "Set a directory path", "wix": "<SetDirectory Id='INSTALLDIR' Value='[ProgramFilesFolder]MyApp' Sequence='execute' />"},
+    {"name": "Run EXE (immediate)", "description": "Run executable immediately", "wix": "<CustomAction Id='RunSetup' FileRef='Setup.exe' ExeCommand='/s' Execute='immediate' Return='check' />"},
+    {"name": "Run EXE (deferred)", "description": "Run executable deferred with elevation", "wix": "<CustomAction Id='ConfigureApp' FileRef='Config.exe' ExeCommand='[CustomActionData]' Execute='deferred' Impersonate='no' />"},
+    {"name": "Call DLL", "description": "Call DLL function", "wix": "<CustomAction Id='CallDll' BinaryRef='MyFunctions' DllEntry='Initialize' Execute='immediate' />"},
+    {"name": "Run PowerShell", "description": "Run PowerShell script", "wix": "<CustomAction Id='RunPS' Property='POWERSHELL' ExeCommand='-ExecutionPolicy Bypass -File \"[#ScriptFile]\"' Execute='deferred' />"},
+    {"name": "Deferred with data", "description": "Pass data to deferred action", "wix": "<SetProperty Id='MyDeferredAction' Value='[INSTALLDIR];[ProductName]' Before='MyDeferredAction' Sequence='execute' />"}
+  ]
+}

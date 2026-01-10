@@ -1,0 +1,349 @@
+{
+  "_description": "Windows Installer (msiexec.exe) command-line reference",
+  "_source": "Microsoft Learn",
+  "install_options": [
+    {
+      "option": "/i",
+      "syntax": "/i <package|ProductCode>",
+      "description": "Install or configure a product",
+      "examples": [
+        "msiexec /i MyApp.msi",
+        "msiexec /i {GUID}"
+      ]
+    },
+    {
+      "option": "/a",
+      "syntax": "/a <package>",
+      "description": "Administrative install - extracts files to a network location",
+      "examples": ["msiexec /a MyApp.msi TARGETDIR=\"\\\\server\\share\""]
+    },
+    {
+      "option": "/x",
+      "syntax": "/x <package|ProductCode>",
+      "description": "Uninstall a product",
+      "examples": [
+        "msiexec /x MyApp.msi",
+        "msiexec /x {GUID}"
+      ]
+    },
+    {
+      "option": "/f",
+      "syntax": "/f [p|o|e|d|c|a|u|m|s|v] <package|ProductCode>",
+      "description": "Repair a product installation",
+      "suboptions": [
+        {"flag": "p", "description": "Reinstall only if file is missing"},
+        {"flag": "o", "description": "Reinstall if file is missing or older version"},
+        {"flag": "e", "description": "Reinstall if file is missing or equal/older version"},
+        {"flag": "d", "description": "Reinstall if file is missing or different version"},
+        {"flag": "c", "description": "Reinstall if file is missing or checksum doesn't match"},
+        {"flag": "a", "description": "Force reinstall of all files"},
+        {"flag": "u", "description": "Rewrite all required user registry entries"},
+        {"flag": "m", "description": "Rewrite all required machine registry entries"},
+        {"flag": "s", "description": "Overwrite existing shortcuts"},
+        {"flag": "v", "description": "Run from source and recache local package"}
+      ],
+      "examples": [
+        "msiexec /fa MyApp.msi",
+        "msiexec /fecums {GUID}"
+      ]
+    },
+    {
+      "option": "/j",
+      "syntax": "/j [u|m] <package> [/t <transform>] [/g <languageID>]",
+      "description": "Advertise a product",
+      "suboptions": [
+        {"flag": "u", "description": "Advertise to current user"},
+        {"flag": "m", "description": "Advertise to all users (requires admin)"}
+      ],
+      "examples": ["msiexec /jm MyApp.msi /t Transform.mst"]
+    },
+    {
+      "option": "/p",
+      "syntax": "/p <patch> [;patch2;...]",
+      "description": "Apply a patch (.msp file)",
+      "examples": [
+        "msiexec /p Patch.msp",
+        "msiexec /p Patch1.msp;Patch2.msp /i MyApp.msi"
+      ]
+    }
+  ],
+  "display_options": [
+    {
+      "option": "/q",
+      "syntax": "/q [n|b|r|f]",
+      "description": "Set user interface level",
+      "suboptions": [
+        {"flag": "n", "description": "No UI (completely silent)"},
+        {"flag": "b", "description": "Basic UI - progress bar only"},
+        {"flag": "r", "description": "Reduced UI - modal dialog at end"},
+        {"flag": "f", "description": "Full UI (default)"},
+        {"flag": "+", "description": "Add modal dialog at end (e.g., /qb+)"},
+        {"flag": "-", "description": "Hide Cancel button (e.g., /qb-)"}
+      ],
+      "examples": [
+        "msiexec /i MyApp.msi /qn",
+        "msiexec /i MyApp.msi /qb!",
+        "msiexec /x {GUID} /qb+"
+      ]
+    },
+    {
+      "option": "/passive",
+      "syntax": "/passive",
+      "description": "Unattended mode - progress bar only, no user interaction",
+      "examples": ["msiexec /i MyApp.msi /passive"]
+    }
+  ],
+  "logging_options": [
+    {
+      "option": "/l",
+      "syntax": "/l [i|w|e|a|r|u|c|m|o|p|v|x|+|!|*] <logfile>",
+      "description": "Enable logging",
+      "suboptions": [
+        {"flag": "i", "description": "Status messages"},
+        {"flag": "w", "description": "Non-fatal warnings"},
+        {"flag": "e", "description": "All error messages"},
+        {"flag": "a", "description": "Start up of actions"},
+        {"flag": "r", "description": "Action-specific records"},
+        {"flag": "u", "description": "User requests"},
+        {"flag": "c", "description": "Initial UI parameters"},
+        {"flag": "m", "description": "Out-of-memory or fatal exit"},
+        {"flag": "o", "description": "Out-of-disk-space messages"},
+        {"flag": "p", "description": "Terminal properties"},
+        {"flag": "v", "description": "Verbose output"},
+        {"flag": "x", "description": "Extra debugging information"},
+        {"flag": "+", "description": "Append to existing log file"},
+        {"flag": "!", "description": "Flush each line to the log"},
+        {"flag": "*", "description": "Log all information except v and x"}
+      ],
+      "examples": [
+        "msiexec /i MyApp.msi /l*v install.log",
+        "msiexec /i MyApp.msi /l*vx debug.log",
+        "msiexec /i MyApp.msi /l!*v install.log"
+      ],
+      "notes": "Use /l*v for verbose logging when troubleshooting"
+    }
+  ],
+  "restart_options": [
+    {
+      "option": "/norestart",
+      "description": "Suppress any restarts after installation completes",
+      "examples": ["msiexec /i MyApp.msi /norestart"]
+    },
+    {
+      "option": "/promptrestart",
+      "description": "Prompt user if a restart is required",
+      "examples": ["msiexec /i MyApp.msi /promptrestart"]
+    },
+    {
+      "option": "/forcerestart",
+      "description": "Always restart after installation completes",
+      "examples": ["msiexec /i MyApp.msi /forcerestart"]
+    }
+  ],
+  "property_options": [
+    {
+      "option": "PROPERTY=value",
+      "description": "Set a public property value",
+      "notes": "Property names must be UPPERCASE. Values with spaces must be quoted.",
+      "examples": [
+        "msiexec /i MyApp.msi INSTALLFOLDER=\"C:\\Program Files\\MyApp\"",
+        "msiexec /i MyApp.msi ALLUSERS=1",
+        "msiexec /i MyApp.msi ADDLOCAL=ALL",
+        "msiexec /i MyApp.msi TRANSFORMS=Transform.mst"
+      ]
+    },
+    {
+      "option": "TRANSFORMS",
+      "syntax": "TRANSFORMS=<transform>[;<transform2>]",
+      "description": "Apply transform files during installation",
+      "examples": ["msiexec /i MyApp.msi TRANSFORMS=\"Lang.mst;Custom.mst\""]
+    },
+    {
+      "option": "REINSTALLMODE",
+      "syntax": "REINSTALLMODE=<flags>",
+      "description": "Control reinstall behavior (same flags as /f)",
+      "examples": ["msiexec /i MyApp.msi REINSTALL=ALL REINSTALLMODE=vomus"]
+    }
+  ],
+  "common_properties": [
+    {"name": "ALLUSERS", "values": ["1", "2", "\"\""], "description": "1=per-machine, 2=per-user (MSI 5.0+), empty=per-user"},
+    {"name": "INSTALLFOLDER", "description": "Installation directory path"},
+    {"name": "TARGETDIR", "description": "Root destination directory"},
+    {"name": "ADDLOCAL", "values": ["ALL", "Feature1,Feature2"], "description": "Features to install locally"},
+    {"name": "REMOVE", "values": ["ALL", "Feature1"], "description": "Features to remove"},
+    {"name": "REINSTALL", "values": ["ALL", "Feature1"], "description": "Features to reinstall"},
+    {"name": "REBOOT", "values": ["Force", "Suppress", "ReallySuppress"], "description": "Control restart behavior"},
+    {"name": "MSIINSTALLPERUSER", "values": ["1"], "description": "Force per-user installation"},
+    {"name": "MSIFASTINSTALL", "values": ["1", "2", "3"], "description": "1=no system restore, 2=no heavy validation, 3=both"},
+    {"name": "LIMITUI", "values": ["1"], "description": "Limit UI to basic"},
+    {"name": "ARPNOREMOVE", "values": ["1"], "description": "Hide Remove button in Add/Remove Programs"},
+    {"name": "ARPNOMODIFY", "values": ["1"], "description": "Hide Modify button in Add/Remove Programs"},
+    {"name": "ARPNOREPAIR", "values": ["1"], "description": "Hide Repair option in Add/Remove Programs"}
+  ],
+  "common_scenarios": [
+    {
+      "name": "Silent install",
+      "command": "msiexec /i MyApp.msi /qn",
+      "description": "Install without any user interface"
+    },
+    {
+      "name": "Silent install with logging",
+      "command": "msiexec /i MyApp.msi /qn /l*v install.log",
+      "description": "Silent install with verbose logging for troubleshooting"
+    },
+    {
+      "name": "Silent install to custom directory",
+      "command": "msiexec /i MyApp.msi /qn INSTALLFOLDER=\"C:\\CustomPath\"",
+      "description": "Install to a specific directory without UI"
+    },
+    {
+      "name": "Silent install for all users",
+      "command": "msiexec /i MyApp.msi /qn ALLUSERS=1",
+      "description": "Per-machine installation (requires elevation)"
+    },
+    {
+      "name": "Silent uninstall",
+      "command": "msiexec /x {ProductCode} /qn",
+      "description": "Uninstall without any user interface"
+    },
+    {
+      "name": "Silent uninstall with logging",
+      "command": "msiexec /x {ProductCode} /qn /l*v uninstall.log",
+      "description": "Uninstall with verbose logging"
+    },
+    {
+      "name": "Repair installation",
+      "command": "msiexec /fa {ProductCode}",
+      "description": "Repair all files"
+    },
+    {
+      "name": "Apply patch",
+      "command": "msiexec /p Patch.msp /qb",
+      "description": "Apply patch with basic UI"
+    },
+    {
+      "name": "Extract files (admin install)",
+      "command": "msiexec /a MyApp.msi TARGETDIR=\"C:\\Extract\"",
+      "description": "Extract MSI contents without installing"
+    },
+    {
+      "name": "Install specific features",
+      "command": "msiexec /i MyApp.msi ADDLOCAL=Feature1,Feature2 /qb",
+      "description": "Install only selected features"
+    },
+    {
+      "name": "Modify installation",
+      "command": "msiexec /i MyApp.msi ADDLOCAL=NewFeature REINSTALL=ALL REINSTALLMODE=vomus",
+      "description": "Add features to existing installation"
+    },
+    {
+      "name": "Silent install no restart",
+      "command": "msiexec /i MyApp.msi /qn /norestart",
+      "description": "Install silently and suppress any restarts"
+    },
+    {
+      "name": "Debug installation",
+      "command": "msiexec /i MyApp.msi /l*vx! debug.log",
+      "description": "Install with maximum logging and immediate flush"
+    }
+  ],
+  "exit_codes": [
+    {"code": 0, "name": "ERROR_SUCCESS", "description": "Installation completed successfully"},
+    {"code": 13, "name": "ERROR_INVALID_DATA", "description": "Data is invalid"},
+    {"code": 87, "name": "ERROR_INVALID_PARAMETER", "description": "Invalid command line parameter"},
+    {"code": 1259, "name": "ERROR_APPHELP_BLOCK", "description": "Blocked by application compatibility"},
+    {"code": 1601, "name": "ERROR_INSTALL_SERVICE_FAILURE", "description": "Windows Installer service could not be accessed"},
+    {"code": 1602, "name": "ERROR_INSTALL_USEREXIT", "description": "User cancelled installation"},
+    {"code": 1603, "name": "ERROR_INSTALL_FAILURE", "description": "Fatal error during installation"},
+    {"code": 1604, "name": "ERROR_INSTALL_SUSPEND", "description": "Installation suspended, incomplete"},
+    {"code": 1605, "name": "ERROR_UNKNOWN_PRODUCT", "description": "Product is not installed"},
+    {"code": 1606, "name": "ERROR_UNKNOWN_FEATURE", "description": "Feature ID not registered"},
+    {"code": 1607, "name": "ERROR_UNKNOWN_COMPONENT", "description": "Component ID not registered"},
+    {"code": 1608, "name": "ERROR_UNKNOWN_PROPERTY", "description": "Unknown property"},
+    {"code": 1609, "name": "ERROR_INVALID_HANDLE_STATE", "description": "Handle is in an invalid state"},
+    {"code": 1610, "name": "ERROR_BAD_CONFIGURATION", "description": "Configuration data is corrupt"},
+    {"code": 1611, "name": "ERROR_INDEX_ABSENT", "description": "Component qualifier not present"},
+    {"code": 1612, "name": "ERROR_INSTALL_SOURCE_ABSENT", "description": "Installation source is unavailable"},
+    {"code": 1613, "name": "ERROR_INSTALL_PACKAGE_VERSION", "description": "Package version not supported"},
+    {"code": 1614, "name": "ERROR_PRODUCT_UNINSTALLED", "description": "Product is uninstalled"},
+    {"code": 1618, "name": "ERROR_INSTALL_ALREADY_RUNNING", "description": "Another installation is in progress"},
+    {"code": 1619, "name": "ERROR_INSTALL_PACKAGE_OPEN_FAILED", "description": "Package could not be opened"},
+    {"code": 1620, "name": "ERROR_INSTALL_PACKAGE_INVALID", "description": "Package is invalid"},
+    {"code": 1621, "name": "ERROR_INSTALL_UI_FAILURE", "description": "Error starting Windows Installer UI"},
+    {"code": 1622, "name": "ERROR_INSTALL_LOG_FAILURE", "description": "Error opening installation log file"},
+    {"code": 1623, "name": "ERROR_INSTALL_LANGUAGE_UNSUPPORTED", "description": "Language not supported"},
+    {"code": 1624, "name": "ERROR_INSTALL_TRANSFORM_FAILURE", "description": "Error applying transforms"},
+    {"code": 1625, "name": "ERROR_INSTALL_PACKAGE_REJECTED", "description": "Installation prohibited by policy"},
+    {"code": 1627, "name": "ERROR_FUNCTION_NOT_CALLED", "description": "Function could not be executed"},
+    {"code": 1628, "name": "ERROR_FUNCTION_FAILED", "description": "Function failed during execution"},
+    {"code": 1629, "name": "ERROR_INVALID_TABLE", "description": "Invalid or unknown table"},
+    {"code": 1630, "name": "ERROR_DATATYPE_MISMATCH", "description": "Data supplied is wrong type"},
+    {"code": 1631, "name": "ERROR_UNSUPPORTED_TYPE", "description": "Data type not supported"},
+    {"code": 1632, "name": "ERROR_CREATE_FAILED", "description": "Windows Installer service failed to start"},
+    {"code": 1633, "name": "ERROR_INSTALL_TEMP_UNWRITABLE", "description": "Temp folder is full or inaccessible"},
+    {"code": 1634, "name": "ERROR_INSTALL_PLATFORM_UNSUPPORTED", "description": "Platform not supported"},
+    {"code": 1635, "name": "ERROR_INSTALL_NOTUSED", "description": "Component not used on this machine"},
+    {"code": 1636, "name": "ERROR_PATCH_PACKAGE_OPEN_FAILED", "description": "Patch package could not be opened"},
+    {"code": 1637, "name": "ERROR_PATCH_PACKAGE_INVALID", "description": "Patch package is invalid"},
+    {"code": 1638, "name": "ERROR_PRODUCT_VERSION", "description": "Another version already installed"},
+    {"code": 1639, "name": "ERROR_INVALID_COMMAND_LINE", "description": "Invalid command line argument"},
+    {"code": 1640, "name": "ERROR_INSTALL_REMOTE_DISALLOWED", "description": "Remote installation not permitted"},
+    {"code": 1641, "name": "ERROR_SUCCESS_REBOOT_INITIATED", "description": "Installer initiated a restart"},
+    {"code": 1642, "name": "ERROR_PATCH_TARGET_NOT_FOUND", "description": "Patch target product not found"},
+    {"code": 1643, "name": "ERROR_PATCH_PACKAGE_REJECTED", "description": "Patch package not permitted by policy"},
+    {"code": 1644, "name": "ERROR_INSTALL_TRANSFORM_REJECTED", "description": "Transform not permitted by policy"},
+    {"code": 1645, "name": "ERROR_INSTALL_REMOTE_PROHIBITED", "description": "Windows Installer does not permit remote"},
+    {"code": 1646, "name": "ERROR_PATCH_REMOVAL_UNSUPPORTED", "description": "Patch removal not supported"},
+    {"code": 1647, "name": "ERROR_UNKNOWN_PATCH", "description": "Patch not applied to this product"},
+    {"code": 1648, "name": "ERROR_PATCH_NO_SEQUENCE", "description": "No valid sequence for patch"},
+    {"code": 1649, "name": "ERROR_PATCH_REMOVAL_DISALLOWED", "description": "Patch removal disallowed by policy"},
+    {"code": 1650, "name": "ERROR_INVALID_PATCH_XML", "description": "Patch XML is invalid"},
+    {"code": 3010, "name": "ERROR_SUCCESS_REBOOT_REQUIRED", "description": "Restart required to complete installation"}
+  ],
+  "troubleshooting_tips": [
+    {
+      "problem": "Installation fails with 1603",
+      "solutions": [
+        "Enable verbose logging: /l*vx install.log",
+        "Check for pending reboots",
+        "Run as administrator",
+        "Check for insufficient disk space",
+        "Review the log for 'Return value 3' to find the failing action"
+      ]
+    },
+    {
+      "problem": "Installation hangs",
+      "solutions": [
+        "Check if another installation is running (error 1618)",
+        "Restart the Windows Installer service",
+        "Use /qb instead of /qn to see progress",
+        "Check for dialog boxes that may be hidden"
+      ]
+    },
+    {
+      "problem": "Silent install not completely silent",
+      "solutions": [
+        "Ensure /qn is used (not /qb)",
+        "Add /norestart to prevent restart dialogs",
+        "Set UILevel property: UILevel=2 for no UI"
+      ]
+    },
+    {
+      "problem": "Cannot uninstall - product not found",
+      "solutions": [
+        "Use the ProductCode GUID, not the MSI filename",
+        "Check registry: HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall",
+        "Product may have been installed per-user: check HKCU"
+      ]
+    },
+    {
+      "problem": "Patch won't apply",
+      "solutions": [
+        "Verify the base product is installed",
+        "Check that product version matches patch requirements",
+        "Ensure patch sequence is correct",
+        "Use /l*v to log patch application"
+      ]
+    }
+  ]
+}

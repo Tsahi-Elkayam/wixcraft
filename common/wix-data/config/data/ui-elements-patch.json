@@ -1,0 +1,32 @@
+{
+  "_description": "Descriptions for UI elements missing from harvested data",
+  "_source": "Derived from WiX UI dialog documentation",
+  "patches": [
+    {"element_type": "dialog", "element_id": "BrowseDlg", "description": "Directory browse dialog for selecting installation folder location."},
+    {"element_type": "dialog", "element_id": "CancelDlg", "description": "Confirmation dialog shown when user clicks Cancel button."},
+    {"element_type": "dialog", "element_id": "CustomizeDlg", "description": "Feature selection tree dialog for custom installation."},
+    {"element_type": "dialog", "element_id": "DiskCostDlg", "description": "Dialog showing disk space requirements by volume."},
+    {"element_type": "dialog", "element_id": "ErrorDlg", "description": "Error message dialog for installation failures."},
+    {"element_type": "dialog", "element_id": "ExitDialog", "description": "Final dialog shown after successful installation."},
+    {"element_type": "dialog", "element_id": "FatalError", "description": "Dialog shown when a fatal error occurs during installation."},
+    {"element_type": "dialog", "element_id": "FeaturesDlg", "description": "Alternative feature selection dialog with list view."},
+    {"element_type": "dialog", "element_id": "FilesInUse", "description": "Dialog listing applications that have files in use."},
+    {"element_type": "dialog", "element_id": "InstallDirDlg", "description": "Dialog for selecting the installation directory."},
+    {"element_type": "dialog", "element_id": "InstallScopeDlg", "description": "Dialog for choosing per-user or per-machine installation."},
+    {"element_type": "dialog", "element_id": "LicenseAgreementDlg", "description": "Dialog displaying license agreement with accept/decline options."},
+    {"element_type": "dialog", "element_id": "MaintenanceTypeDlg", "description": "Dialog for choosing repair, change, or remove during maintenance."},
+    {"element_type": "dialog", "element_id": "MaintenanceWelcomeDlg", "description": "Welcome dialog shown when product is already installed."},
+    {"element_type": "dialog", "element_id": "MsiRMFilesInUse", "description": "Dialog for Restart Manager showing applications to close."},
+    {"element_type": "dialog", "element_id": "OutOfDiskDlg", "description": "Dialog shown when there is insufficient disk space."},
+    {"element_type": "dialog", "element_id": "OutOfRbDiskDlg", "description": "Dialog shown when there is insufficient disk space for rollback."},
+    {"element_type": "dialog", "element_id": "PrepareDlg", "description": "Progress dialog shown while preparing installation."},
+    {"element_type": "dialog", "element_id": "ProgressDlg", "description": "Progress dialog shown during file installation."},
+    {"element_type": "dialog", "element_id": "ResumeDlg", "description": "Dialog shown when resuming an interrupted installation."},
+    {"element_type": "dialog", "element_id": "SetupTypeDlg", "description": "Dialog for choosing Typical, Custom, or Complete installation."},
+    {"element_type": "dialog", "element_id": "UserExit", "description": "Dialog shown when user cancels the installation."},
+    {"element_type": "dialog", "element_id": "VerifyReadyDlg", "description": "Confirmation dialog before beginning installation."},
+    {"element_type": "dialog", "element_id": "WaitForCostingDlg", "description": "Wait dialog shown while calculating disk space."},
+    {"element_type": "dialog", "element_id": "WelcomeDlg", "description": "Initial welcome dialog for the installation."},
+    {"element_type": "dialog", "element_id": "WelcomeEulaDlg", "description": "Combined welcome and license agreement dialog."}
+  ]
+}

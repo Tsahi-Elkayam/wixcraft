@@ -1,0 +1,172 @@
+{
+  "directories": [
+    {
+      "name": "ProgramFilesFolder",
+      "description": "Full path to the Program Files folder",
+      "windows_path": "C:\\Program Files",
+      "property": "ProgramFilesFolder"
+    },
+    {
+      "name": "ProgramFiles64Folder",
+      "description": "Full path to the Program Files folder for 64-bit applications",
+      "windows_path": "C:\\Program Files",
+      "property": "ProgramFiles64Folder"
+    },
+    {
+      "name": "ProgramFiles6432Folder",
+      "description": "Full path to the Program Files folder (architecture-aware)",
+      "windows_path": "C:\\Program Files",
+      "property": "ProgramFiles6432Folder"
+    },
+    {
+      "name": "CommonFilesFolder",
+      "description": "Full path to the Common Files folder",
+      "windows_path": "C:\\Program Files\\Common Files",
+      "property": "CommonFilesFolder"
+    },
+    {
+      "name": "CommonFiles64Folder",
+      "description": "Full path to the Common Files folder for 64-bit applications",
+      "windows_path": "C:\\Program Files\\Common Files",
+      "property": "CommonFiles64Folder"
+    },
+    {
+      "name": "SystemFolder",
+      "description": "Full path to the System folder (32-bit)",
+      "windows_path": "C:\\Windows\\System32",
+      "property": "SystemFolder"
+    },
+    {
+      "name": "System64Folder",
+      "description": "Full path to the System folder (64-bit)",
+      "windows_path": "C:\\Windows\\System32",
+      "property": "System64Folder"
+    },
+    {
+      "name": "System16Folder",
+      "description": "Full path to the System folder (16-bit)",
+      "windows_path": "C:\\Windows\\System",
+      "property": "System16Folder"
+    },
+    {
+      "name": "WindowsFolder",
+      "description": "Full path to the Windows folder",
+      "windows_path": "C:\\Windows",
+      "property": "WindowsFolder"
+    },
+    {
+      "name": "WindowsVolume",
+      "description": "Volume of the Windows folder",
+      "windows_path": "C:\\",
+      "property": "WindowsVolume"
+    },
+    {
+      "name": "TempFolder",
+      "description": "Full path to the Temp folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Local\\Temp",
+      "property": "TempFolder"
+    },
+    {
+      "name": "LocalAppDataFolder",
+      "description": "Full path to the local application data folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Local",
+      "property": "LocalAppDataFolder"
+    },
+    {
+      "name": "AppDataFolder",
+      "description": "Full path to the roaming application data folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Roaming",
+      "property": "AppDataFolder"
+    },
+    {
+      "name": "CommonAppDataFolder",
+      "description": "Full path to the application data folder for all users",
+      "windows_path": "C:\\ProgramData",
+      "property": "CommonAppDataFolder"
+    },
+    {
+      "name": "PersonalFolder",
+      "description": "Full path to the user's personal folder (Documents)",
+      "windows_path": "C:\\Users\\<user>\\Documents",
+      "property": "PersonalFolder"
+    },
+    {
+      "name": "MyPicturesFolder",
+      "description": "Full path to the user's pictures folder",
+      "windows_path": "C:\\Users\\<user>\\Pictures",
+      "property": "MyPicturesFolder"
+    },
+    {
+      "name": "DesktopFolder",
+      "description": "Full path to the user's desktop folder",
+      "windows_path": "C:\\Users\\<user>\\Desktop",
+      "property": "DesktopFolder"
+    },
+    {
+      "name": "StartMenuFolder",
+      "description": "Full path to the Start menu folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu",
+      "property": "StartMenuFolder"
+    },
+    {
+      "name": "ProgramMenuFolder",
+      "description": "Full path to the Program menu folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs",
+      "property": "ProgramMenuFolder"
+    },
+    {
+      "name": "StartupFolder",
+      "description": "Full path to the Startup folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup",
+      "property": "StartupFolder"
+    },
+    {
+      "name": "SendToFolder",
+      "description": "Full path to the Send To folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Roaming\\Microsoft\\Windows\\SendTo",
+      "property": "SendToFolder"
+    },
+    {
+      "name": "FavoritesFolder",
+      "description": "Full path to the Favorites folder",
+      "windows_path": "C:\\Users\\<user>\\Favorites",
+      "property": "FavoritesFolder"
+    },
+    {
+      "name": "FontsFolder",
+      "description": "Full path to the Fonts folder",
+      "windows_path": "C:\\Windows\\Fonts",
+      "property": "FontsFolder"
+    },
+    {
+      "name": "AdminToolsFolder",
+      "description": "Full path to the Administrative Tools folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Administrative Tools",
+      "property": "AdminToolsFolder"
+    },
+    {
+      "name": "NetHoodFolder",
+      "description": "Full path to the Network Neighborhood folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Roaming\\Microsoft\\Windows\\Network Shortcuts",
+      "property": "NetHoodFolder"
+    },
+    {
+      "name": "PrintHoodFolder",
+      "description": "Full path to the Printers folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Roaming\\Microsoft\\Windows\\Printer Shortcuts",
+      "property": "PrintHoodFolder"
+    },
+    {
+      "name": "RecentFolder",
+      "description": "Full path to the Recent folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Roaming\\Microsoft\\Windows\\Recent",
+      "property": "RecentFolder"
+    },
+    {
+      "name": "TemplateFolder",
+      "description": "Full path to the Templates folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Roaming\\Microsoft\\Windows\\Templates",
+      "property": "TemplateFolder"
+    }
+  ]
+}

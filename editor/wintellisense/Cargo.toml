@@ -1,0 +1,42 @@
+[package]
+name = "wintellisense"
+version = "0.1.0"
+edition = "2021"
+description = "Context-aware autocomplete engine for WiX XML files"
+license = "MIT"
+readme = "README.md"
+
+[lib]
+name = "wintellisense"
+path = "src/lib.rs"
+
+[[bin]]
+name = "wintellisense"
+path = "src/main.rs"
+
+[dependencies]
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_yaml = "0.9"
+
+# Error handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# CLI
+clap = { version = "4.4", features = ["derive", "env"] }
+
+# XML parsing
+roxmltree = "0.20"
+
+# Database
+rusqlite = { version = "0.31", features = ["bundled"] }
+
+# Utilities
+uuid = { version = "1.8", features = ["v4"] }
+walkdir = "2.5"
+glob = "0.3"
+
+[dev-dependencies]
+tempfile = "3.10"

@@ -1,0 +1,271 @@
+{
+  "_description": "Attribute enum values for WiX elements",
+  "enums": {
+    "Package": {
+      "Scope": [
+        {"value": "perMachine", "description": "Install for all users (requires admin). Default."},
+        {"value": "perUser", "description": "Install for current user only, no admin required."},
+        {"value": "perUserOrMachine", "description": "Let user choose during installation."}
+      ],
+      "Compressed": [
+        {"value": "yes", "description": "Compress files into cabinet. Default."},
+        {"value": "no", "description": "Files remain uncompressed alongside MSI."}
+      ],
+      "ShortNames": [
+        {"value": "yes", "description": "Use 8.3 short filenames."},
+        {"value": "no", "description": "Use long filenames. Default."}
+      ]
+    },
+    "Feature": {
+      "InstallDefault": [
+        {"value": "local", "description": "Install feature locally. Default."},
+        {"value": "source", "description": "Run feature from source media."},
+        {"value": "followParent", "description": "Same install state as parent feature."}
+      ],
+      "TypicalDefault": [
+        {"value": "install", "description": "Feature installed in Typical setup. Default."},
+        {"value": "advertise", "description": "Feature advertised in Typical setup."}
+      ],
+      "Display": [
+        {"value": "collapse", "description": "Feature shown collapsed in tree. Default."},
+        {"value": "expand", "description": "Feature shown expanded in tree."},
+        {"value": "hidden", "description": "Feature hidden from user interface."}
+      ],
+      "AllowAbsent": [
+        {"value": "yes", "description": "User can choose not to install. Default."},
+        {"value": "no", "description": "Feature is required, cannot be deselected."}
+      ],
+      "AllowAdvertise": [
+        {"value": "yes", "description": "Feature can be advertised. Default."},
+        {"value": "no", "description": "Feature cannot be advertised."},
+        {"value": "system", "description": "Feature can be advertised if OS supports."}
+      ]
+    },
+    "Component": {
+      "Bitness": [
+        {"value": "default", "description": "Match package bitness. Default."},
+        {"value": "always32", "description": "Force 32-bit component."},
+        {"value": "always64", "description": "Force 64-bit component."}
+      ],
+      "Location": [
+        {"value": "local", "description": "Component runs from local installation."},
+        {"value": "source", "description": "Component runs from source media."},
+        {"value": "either", "description": "Component can run from either location."}
+      ]
+    },
+    "File": {
+      "Assembly": [
+        {"value": "no", "description": "Not an assembly. Default."},
+        {"value": ".net", "description": ".NET Framework assembly for GAC."},
+        {"value": "win32", "description": "Win32 side-by-side assembly."}
+      ],
+      "ProcessorArchitecture": [
+        {"value": "msil", "description": "Processor-neutral .NET assembly."},
+        {"value": "x86", "description": "32-bit x86 assembly."},
+        {"value": "x64", "description": "64-bit x64 assembly."},
+        {"value": "arm", "description": "ARM assembly."},
+        {"value": "arm64", "description": "ARM64 assembly."},
+        {"value": "ia64", "description": "Itanium assembly (legacy)."}
+      ],
+      "Compressed": [
+        {"value": "default", "description": "Use package compression setting."},
+        {"value": "yes", "description": "Compress this file."},
+        {"value": "no", "description": "Do not compress this file."}
+      ]
+    },
+    "RegistryValue": {
+      "Type": [
+        {"value": "string", "description": "REG_SZ string value."},
+        {"value": "integer", "description": "REG_DWORD 32-bit integer."},
+        {"value": "binary", "description": "REG_BINARY binary data."},
+        {"value": "expandable", "description": "REG_EXPAND_SZ expandable string."},
+        {"value": "multiString", "description": "REG_MULTI_SZ multi-string value."}
+      ],
+      "Action": [
+        {"value": "write", "description": "Write the value. Default."},
+        {"value": "append", "description": "Append to existing multi-string."},
+        {"value": "prepend", "description": "Prepend to existing multi-string."}
+      ]
+    },
+    "RegistryKey": {
+      "Root": [
+        {"value": "HKCR", "description": "HKEY_CLASSES_ROOT"},
+        {"value": "HKCU", "description": "HKEY_CURRENT_USER"},
+        {"value": "HKLM", "description": "HKEY_LOCAL_MACHINE"},
+        {"value": "HKU", "description": "HKEY_USERS"},
+        {"value": "HKMU", "description": "HKLM for per-machine, HKCU for per-user"}
+      ],
+      "Action": [
+        {"value": "create", "description": "Create key if not exists. Default."},
+        {"value": "createAndRemoveOnUninstall", "description": "Create and remove on uninstall."},
+        {"value": "none", "description": "Don't create, just reference."}
+      ]
+    },
+    "ServiceInstall": {
+      "Type": [
+        {"value": "ownProcess", "description": "Runs in its own process. Most common."},
+        {"value": "shareProcess", "description": "Shares process with other services."},
+        {"value": "kernelDriver", "description": "Kernel device driver."},
+        {"value": "systemDriver", "description": "File system driver."}
+      ],
+      "Start": [
+        {"value": "auto", "description": "Start automatically at boot."},
+        {"value": "demand", "description": "Start manually on demand."},
+        {"value": "disabled", "description": "Service is disabled."},
+        {"value": "boot", "description": "Started by system loader (drivers)."},
+        {"value": "system", "description": "Started during kernel init (drivers)."}
+      ],
+      "ErrorControl": [
+        {"value": "ignore", "description": "Log error, continue startup."},
+        {"value": "normal", "description": "Log error, display message, continue."},
+        {"value": "critical", "description": "Log error, restart with last-known-good."}
+      ],
+      "Account": [
+        {"value": "LocalSystem", "description": "Highest privileges, no network identity."},
+        {"value": "LocalService", "description": "Limited local privileges, anonymous network."},
+        {"value": "NetworkService", "description": "Limited local privileges, machine network identity."},
+        {"value": "[username]", "description": "Custom account (requires ServiceConfig for password)."}
+      ]
+    },
+    "ServiceControl": {
+      "Start": [
+        {"value": "install", "description": "Start service on install."},
+        {"value": "uninstall", "description": "Start service on uninstall."},
+        {"value": "both", "description": "Start on install and uninstall."}
+      ],
+      "Stop": [
+        {"value": "install", "description": "Stop service on install."},
+        {"value": "uninstall", "description": "Stop service on uninstall."},
+        {"value": "both", "description": "Stop on install and uninstall."}
+      ],
+      "Remove": [
+        {"value": "install", "description": "Remove service on install."},
+        {"value": "uninstall", "description": "Remove service on uninstall."},
+        {"value": "both", "description": "Remove on install and uninstall."}
+      ]
+    },
+    "CustomAction": {
+      "Execute": [
+        {"value": "immediate", "description": "Run immediately, can access properties."},
+        {"value": "deferred", "description": "Run during installation, SYSTEM context."},
+        {"value": "rollback", "description": "Run on installation rollback."},
+        {"value": "commit", "description": "Run after successful installation."}
+      ],
+      "Return": [
+        {"value": "check", "description": "Check return value, fail on error. Default."},
+        {"value": "ignore", "description": "Ignore return value."},
+        {"value": "asyncWait", "description": "Run async, wait for completion."},
+        {"value": "asyncNoWait", "description": "Run async, don't wait."}
+      ],
+      "Impersonate": [
+        {"value": "yes", "description": "Run as installing user. Default for immediate."},
+        {"value": "no", "description": "Run as SYSTEM. Required for deferred system changes."}
+      ]
+    },
+    "Shortcut": {
+      "Show": [
+        {"value": "normal", "description": "Normal window. Default."},
+        {"value": "minimized", "description": "Start minimized."},
+        {"value": "maximized", "description": "Start maximized."}
+      ]
+    },
+    "RemoveFile": {
+      "On": [
+        {"value": "install", "description": "Remove file on install."},
+        {"value": "uninstall", "description": "Remove file on uninstall."},
+        {"value": "both", "description": "Remove on both install and uninstall."}
+      ]
+    },
+    "RemoveFolder": {
+      "On": [
+        {"value": "install", "description": "Remove folder on install."},
+        {"value": "uninstall", "description": "Remove folder on uninstall."},
+        {"value": "both", "description": "Remove on both install and uninstall."}
+      ]
+    },
+    "Environment": {
+      "Action": [
+        {"value": "set", "description": "Set the environment variable."},
+        {"value": "create", "description": "Create only if doesn't exist."},
+        {"value": "remove", "description": "Remove the variable."}
+      ],
+      "Part": [
+        {"value": "all", "description": "Replace entire value."},
+        {"value": "first", "description": "Prepend to existing value."},
+        {"value": "last", "description": "Append to existing value."}
+      ]
+    },
+    "MajorUpgrade": {
+      "Schedule": [
+        {"value": "afterInstallValidate", "description": "Remove old version early. Default."},
+        {"value": "afterInstallInitialize", "description": "Remove after transaction starts."},
+        {"value": "afterInstallExecute", "description": "Remove after new files installed."},
+        {"value": "afterInstallExecuteAgain", "description": "Remove after retry."},
+        {"value": "afterInstallFinalize", "description": "Remove at end of install."}
+      ],
+      "AllowDowngrades": [
+        {"value": "yes", "description": "Allow installing older version."},
+        {"value": "no", "description": "Block downgrade with error. Default."}
+      ],
+      "AllowSameVersionUpgrades": [
+        {"value": "yes", "description": "Allow reinstall of same version."},
+        {"value": "no", "description": "Block same version reinstall. Default."}
+      ]
+    },
+    "Bundle": {
+      "Compressed": [
+        {"value": "yes", "description": "Embed payloads in bundle. Default."},
+        {"value": "no", "description": "Keep payloads external."}
+      ],
+      "DisableModify": [
+        {"value": "yes", "description": "Hide Modify button in ARP."},
+        {"value": "no", "description": "Show Modify button. Default."},
+        {"value": "button", "description": "Single Uninstall/Change button."}
+      ]
+    },
+    "MsiPackage": {
+      "DisplayInternalUI": [
+        {"value": "yes", "description": "Show MSI's own UI during install."},
+        {"value": "no", "description": "Silent MSI install. Default."}
+      ],
+      "Vital": [
+        {"value": "yes", "description": "Bundle fails if package fails. Default."},
+        {"value": "no", "description": "Continue bundle if package fails."}
+      ],
+      "Permanent": [
+        {"value": "yes", "description": "Don't uninstall when bundle uninstalls."},
+        {"value": "no", "description": "Uninstall with bundle. Default."}
+      ],
+      "Cache": [
+        {"value": "yes", "description": "Cache package for repair/uninstall. Default."},
+        {"value": "no", "description": "Don't cache (requires Permanent='yes')."},
+        {"value": "always", "description": "Always cache, even if already installed."}
+      ]
+    },
+    "ExePackage": {
+      "DetectionType": [
+        {"value": "condition", "description": "Use DetectCondition. Default."},
+        {"value": "arp", "description": "Detect via Add/Remove Programs entry."},
+        {"value": "none", "description": "Always run package."}
+      ]
+    },
+    "Payload": {
+      "Compressed": [
+        {"value": "default", "description": "Use container's setting."},
+        {"value": "yes", "description": "Compress this payload."},
+        {"value": "no", "description": "Don't compress this payload."}
+      ]
+    },
+    "Variable": {
+      "Type": [
+        {"value": "string", "description": "String variable. Default."},
+        {"value": "numeric", "description": "Numeric variable."},
+        {"value": "version", "description": "Version (major.minor.build.rev)."}
+      ],
+      "Persisted": [
+        {"value": "yes", "description": "Save value for repair/uninstall."},
+        {"value": "no", "description": "Don't persist value. Default."}
+      ]
+    }
+  }
+}

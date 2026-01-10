@@ -1,0 +1,21 @@
+[package]
+name = "wix-intune"
+version = "0.1.0"
+edition = "2021"
+description = "Generate Microsoft Intune deployment packages (.intunewin) from WiX installers"
+license = "MIT"
+
+[[bin]]
+name = "wix-intune"
+path = "src/main.rs"
+
+[lib]
+name = "wix_intune"
+path = "src/lib.rs"
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+roxmltree = "0.20"

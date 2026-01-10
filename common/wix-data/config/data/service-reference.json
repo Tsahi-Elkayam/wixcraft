@@ -1,0 +1,109 @@
+{
+  "_description": "Windows Service installation reference for WiX",
+  "service_types": [
+    {"value": "ownProcess", "constant": "SERVICE_WIN32_OWN_PROCESS", "hex": "0x10", "description": "Service runs in its own process. Most common for user services."},
+    {"value": "shareProcess", "constant": "SERVICE_WIN32_SHARE_PROCESS", "hex": "0x20", "description": "Service shares process with other services. Used by svchost.exe hosted services."},
+    {"value": "kernelDriver", "constant": "SERVICE_KERNEL_DRIVER", "hex": "0x01", "description": "Kernel device driver. Requires signed driver."},
+    {"value": "systemDriver", "constant": "SERVICE_FILE_SYSTEM_DRIVER", "hex": "0x02", "description": "File system driver. Requires signed driver."},
+    {"value": "interactiveProcess", "constant": "SERVICE_INTERACTIVE_PROCESS", "hex": "0x100", "description": "Can interact with desktop. Deprecated in Vista+."}
+  ],
+  "start_types": [
+    {"value": "auto", "constant": "SERVICE_AUTO_START", "hex": "0x02", "description": "Started automatically by SCM at system startup. Most common."},
+    {"value": "demand", "constant": "SERVICE_DEMAND_START", "hex": "0x03", "description": "Started manually or by dependent service. For rarely used services."},
+    {"value": "disabled", "constant": "SERVICE_DISABLED", "hex": "0x04", "description": "Service cannot be started. Must be enabled first."},
+    {"value": "boot", "constant": "SERVICE_BOOT_START", "hex": "0x00", "description": "Started by system loader. For boot-critical drivers only."},
+    {"value": "system", "constant": "SERVICE_SYSTEM_START", "hex": "0x01", "description": "Started during kernel initialization. For system drivers."}
+  ],
+  "error_control": [
+    {"value": "ignore", "constant": "SERVICE_ERROR_IGNORE", "hex": "0x00", "description": "Startup continues, error logged to event log."},
+    {"value": "normal", "constant": "SERVICE_ERROR_NORMAL", "hex": "0x01", "description": "Startup continues, error logged, message box displayed."},
+    {"value": "severe", "constant": "SERVICE_ERROR_SEVERE", "hex": "0x02", "description": "Startup continues if last-known-good config, otherwise fails."},
+    {"value": "critical", "constant": "SERVICE_ERROR_CRITICAL", "hex": "0x03", "description": "If not last-known-good, switch to it. If already, fail startup."}
+  ],
+  "builtin_accounts": [
+    {"name": "LocalSystem", "display": "Local System", "description": "Highest privilege level. Full access to local system. Network access as computer account. Use only when necessary."},
+    {"name": "LocalService", "display": "NT AUTHORITY\\LocalService", "description": "Limited privileges similar to Users group. Network access as Anonymous. Safer than LocalSystem."},
+    {"name": "NetworkService", "display": "NT AUTHORITY\\NetworkService", "description": "Limited privileges like LocalService. Network access as computer account. Use for services needing network identity."}
+  ],
+  "failure_actions": [
+    {"value": "none", "constant": "SC_ACTION_NONE", "description": "Take no action on failure."},
+    {"value": "reboot", "constant": "SC_ACTION_REBOOT", "description": "Reboot the computer. Requires SE_SHUTDOWN_NAME privilege."},
+    {"value": "restart", "constant": "SC_ACTION_RESTART", "description": "Restart the service. Most common recovery action."},
+    {"value": "runCommand", "constant": "SC_ACTION_RUN_COMMAND", "description": "Run a specified program or script."}
+  ],
+  "service_config_failure_actions": {
+    "description": "ServiceConfigFailureActions element configures recovery options",
+    "attributes": [
+      {"name": "ResetPeriod", "type": "integer", "description": "Time in seconds after which failure count resets to zero. Default 86400 (24 hours)."},
+      {"name": "RebootMessage", "type": "string", "description": "Message broadcast to users before reboot (if reboot action used)."},
+      {"name": "Command", "type": "string", "description": "Command line to execute (if runCommand action used)."},
+      {"name": "OnInstall", "type": "yesno", "description": "Configure failure actions on install. Default 'yes'."},
+      {"name": "OnReinstall", "type": "yesno", "description": "Configure failure actions on reinstall. Default 'yes'."},
+      {"name": "OnUninstall", "type": "yesno", "description": "Clear failure actions on uninstall. Default 'yes'."}
+    ],
+    "child_elements": [
+      {"name": "Failure", "description": "Defines a failure action. Multiple allowed, executed in order."}
+    ],
+    "failure_element": {
+      "attributes": [
+        {"name": "Action", "values": ["none", "reboot", "restart", "runCommand"], "description": "Action to take."},
+        {"name": "Delay", "type": "string", "description": "Delay before action (e.g., '10000' for 10 seconds in milliseconds)."}
+      ]
+    },
+    "examples": [
+      {
+        "name": "Basic restart on failure",
+        "xml": "<ServiceConfigFailureActions ServiceName='MyService'><Failure Action='restart' Delay='10000'/><Failure Action='restart' Delay='30000'/><Failure Action='none'/></ServiceConfigFailureActions>"
+      },
+      {
+        "name": "Restart with escalation to reboot",
+        "xml": "<ServiceConfigFailureActions ServiceName='MyService' RebootMessage='Service recovery triggered reboot.'><Failure Action='restart' Delay='5000'/><Failure Action='restart' Delay='30000'/><Failure Action='reboot' Delay='60000'/></ServiceConfigFailureActions>"
+      },
+      {
+        "name": "Run recovery script",
+        "xml": "<ServiceConfigFailureActions ServiceName='MyService' Command='[INSTALLFOLDER]recover.cmd'><Failure Action='restart' Delay='10000'/><Failure Action='runCommand' Delay='30000'/></ServiceConfigFailureActions>"
+      }
+    ]
+  },
+  "service_dependencies": {
+    "description": "ServiceDependency specifies services that must start before this service",
+    "common_dependencies": [
+      {"name": "Tcpip", "description": "TCP/IP networking. For network-dependent services."},
+      {"name": "Afd", "description": "Winsock kernel driver. Required for socket operations."},
+      {"name": "LanmanWorkstation", "description": "Workstation service. For SMB/network share access."},
+      {"name": "Dnscache", "description": "DNS Client. For DNS resolution."},
+      {"name": "RpcSs", "description": "RPC services. For COM/DCOM dependencies."},
+      {"name": "EventLog", "description": "Event Log service. If your service logs events."},
+      {"name": "PlugPlay", "description": "Plug and Play. For device-dependent services."},
+      {"name": "Netman", "description": "Network Connections. For network configuration access."}
+    ],
+    "group_dependencies": [
+      {"name": "+NetworkProvider", "description": "Any network provider. Prefix with + for groups."},
+      {"name": "+TDI", "description": "Transport Driver Interface group."},
+      {"name": "+PNP_TDI", "description": "PnP-aware TDI drivers."}
+    ]
+  },
+  "service_privileges": {
+    "description": "Required privileges for service operations",
+    "privilege_constants": [
+      {"name": "SeServiceLogonRight", "description": "Required for service account. Auto-granted for LocalSystem/LocalService/NetworkService."},
+      {"name": "SeShutdownPrivilege", "description": "Required for reboot failure action."},
+      {"name": "SeDebugPrivilege", "description": "For debugging other processes."},
+      {"name": "SeTcbPrivilege", "description": "Act as part of operating system. Very high privilege."},
+      {"name": "SeChangeNotifyPrivilege", "description": "Bypass traverse checking. Usually granted."},
+      {"name": "SeImpersonatePrivilege", "description": "Impersonate clients. Common for server services."}
+    ]
+  },
+  "best_practices": [
+    "Use demand start for infrequently used services to improve boot time.",
+    "Always include ServiceControl to properly stop service before uninstall.",
+    "Use NetworkService instead of LocalSystem when possible for security.",
+    "Configure failure actions with restart as first action, escalating if needed.",
+    "Set appropriate dependencies to avoid startup race conditions.",
+    "Include Wait='yes' on ServiceControl Stop to ensure clean shutdown.",
+    "Use ServiceConfig for delayed auto-start (Start='auto' with DelayedAutoStart='yes').",
+    "Document service purpose in Description attribute for administrators.",
+    "Test service behavior under different user accounts.",
+    "Consider using Group Managed Service Accounts (gMSA) in enterprise scenarios."
+  ]
+}

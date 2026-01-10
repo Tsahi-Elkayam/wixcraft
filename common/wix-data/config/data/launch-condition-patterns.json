@@ -1,0 +1,91 @@
+{
+  "_source": "WiX Toolset Documentation, Microsoft Learn",
+  "_urls": [
+    "https://docs.firegiant.com/wix/tutorial/sprint4/authoring-the-launch-condition/",
+    "https://wixtoolset.org/docs/v3/howtos/redistributables_and_install_checks/block_install_on_os/",
+    "https://learn.microsoft.com/en-us/windows/win32/msi/operating-system-property-values"
+  ],
+  "os_version_conditions": [
+    {"name": "Windows Vista or later", "condition": "Installed OR VersionNT >= 600", "message": "This application requires Windows Vista or later.", "versionNT": 600},
+    {"name": "Windows 7 or later", "condition": "Installed OR VersionNT >= 601", "message": "This application requires Windows 7 or later.", "versionNT": 601},
+    {"name": "Windows 8 or later", "condition": "Installed OR VersionNT >= 602", "message": "This application requires Windows 8 or later.", "versionNT": 602},
+    {"name": "Windows 8.1 or later", "condition": "Installed OR VersionNT >= 603", "message": "This application requires Windows 8.1 or later.", "versionNT": 603},
+    {"name": "Windows 10 or later", "condition": "Installed OR VersionNT >= 603", "message": "This application requires Windows 10 or later.", "versionNT": 603, "notes": "Windows 10/11 report VersionNT=603, use WindowsBuild for differentiation"},
+    {"name": "Windows 10 1809+", "condition": "Installed OR (VersionNT >= 603 AND WindowsBuild >= 17763)", "message": "This application requires Windows 10 version 1809 or later.", "notes": "Build 17763 is Windows 10 1809"},
+    {"name": "Windows 10 21H2+", "condition": "Installed OR (VersionNT >= 603 AND WindowsBuild >= 19044)", "message": "This application requires Windows 10 version 21H2 or later."},
+    {"name": "Windows 11", "condition": "Installed OR (VersionNT >= 603 AND WindowsBuild >= 22000)", "message": "This application requires Windows 11.", "notes": "Build 22000+ is Windows 11"}
+  ],
+  "versionNT_values": [
+    {"value": 400, "os": "Windows NT 4.0"},
+    {"value": 500, "os": "Windows 2000"},
+    {"value": 501, "os": "Windows XP"},
+    {"value": 502, "os": "Windows Server 2003, Windows XP x64"},
+    {"value": 600, "os": "Windows Vista, Windows Server 2008"},
+    {"value": 601, "os": "Windows 7, Windows Server 2008 R2"},
+    {"value": 602, "os": "Windows 8, Windows Server 2012"},
+    {"value": 603, "os": "Windows 8.1, Windows 10, Windows 11, Server 2012 R2+"}
+  ],
+  "architecture_conditions": [
+    {"name": "64-bit Windows required", "condition": "Installed OR VersionNT64", "message": "This application requires 64-bit Windows."},
+    {"name": "32-bit Windows only", "condition": "Installed OR NOT VersionNT64", "message": "This application only runs on 32-bit Windows."},
+    {"name": "x64 processor required", "condition": "Installed OR Intel64 OR AMD64", "message": "This application requires an x64 processor."},
+    {"name": "ARM64 Windows", "condition": "Installed OR Arm64", "message": "This application requires Windows on ARM64."}
+  ],
+  "privilege_conditions": [
+    {"name": "Admin required", "condition": "Privileged", "message": "Administrator privileges are required to install this application."},
+    {"name": "Admin user required", "condition": "AdminUser", "message": "You must be logged in as an administrator to install this application."},
+    {"name": "Elevated required", "condition": "Installed OR MsiRunningElevated", "message": "This installer must be run elevated (Run as Administrator)."}
+  ],
+  "product_type_conditions": [
+    {"name": "Workstation only", "condition": "Installed OR MsiNTProductType = 1", "message": "This application can only be installed on Windows workstations.", "MsiNTProductType": 1},
+    {"name": "Server only", "condition": "Installed OR MsiNTProductType >= 2", "message": "This application can only be installed on Windows Server.", "notes": "2=Domain Controller, 3=Server"},
+    {"name": "Domain Controller only", "condition": "Installed OR MsiNTProductType = 2", "message": "This application can only be installed on a Domain Controller.", "MsiNTProductType": 2},
+    {"name": "Not Terminal Server", "condition": "Installed OR NOT TerminalServer", "message": "This application cannot be installed on Terminal Server."}
+  ],
+  "prerequisite_conditions": [
+    {"name": ".NET Framework 4.8", "condition": "Installed OR NETFRAMEWORK48", "message": ".NET Framework 4.8 is required. Please install it first.", "detection": "Registry search for HKLM\\SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full, Release >= 528040"},
+    {"name": ".NET Framework 4.7.2", "condition": "Installed OR NETFRAMEWORK472", "message": ".NET Framework 4.7.2 is required.", "detection": "Release >= 461808"},
+    {"name": ".NET 6.0 Runtime", "condition": "Installed OR DOTNET6_RUNTIME", "message": ".NET 6.0 Runtime is required.", "detection": "WixToolset.Netfx DotNetCoreSearch"},
+    {"name": ".NET 8.0 Runtime", "condition": "Installed OR DOTNET8_RUNTIME", "message": ".NET 8.0 Runtime is required.", "detection": "WixToolset.Netfx DotNetCoreSearch"},
+    {"name": "Visual C++ 2015-2022", "condition": "Installed OR VCRUNTIME140", "message": "Visual C++ Redistributable 2015-2022 is required.", "detection": "Registry or file search"},
+    {"name": "IIS installed", "condition": "Installed OR IISMAJORVERSION", "message": "Internet Information Services (IIS) must be installed.", "detection": "Registry HKLM\\SOFTWARE\\Microsoft\\InetStp, MajorVersion"}
+  ],
+  "memory_disk_conditions": [
+    {"name": "Minimum RAM (2GB)", "condition": "Installed OR PhysicalMemory >= 2048", "message": "This application requires at least 2 GB of RAM."},
+    {"name": "Minimum RAM (4GB)", "condition": "Installed OR PhysicalMemory >= 4096", "message": "This application requires at least 4 GB of RAM."},
+    {"name": "Minimum RAM (8GB)", "condition": "Installed OR PhysicalMemory >= 8192", "message": "This application requires at least 8 GB of RAM."}
+  ],
+  "custom_property_conditions": [
+    {"name": "License key provided", "condition": "Installed OR LICENSEKEY", "message": "A license key must be provided. Use LICENSEKEY property.", "notes": "Define LICENSEKEY property with Secure='yes'"},
+    {"name": "Previous version installed", "condition": "Installed OR PREVIOUSVERSION", "message": "A previous version of this application must be installed first.", "notes": "Use AppSearch to detect previous version"},
+    {"name": "Custom prerequisite", "condition": "Installed OR MYPREREQ", "message": "Required prerequisite is not installed.", "notes": "Use RegistrySearch or FileSearch to set property"}
+  ],
+  "installation_state_conditions": [
+    {"name": "First install only action", "condition": "NOT Installed", "message": "", "notes": "For actions that should only run on first install"},
+    {"name": "Upgrade only action", "condition": "Installed AND UPGRADINGPRODUCTCODE", "message": "", "notes": "For actions during major upgrade"},
+    {"name": "Not uninstalling", "condition": "NOT REMOVE", "message": "", "notes": "Skip during uninstall"},
+    {"name": "Uninstall only", "condition": "REMOVE = \"ALL\"", "message": "", "notes": "Only during complete uninstall"}
+  ],
+  "wix_v4_launch_element": [
+    {"name": "Simple OS check", "wix": "<Launch Condition=\"VersionNT >= 603\" Message=\"Windows 8.1 or later required.\" />"},
+    {"name": "Admin check", "wix": "<Launch Condition=\"Privileged\" Message=\"Administrator rights required.\" />"},
+    {"name": "64-bit check", "wix": "<Launch Condition=\"VersionNT64\" Message=\"64-bit Windows required.\" />"},
+    {"name": "Property check", "wix": "<Launch Condition=\"MYPREREQ\" Message=\"Prerequisite not found.\" />"},
+    {"name": "Combined check", "wix": "<Launch Condition=\"VersionNT >= 603 AND VersionNT64\" Message=\"64-bit Windows 8.1+ required.\" />"}
+  ],
+  "wix_v3_condition_element": [
+    {"name": "OS version", "wix": "<Condition Message=\"Windows 8.1 or later required.\">Installed OR VersionNT >= 603</Condition>"},
+    {"name": "Architecture", "wix": "<Condition Message=\"64-bit Windows required.\">Installed OR VersionNT64</Condition>"},
+    {"name": "Privileges", "wix": "<Condition Message=\"Administrator rights required.\">Privileged</Condition>"}
+  ],
+  "search_patterns": [
+    {"name": "Registry value search", "wix": "<Property Id=\"MYAPP_INSTALLED\"><RegistrySearch Id=\"FindMyApp\" Root=\"HKLM\" Key=\"SOFTWARE\\MyApp\" Name=\"Version\" Type=\"raw\" /></Property>"},
+    {"name": "File existence search", "wix": "<Property Id=\"FILEEXISTS\"><DirectorySearch Id=\"FindDir\" Path=\"[ProgramFilesFolder]\"><FileSearch Id=\"FindFile\" Name=\"required.dll\" /></DirectorySearch></Property>"},
+    {"name": "Component search", "wix": "<Property Id=\"COMPONENTINSTALLED\"><ComponentSearch Id=\"FindComp\" Guid=\"{GUID-HERE}\" /></Property>"}
+  ],
+  "util_extension_searches": [
+    {"name": ".NET Core search", "wix": "<util:RegistrySearch Id=\"NetCore6\" Root=\"HKLM\" Key=\"SOFTWARE\\dotnet\\Setup\\InstalledVersions\\x64\\sharedhost\" Value=\"Version\" Variable=\"NETCORE6\" />", "extension": "WixToolset.Util"},
+    {"name": "File version search", "wix": "<util:FileSearch Id=\"FindDll\" Path=\"[SystemFolder]mydll.dll\" Variable=\"DLLVERSION\" Condition=\"VersionNT64\" />", "extension": "WixToolset.Util"},
+    {"name": "Product search", "wix": "<util:ProductSearch Id=\"FindProduct\" UpgradeCode=\"{GUID}\" Variable=\"PRODUCTFOUND\" />", "extension": "WixToolset.Util"}
+  ]
+}

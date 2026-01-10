@@ -1,0 +1,127 @@
+{
+  "from": "v4",
+  "to": "v5",
+  "description": "WiX v5 migration from v4 - highly compatible with minimal changes required",
+  "release_date": "2024-04-05",
+  "changes": [
+    {
+      "type": "removed",
+      "category": "extension",
+      "old": "WixDifxAppExtension",
+      "description": "DifxApp extension removed - deprecated in Windows 10",
+      "severity": "breaking",
+      "migration_notes": "Use alternative driver installation methods"
+    },
+    {
+      "type": "deprecated",
+      "category": "element",
+      "old": "WixManagedBootstrapperApplicationHost",
+      "new": "WixPrerequisiteBootstrapperApplication",
+      "description": "Use WixPrerequisiteBootstrapperApplication instead",
+      "severity": "warning"
+    },
+    {
+      "type": "added",
+      "category": "element",
+      "new": "Files",
+      "description": "New element to install all files in a directory with wildcards",
+      "severity": "info",
+      "example": "<Files Include=\"bin\\**\\*.dll\" />"
+    },
+    {
+      "type": "added",
+      "category": "feature",
+      "new": "default_major_upgrade",
+      "description": "Packages without MajorUpgrade get one automatically",
+      "severity": "info",
+      "migration_notes": "No action needed - automatic if no upgrade authoring exists"
+    },
+    {
+      "type": "added",
+      "category": "feature",
+      "new": "default_installfolder",
+      "description": "INSTALLFOLDER defined automatically if referenced but not defined",
+      "severity": "info",
+      "migration_notes": "No action needed - reduces boilerplate"
+    },
+    {
+      "type": "added",
+      "category": "feature",
+      "new": "virtual_override_modifiers",
+      "description": "Symbol identifiers can use virtual/override access modifiers",
+      "severity": "info",
+      "example": "Id=\"MyComponent\" virtual=\"yes\""
+    },
+    {
+      "type": "changed",
+      "category": "feature",
+      "old": "explicit_feature_required",
+      "new": "default_feature_for_components",
+      "description": "ComponentRef/ComponentGroupRef can be children of Package element",
+      "severity": "info",
+      "migration_notes": "Components without explicit feature assignment get a default feature"
+    },
+    {
+      "type": "added",
+      "category": "element",
+      "new": "DotNetCompatibilityCheck",
+      "description": "Check .NET runtime compatibility in MSI packages",
+      "severity": "info",
+      "extension": "netfx"
+    },
+    {
+      "type": "added",
+      "category": "element",
+      "new": "DotNetCoreSdkFeatureBandSearch",
+      "description": "Search for .NET SDK by feature band",
+      "severity": "info",
+      "extension": "netfx"
+    },
+    {
+      "type": "changed",
+      "category": "tooling",
+      "description": "wix.exe is the unified command-line tool",
+      "severity": "info",
+      "migration_notes": "Same as v4 - no changes to CLI"
+    },
+    {
+      "type": "unchanged",
+      "category": "namespace",
+      "description": "Same XML namespace as v4",
+      "severity": "info",
+      "migration_notes": "http://wixtoolset.org/schemas/v4/wxs - no namespace change"
+    },
+    {
+      "type": "unchanged",
+      "category": "compatibility",
+      "description": "Backward compatible with WiX v4 language",
+      "severity": "info",
+      "migration_notes": "Most projects can upgrade with no code changes"
+    }
+  ],
+  "common_migration_tasks": [
+    {
+      "task": "Update NuGet packages",
+      "description": "Change WixToolset.*.wixext packages from 4.x to 5.x versions",
+      "required": true
+    },
+    {
+      "task": "Remove DifxApp references",
+      "description": "If using WixDifxAppExtension, find alternative driver installation",
+      "required": false,
+      "condition": "Uses DifxApp extension"
+    },
+    {
+      "task": "Update MBA host references",
+      "description": "Replace WixManagedBootstrapperApplicationHost with WixPrerequisiteBootstrapperApplication",
+      "required": false,
+      "condition": "Uses managed BA"
+    },
+    {
+      "task": "Consider using Files element",
+      "description": "Simplify file harvesting with new Files element",
+      "required": false,
+      "benefit": "Reduces authoring complexity"
+    }
+  ]
+}

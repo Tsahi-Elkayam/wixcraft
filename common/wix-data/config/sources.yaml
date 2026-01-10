@@ -1,0 +1,2204 @@
+# WiX Data Layer Sources Configuration
+# Defines where to harvest WiX metadata from
+
+version: "1.0"
+
+sources:
+  # ============================================================
+  # WiX XSD Schemas - Elements and Attributes
+  # All XSDs are in /src/xsd/ with lowercase names
+  # ============================================================
+  xsd:
+    # Core WiX schema
+    wix-core:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/wix.xsd"
+      parser: xsd
+      targets: [elements, attributes]
+      extension: wix
+
+    # Utility extension - file shares, users, permissions, XML config
+    wix-util:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/util.xsd"
+      parser: xsd
+      targets: [elements, attributes]
+      extension: util
+
+    # .NET Framework detection and prerequisites
+    wix-netfx:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/netfx.xsd"
+      parser: xsd
+      targets: [elements, attributes]
+      extension: netfx
+
+    # Bootstrapper Application Layer (Burn UI)
+    wix-bal:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/bal.xsd"
+      parser: xsd
+      targets: [elements, attributes]
+      extension: bal
+
+    # IIS web server configuration
+    wix-iis:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/iis.xsd"
+      parser: xsd
+      targets: [elements, attributes]
+      extension: iis
+
+    # SQL Server database deployment
+    wix-sql:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/sql.xsd"
+      parser: xsd
+      targets: [elements, attributes]
+      extension: sql
+
+    # Visual Studio integration
+    wix-vs:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/vs.xsd"
+      parser: xsd
+      targets: [elements, attributes]
+      extension: vs
+
+    # Windows Firewall rules
+    wix-firewall:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/firewall.xsd"
+      parser: xsd
+      targets: [elements, attributes]
+      extension: firewall
+
+    # HTTP URL reservations and SSL certificates
+    wix-http:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/http.xsd"
+      parser: xsd
+      targets: [elements, attributes]
+      extension: http
+
+    # DirectX capability detection
+    wix-directx:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/directx.xsd"
+      parser: xsd
+      targets: [elements, attributes]
+      extension: directx
+
+    # COM+ application deployment
+    wix-complus:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/complus.xsd"
+      parser: xsd
+      targets: [elements, attributes]
+      extension: complus
+
+    # Dependency provider/requires for shared components
+    wix-dependency:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/dependency.xsd"
+      parser: xsd
+      targets: [elements, attributes]
+      extension: dependency
+
+    # WiX UI dialogs and wizard sequences
+    wix-ui:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/ui.xsd"
+      parser: xsd
+      targets: [elements, attributes]
+      extension: ui
+
+    # MSMQ message queue configuration
+    wix-msmq:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/msmq.xsd"
+      parser: xsd
+      targets: [elements, attributes]
+      extension: msmq
+
+    # PowerShell snap-in registration
+    wix-powershell:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/powershell.xsd"
+      parser: xsd
+      targets: [elements, attributes]
+      extension: powershell
+
+    # Localization schema
+    wix-localization:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/wxl.xsd"
+      parser: xsd
+      targets: [elements, attributes]
+      extension: wxl
+
+    # WiX include file schema
+    wix-include:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/wxi.xsd"
+      parser: xsd
+      targets: [elements, attributes]
+      extension: wxi
+
+  # ============================================================
+  # WiX v3 XSD Schemas - For Migration Comparison
+  # XSDs are in /src/ext/<Extension>Extension/wixext/Xsd/
+  # ============================================================
+  xsd-v3:
+    # WiX v3 Util extension
+    v3-util:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix3/develop/src/ext/UtilExtension/wixext/Xsd/util.xsd"
+      parser: xsd
+      targets: [elements_v3]
+      extension: util3
+
+    # WiX v3 NetFx extension
+    v3-netfx:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix3/develop/src/ext/NetFxExtension/wixext/Xsd/netfx.xsd"
+      parser: xsd
+      targets: [elements_v3]
+      extension: netfx3
+
+    # WiX v3 Bal extension
+    v3-bal:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix3/develop/src/ext/BalExtension/wixext/Xsd/bal.xsd"
+      parser: xsd
+      targets: [elements_v3]
+      extension: bal3
+
+    # WiX v3 IIS extension
+    v3-iis:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix3/develop/src/ext/IIsExtension/wixext/Xsd/iis.xsd"
+      parser: xsd
+      targets: [elements_v3]
+      extension: iis3
+
+    # WiX v3 SQL extension
+    v3-sql:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix3/develop/src/ext/SqlExtension/wixext/Xsd/sql.xsd"
+      parser: xsd
+      targets: [elements_v3]
+      extension: sql3
+
+    # WiX v3 Firewall extension
+    v3-firewall:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix3/develop/src/ext/FirewallExtension/wixext/Xsd/firewall.xsd"
+      parser: xsd
+      targets: [elements_v3]
+      extension: firewall3
+
+    # WiX v3 Http extension
+    v3-http:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix3/develop/src/ext/HttpExtension/wixext/Xsd/http.xsd"
+      parser: xsd
+      targets: [elements_v3]
+      extension: http3
+
+  # ============================================================
+  # WiX Documentation - Descriptions, Examples
+  # ============================================================
+  wix-docs:
+    schema-reference:
+      url: "https://wixtoolset.org/docs/schema/"
+      parser: html
+      targets: [elements]
+      selectors:
+        elements: ".schema-element"
+        description: ".description"
+
+    tools-reference:
+      url: "https://wixtoolset.org/docs/tools/"
+      parser: html
+      targets: [tools]
+
+    wix-cli:
+      url: "https://wixtoolset.org/docs/tools/wixexe/"
+      parser: html
+      targets: [commands]
+
+    wix-build:
+      url: "https://wixtoolset.org/docs/tools/wixexe/#build"
+      parser: html
+      targets: [commands]
+
+    wix-msi-backend:
+      url: "https://wixtoolset.org/docs/tools/msi-backend/"
+      parser: html
+      targets: [tools]
+
+    wix-burn:
+      url: "https://wixtoolset.org/docs/tools/burn/"
+      parser: html
+      targets: [tools]
+
+    wix-heat:
+      url: "https://wixtoolset.org/docs/tools/heat/"
+      parser: html
+      targets: [tools]
+
+    wix-decompile:
+      url: "https://wixtoolset.org/docs/tools/wixexe/#decompile"
+      parser: html
+      targets: [commands]
+
+    getting-started:
+      url: "https://wixtoolset.org/docs/intro/"
+      parser: html
+      targets: [tutorials]
+
+    fundamentals:
+      url: "https://wixtoolset.org/docs/fundamentals/"
+      parser: html
+      targets: [tutorials]
+
+    preprocessor:
+      url: "https://wixtoolset.org/docs/tools/preprocessor/"
+      parser: html
+      targets: [preprocessor]
+
+    extensions-intro:
+      url: "https://wixtoolset.org/docs/extensions/"
+      parser: html
+      targets: [extensions]
+
+    v4-manual:
+      url: "https://wixtoolset.org/docs/fourthree/"
+      parser: html
+      targets: [migrations]
+
+    # Extension documentation
+    ext-util:
+      url: "https://wixtoolset.org/docs/schema/util/"
+      parser: html
+      targets: [extensions]
+
+    ext-netfx:
+      url: "https://wixtoolset.org/docs/schema/netfx/"
+      parser: html
+      targets: [extensions]
+
+    ext-bal:
+      url: "https://wixtoolset.org/docs/schema/bal/"
+      parser: html
+      targets: [extensions]
+
+    ext-iis:
+      url: "https://wixtoolset.org/docs/schema/iis/"
+      parser: html
+      targets: [extensions]
+
+    ext-sql:
+      url: "https://wixtoolset.org/docs/schema/sql/"
+      parser: html
+      targets: [extensions]
+
+    ext-firewall:
+      url: "https://wixtoolset.org/docs/schema/firewall/"
+      parser: html
+      targets: [extensions]
+
+    ext-http:
+      url: "https://wixtoolset.org/docs/schema/http/"
+      parser: html
+      targets: [extensions]
+
+    ext-vs:
+      url: "https://wixtoolset.org/docs/schema/vs/"
+      parser: html
+      targets: [extensions]
+
+    ext-directx:
+      url: "https://wixtoolset.org/docs/schema/directx/"
+      parser: html
+      targets: [extensions]
+
+    ext-complus:
+      url: "https://wixtoolset.org/docs/schema/complus/"
+      parser: html
+      targets: [extensions]
+
+    # Tutorials and guides
+    msi-basics:
+      url: "https://wixtoolset.org/docs/intro/#building-an-msi"
+      parser: html
+      targets: [tutorials]
+
+    bundle-basics:
+      url: "https://wixtoolset.org/docs/intro/#building-a-bundle"
+      parser: html
+      targets: [tutorials]
+
+    localization-guide:
+      url: "https://wixtoolset.org/docs/tools/localization/"
+      parser: html
+      targets: [tutorials]
+
+    custom-actions:
+      url: "https://wixtoolset.org/docs/custom_actions/"
+      parser: html
+      targets: [tutorials]
+
+    wix-variables:
+      url: "https://wixtoolset.org/docs/tools/preprocessor/#variables"
+      parser: html
+      targets: [preprocessor]
+
+    wix-conditions:
+      url: "https://wixtoolset.org/docs/tools/preprocessor/#conditional-statements"
+      parser: html
+      targets: [preprocessor]
+
+    wix-include:
+      url: "https://wixtoolset.org/docs/tools/preprocessor/#include-processing"
+      parser: html
+      targets: [preprocessor]
+
+    harvesting-guide:
+      url: "https://wixtoolset.org/docs/tools/heat/#harvesting"
+      parser: html
+      targets: [tools]
+
+    patch-creation:
+      url: "https://wixtoolset.org/docs/patching/"
+      parser: html
+      targets: [tutorials]
+
+    bundle-variables:
+      url: "https://wixtoolset.org/docs/tools/burn/#bundle-variables"
+      parser: html
+      targets: [burn]
+
+    bundle-conditions:
+      url: "https://wixtoolset.org/docs/tools/burn/#conditions"
+      parser: html
+      targets: [burn]
+
+  # ============================================================
+  # Microsoft Learn - MSI Reference
+  # ============================================================
+  microsoft:
+    # Database tables
+    msi-tables:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/database-tables"
+      parser: html
+      targets: [msi_tables]
+      selectors:
+        tables: "table tr td a"
+
+    # Property reference
+    msi-properties:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/property-reference"
+      parser: html
+      targets: [properties]
+      selectors:
+        properties: "table tr"
+
+    # Standard actions
+    msi-actions:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/standard-actions-reference"
+      parser: html
+      targets: [actions]
+
+    # ICE validation rules
+    ice-reference:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/ice-reference"
+      parser: html
+      targets: [ice_rules]
+      selectors:
+        rules: "table tr, .ice-list li"
+
+    # Standard folder properties
+    standard-folders:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/property-reference#system-folder-properties"
+      parser: html
+      targets: [directories]
+
+    # MSI error codes
+    error-messages:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/error-codes"
+      parser: html
+      targets: [msi_errors]
+
+    # Installer API functions
+    installer-functions:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/installer-function-reference"
+      parser: html
+      targets: [functions]
+
+    # Custom action types
+    custom-action-types:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/summary-list-of-all-custom-action-types"
+      parser: html
+      targets: [custom_action_types]
+
+    # Conditional statement syntax
+    conditional-syntax:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/conditional-statement-syntax"
+      parser: html
+      targets: [syntax]
+
+    # Summary information stream
+    summary-info:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/summary-information-stream"
+      parser: html
+      targets: [summary_info]
+
+    # Component rules
+    component-rules:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/organizing-applications-into-components"
+      parser: html
+      targets: [best_practices]
+
+    # Feature table
+    feature-table:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/feature-table"
+      parser: html
+      targets: [msi_tables]
+
+    # Media table
+    media-table:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/media-table"
+      parser: html
+      targets: [msi_tables]
+
+    # Upgrade table
+    upgrade-table:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/upgrade-table"
+      parser: html
+      targets: [msi_tables]
+
+    # Registry table
+    registry-table:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/registry-table"
+      parser: html
+      targets: [msi_tables]
+
+    # ServiceInstall table
+    serviceinstall-table:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/serviceinstall-table"
+      parser: html
+      targets: [msi_tables]
+
+    # Major upgrades
+    major-upgrades:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/major-upgrades"
+      parser: html
+      targets: [best_practices]
+
+    # Minor upgrades
+    minor-upgrades:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/minor-upgrades"
+      parser: html
+      targets: [best_practices]
+
+    # Patch packages
+    patch-packages:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/patch-packages"
+      parser: html
+      targets: [best_practices]
+
+    # Install sequences
+    install-sequences:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/installation-procedure-tables-group"
+      parser: html
+      targets: [sequences]
+
+    # Advertising
+    advertising:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/advertisement"
+      parser: html
+      targets: [concepts]
+
+    # Per-user vs per-machine
+    installation-context:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/installation-context"
+      parser: html
+      targets: [concepts]
+
+    # Windows Installer versions
+    installer-versions:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/released-versions-of-windows-installer"
+      parser: html
+      targets: [versions]
+
+    # MsiExec command line
+    msiexec-reference:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/command-line-options"
+      parser: html
+      targets: [commands]
+
+    # Session object
+    session-object:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/session-object"
+      parser: html
+      targets: [api]
+
+    # Installer object
+    installer-object:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/installer-object"
+      parser: html
+      targets: [api]
+
+    # Record object
+    record-object:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/record-object"
+      parser: html
+      targets: [api]
+
+    # View object
+    view-object:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/view-object"
+      parser: html
+      targets: [api]
+
+    # Database object
+    database-object:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/database-object"
+      parser: html
+      targets: [api]
+
+    # More MSI tables
+    component-table:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/component-table"
+      parser: html
+      targets: [msi_tables]
+
+    directory-table:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/directory-table"
+      parser: html
+      targets: [msi_tables]
+
+    file-table:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/file-table"
+      parser: html
+      targets: [msi_tables]
+
+    shortcut-table:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/shortcut-table"
+      parser: html
+      targets: [msi_tables]
+
+    customaction-table:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/customaction-table"
+      parser: html
+      targets: [msi_tables]
+
+    installexecutesequence-table:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/installexecutesequence-table"
+      parser: html
+      targets: [msi_tables]
+
+    installuisequence-table:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/installuisequence-table"
+      parser: html
+      targets: [msi_tables]
+
+    launchcondition-table:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/launchcondition-table"
+      parser: html
+      targets: [msi_tables]
+
+    environment-table:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/environment-table"
+      parser: html
+      targets: [msi_tables]
+
+    createfolder-table:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/createfolder-table"
+      parser: html
+      targets: [msi_tables]
+
+    removefile-table:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/removefile-table"
+      parser: html
+      targets: [msi_tables]
+
+    property-table:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/property-table"
+      parser: html
+      targets: [msi_tables]
+
+    binary-table:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/binary-table"
+      parser: html
+      targets: [msi_tables]
+
+    icon-table:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/icon-table"
+      parser: html
+      targets: [msi_tables]
+
+    servicecontrol-table:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/servicecontrol-table"
+      parser: html
+      targets: [msi_tables]
+
+    # Automation interfaces
+    summaryinfo-object:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/summaryinfo-object"
+      parser: html
+      targets: [api]
+
+    featureinfo-object:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/featureinfo-object"
+      parser: html
+      targets: [api]
+
+    componentinfo-object:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/componentinfo-object"
+      parser: html
+      targets: [api]
+
+    productinfo-object:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/product-object"
+      parser: html
+      targets: [api]
+
+    patchinfo-object:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/patch-object"
+      parser: html
+      targets: [api]
+
+    # Installation behavior
+    deferred-execution:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/deferred-execution-custom-actions"
+      parser: html
+      targets: [concepts]
+
+    rollback-actions:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/rollback-custom-actions"
+      parser: html
+      targets: [concepts]
+
+    commit-actions:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/commit-custom-actions"
+      parser: html
+      targets: [concepts]
+
+    system-policy:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/system-policy"
+      parser: html
+      targets: [concepts]
+
+    user-policy:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/user-interface-policies"
+      parser: html
+      targets: [concepts]
+
+    # Installation logging
+    logging:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/logging"
+      parser: html
+      targets: [debugging]
+
+    wilogutl:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/wilogutl-exe"
+      parser: html
+      targets: [tools]
+
+    # Transforms
+    transforms:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/transforms"
+      parser: html
+      targets: [concepts]
+
+    database-transforms:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/database-transforms"
+      parser: html
+      targets: [concepts]
+
+    # Merge modules
+    merge-modules:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/merge-modules"
+      parser: html
+      targets: [concepts]
+
+    # Package validation
+    package-validation:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/package-validation"
+      parser: html
+      targets: [validation]
+
+    msival2:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/msival2-exe"
+      parser: html
+      targets: [tools]
+
+    orca-tool:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/orca-exe"
+      parser: html
+      targets: [tools]
+
+    msidb-tool:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/msidb-exe"
+      parser: html
+      targets: [tools]
+
+    msimsp-tool:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/msimsp-exe"
+      parser: html
+      targets: [tools]
+
+    # Digital signatures
+    digital-signatures:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/digital-signatures-and-windows-installer"
+      parser: html
+      targets: [security]
+
+    # File versioning
+    file-versioning:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/file-versioning-rules"
+      parser: html
+      targets: [concepts]
+
+    # Side-by-side assemblies
+    side-by-side:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/side-by-side-assemblies"
+      parser: html
+      targets: [concepts]
+
+    # 64-bit installations
+    64bit-support:
+      url: "https://learn.microsoft.com/en-us/windows/win32/msi/64-bit-windows-installer-packages"
+      parser: html
+      targets: [concepts]
+
+    # MSIX documentation
+    msix-overview:
+      url: "https://learn.microsoft.com/en-us/windows/msix/overview"
+      parser: html
+      targets: [msix]
+
+    msix-from-msi:
+      url: "https://learn.microsoft.com/en-us/windows/msix/packaging-tool/create-app-package"
+      parser: html
+      targets: [msix]
+
+  # ============================================================
+  # WiX GitHub - Source Code, Issues, Releases
+  # Use HEAD branch for stable URLs
+  # ============================================================
+  github:
+    # Core error messages (multiple error definition files)
+    core-errors:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/wix/WixToolset.Core/CoreErrors.cs"
+      parser: csharp
+      targets: [errors]
+
+    compiler-errors:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/wix/WixToolset.Core/CompilerErrors.cs"
+      parser: csharp
+      targets: [errors]
+
+    compiler-warnings:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/wix/WixToolset.Core/CompilerWarnings.cs"
+      parser: csharp
+      targets: [warnings]
+
+    linker-errors:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/wix/WixToolset.Core/LinkerErrors.cs"
+      parser: csharp
+      targets: [errors]
+
+    linker-warnings:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/wix/WixToolset.Core/LinkerWarnings.cs"
+      parser: csharp
+      targets: [warnings]
+
+    # Burn bootstrapper engine
+    burn-core:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/burn/engine/core.cpp"
+      parser: cpp
+      targets: [burn]
+
+    burn-engine:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/burn/engine/engine.cpp"
+      parser: cpp
+      targets: [burn]
+
+    burn-logging:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/burn/engine/logging.cpp"
+      parser: cpp
+      targets: [burn]
+
+    burn-cache:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/burn/engine/cache.cpp"
+      parser: cpp
+      targets: [burn]
+
+    burn-plan:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/burn/engine/plan.cpp"
+      parser: cpp
+      targets: [burn]
+
+    burn-apply:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/burn/engine/apply.cpp"
+      parser: cpp
+      targets: [burn]
+
+    burn-detect:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/burn/engine/detect.cpp"
+      parser: cpp
+      targets: [burn]
+
+    # Release information
+    releases:
+      url: "https://api.github.com/repos/wixtoolset/wix/releases"
+      parser: json
+      targets: [releases]
+
+    # UI dialog definitions
+    wixui-common:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/ext/UI/wixlib/Common.wxs"
+      parser: wxs
+      targets: [ui_elements]
+
+    wixui-mondo:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/ext/UI/wixlib/WixUI_Mondo.wxs"
+      parser: wxs
+      targets: [ui_elements]
+
+    wixui-minimal:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/ext/UI/wixlib/WixUI_Minimal.wxs"
+      parser: wxs
+      targets: [ui_elements]
+
+    wixui-installdir:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/ext/UI/wixlib/WixUI_InstallDir.wxs"
+      parser: wxs
+      targets: [ui_elements]
+
+    wixui-featuretree:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/ext/UI/wixlib/WixUI_FeatureTree.wxs"
+      parser: wxs
+      targets: [ui_elements]
+
+    wixui-advanced:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/ext/UI/wixlib/WixUI_Advanced.wxs"
+      parser: wxs
+      targets: [ui_elements]
+
+    # Contributing guidelines
+    contributing:
+      url: "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/CONTRIBUTING.md"
+      parser: markdown
+      targets: [docs]
+
+    # Changelog
+    changelog:
+      url: "https://api.github.com/repos/wixtoolset/wix/releases"
+      parser: json
+      targets: [changelog]
+
+  # ============================================================
+  # GitHub Examples and Sample Projects
+  # ============================================================
+  github-examples:
+    # Official WiX test fixtures (real-world examples)
+    wix-test-data:
+      url: "https://api.github.com/repos/wixtoolset/wix/contents/src/test/WixToolsetTest.CoreIntegration/TestData"
+      parser: json
+      targets: [examples]
+
+    # WiX extension test data
+    util-test-data:
+      url: "https://api.github.com/repos/wixtoolset/wix/contents/src/ext/Util/test/WixToolsetTest.Util/TestData"
+      parser: json
+      targets: [examples]
+
+    netfx-test-data:
+      url: "https://api.github.com/repos/wixtoolset/wix/contents/src/ext/NetFx/test/WixToolsetTest.Netfx/TestData"
+      parser: json
+      targets: [examples]
+
+    bal-test-data:
+      url: "https://api.github.com/repos/wixtoolset/wix/contents/src/ext/Bal/test/WixToolsetTest.Bal/TestData"
+      parser: json
+      targets: [examples]
+
+    iis-test-data:
+      url: "https://api.github.com/repos/wixtoolset/wix/contents/src/ext/Iis/test/WixToolsetTest.Iis/TestData"
+      parser: json
+      targets: [examples]
+
+    sql-test-data:
+      url: "https://api.github.com/repos/wixtoolset/wix/contents/src/ext/Sql/test/WixToolsetTest.Sql/TestData"
+      parser: json
+      targets: [examples]
+
+    firewall-test-data:
+      url: "https://api.github.com/repos/wixtoolset/wix/contents/src/ext/Firewall/test/WixToolsetTest.Firewall/TestData"
+      parser: json
+      targets: [examples]
+
+    # GitHub code search for WiX examples
+    github-wxs-samples:
+      url: "https://api.github.com/search/code?q=extension:wxs+Component+File&per_page=100"
+      parser: json
+      targets: [examples]
+
+    github-bundle-samples:
+      url: "https://api.github.com/search/code?q=extension:wxs+Bundle+Chain&per_page=100"
+      parser: json
+      targets: [examples]
+
+    github-customaction-samples:
+      url: "https://api.github.com/search/code?q=extension:wxs+CustomAction+DllEntry&per_page=100"
+      parser: json
+      targets: [examples]
+
+    # Popular WiX sample repositories
+    wix-sample-repos:
+      url: "https://api.github.com/search/repositories?q=wix+installer+sample+language:xml&sort=stars&per_page=50"
+      parser: json
+      targets: [examples]
+
+    wix-template-repos:
+      url: "https://api.github.com/search/repositories?q=wix+template+msi&sort=stars&per_page=50"
+      parser: json
+      targets: [examples]
+
+    wix-bootstrapper-repos:
+      url: "https://api.github.com/search/repositories?q=wix+burn+bootstrapper&sort=stars&per_page=50"
+      parser: json
+      targets: [examples]
+
+    # GitHub Gists with WiX examples
+    wix-gists:
+      url: "https://api.github.com/gists/public?per_page=100"
+      parser: json
+      targets: [examples]
+      filter: "wix wxs"
+
+    # Specific well-known example projects
+    wix-examples-dotnet:
+      url: "https://api.github.com/search/repositories?q=wix+dotnet+installer+example&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    wix-examples-service:
+      url: "https://api.github.com/search/repositories?q=wix+windows+service+installer&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    wix-examples-wpf:
+      url: "https://api.github.com/search/repositories?q=wix+wpf+installer&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    # FireGiant example projects
+    firegiant-samples:
+      url: "https://api.github.com/users/firegiant/repos?per_page=100"
+      parser: json
+      targets: [examples]
+
+    # WiX tutorial codebases
+    tutorial-projects:
+      url: "https://api.github.com/search/repositories?q=wix+tutorial+installer&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    # Real-world open source projects using WiX
+    oss-wix-projects:
+      url: "https://api.github.com/search/repositories?q=path:**/*.wxs+stars:>100&sort=stars&per_page=50"
+      parser: json
+      targets: [examples]
+
+    # Common WiX patterns search
+    pattern-majorupgrade:
+      url: "https://api.github.com/search/code?q=MajorUpgrade+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-mediatemplate:
+      url: "https://api.github.com/search/code?q=MediaTemplate+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-wixui:
+      url: "https://api.github.com/search/code?q=WixUI_InstallDir+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-serviceinstall:
+      url: "https://api.github.com/search/code?q=ServiceInstall+ServiceControl+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-registrykey:
+      url: "https://api.github.com/search/code?q=RegistryKey+RegistryValue+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-shortcut:
+      url: "https://api.github.com/search/code?q=Shortcut+DesktopFolder+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-environment:
+      url: "https://api.github.com/search/code?q=Environment+PATH+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-featuretree:
+      url: "https://api.github.com/search/code?q=Feature+ComponentGroupRef+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    # More element-specific patterns
+    pattern-directory:
+      url: "https://api.github.com/search/code?q=StandardDirectory+Directory+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-fragment:
+      url: "https://api.github.com/search/code?q=Fragment+ComponentGroup+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-condition:
+      url: "https://api.github.com/search/code?q=Condition+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-launch-condition:
+      url: "https://api.github.com/search/code?q=LaunchConditions+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-property:
+      url: "https://api.github.com/search/code?q=Property+Secure+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-setproperty:
+      url: "https://api.github.com/search/code?q=SetProperty+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-binary:
+      url: "https://api.github.com/search/code?q=Binary+SourceFile+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-icon:
+      url: "https://api.github.com/search/code?q=Icon+ARPPRODUCTICON+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-removefile:
+      url: "https://api.github.com/search/code?q=RemoveFile+RemoveFolder+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-createfolder:
+      url: "https://api.github.com/search/code?q=CreateFolder+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-copyfile:
+      url: "https://api.github.com/search/code?q=CopyFile+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-inifile:
+      url: "https://api.github.com/search/code?q=IniFile+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-xmlfile:
+      url: "https://api.github.com/search/code?q=XmlFile+XmlConfig+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    # Custom action patterns
+    pattern-ca-immediate:
+      url: "https://api.github.com/search/code?q=CustomAction+Execute+immediate+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-ca-deferred:
+      url: "https://api.github.com/search/code?q=CustomAction+Execute+deferred+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-ca-rollback:
+      url: "https://api.github.com/search/code?q=CustomAction+Execute+rollback+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-ca-commit:
+      url: "https://api.github.com/search/code?q=CustomAction+Execute+commit+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-ca-vbscript:
+      url: "https://api.github.com/search/code?q=CustomAction+Script+vbscript+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-ca-powershell:
+      url: "https://api.github.com/search/code?q=CustomAction+PowerShell+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-ca-sequence:
+      url: "https://api.github.com/search/code?q=InstallExecuteSequence+Custom+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    # Util extension patterns
+    pattern-user:
+      url: "https://api.github.com/search/code?q=util+User+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-group:
+      url: "https://api.github.com/search/code?q=util+Group+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-fileshare:
+      url: "https://api.github.com/search/code?q=util+FileShare+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-permissionex:
+      url: "https://api.github.com/search/code?q=util+PermissionEx+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-xmlconfig:
+      url: "https://api.github.com/search/code?q=util+XmlConfig+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-closeapplication:
+      url: "https://api.github.com/search/code?q=util+CloseApplication+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-internetshortcut:
+      url: "https://api.github.com/search/code?q=util+InternetShortcut+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-removefolderex:
+      url: "https://api.github.com/search/code?q=util+RemoveFolderEx+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    # IIS extension patterns
+    pattern-iis-website:
+      url: "https://api.github.com/search/code?q=iis+WebSite+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-iis-webapplication:
+      url: "https://api.github.com/search/code?q=iis+WebApplication+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-iis-webvirtualdir:
+      url: "https://api.github.com/search/code?q=iis+WebVirtualDir+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-iis-apppool:
+      url: "https://api.github.com/search/code?q=iis+WebAppPool+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-iis-certificate:
+      url: "https://api.github.com/search/code?q=iis+Certificate+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    # SQL extension patterns
+    pattern-sql-database:
+      url: "https://api.github.com/search/code?q=sql+SqlDatabase+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-sql-script:
+      url: "https://api.github.com/search/code?q=sql+SqlScript+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-sql-string:
+      url: "https://api.github.com/search/code?q=sql+SqlString+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    # NetFx extension patterns
+    pattern-netfx-package:
+      url: "https://api.github.com/search/code?q=netfx+NativeImage+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-netfx-dotnetcore:
+      url: "https://api.github.com/search/code?q=netfx+DotNetCoreSearch+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    # Firewall extension patterns
+    pattern-firewall-exception:
+      url: "https://api.github.com/search/code?q=firewall+FirewallException+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    # HTTP extension patterns
+    pattern-http-urlreservation:
+      url: "https://api.github.com/search/code?q=http+UrlReservation+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-http-sslcertificate:
+      url: "https://api.github.com/search/code?q=http+SslCertificate+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    # Burn/Bundle patterns
+    pattern-bundle-exepackage:
+      url: "https://api.github.com/search/code?q=ExePackage+DetectCondition+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-bundle-msipackage:
+      url: "https://api.github.com/search/code?q=MsiPackage+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-bundle-msppackage:
+      url: "https://api.github.com/search/code?q=MspPackage+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-bundle-msupackage:
+      url: "https://api.github.com/search/code?q=MsuPackage+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-bundle-rollbackboundary:
+      url: "https://api.github.com/search/code?q=RollbackBoundary+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-bundle-packagegroup:
+      url: "https://api.github.com/search/code?q=PackageGroup+PackageGroupRef+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-bundle-payload:
+      url: "https://api.github.com/search/code?q=Payload+PayloadGroup+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-bundle-variable:
+      url: "https://api.github.com/search/code?q=Variable+bal+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-bundle-search:
+      url: "https://api.github.com/search/code?q=RegistrySearch+util+Bundle+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-bundle-condition:
+      url: "https://api.github.com/search/code?q=bal+Condition+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    # BAL extension patterns
+    pattern-bal-wixstdba:
+      url: "https://api.github.com/search/code?q=WixStandardBootstrapperApplication+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-bal-theme:
+      url: "https://api.github.com/search/code?q=bal+ThemeFile+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-bal-prereq:
+      url: "https://api.github.com/search/code?q=bal+PrereqSupportPackage+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    # UI patterns
+    pattern-ui-dialog:
+      url: "https://api.github.com/search/code?q=Dialog+Control+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-ui-text:
+      url: "https://api.github.com/search/code?q=UIText+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-ui-error:
+      url: "https://api.github.com/search/code?q=Error+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-ui-progresstext:
+      url: "https://api.github.com/search/code?q=ProgressText+extension:wxs&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    # Localization examples
+    pattern-wxl-string:
+      url: "https://api.github.com/search/code?q=String+extension:wxl&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    pattern-wxi-include:
+      url: "https://api.github.com/search/code?q=Include+extension:wxi&per_page=50"
+      parser: json
+      targets: [patterns]
+
+    # More extension test data
+    http-test-data:
+      url: "https://api.github.com/repos/wixtoolset/wix/contents/src/ext/Http/test/WixToolsetTest.Http/TestData"
+      parser: json
+      targets: [examples]
+
+    vs-test-data:
+      url: "https://api.github.com/repos/wixtoolset/wix/contents/src/ext/VisualStudio/test/WixToolsetTest.VisualStudio/TestData"
+      parser: json
+      targets: [examples]
+
+    directx-test-data:
+      url: "https://api.github.com/repos/wixtoolset/wix/contents/src/ext/DirectX/test/WixToolsetTest.DirectX/TestData"
+      parser: json
+      targets: [examples]
+
+    complus-test-data:
+      url: "https://api.github.com/repos/wixtoolset/wix/contents/src/ext/ComPlus/test/WixToolsetTest.ComPlus/TestData"
+      parser: json
+      targets: [examples]
+
+    dependency-test-data:
+      url: "https://api.github.com/repos/wixtoolset/wix/contents/src/ext/Dependency/test/WixToolsetTest.Dependency/TestData"
+      parser: json
+      targets: [examples]
+
+    ui-test-data:
+      url: "https://api.github.com/repos/wixtoolset/wix/contents/src/ext/UI/test/WixToolsetTest.UI/TestData"
+      parser: json
+      targets: [examples]
+
+    msmq-test-data:
+      url: "https://api.github.com/repos/wixtoolset/wix/contents/src/ext/Msmq/test/WixToolsetTest.Msmq/TestData"
+      parser: json
+      targets: [examples]
+
+    # Burn test data
+    burn-test-data:
+      url: "https://api.github.com/repos/wixtoolset/wix/contents/src/test/burn/WixToolsetTest.BurnE2E/TestData"
+      parser: json
+      targets: [examples]
+
+    # MSI backend test data
+    msi-test-data:
+      url: "https://api.github.com/repos/wixtoolset/wix/contents/src/test/msi/WixToolsetTest.MsiE2E/TestData"
+      parser: json
+      targets: [examples]
+
+    # Heat harvester test data
+    heat-test-data:
+      url: "https://api.github.com/repos/wixtoolset/wix/contents/src/wix/test/WixToolsetTest.Heat/TestData"
+      parser: json
+      targets: [examples]
+
+    # More repository searches
+    wix-azure-devops:
+      url: "https://api.github.com/search/repositories?q=wix+azure+devops+pipeline&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    wix-github-actions:
+      url: "https://api.github.com/search/repositories?q=wix+github+actions+build&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    wix-silent-install:
+      url: "https://api.github.com/search/repositories?q=wix+silent+install&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    wix-upgrade-example:
+      url: "https://api.github.com/search/repositories?q=wix+major+upgrade+example&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    wix-patch-example:
+      url: "https://api.github.com/search/repositories?q=wix+patch+msp&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    wix-transform-example:
+      url: "https://api.github.com/search/repositories?q=wix+transform+mst&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    wix-merge-module:
+      url: "https://api.github.com/search/repositories?q=wix+merge+module+msm&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    wix-per-user:
+      url: "https://api.github.com/search/repositories?q=wix+per+user+install&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    wix-per-machine:
+      url: "https://api.github.com/search/repositories?q=wix+per+machine+allusers&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    wix-64bit:
+      url: "https://api.github.com/search/repositories?q=wix+64bit+x64&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    wix-arm64:
+      url: "https://api.github.com/search/repositories?q=wix+arm64&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    wix-com-registration:
+      url: "https://api.github.com/search/repositories?q=wix+com+registration+regfree&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    wix-file-association:
+      url: "https://api.github.com/search/repositories?q=wix+file+association+progid&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    wix-shell-extension:
+      url: "https://api.github.com/search/repositories?q=wix+shell+extension+context+menu&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    wix-driver-install:
+      url: "https://api.github.com/search/repositories?q=wix+driver+install+difx&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    wix-font-install:
+      url: "https://api.github.com/search/repositories?q=wix+font+install&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    wix-scheduled-task:
+      url: "https://api.github.com/search/repositories?q=wix+scheduled+task&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    wix-event-source:
+      url: "https://api.github.com/search/repositories?q=wix+event+source+eventlog&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+    wix-performance-counter:
+      url: "https://api.github.com/search/repositories?q=wix+performance+counter&sort=stars&per_page=30"
+      parser: json
+      targets: [examples]
+
+  # ============================================================
+  # Community Resources
+  # ============================================================
+  community:
+    # FireGiant documentation
+    firegiant-docs:
+      url: "https://docs.firegiant.com/wix/"
+      parser: html
+      targets: [tutorials]
+
+    # Stack Overflow FAQ
+    stackoverflow-tags:
+      url: "https://api.stackexchange.com/2.3/tags/wix/faq?site=stackoverflow"
+      parser: json
+      targets: [faq]
+
+    # Stack Overflow top questions
+    stackoverflow-top:
+      url: "https://api.stackexchange.com/2.3/questions?order=desc&sort=votes&tagged=wix&site=stackoverflow"
+      parser: json
+      targets: [common_issues]
+
+    # WiX installer discussions (GitHub)
+    github-discussions:
+      url: "https://api.github.com/repos/wixtoolset/wix/discussions?category=Q%26A"
+      parser: json
+      targets: [discussions]
+
+    # WiX issues labeled as bugs
+    github-bugs:
+      url: "https://api.github.com/repos/wixtoolset/wix/issues?labels=bug&state=open"
+      parser: json
+      targets: [known_issues]
+
+    # WiX issues labeled as documentation
+    github-docs-issues:
+      url: "https://api.github.com/repos/wixtoolset/wix/issues?labels=documentation&state=open"
+      parser: json
+      targets: [doc_gaps]
+
+    # FireGiant HeatWave
+    firegiant-heatwave:
+      url: "https://www.firegiant.com/docs/heatwave/"
+      parser: html
+      targets: [tools]
+
+    # InstallSite.org tutorials
+    installsite:
+      url: "https://www.installsite.org/pages/en/msi/articles.htm"
+      parser: html
+      targets: [tutorials]
+
+    # AppDeploy MSI resources
+    appdeploy:
+      url: "https://www.appdeploy.com/messageboards/archive/msi.html"
+      parser: html
+      targets: [discussions]
+
+    # NuGet WiX packages
+    nuget-wix:
+      url: "https://api.nuget.org/v3/registration5-gz-semver2/wix/index.json"
+      parser: json
+      targets: [packages]
+
+    # Chocolatey WiX package
+    chocolatey-wix:
+      url: "https://community.chocolatey.org/packages/wixtoolset"
+      parser: html
+      targets: [packages]
+
+    # VS Marketplace extensions
+    vs-wix-extension:
+      url: "https://marketplace.visualstudio.com/items?itemName=WixToolset.WixToolsetVisualStudio2022Extension"
+      parser: html
+      targets: [tools]
+
+    # WiX blogs and tutorials
+    robmen-blog:
+      url: "https://robmensching.com/blog/posts/tag/wix/"
+      parser: html
+      targets: [tutorials]
+
+    # MSDN Magazine archives (WiX articles)
+    msdn-wix:
+      url: "https://docs.microsoft.com/en-us/archive/msdn-magazine/2007/april/wix-click-through"
+      parser: html
+      targets: [tutorials]
+
+    # CodeProject WiX tutorials
+    codeproject-wix:
+      url: "https://www.codeproject.com/Tags/WiX"
+      parser: html
+      targets: [tutorials]
+
+    # Helge Klein blog (MSI expert)
+    helgeklein-blog:
+      url: "https://helgeklein.com/blog/category/windows-installer/"
+      parser: html
+      targets: [tutorials]
+
+    # Stefan Krueger MSI blog
+    installsite-blog:
+      url: "https://www.installsite.org/pages/en/msi/tips.htm"
+      parser: html
+      targets: [tutorials]
+
+    # GitHub sample projects
+    wix-samples:
+      url: "https://api.github.com/search/repositories?q=wix+sample+installer&sort=stars"
+      parser: json
+      targets: [samples]
+
+    # Reddit r/WiX
+    reddit-wix:
+      url: "https://www.reddit.com/r/wixtoolset/.json"
+      parser: json
+      targets: [discussions]
+
+    # WiX Discord/Slack community
+    wix-community:
+      url: "https://wixtoolset.org/community/"
+      parser: html
+      targets: [community]
+
+    # Advanced Installer comparison
+    advanced-installer:
+      url: "https://www.advancedinstaller.com/wix-toolset-alternative.html"
+      parser: html
+      targets: [comparisons]
+
+    # InstallShield comparison
+    installshield-migration:
+      url: "https://docs.firegiant.com/wix/migrating-from-installshield/"
+      parser: html
+      targets: [migrations]
+
+    # DevExpress WiX articles
+    devexpress-wix:
+      url: "https://supportcenter.devexpress.com/ticket/list?preset=alltime&q=wix"
+      parser: html
+      targets: [issues]
+
+    # Stack Overflow WiX3 questions
+    stackoverflow-wix3:
+      url: "https://api.stackexchange.com/2.3/questions?order=desc&sort=votes&tagged=wix3&site=stackoverflow"
+      parser: json
+      targets: [common_issues]
+
+    # Stack Overflow Burn questions
+    stackoverflow-burn:
+      url: "https://api.stackexchange.com/2.3/questions?order=desc&sort=votes&tagged=burn&site=stackoverflow"
+      parser: json
+      targets: [common_issues]
+
+    # Stack Overflow Windows-Installer questions
+    stackoverflow-msi:
+      url: "https://api.stackexchange.com/2.3/questions?order=desc&sort=votes&tagged=windows-installer&site=stackoverflow"
+      parser: json
+      targets: [common_issues]
+
+  # ============================================================
+  # NuGet Package Sources
+  # ============================================================
+  nuget:
+    wix-sdk:
+      url: "https://api.nuget.org/v3/registration5-gz-semver2/wix/index.json"
+      parser: json
+      targets: [packages]
+
+    wix-extensions:
+      url: "https://api.nuget.org/v3/query?q=WixToolset&prerelease=false&semVerLevel=2.0.0"
+      parser: json
+      targets: [extensions]
+
+    netfx-package:
+      url: "https://api.nuget.org/v3/registration5-gz-semver2/wixtoolset.netfx.wixext/index.json"
+      parser: json
+      targets: [packages]
+
+    bal-package:
+      url: "https://api.nuget.org/v3/registration5-gz-semver2/wixtoolset.bal.wixext/index.json"
+      parser: json
+      targets: [packages]
+
+    util-package:
+      url: "https://api.nuget.org/v3/registration5-gz-semver2/wixtoolset.util.wixext/index.json"
+      parser: json
+      targets: [packages]
+
+    iis-package:
+      url: "https://api.nuget.org/v3/registration5-gz-semver2/wixtoolset.iis.wixext/index.json"
+      parser: json
+      targets: [packages]
+
+    sql-package:
+      url: "https://api.nuget.org/v3/registration5-gz-semver2/wixtoolset.sql.wixext/index.json"
+      parser: json
+      targets: [packages]
+
+    firewall-package:
+      url: "https://api.nuget.org/v3/registration5-gz-semver2/wixtoolset.firewall.wixext/index.json"
+      parser: json
+      targets: [packages]
+
+    http-package:
+      url: "https://api.nuget.org/v3/registration5-gz-semver2/wixtoolset.http.wixext/index.json"
+      parser: json
+      targets: [packages]
+
+    vs-package:
+      url: "https://api.nuget.org/v3/registration5-gz-semver2/wixtoolset.visualstudio.wixext/index.json"
+      parser: json
+      targets: [packages]
+
+    directx-package:
+      url: "https://api.nuget.org/v3/registration5-gz-semver2/wixtoolset.directx.wixext/index.json"
+      parser: json
+      targets: [packages]
+
+    complus-package:
+      url: "https://api.nuget.org/v3/registration5-gz-semver2/wixtoolset.complus.wixext/index.json"
+      parser: json
+      targets: [packages]
+
+    dependency-package:
+      url: "https://api.nuget.org/v3/registration5-gz-semver2/wixtoolset.dependency.wixext/index.json"
+      parser: json
+      targets: [packages]
+
+    ui-package:
+      url: "https://api.nuget.org/v3/registration5-gz-semver2/wixtoolset.ui.wixext/index.json"
+      parser: json
+      targets: [packages]
+
+    msmq-package:
+      url: "https://api.nuget.org/v3/registration5-gz-semver2/wixtoolset.msmq.wixext/index.json"
+      parser: json
+      targets: [packages]
+
+    powershell-package:
+      url: "https://api.nuget.org/v3/registration5-gz-semver2/wixtoolset.powershell.wixext/index.json"
+      parser: json
+      targets: [packages]
+
+    # SDK and build packages
+    sdk-package:
+      url: "https://api.nuget.org/v3/registration5-gz-semver2/wixtoolset.sdk/index.json"
+      parser: json
+      targets: [packages]
+
+    dnc-hostgen:
+      url: "https://api.nuget.org/v3/registration5-gz-semver2/wixtoolset.dnc.hostgenerator/index.json"
+      parser: json
+      targets: [packages]
+
+    heat-package:
+      url: "https://api.nuget.org/v3/registration5-gz-semver2/wixtoolset.heat/index.json"
+      parser: json
+      targets: [packages]
+
+  # ============================================================
+  # VS Code Extensions and IDE Integration
+  # ============================================================
+  ide:
+    vscode-wix:
+      url: "https://marketplace.visualstudio.com/items?itemName=ACanis.wix"
+      parser: html
+      targets: [tools]
+
+    vscode-xml:
+      url: "https://marketplace.visualstudio.com/items?itemName=redhat.vscode-xml"
+      parser: html
+      targets: [tools]
+
+    vs2022-wix:
+      url: "https://marketplace.visualstudio.com/items?itemName=WixToolset.WixToolsetVisualStudio2022Extension"
+      parser: html
+      targets: [tools]
+
+    vs2019-wix:
+      url: "https://marketplace.visualstudio.com/items?itemName=WixToolset.WixToolsetVisualStudio2019Extension"
+      parser: html
+      targets: [tools]
+
+  # ============================================================
+  # Local Data Files - Pre-populated Fallback
+  # ============================================================
+  local:
+    keywords:
+      path: "data/keywords.json"
+      parser: json
+      targets: [keywords]
+
+    snippets:
+      path: "data/snippets.json"
+      parser: json
+      targets: [snippets]
+
+    rules:
+      path: "data/rules.json"
+      parser: rules
+      targets: [rules]
+
+    standard-directories:
+      path: "data/standard-directories.json"
+      parser: json
+      targets: [directories]
+
+    builtin-properties:
+      path: "data/builtin-properties.json"
+      parser: json
+      targets: [properties]
+
+    ice-rules:
+      path: "data/ice-rules.json"
+      parser: json
+      targets: [ice_rules]
+
+    msi-tables:
+      path: "data/msi-tables.json"
+      parser: json
+      targets: [msi_tables]
+
+    wix-errors:
+      path: "data/wix-errors.json"
+      parser: json
+      targets: [errors]
+
+    migrations:
+      path: "data/v3-v4-migration.json"
+      parser: migration
+      targets: [migrations]
+
+    standard-actions:
+      path: "data/standard-actions.json"
+      parser: json
+      targets: [standard_actions]
+
+    preprocessor:
+      path: "data/preprocessor.json"
+      parser: json
+      targets: [preprocessor]
+
+    extensions:
+      path: "data/extensions.json"
+      parser: json
+      targets: [extensions]
+
+    extension-elements:
+      path: "data/extension-elements.json"
+      parser: json
+      targets: [extension_elements]
+
+    additional-rules:
+      path: "data/additional-rules.json"
+      parser: json
+      targets: [additional_rules]
+
+    extension-snippets:
+      path: "data/extension-snippets.json"
+      parser: json
+      targets: [extension_snippets]
+
+    prerequisites:
+      path: "data/prerequisites.json"
+      parser: json
+      targets: [prerequisites]
+
+    v4-v5-migration:
+      path: "data/v4-v5-migration.json"
+      parser: migration
+      targets: [migrations]
+
+    ui-elements:
+      path: "data/ui-elements.json"
+      parser: json
+      targets: [ui_elements]
+
+    rule-conditions:
+      path: "data/rule-conditions.json"
+      parser: json
+      targets: [rule_conditions]
+
+    element-descriptions-patch:
+      path: "data/element-descriptions-patch.json"
+      parser: json
+      targets: [element_descriptions_patch]
+
+    attribute-descriptions-patch:
+      path: "data/attribute-descriptions-patch.json"
+      parser: json
+      targets: [attribute_descriptions_patch]
+
+    ui-elements-patch:
+      path: "data/ui-elements-patch.json"
+      parser: json
+      targets: [ui_elements_patch]
+
+    documentation:
+      path: "data/documentation.json"
+      parser: json
+      targets: [documentation]
+
+    custom-action-types:
+      path: "data/custom-action-types.json"
+      parser: json
+      targets: [custom_action_types]
+
+    condition-operators:
+      path: "data/condition-operators.json"
+      parser: json
+      targets: [condition_operators]
+
+    burn-variables:
+      path: "data/burn-variables.json"
+      parser: json
+      targets: [burn_variables]
+
+    launch-condition-patterns:
+      path: "data/launch-condition-patterns.json"
+      parser: json
+      targets: [launch_condition_patterns]
+
+    wix-cli-commands:
+      path: "data/wix-cli-commands.json"
+      parser: json
+      targets: [cli_commands]
+
+    wxl-localization:
+      path: "data/wxl-localization.json"
+      parser: json
+      targets: [localization_cultures]
+
+    patching-reference:
+      path: "data/patching-reference.json"
+      parser: json
+      targets: [patching_reference]
+
+    transform-reference:
+      path: "data/transform-reference.json"
+      parser: json
+      targets: [transform_reference]
+
+    wxl-snippets:
+      path: "data/wxl-snippets.json"
+      parser: json
+      targets: [snippets]
+      description: "Code snippets for WiX localization files (.wxl)"
+
+    wxi-snippets:
+      path: "data/wxi-snippets.json"
+      parser: json
+      targets: [snippets]
+      description: "Code snippets for WiX include files (.wxi)"
+
+    windows-build-numbers:
+      path: "data/windows-build-numbers.json"
+      parser: json
+      targets: [windows_builds]
+      description: "Windows 10/11 build numbers for version targeting"
+
+    additional-keywords:
+      path: "data/additional-keywords.json"
+      parser: json
+      targets: [keywords]
+      description: "Additional keywords for syntax highlighting"
+
+    wixui-dialogs:
+      path: "data/wixui-dialogs.json"
+      parser: json
+      targets: [ui_dialogs]
+      description: "WixUI dialog sets and customization reference"
+
+    msiexec-reference:
+      path: "data/msiexec-reference.json"
+      parser: json
+      targets: [msiexec]
+      description: "Windows Installer command-line reference"
+
+    localization-cultures:
+      path: "data/localization-cultures.json"
+      parser: json
+      targets: [localization_cultures]
+      description: "LCID codes for WiX localization files"
+
+    wix-cli-commands:
+      path: "data/wix-cli-commands.json"
+      parser: json
+      targets: [cli_commands]
+      description: "WiX toolset CLI command reference"
+
+    documentation-entries:
+      path: "data/documentation-entries.json"
+      parser: json
+      targets: [documentation]
+      description: "Comprehensive WiX documentation entries"
+
+    attribute-enum-values:
+      path: "data/attribute-enum-values.json"
+      parser: json
+      targets: [attribute_enums]
+      description: "Attribute enum values for WiX elements"
+
+    migration-mappings:
+      path: "data/migration-mappings.json"
+      parser: json
+      targets: [migrations]
+      description: "WiX v3 to v4 to v5 migration mappings"
+
+    service-reference:
+      path: "data/service-reference.json"
+      parser: json
+      targets: [service_reference]
+      description: "Windows Service installation reference"
+
+    patching-reference:
+      path: "data/patching-reference.json"
+      parser: json
+      targets: [patching_reference]
+      description: "MSI Patching and Transform reference"
+
+    msi-tables-descriptions:
+      path: "data/msi-tables-descriptions.json"
+      parser: json
+      targets: [msi_table_descriptions]
+      description: "MSI table and data type descriptions"
+
+    element-descriptions-missing:
+      path: "data/element-descriptions-missing.json"
+      parser: json
+      targets: [element_descriptions_patch]
+      description: "Missing element descriptions"
+
+    error-resolutions:
+      path: "data/error-resolutions.json"
+      parser: json
+      targets: [error_resolutions]
+      description: "Resolutions for WiX errors and MSIEXEC exit codes"
+
+    ice-resolutions:
+      path: "data/ice-resolutions.json"
+      parser: json
+      targets: [ice_resolutions]
+      description: "Resolutions for ICE validation rules"
+
+    ice-resolutions-additional:
+      path: "data/ice-resolutions-additional.json"
+      parser: json
+      targets: [ice_resolutions]
+      description: "Additional resolutions for ICE validation rules"
+
+    ui-extension-elements:
+      path: "data/ui-extension-elements.json"
+      parser: json
+      targets: [extension_elements]
+      description: "WiX UI extension elements"
+
+    attribute-descriptions-missing:
+      path: "data/attribute-descriptions-missing.json"
+      parser: json
+      targets: [attribute_descriptions_patch]
+      description: "Missing attribute descriptions"
+
+    attribute-descriptions-remaining:
+      path: "data/attribute-descriptions-remaining.json"
+      parser: json
+      targets: [attribute_descriptions_patch]
+      description: "Remaining attribute descriptions"
+
+  # ============================================================
+  # Enrichments - Processed after base data
+  # These update existing records with curated content
+  # ============================================================
+  enrichments:
+    element-enrichments:
+      path: "data/element-enrichments.json"
+      parser: json
+      targets: [element_enrichments]
+      description: "Element examples and remarks"
+
+    rule-enrichments:
+      path: "data/rule-enrichments.json"
+      parser: json
+      targets: [rule_enrichments]
+      description: "Rule rationales, fix suggestions, auto-fix flags"
+
+    attribute-enum-descriptions:
+      path: "data/attribute-enum-descriptions.json"
+      parser: json
+      targets: [enum_descriptions]
+      description: "Descriptions for attribute enum values"
+
+    msi-table-definitions:
+      path: "data/msi-table-definitions.json"
+      parser: json
+      targets: [msi_table_definitions]
+      description: "Complete MSI table column definitions"
+
+    element-parents:
+      path: "data/element-parents.json"
+      parser: json
+      targets: [element_parents]
+      description: "Element parent relationships"
+
+    data-sources:
+      path: "data/data-sources.json"
+      parser: json
+      targets: [sources]
+      description: "Data provenance tracking"
+
+    standard-directories-enriched:
+      path: "data/standard-directories-enriched.json"
+      parser: json
+      targets: [standard_directories_enriched]
+      description: "Standard directories with examples"
+
+    migration-notes:
+      path: "data/migration-notes.json"
+      parser: json
+      targets: [migration_notes]
+      description: "WiX version migration notes"
+
+    cli-commands-enriched:
+      path: "data/cli-commands-enriched.json"
+      parser: json
+      targets: [cli_commands_enriched]
+      description: "CLI commands with syntax examples"
+
+# ============================================================
+# Parser Configurations
+# ============================================================
+parsers:
+  xsd:
+    type: xml
+    extract:
+      - target: elements
+        xpath: "//xs:element[@name]"
+      - target: attributes
+        xpath: "//xs:attribute[@name]"
+      - target: types
+        xpath: "//xs:simpleType[@name]"
+
+  html:
+    type: html
+    selectors:
+      default: "article, .content, main, #main-content"
+
+  json:
+    type: json
+
+  rules:
+    type: rules
+    validate_schema: "schemas/rule.schema.json"
+
+  migration:
+    type: migration
+
+  wxs:
+    type: wxs
+    extract:
+      - target: dialogs
+      - target: properties
+      - target: controls
+
+  csharp:
+    type: csharp
+    patterns:
+      error_method: 'public static Message (\w+)\(.*\)'
+      error_id: 'Ids\.(\w+)'
+      message_format: '"([^"]+)"'
+
+  cpp:
+    type: cpp
+    patterns:
+      hresult: 'hr = E_(\w+)'
+      log_message: 'Log\w+\([^,]+,\s*"([^"]+)"'
+
+  markdown:
+    type: markdown
+    sections:
+      headings: true
+      code_blocks: true
+
+# ============================================================
+# Harvest Settings
+# ============================================================
+harvest:
+  cache_dir: ".cache"
+  timeout_seconds: 30
+  retry_count: 3
+  user_agent: "WixCraft-Harvester/1.0 (https://github.com/wixcraft)"
+  rate_limit:
+    requests_per_second: 2
+    burst: 5
+
+  # Source priorities (higher = preferred)
+  priorities:
+    local: 100      # Always prefer local first
+    xsd: 90         # Official WiX v4 schemas
+    xsd-v3: 85      # WiX v3 schemas (for migration)
+    github: 80      # GitHub source code
+    github-examples: 75  # GitHub examples and patterns
+    wix-docs: 70    # WiX documentation
+    microsoft: 60   # Microsoft Learn
+    nuget: 55       # NuGet package registry
+    ide: 52         # IDE/editor extensions
+    community: 50   # Community resources

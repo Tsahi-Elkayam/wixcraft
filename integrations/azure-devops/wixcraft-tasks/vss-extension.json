@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json.schemastore.org/vss-extension",
+  "manifestVersion": 1,
+  "id": "wixcraft-tasks",
+  "name": "WixCraft - WiX Toolset Quality Gates",
+  "version": "0.1.0",
+  "publisher": "wixcraft",
+  "description": "Quality gates for WiX Toolset projects: linting, security scanning, and upgrade validation",
+  "categories": ["Azure Pipelines"],
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "icons": {
+    "default": "images/icon.png"
+  },
+  "content": {
+    "details": {
+      "path": "overview.md"
+    }
+  },
+  "files": [
+    {
+      "path": "Tasks/WixLint"
+    },
+    {
+      "path": "Tasks/WixSecurity"
+    },
+    {
+      "path": "Tasks/WixUpgrade"
+    }
+  ],
+  "contributions": [
+    {
+      "id": "wix-lint-task",
+      "type": "ms.vss-distributed-task.task",
+      "targets": ["ms.vss-distributed-task.tasks"],
+      "properties": {
+        "name": "Tasks/WixLint"
+      }
+    },
+    {
+      "id": "wix-security-task",
+      "type": "ms.vss-distributed-task.task",
+      "targets": ["ms.vss-distributed-task.tasks"],
+      "properties": {
+        "name": "Tasks/WixSecurity"
+      }
+    },
+    {
+      "id": "wix-upgrade-task",
+      "type": "ms.vss-distributed-task.task",
+      "targets": ["ms.vss-distributed-task.tasks"],
+      "properties": {
+        "name": "Tasks/WixUpgrade"
+      }
+    }
+  ]
+}

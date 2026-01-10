@@ -1,0 +1,174 @@
+{
+  "_source": "Standard directory definitions with examples",
+  "_description": "Windows Installer standard directories with WiX usage examples",
+  "standard_directories": [
+    {
+      "name": "AdminToolsFolder",
+      "description": "Full path to the Administrative Tools folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Administrative Tools",
+      "example": "<StandardDirectory Id=\"AdminToolsFolder\">\n    <Directory Id=\"MyAdminTool\" Name=\"MyTool\" />\n</StandardDirectory>"
+    },
+    {
+      "name": "AppDataFolder",
+      "description": "Full path to the roaming application data folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Roaming",
+      "example": "<StandardDirectory Id=\"AppDataFolder\">\n    <Directory Id=\"MyAppData\" Name=\"MyApp\">\n        <Component Id=\"UserConfig\" Guid=\"*\">\n            <File Source=\"user-config.xml\" />\n        </Component>\n    </Directory>\n</StandardDirectory>"
+    },
+    {
+      "name": "CommonAppDataFolder",
+      "description": "Full path to the application data folder for all users",
+      "windows_path": "C:\\ProgramData",
+      "example": "<StandardDirectory Id=\"CommonAppDataFolder\">\n    <Directory Id=\"MyCommonData\" Name=\"MyApp\">\n        <Component Id=\"SharedConfig\" Guid=\"*\">\n            <File Source=\"shared-config.xml\" />\n        </Component>\n    </Directory>\n</StandardDirectory>"
+    },
+    {
+      "name": "CommonFiles64Folder",
+      "description": "Full path to the Common Files folder for 64-bit applications",
+      "windows_path": "C:\\Program Files\\Common Files",
+      "example": "<StandardDirectory Id=\"CommonFiles64Folder\">\n    <Directory Id=\"MyCommonFiles\" Name=\"MyCompany\" />\n</StandardDirectory>"
+    },
+    {
+      "name": "CommonFilesFolder",
+      "description": "Full path to the Common Files folder",
+      "windows_path": "C:\\Program Files\\Common Files",
+      "example": "<StandardDirectory Id=\"CommonFilesFolder\">\n    <Directory Id=\"MyCommonFiles\" Name=\"MyCompany\" />\n</StandardDirectory>"
+    },
+    {
+      "name": "DesktopFolder",
+      "description": "Full path to the user's desktop folder",
+      "windows_path": "C:\\Users\\<user>\\Desktop",
+      "example": "<Shortcut Id=\"DesktopShortcut\"\n    Name=\"My Application\"\n    Directory=\"DesktopFolder\"\n    Target=\"[#MyApp.exe]\"\n    WorkingDirectory=\"INSTALLDIR\" />"
+    },
+    {
+      "name": "FavoritesFolder",
+      "description": "Full path to the Favorites folder",
+      "windows_path": "C:\\Users\\<user>\\Favorites",
+      "example": "<StandardDirectory Id=\"FavoritesFolder\">\n    <Component Id=\"Favorite\" Guid=\"*\">\n        <util:InternetShortcut Id=\"MyFavorite\" Name=\"My Site\" Target=\"https://example.com\" />\n    </Component>\n</StandardDirectory>"
+    },
+    {
+      "name": "FontsFolder",
+      "description": "Full path to the Fonts folder",
+      "windows_path": "C:\\Windows\\Fonts",
+      "example": "<StandardDirectory Id=\"FontsFolder\">\n    <Component Id=\"MyFont\" Guid=\"*\">\n        <File Id=\"MyFont.ttf\" Source=\"fonts\\MyFont.ttf\" />\n    </Component>\n</StandardDirectory>"
+    },
+    {
+      "name": "LocalAppDataFolder",
+      "description": "Full path to the local application data folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Local",
+      "example": "<StandardDirectory Id=\"LocalAppDataFolder\">\n    <Directory Id=\"MyLocalData\" Name=\"MyApp\">\n        <Component Id=\"LocalCache\" Guid=\"*\">\n            <File Source=\"cache.db\" />\n        </Component>\n    </Directory>\n</StandardDirectory>"
+    },
+    {
+      "name": "MyPicturesFolder",
+      "description": "Full path to the user's pictures folder",
+      "windows_path": "C:\\Users\\<user>\\Pictures",
+      "example": "<StandardDirectory Id=\"MyPicturesFolder\">\n    <Directory Id=\"MyAppPictures\" Name=\"MyApp Screenshots\" />\n</StandardDirectory>"
+    },
+    {
+      "name": "NetHoodFolder",
+      "description": "Full path to the Network Neighborhood folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Roaming\\Microsoft\\Windows\\Network Shortcuts",
+      "example": "<StandardDirectory Id=\"NetHoodFolder\" />"
+    },
+    {
+      "name": "PersonalFolder",
+      "description": "Full path to the user's personal folder (Documents)",
+      "windows_path": "C:\\Users\\<user>\\Documents",
+      "example": "<StandardDirectory Id=\"PersonalFolder\">\n    <Directory Id=\"MyDocuments\" Name=\"My Application Files\" />\n</StandardDirectory>"
+    },
+    {
+      "name": "PrintHoodFolder",
+      "description": "Full path to the Printers folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Roaming\\Microsoft\\Windows\\Printer Shortcuts",
+      "example": "<StandardDirectory Id=\"PrintHoodFolder\" />"
+    },
+    {
+      "name": "ProgramFiles6432Folder",
+      "description": "Full path to the Program Files folder (architecture-aware)",
+      "windows_path": "C:\\Program Files",
+      "example": "<StandardDirectory Id=\"ProgramFiles6432Folder\">\n    <!-- Resolves to Program Files on 64-bit, Program Files (x86) on 32-bit when run from 32-bit process -->\n    <Directory Id=\"INSTALLDIR\" Name=\"MyApp\" />\n</StandardDirectory>"
+    },
+    {
+      "name": "ProgramFiles64Folder",
+      "description": "Full path to the Program Files folder for 64-bit applications",
+      "windows_path": "C:\\Program Files",
+      "example": "<StandardDirectory Id=\"ProgramFiles64Folder\">\n    <Directory Id=\"INSTALLDIR\" Name=\"MyApp\">\n        <Component Id=\"MainExe64\" Guid=\"*\">\n            <File Source=\"bin\\x64\\MyApp.exe\" />\n        </Component>\n    </Directory>\n</StandardDirectory>"
+    },
+    {
+      "name": "ProgramFilesFolder",
+      "description": "Full path to the Program Files folder",
+      "windows_path": "C:\\Program Files",
+      "example": "<StandardDirectory Id=\"ProgramFilesFolder\">\n    <Directory Id=\"INSTALLDIR\" Name=\"MyApp\">\n        <Component Id=\"MainExe\" Guid=\"*\">\n            <File Source=\"bin\\MyApp.exe\" KeyPath=\"yes\" />\n        </Component>\n    </Directory>\n</StandardDirectory>"
+    },
+    {
+      "name": "ProgramMenuFolder",
+      "description": "Full path to the Program menu folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs",
+      "example": "<Shortcut Id=\"StartMenuShortcut\"\n    Name=\"My Application\"\n    Directory=\"ProgramMenuFolder\"\n    Target=\"[#MyApp.exe]\"\n    WorkingDirectory=\"INSTALLDIR\"\n    Icon=\"AppIcon\" />"
+    },
+    {
+      "name": "RecentFolder",
+      "description": "Full path to the Recent folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Roaming\\Microsoft\\Windows\\Recent",
+      "example": "<StandardDirectory Id=\"RecentFolder\" />"
+    },
+    {
+      "name": "SendToFolder",
+      "description": "Full path to the Send To folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Roaming\\Microsoft\\Windows\\SendTo",
+      "example": "<StandardDirectory Id=\"SendToFolder\">\n    <Component Id=\"SendToShortcut\" Guid=\"*\">\n        <Shortcut Id=\"SendTo\" Name=\"Send to MyApp\" Target=\"[#MyApp.exe]\" />\n    </Component>\n</StandardDirectory>"
+    },
+    {
+      "name": "StartMenuFolder",
+      "description": "Full path to the Start menu folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu",
+      "example": "<StandardDirectory Id=\"StartMenuFolder\">\n    <Directory Id=\"MyAppMenu\" Name=\"My Application\">\n        <Component Id=\"StartMenuShortcuts\" Guid=\"*\">\n            <Shortcut Id=\"LaunchApp\" Name=\"My Application\" Target=\"[#MyApp.exe]\" />\n            <Shortcut Id=\"Uninstall\" Name=\"Uninstall\" Target=\"[System64Folder]msiexec.exe\" Arguments=\"/x [ProductCode]\" />\n            <RemoveFolder Id=\"RemoveMenuFolder\" On=\"uninstall\" />\n            <RegistryValue Root=\"HKCU\" Key=\"Software\\MyCompany\\MyApp\" Name=\"StartMenu\" Type=\"integer\" Value=\"1\" KeyPath=\"yes\" />\n        </Component>\n    </Directory>\n</StandardDirectory>"
+    },
+    {
+      "name": "StartupFolder",
+      "description": "Full path to the Startup folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup",
+      "example": "<StandardDirectory Id=\"StartupFolder\">\n    <Component Id=\"AutoStart\" Guid=\"*\">\n        <Shortcut Id=\"StartupShortcut\" Name=\"MyApp\" Target=\"[#MyApp.exe]\" />\n        <RegistryValue Root=\"HKCU\" Key=\"Software\\MyCompany\\MyApp\" Name=\"Startup\" Type=\"integer\" Value=\"1\" KeyPath=\"yes\" />\n    </Component>\n</StandardDirectory>"
+    },
+    {
+      "name": "System16Folder",
+      "description": "Full path to the System folder (16-bit)",
+      "windows_path": "C:\\Windows\\System",
+      "example": "<StandardDirectory Id=\"System16Folder\" />"
+    },
+    {
+      "name": "System64Folder",
+      "description": "Full path to the System folder (64-bit)",
+      "windows_path": "C:\\Windows\\System32",
+      "example": "<StandardDirectory Id=\"System64Folder\">\n    <Component Id=\"SystemDll64\" Guid=\"*\">\n        <File Source=\"bin\\x64\\mylib.dll\" />\n    </Component>\n</StandardDirectory>"
+    },
+    {
+      "name": "SystemFolder",
+      "description": "Full path to the System folder (32-bit)",
+      "windows_path": "C:\\Windows\\System32",
+      "example": "<StandardDirectory Id=\"SystemFolder\">\n    <Component Id=\"SystemDll\" Guid=\"*\">\n        <File Source=\"bin\\mylib.dll\" />\n    </Component>\n</StandardDirectory>"
+    },
+    {
+      "name": "TempFolder",
+      "description": "Full path to the Temp folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Local\\Temp",
+      "example": "<Property Id=\"TEMP_PATH\" Value=\"[TempFolder]MyAppTemp\" />"
+    },
+    {
+      "name": "TemplateFolder",
+      "description": "Full path to the Templates folder",
+      "windows_path": "C:\\Users\\<user>\\AppData\\Roaming\\Microsoft\\Windows\\Templates",
+      "example": "<StandardDirectory Id=\"TemplateFolder\">\n    <Directory Id=\"MyTemplates\" Name=\"MyApp Templates\" />\n</StandardDirectory>"
+    },
+    {
+      "name": "WindowsFolder",
+      "description": "Full path to the Windows folder",
+      "windows_path": "C:\\Windows",
+      "example": "<Property Id=\"WINDOWS_PATH\" Value=\"[WindowsFolder]\" />"
+    },
+    {
+      "name": "WindowsVolume",
+      "description": "Volume of the Windows folder",
+      "windows_path": "C:\\",
+      "example": "<Property Id=\"INSTALLVOLUME\" Value=\"[WindowsVolume]\" />"
+    }
+  ]
+}

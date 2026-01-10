@@ -1,0 +1,18 @@
+[package]
+name = "wix-syntax"
+version = "0.1.0"
+edition = "2021"
+description = "Syntax highlighting definitions for WiX files"
+license = "MIT"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+
+[dev-dependencies]
+tempfile = "3"
+
+[lib]
+name = "wix_syntax"
+path = "src/lib.rs"

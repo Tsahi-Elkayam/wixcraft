@@ -1,0 +1,4205 @@
+{
+  "_source": "MSI database table definitions",
+  "_description": "Complete column definitions for Windows Installer database tables",
+  "msi_tables": [
+    {
+      "name": "ActionText",
+      "description": "Contains text displayed in the progress dialog during installation. Maps actions to descriptive strings shown to users.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Action",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Name of the action."
+        },
+        {
+          "name": "Description",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Localized description of action."
+        },
+        {
+          "name": "Template",
+          "type": "Template",
+          "nullable": true,
+          "key": false,
+          "description": "Template for formatting progress messages."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "AdminExecuteSequence",
+      "description": "Sequence table for administrative installation. Contains actions executed during 'msiexec /a' administrative installs.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Action",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Name of the action to execute."
+        },
+        {
+          "name": "Condition",
+          "type": "Condition",
+          "nullable": true,
+          "key": false,
+          "description": "Conditional expression for execution."
+        },
+        {
+          "name": "Sequence",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Sequence number in admin install."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "AdminUISequence",
+      "description": "Sequence table for administrative UI. Contains UI actions during administrative installation.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Action",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Name of the action to execute."
+        },
+        {
+          "name": "Condition",
+          "type": "Condition",
+          "nullable": true,
+          "key": false,
+          "description": "Conditional expression for execution."
+        },
+        {
+          "name": "Sequence",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Sequence number in admin UI."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "AdvtExecuteSequence",
+      "description": "Sequence table for advertised installation. Contains actions for feature advertisement without full install.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Action",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Name of the action to execute."
+        },
+        {
+          "name": "Condition",
+          "type": "Condition",
+          "nullable": true,
+          "key": false,
+          "description": "Conditional expression for execution."
+        },
+        {
+          "name": "Sequence",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Sequence number in advertisement."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "AdvtUISequence",
+      "description": "Sequence table for advertised UI. Contains UI-related actions during advertisement.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Action",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Name of the action to execute."
+        },
+        {
+          "name": "Condition",
+          "type": "Condition",
+          "nullable": true,
+          "key": false,
+          "description": "Conditional expression for execution."
+        },
+        {
+          "name": "Sequence",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Sequence number."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "AppId",
+      "description": "Contains information for DCOM application registration including RemoteServerName and activation settings.",
+      "required": false,
+      "columns": [
+        {
+          "name": "AppId",
+          "type": "GUID",
+          "nullable": false,
+          "key": true,
+          "description": "The AppId GUID."
+        },
+        {
+          "name": "RemoteServerName",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Remote server name for DCOM."
+        },
+        {
+          "name": "LocalService",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Local service name."
+        },
+        {
+          "name": "ServiceParameters",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Service command-line parameters."
+        },
+        {
+          "name": "DllSurrogate",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "DLL surrogate path."
+        },
+        {
+          "name": "ActivateAtStorage",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "1 to activate at storage."
+        },
+        {
+          "name": "RunAsInteractiveUser",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "1 to run as interactive user."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "AppSearch",
+      "description": "Maps properties to signatures for searching installed applications, files, or registry entries.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Property",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Property to set with search result."
+        },
+        {
+          "name": "Signature_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Signature table."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "BBControl",
+      "description": "Billboard control table. Defines controls displayed on billboard dialogs during file copying.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Billboard_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Billboard table."
+        },
+        {
+          "name": "BBControl",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Control identifier."
+        },
+        {
+          "name": "Type",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Control type (Text, Bitmap, etc.)."
+        },
+        {
+          "name": "X",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "X coordinate in installer units."
+        },
+        {
+          "name": "Y",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Y coordinate in installer units."
+        },
+        {
+          "name": "Width",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Width in installer units."
+        },
+        {
+          "name": "Height",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Height in installer units."
+        },
+        {
+          "name": "Attributes",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Control attributes bitmask."
+        },
+        {
+          "name": "Text",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Control text or property reference."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Billboard",
+      "description": "Contains billboard information displayed during lengthy operations like file copying.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Billboard",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Billboard identifier."
+        },
+        {
+          "name": "Feature_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Feature that triggers this billboard."
+        },
+        {
+          "name": "Action",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Action that triggers this billboard."
+        },
+        {
+          "name": "Ordering",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Display order within feature."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Binary",
+      "description": "Stores binary data like icons, bitmaps, and custom action DLLs embedded in the MSI package.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Name",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Unique binary data identifier."
+        },
+        {
+          "name": "Data",
+          "type": "Binary",
+          "nullable": false,
+          "key": false,
+          "description": "Binary stream data."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "BindImage",
+      "description": "Contains information for binding executable files to DLLs during installation.",
+      "required": false,
+      "columns": [
+        {
+          "name": "File_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to File table."
+        },
+        {
+          "name": "Path",
+          "type": "Paths",
+          "nullable": true,
+          "key": false,
+          "description": "Semicolon-delimited DLL search paths."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "CCPSearch",
+      "description": "Compliance Checking Program search. Contains signatures for CCP product validation.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Signature_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Signature table."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "CheckBox",
+      "description": "Defines checkbox control values. Maps checkbox controls to property values.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Property",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Property name."
+        },
+        {
+          "name": "Value",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Value when checked."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Class",
+      "description": "COM class registration table. Contains CLSID, ProgID, and InprocServer information for COM components.",
+      "required": false,
+      "columns": [
+        {
+          "name": "CLSID",
+          "type": "GUID",
+          "nullable": false,
+          "key": true,
+          "description": "Class identifier (CLSID)."
+        },
+        {
+          "name": "Context",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Server context (LocalServer32, InprocServer32)."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Component table."
+        },
+        {
+          "name": "ProgId_Default",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Default ProgId for this class."
+        },
+        {
+          "name": "Description",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Class description."
+        },
+        {
+          "name": "AppId_",
+          "type": "GUID",
+          "nullable": true,
+          "key": false,
+          "description": "Reference to AppId table."
+        },
+        {
+          "name": "FileTypeMask",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "File type mask for detection."
+        },
+        {
+          "name": "Icon_",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Reference to Icon table."
+        },
+        {
+          "name": "IconIndex",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Icon index within file."
+        },
+        {
+          "name": "DefInprocHandler",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Default in-process handler."
+        },
+        {
+          "name": "Argument",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Command-line arguments."
+        },
+        {
+          "name": "Feature_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Reference to Feature table."
+        },
+        {
+          "name": "Attributes",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Class registration attributes."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "ComboBox",
+      "description": "Defines values for combo box controls. Contains property, order, value, and text for each item.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Property",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Property name."
+        },
+        {
+          "name": "Order",
+          "type": "Integer",
+          "nullable": false,
+          "key": true,
+          "description": "Item display order."
+        },
+        {
+          "name": "Value",
+          "type": "Formatted",
+          "nullable": false,
+          "key": false,
+          "description": "Item value."
+        },
+        {
+          "name": "Text",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Display text."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "CompLocator",
+      "description": "Component locator table. Searches for components by ComponentId to find installed paths.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Signature_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Signature table."
+        },
+        {
+          "name": "ComponentId",
+          "type": "GUID",
+          "nullable": false,
+          "key": false,
+          "description": "Component code GUID."
+        },
+        {
+          "name": "Type",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Search type (0=directory, 1=file)."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Complus",
+      "description": "COM+ application registration table. Contains information for COM+ component services.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Component table."
+        },
+        {
+          "name": "ExpType",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "COM+ application export type."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Component",
+      "description": "Core table defining installation components. Each component has unique GUID, directory, and key path.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Component",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Component identifier."
+        },
+        {
+          "name": "ComponentId",
+          "type": "GUID",
+          "nullable": true,
+          "key": false,
+          "description": "Component code GUID."
+        },
+        {
+          "name": "Directory_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Reference to Directory table."
+        },
+        {
+          "name": "Attributes",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Component attributes bitmask."
+        },
+        {
+          "name": "Condition",
+          "type": "Condition",
+          "nullable": true,
+          "key": false,
+          "description": "Installation condition."
+        },
+        {
+          "name": "KeyPath",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Key path resource identifier."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Condition",
+      "description": "Feature-level conditions table. Contains conditions that affect feature installation states.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Feature_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Feature table."
+        },
+        {
+          "name": "Level",
+          "type": "Integer",
+          "nullable": false,
+          "key": true,
+          "description": "New install level if condition is true."
+        },
+        {
+          "name": "Condition",
+          "type": "Condition",
+          "nullable": true,
+          "key": false,
+          "description": "Conditional expression."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Control",
+      "description": "Dialog control definitions. Contains all controls (buttons, text, checkboxes) for each dialog.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Dialog_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Dialog table."
+        },
+        {
+          "name": "Control",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Control identifier."
+        },
+        {
+          "name": "Type",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Control type."
+        },
+        {
+          "name": "X",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "X coordinate."
+        },
+        {
+          "name": "Y",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Y coordinate."
+        },
+        {
+          "name": "Width",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Control width."
+        },
+        {
+          "name": "Height",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Control height."
+        },
+        {
+          "name": "Attributes",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Control attributes."
+        },
+        {
+          "name": "Property",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Associated property."
+        },
+        {
+          "name": "Text",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Control text."
+        },
+        {
+          "name": "Control_Next",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Next control in tab order."
+        },
+        {
+          "name": "Help",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Tooltip and context help."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "ControlCondition",
+      "description": "Dynamic control state conditions. Enables/disables/shows/hides controls based on property values.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Dialog_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Dialog table."
+        },
+        {
+          "name": "Control_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Control table."
+        },
+        {
+          "name": "Action",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Action (Default, Disable, Enable, Hide, Show)."
+        },
+        {
+          "name": "Condition",
+          "type": "Condition",
+          "nullable": false,
+          "key": true,
+          "description": "Condition for the action."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "ControlEvent",
+      "description": "Control event subscriptions. Maps control actions to events like NewDialog, SetProperty, DoAction.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Dialog_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Dialog table."
+        },
+        {
+          "name": "Control_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Control table."
+        },
+        {
+          "name": "Event",
+          "type": "Formatted",
+          "nullable": false,
+          "key": true,
+          "description": "Event name."
+        },
+        {
+          "name": "Argument",
+          "type": "Formatted",
+          "nullable": false,
+          "key": true,
+          "description": "Event argument."
+        },
+        {
+          "name": "Condition",
+          "type": "Condition",
+          "nullable": true,
+          "key": true,
+          "description": "Condition for event."
+        },
+        {
+          "name": "Ordering",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Event processing order."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "CreateFolder",
+      "description": "Empty folder creation table. Lists directories to create even without files installed.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Directory_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Directory table."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Component table."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "CustomAction",
+      "description": "Custom action definitions. Contains type, source, target for DLL, EXE, script, and property actions.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Action",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Custom action identifier."
+        },
+        {
+          "name": "Type",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Custom action type number."
+        },
+        {
+          "name": "Source",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Source (Binary, Property, Directory)."
+        },
+        {
+          "name": "Target",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Target (DLL entry, EXE path, script)."
+        },
+        {
+          "name": "ExtendedType",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Extended type attributes."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Dialog",
+      "description": "Dialog definitions table. Contains dialog dimensions, title, and attributes for all installer dialogs.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Dialog",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Dialog identifier."
+        },
+        {
+          "name": "HCentering",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Horizontal centering percent."
+        },
+        {
+          "name": "VCentering",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Vertical centering percent."
+        },
+        {
+          "name": "Width",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Dialog width."
+        },
+        {
+          "name": "Height",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Dialog height."
+        },
+        {
+          "name": "Attributes",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Dialog attributes."
+        },
+        {
+          "name": "Title",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Dialog title."
+        },
+        {
+          "name": "Control_First",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "First control in tab order."
+        },
+        {
+          "name": "Control_Default",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Default pushbutton."
+        },
+        {
+          "name": "Control_Cancel",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Cancel pushbutton."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Directory",
+      "description": "Directory structure table. Defines folder hierarchy with parent references and default paths.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Directory",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Directory identifier."
+        },
+        {
+          "name": "Directory_Parent",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Parent directory."
+        },
+        {
+          "name": "DefaultDir",
+          "type": "DefaultDir",
+          "nullable": false,
+          "key": false,
+          "description": "Default directory name."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "DrLocator",
+      "description": "Directory locator for searches. Used by AppSearch to locate directories on the system.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Signature_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Signature table."
+        },
+        {
+          "name": "Parent",
+          "type": "Identifier",
+          "nullable": true,
+          "key": true,
+          "description": "Parent signature for nested search."
+        },
+        {
+          "name": "Path",
+          "type": "AnyPath",
+          "nullable": true,
+          "key": false,
+          "description": "Path to search."
+        },
+        {
+          "name": "Depth",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Subdirectory search depth."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "DuplicateFile",
+      "description": "File duplication table. Creates copies of installed files to additional locations.",
+      "required": false,
+      "columns": [
+        {
+          "name": "FileKey",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Duplicate file identifier."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Reference to Component table."
+        },
+        {
+          "name": "File_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Source file reference."
+        },
+        {
+          "name": "DestName",
+          "type": "Filename",
+          "nullable": true,
+          "key": false,
+          "description": "Destination filename."
+        },
+        {
+          "name": "DestFolder",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Destination directory."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Environment",
+      "description": "Environment variable table. Defines environment variables to set, append, or remove.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Environment",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Environment variable identifier."
+        },
+        {
+          "name": "Name",
+          "type": "Text",
+          "nullable": false,
+          "key": false,
+          "description": "Environment variable name."
+        },
+        {
+          "name": "Value",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Environment variable value."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Reference to Component table."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Error",
+      "description": "Error message table. Contains localized error messages for MSI error codes.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Error",
+          "type": "Integer",
+          "nullable": false,
+          "key": true,
+          "description": "Error code number."
+        },
+        {
+          "name": "Message",
+          "type": "Template",
+          "nullable": true,
+          "key": false,
+          "description": "Error message template."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "EventMapping",
+      "description": "Maps control events to control attributes. Used for progress bar and status text updates.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Dialog_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Dialog table."
+        },
+        {
+          "name": "Control_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Control table."
+        },
+        {
+          "name": "Event",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Event name."
+        },
+        {
+          "name": "Attribute",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Control attribute to update."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Extension",
+      "description": "File extension registration. Associates file extensions with ProgIds for shell integration.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Extension",
+          "type": "Text",
+          "nullable": false,
+          "key": true,
+          "description": "File extension (without dot)."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Component table."
+        },
+        {
+          "name": "ProgId_",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Default ProgId for extension."
+        },
+        {
+          "name": "MIME_",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "MIME content type."
+        },
+        {
+          "name": "Feature_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Reference to Feature table."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Feature",
+      "description": "Feature hierarchy table. Defines installable features with parent relationships and install levels.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Feature",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Feature identifier."
+        },
+        {
+          "name": "Feature_Parent",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Parent feature."
+        },
+        {
+          "name": "Title",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Feature title."
+        },
+        {
+          "name": "Description",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Feature description."
+        },
+        {
+          "name": "Display",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Display order and state."
+        },
+        {
+          "name": "Level",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Installation level."
+        },
+        {
+          "name": "Directory_",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Feature configuration directory."
+        },
+        {
+          "name": "Attributes",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Feature attributes."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "FeatureComponents",
+      "description": "Feature-component mapping. Links components to features they belong to.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Feature_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Feature table."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Component table."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "File",
+      "description": "File table. Contains all files to install with version, size, and component references.",
+      "required": false,
+      "columns": [
+        {
+          "name": "File",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "File identifier."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Reference to Component table."
+        },
+        {
+          "name": "FileName",
+          "type": "Filename",
+          "nullable": false,
+          "key": false,
+          "description": "Short|Long filename."
+        },
+        {
+          "name": "FileSize",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "File size in bytes."
+        },
+        {
+          "name": "Version",
+          "type": "Version",
+          "nullable": true,
+          "key": false,
+          "description": "File version string."
+        },
+        {
+          "name": "Language",
+          "type": "Language",
+          "nullable": true,
+          "key": false,
+          "description": "Language ID."
+        },
+        {
+          "name": "Attributes",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "File attributes."
+        },
+        {
+          "name": "Sequence",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Sequence in media."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "FileSFPCatalog",
+      "description": "System File Protection catalog mapping. Links files to SFP catalog files.",
+      "required": false,
+      "columns": [
+        {
+          "name": "File_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to File table."
+        },
+        {
+          "name": "SFPCatalog_",
+          "type": "Filename",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to SFPCatalog table."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Font",
+      "description": "Font registration table. Contains font files to register with Windows font system.",
+      "required": false,
+      "columns": [
+        {
+          "name": "File_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to File table."
+        },
+        {
+          "name": "FontTitle",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Font title for registration."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Icon",
+      "description": "Icon storage table. Contains icon files used for shortcuts and ARP entries.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Name",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Icon identifier."
+        },
+        {
+          "name": "Data",
+          "type": "Binary",
+          "nullable": false,
+          "key": false,
+          "description": "Icon binary data."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "IniFile",
+      "description": "INI file modification table. Defines INI file entries to create or modify.",
+      "required": false,
+      "columns": [
+        {
+          "name": "IniFile",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "INI file entry identifier."
+        },
+        {
+          "name": "FileName",
+          "type": "Filename",
+          "nullable": false,
+          "key": false,
+          "description": "INI filename."
+        },
+        {
+          "name": "DirProperty",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Directory property."
+        },
+        {
+          "name": "Section",
+          "type": "Formatted",
+          "nullable": false,
+          "key": false,
+          "description": "Section name."
+        },
+        {
+          "name": "Key",
+          "type": "Formatted",
+          "nullable": false,
+          "key": false,
+          "description": "Key name."
+        },
+        {
+          "name": "Value",
+          "type": "Formatted",
+          "nullable": false,
+          "key": false,
+          "description": "Value to write."
+        },
+        {
+          "name": "Action",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Write action type."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Reference to Component table."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "IniLocator",
+      "description": "INI file locator for searches. Reads INI values during AppSearch.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Signature_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Signature table."
+        },
+        {
+          "name": "FileName",
+          "type": "Filename",
+          "nullable": false,
+          "key": false,
+          "description": "INI filename to search."
+        },
+        {
+          "name": "Section",
+          "type": "Text",
+          "nullable": false,
+          "key": false,
+          "description": "Section name."
+        },
+        {
+          "name": "Key",
+          "type": "Text",
+          "nullable": false,
+          "key": false,
+          "description": "Key name."
+        },
+        {
+          "name": "Field",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Field number in value."
+        },
+        {
+          "name": "Type",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Search result type."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "InstallExecuteSequence",
+      "description": "Main execution sequence. Contains all actions for installation including file copying and registration.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Action",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Name of the action."
+        },
+        {
+          "name": "Condition",
+          "type": "Condition",
+          "nullable": true,
+          "key": false,
+          "description": "Execution condition."
+        },
+        {
+          "name": "Sequence",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Sequence number."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "InstallUISequence",
+      "description": "UI sequence table. Contains dialog display and UI-related actions during installation.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Action",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Name of the action."
+        },
+        {
+          "name": "Condition",
+          "type": "Condition",
+          "nullable": true,
+          "key": false,
+          "description": "Execution condition."
+        },
+        {
+          "name": "Sequence",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Sequence number."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "IsolatedComponent",
+      "description": "Side-by-side component isolation. Redirects shared component to application-private location.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Component_Shared",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Shared component reference."
+        },
+        {
+          "name": "Component_Application",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Application component reference."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "LaunchCondition",
+      "description": "Installation prerequisites. Contains conditions that must be true for installation to proceed.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Condition",
+          "type": "Condition",
+          "nullable": false,
+          "key": true,
+          "description": "Launch condition expression."
+        },
+        {
+          "name": "Description",
+          "type": "Formatted",
+          "nullable": false,
+          "key": false,
+          "description": "Error message if condition fails."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "ListBox",
+      "description": "List box control values. Defines items displayed in list box controls.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Property",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Property name."
+        },
+        {
+          "name": "Order",
+          "type": "Integer",
+          "nullable": false,
+          "key": true,
+          "description": "Item display order."
+        },
+        {
+          "name": "Value",
+          "type": "Formatted",
+          "nullable": false,
+          "key": false,
+          "description": "Item value."
+        },
+        {
+          "name": "Text",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Display text."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "ListView",
+      "description": "List view control values. Defines items with icons for list view controls.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Property",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Property name."
+        },
+        {
+          "name": "Order",
+          "type": "Integer",
+          "nullable": false,
+          "key": true,
+          "description": "Item display order."
+        },
+        {
+          "name": "Value",
+          "type": "Formatted",
+          "nullable": false,
+          "key": false,
+          "description": "Item value."
+        },
+        {
+          "name": "Text",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Display text."
+        },
+        {
+          "name": "Binary_",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Icon binary reference."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "LockPermissions",
+      "description": "Security permissions table. Sets ACLs on files, registry keys, and folders.",
+      "required": false,
+      "columns": [
+        {
+          "name": "LockObject",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "File, Registry, or Directory key."
+        },
+        {
+          "name": "Table",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Source table name."
+        },
+        {
+          "name": "Domain",
+          "type": "Formatted",
+          "nullable": true,
+          "key": true,
+          "description": "Domain name."
+        },
+        {
+          "name": "User",
+          "type": "Formatted",
+          "nullable": false,
+          "key": true,
+          "description": "User or group name."
+        },
+        {
+          "name": "Permission",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Permission bitmask."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MIME",
+      "description": "MIME type registration. Associates MIME content types with file extensions.",
+      "required": false,
+      "columns": [
+        {
+          "name": "ContentType",
+          "type": "Text",
+          "nullable": false,
+          "key": true,
+          "description": "MIME content type."
+        },
+        {
+          "name": "Extension_",
+          "type": "Text",
+          "nullable": false,
+          "key": false,
+          "description": "File extension."
+        },
+        {
+          "name": "CLSID",
+          "type": "GUID",
+          "nullable": true,
+          "key": false,
+          "description": "Associated CLSID."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Media",
+      "description": "Source media table. Defines cabinet files, disk prompts, and volume labels for source files.",
+      "required": false,
+      "columns": [
+        {
+          "name": "DiskId",
+          "type": "Integer",
+          "nullable": false,
+          "key": true,
+          "description": "Disk identifier."
+        },
+        {
+          "name": "LastSequence",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Last file sequence on disk."
+        },
+        {
+          "name": "DiskPrompt",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Disk prompt string."
+        },
+        {
+          "name": "Cabinet",
+          "type": "Cabinet",
+          "nullable": true,
+          "key": false,
+          "description": "Cabinet filename."
+        },
+        {
+          "name": "VolumeLabel",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Volume label."
+        },
+        {
+          "name": "Source",
+          "type": "Property",
+          "nullable": true,
+          "key": false,
+          "description": "Source directory property."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MoveFile",
+      "description": "File move/copy operations. Moves or copies existing files during installation.",
+      "required": false,
+      "columns": [
+        {
+          "name": "FileKey",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Move file identifier."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Reference to Component table."
+        },
+        {
+          "name": "SourceName",
+          "type": "Filename",
+          "nullable": true,
+          "key": false,
+          "description": "Source filename or wildcard."
+        },
+        {
+          "name": "SourceFolder",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Source directory property."
+        },
+        {
+          "name": "DestName",
+          "type": "Filename",
+          "nullable": true,
+          "key": false,
+          "description": "Destination filename."
+        },
+        {
+          "name": "DestFolder",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Destination directory property."
+        },
+        {
+          "name": "Options",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Move or copy options."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MsiAssembly",
+      "description": ".NET and Win32 assembly registration. Registers assemblies with the Global Assembly Cache.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Component table."
+        },
+        {
+          "name": "Feature_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Reference to Feature table."
+        },
+        {
+          "name": "File_Manifest",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Manifest file reference."
+        },
+        {
+          "name": "File_Application",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Application file for private assembly."
+        },
+        {
+          "name": "Attributes",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Assembly attributes."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MsiAssemblyName",
+      "description": "Assembly name attributes. Contains assembly identity information (name, version, culture, token).",
+      "required": false,
+      "columns": [
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Component table."
+        },
+        {
+          "name": "Name",
+          "type": "Text",
+          "nullable": false,
+          "key": true,
+          "description": "Assembly name part."
+        },
+        {
+          "name": "Value",
+          "type": "Text",
+          "nullable": false,
+          "key": false,
+          "description": "Assembly name value."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MsiDigitalCertificate",
+      "description": "Digital certificate storage. Contains certificates for package signing verification.",
+      "required": false,
+      "columns": [
+        {
+          "name": "DigitalCertificate",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Certificate identifier."
+        },
+        {
+          "name": "CertData",
+          "type": "Binary",
+          "nullable": false,
+          "key": false,
+          "description": "Certificate binary data."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MsiDigitalSignature",
+      "description": "Digital signature table. Links signed objects to their certificates.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Table",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Signed table name."
+        },
+        {
+          "name": "SignObject",
+          "type": "Text",
+          "nullable": false,
+          "key": true,
+          "description": "Signed object key."
+        },
+        {
+          "name": "DigitalCertificate_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Certificate reference."
+        },
+        {
+          "name": "Hash",
+          "type": "Binary",
+          "nullable": true,
+          "key": false,
+          "description": "Hash of signed content."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MsiDriverPackages",
+      "description": "Driver package registration. Contains driver packages for DIFx installation.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Component",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to Component table."
+        },
+        {
+          "name": "Flags",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "DIFx driver package flags."
+        },
+        {
+          "name": "Sequence",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Processing sequence."
+        },
+        {
+          "name": "ReferenceComponents",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Dependent component list."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MsiEmbeddedChainer",
+      "description": "Embedded chainer for multiple package installation. Chains MSI packages together.",
+      "required": false,
+      "columns": [
+        {
+          "name": "MsiEmbeddedChainer",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Chainer identifier."
+        },
+        {
+          "name": "Condition",
+          "type": "Condition",
+          "nullable": true,
+          "key": false,
+          "description": "Execution condition."
+        },
+        {
+          "name": "CommandLine",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Command-line arguments."
+        },
+        {
+          "name": "Source",
+          "type": "CustomSource",
+          "nullable": false,
+          "key": false,
+          "description": "Chainer source."
+        },
+        {
+          "name": "Type",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Chainer type."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MsiEmbeddedUI",
+      "description": "Embedded UI handler. Contains custom UI DLLs for enhanced installation experience.",
+      "required": false,
+      "columns": [
+        {
+          "name": "MsiEmbeddedUI",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Embedded UI identifier."
+        },
+        {
+          "name": "FileName",
+          "type": "Filename",
+          "nullable": false,
+          "key": false,
+          "description": "UI handler DLL name."
+        },
+        {
+          "name": "Attributes",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "UI attributes."
+        },
+        {
+          "name": "MessageFilter",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Message filter mask."
+        },
+        {
+          "name": "Data",
+          "type": "Binary",
+          "nullable": false,
+          "key": false,
+          "description": "UI handler binary."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MsiFileHash",
+      "description": "File hash values. Contains MD5 hashes for unversioned file change detection.",
+      "required": false,
+      "columns": [
+        {
+          "name": "File_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to File table."
+        },
+        {
+          "name": "Options",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Hash options (must be 0)."
+        },
+        {
+          "name": "HashPart1",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "First part of MD5 hash."
+        },
+        {
+          "name": "HashPart2",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Second part of MD5 hash."
+        },
+        {
+          "name": "HashPart3",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Third part of MD5 hash."
+        },
+        {
+          "name": "HashPart4",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Fourth part of MD5 hash."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MsiLockPermissionsEx",
+      "description": "Extended permissions using SDDL strings.",
+      "required": false,
+      "columns": [
+        {
+          "name": "MsiLockPermissionsEx",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Entry identifier."
+        },
+        {
+          "name": "LockObject",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Object to secure."
+        },
+        {
+          "name": "Table",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Source table name."
+        },
+        {
+          "name": "SDDLText",
+          "type": "FormattedSDDL",
+          "nullable": false,
+          "key": false,
+          "description": "SDDL security descriptor."
+        },
+        {
+          "name": "Condition",
+          "type": "Condition",
+          "nullable": true,
+          "key": false,
+          "description": "Application condition."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MsiPackageCertificate",
+      "description": "Package certificate association. Links external packages to verification certificates.",
+      "required": false,
+      "columns": [
+        {
+          "name": "PackageCertificate",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Certificate identifier."
+        },
+        {
+          "name": "DigitalCertificate_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Certificate reference."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MsiPatchCertificate",
+      "description": "Patch certificate table. Contains certificates for patch verification.",
+      "required": false,
+      "columns": [
+        {
+          "name": "PatchCertificate",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Patch certificate identifier."
+        },
+        {
+          "name": "DigitalCertificate_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Certificate reference."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MsiPatchHeaders",
+      "description": "Patch header storage. Contains patch header blobs for delta patching.",
+      "required": false,
+      "columns": [
+        {
+          "name": "StreamRef",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Stream reference."
+        },
+        {
+          "name": "Header",
+          "type": "Binary",
+          "nullable": false,
+          "key": false,
+          "description": "Patch header data."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MsiPatchMetadata",
+      "description": "Patch metadata table. Contains patch description, classification, and targets.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Company",
+          "type": "Identifier",
+          "nullable": true,
+          "key": true,
+          "description": "Company identifier."
+        },
+        {
+          "name": "Property",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Metadata property name."
+        },
+        {
+          "name": "Value",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Metadata value."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MsiPatchOldAssemblyFile",
+      "description": "Old assembly file references for patching. Maps old assembly files to patches.",
+      "required": false,
+      "columns": [
+        {
+          "name": "File_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "File reference."
+        },
+        {
+          "name": "Assembly_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Assembly reference."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MsiPatchOldAssemblyName",
+      "description": "Old assembly names for patching. Contains previous assembly identities.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Assembly",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Assembly identifier."
+        },
+        {
+          "name": "Name",
+          "type": "Text",
+          "nullable": false,
+          "key": true,
+          "description": "Name attribute."
+        },
+        {
+          "name": "Value",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Attribute value."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MsiPatchSequence",
+      "description": "Patch sequencing information. Determines patch application order.",
+      "required": false,
+      "columns": [
+        {
+          "name": "PatchFamily",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Patch family identifier."
+        },
+        {
+          "name": "ProductCode",
+          "type": "GUID",
+          "nullable": true,
+          "key": true,
+          "description": "Target product code."
+        },
+        {
+          "name": "Sequence",
+          "type": "Version",
+          "nullable": false,
+          "key": false,
+          "description": "Patch sequence."
+        },
+        {
+          "name": "Attributes",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Supersedence attributes."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MsiSFCBypass",
+      "description": "System File Checker bypass. Lists protected files that can be replaced during install.",
+      "required": false,
+      "columns": [
+        {
+          "name": "File_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to File table."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MsiServiceConfig",
+      "description": "Service configuration table. Contains delayed auto-start and failure action settings.",
+      "required": false,
+      "columns": [
+        {
+          "name": "MsiServiceConfig",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Service config identifier."
+        },
+        {
+          "name": "Name",
+          "type": "Formatted",
+          "nullable": false,
+          "key": false,
+          "description": "Service name."
+        },
+        {
+          "name": "Event",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Install/Uninstall event."
+        },
+        {
+          "name": "ConfigType",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Configuration type."
+        },
+        {
+          "name": "Argument",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Configuration argument."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Component reference."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MsiServiceConfigFailureActions",
+      "description": "Service failure recovery. Defines actions on service failure (restart, reboot, run command).",
+      "required": false,
+      "columns": [
+        {
+          "name": "MsiServiceConfigFailureActions",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Entry identifier."
+        },
+        {
+          "name": "Name",
+          "type": "Formatted",
+          "nullable": false,
+          "key": false,
+          "description": "Service name."
+        },
+        {
+          "name": "Event",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Install/Uninstall event."
+        },
+        {
+          "name": "ResetPeriod",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Failure count reset period."
+        },
+        {
+          "name": "RebootMessage",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Reboot message."
+        },
+        {
+          "name": "Command",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Command to run on failure."
+        },
+        {
+          "name": "Actions",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Failure action sequence."
+        },
+        {
+          "name": "DelayActions",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Delay between actions."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Component reference."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "MsiShortcutProperty",
+      "description": "Contains extended shortcut properties.",
+      "required": false,
+      "columns": [
+        {
+          "name": "MsiShortcutProperty",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Entry identifier."
+        },
+        {
+          "name": "Shortcut_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Shortcut reference."
+        },
+        {
+          "name": "PropertyKey",
+          "type": "Formatted",
+          "nullable": false,
+          "key": false,
+          "description": "Property key GUID."
+        },
+        {
+          "name": "PropVariantValue",
+          "type": "Formatted",
+          "nullable": false,
+          "key": false,
+          "description": "Property value."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "ODBCAttribute",
+      "description": "ODBC driver/DSN attributes. Contains name-value pairs for ODBC configuration.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Driver_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to ODBCDriver table."
+        },
+        {
+          "name": "Attribute",
+          "type": "Text",
+          "nullable": false,
+          "key": true,
+          "description": "Attribute name."
+        },
+        {
+          "name": "Value",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Attribute value."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "ODBCDataSource",
+      "description": "ODBC data source registration. Defines DSNs to create with driver and attributes.",
+      "required": false,
+      "columns": [
+        {
+          "name": "DataSource",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Data source identifier."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Component reference."
+        },
+        {
+          "name": "Description",
+          "type": "Text",
+          "nullable": false,
+          "key": false,
+          "description": "Data source description."
+        },
+        {
+          "name": "DriverDescription",
+          "type": "Text",
+          "nullable": false,
+          "key": false,
+          "description": "Driver description."
+        },
+        {
+          "name": "Registration",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Registration type."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "ODBCDriver",
+      "description": "ODBC driver registration. Registers ODBC drivers with the system.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Driver",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Driver identifier."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Component reference."
+        },
+        {
+          "name": "Description",
+          "type": "Text",
+          "nullable": false,
+          "key": false,
+          "description": "Driver description."
+        },
+        {
+          "name": "File_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Driver file reference."
+        },
+        {
+          "name": "File_Setup",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Setup file reference."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "ODBCSourceAttribute",
+      "description": "ODBC source attributes. Additional attributes for data source configuration.",
+      "required": false,
+      "columns": [
+        {
+          "name": "DataSource_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Reference to ODBCDataSource table."
+        },
+        {
+          "name": "Attribute",
+          "type": "Text",
+          "nullable": false,
+          "key": true,
+          "description": "Attribute name."
+        },
+        {
+          "name": "Value",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Attribute value."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "ODBCTranslator",
+      "description": "ODBC translator registration. Registers ODBC translators for code page conversion.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Translator",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Translator identifier."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Component reference."
+        },
+        {
+          "name": "Description",
+          "type": "Text",
+          "nullable": false,
+          "key": false,
+          "description": "Translator description."
+        },
+        {
+          "name": "File_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Translator file reference."
+        },
+        {
+          "name": "File_Setup",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Setup file reference."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Patch",
+      "description": "Patch file mapping. Maps files to their patch transformations.",
+      "required": false,
+      "columns": [
+        {
+          "name": "File_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "File reference."
+        },
+        {
+          "name": "Sequence",
+          "type": "Integer",
+          "nullable": false,
+          "key": true,
+          "description": "File sequence."
+        },
+        {
+          "name": "PatchSize",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Patch data size."
+        },
+        {
+          "name": "Attributes",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Patch attributes."
+        },
+        {
+          "name": "Header",
+          "type": "Binary",
+          "nullable": true,
+          "key": false,
+          "description": "Patch header."
+        },
+        {
+          "name": "StreamRef_",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Stream reference."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "PatchPackage",
+      "description": "Embedded patch packages. Contains sub-patches within a patch package.",
+      "required": false,
+      "columns": [
+        {
+          "name": "PatchId",
+          "type": "GUID",
+          "nullable": false,
+          "key": true,
+          "description": "Patch package GUID."
+        },
+        {
+          "name": "Media_",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Media table reference."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "ProgId",
+      "description": "Programmatic identifier registration. Associates ProgIds with CLSIDs and file extensions.",
+      "required": false,
+      "columns": [
+        {
+          "name": "ProgId",
+          "type": "Text",
+          "nullable": false,
+          "key": true,
+          "description": "Programmatic identifier."
+        },
+        {
+          "name": "ProgId_Parent",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Parent ProgId."
+        },
+        {
+          "name": "Class_",
+          "type": "GUID",
+          "nullable": true,
+          "key": false,
+          "description": "CLSID reference."
+        },
+        {
+          "name": "Description",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "ProgId description."
+        },
+        {
+          "name": "Icon_",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Icon reference."
+        },
+        {
+          "name": "IconIndex",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Icon index."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Property",
+      "description": "Property table. Contains installation properties including ProductCode, ProductName, Manufacturer.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Property",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Property name."
+        },
+        {
+          "name": "Value",
+          "type": "Text",
+          "nullable": false,
+          "key": false,
+          "description": "Property value."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "PublishComponent",
+      "description": "Component publishing. Publishes components for use by other applications via qualified components.",
+      "required": false,
+      "columns": [
+        {
+          "name": "ComponentId",
+          "type": "GUID",
+          "nullable": false,
+          "key": true,
+          "description": "Published component GUID."
+        },
+        {
+          "name": "Qualifier",
+          "type": "Text",
+          "nullable": false,
+          "key": true,
+          "description": "Qualifier string."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Component reference."
+        },
+        {
+          "name": "AppData",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Application data."
+        },
+        {
+          "name": "Feature_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Feature reference."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "RadioButton",
+      "description": "Radio button group values. Defines radio button items with positions and values.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Property",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Property name."
+        },
+        {
+          "name": "Order",
+          "type": "Integer",
+          "nullable": false,
+          "key": true,
+          "description": "Button order."
+        },
+        {
+          "name": "Value",
+          "type": "Formatted",
+          "nullable": false,
+          "key": false,
+          "description": "Button value."
+        },
+        {
+          "name": "X",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "X coordinate."
+        },
+        {
+          "name": "Y",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Y coordinate."
+        },
+        {
+          "name": "Width",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Button width."
+        },
+        {
+          "name": "Height",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Button height."
+        },
+        {
+          "name": "Text",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Button text."
+        },
+        {
+          "name": "Help",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Help text."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "RegLocator",
+      "description": "Registry locator for searches. Reads registry values during AppSearch.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Signature_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Signature reference."
+        },
+        {
+          "name": "Root",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Registry root (0=HKCR, 1=HKCU, 2=HKLM, 3=HKU)."
+        },
+        {
+          "name": "Key",
+          "type": "RegPath",
+          "nullable": false,
+          "key": false,
+          "description": "Registry key path."
+        },
+        {
+          "name": "Name",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Value name."
+        },
+        {
+          "name": "Type",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Search type."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Registry",
+      "description": "Registry operations table. Contains registry keys and values to create or modify.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Registry",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Registry entry identifier."
+        },
+        {
+          "name": "Root",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Registry root."
+        },
+        {
+          "name": "Key",
+          "type": "RegPath",
+          "nullable": false,
+          "key": false,
+          "description": "Registry key path."
+        },
+        {
+          "name": "Name",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Value name."
+        },
+        {
+          "name": "Value",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Registry value."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Component reference."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "RemoveFile",
+      "description": "File removal table. Removes files on install, uninstall, or both.",
+      "required": false,
+      "columns": [
+        {
+          "name": "FileKey",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Entry identifier."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Component reference."
+        },
+        {
+          "name": "FileName",
+          "type": "WildCardFilename",
+          "nullable": true,
+          "key": false,
+          "description": "Filename or wildcard."
+        },
+        {
+          "name": "DirProperty",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Directory property."
+        },
+        {
+          "name": "InstallMode",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "When to remove (1=install, 2=uninstall, 3=both)."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "RemoveIniFile",
+      "description": "INI entry removal. Removes specific INI file entries during installation.",
+      "required": false,
+      "columns": [
+        {
+          "name": "RemoveIniFile",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Entry identifier."
+        },
+        {
+          "name": "FileName",
+          "type": "Filename",
+          "nullable": false,
+          "key": false,
+          "description": "INI filename."
+        },
+        {
+          "name": "DirProperty",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Directory property."
+        },
+        {
+          "name": "Section",
+          "type": "Formatted",
+          "nullable": false,
+          "key": false,
+          "description": "Section name."
+        },
+        {
+          "name": "Key",
+          "type": "Formatted",
+          "nullable": false,
+          "key": false,
+          "description": "Key name."
+        },
+        {
+          "name": "Value",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Value to match."
+        },
+        {
+          "name": "Action",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Remove action type."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Component reference."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "RemoveRegistry",
+      "description": "Registry removal table. Removes registry keys or values during installation.",
+      "required": false,
+      "columns": [
+        {
+          "name": "RemoveRegistry",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Entry identifier."
+        },
+        {
+          "name": "Root",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Registry root."
+        },
+        {
+          "name": "Key",
+          "type": "RegPath",
+          "nullable": false,
+          "key": false,
+          "description": "Registry key path."
+        },
+        {
+          "name": "Name",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Value name (null = key)."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Component reference."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "ReserveCost",
+      "description": "Disk space reservation. Reserves additional disk space beyond file sizes.",
+      "required": false,
+      "columns": [
+        {
+          "name": "ReserveKey",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Entry identifier."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Component reference."
+        },
+        {
+          "name": "ReserveFolder",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Directory property."
+        },
+        {
+          "name": "ReserveLocal",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Local install cost."
+        },
+        {
+          "name": "ReserveSource",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Source install cost."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "SFPCatalog",
+      "description": "System File Protection catalogs. Contains catalog files for Windows File Protection.",
+      "required": false,
+      "columns": [
+        {
+          "name": "SFPCatalog",
+          "type": "Filename",
+          "nullable": false,
+          "key": true,
+          "description": "Catalog filename."
+        },
+        {
+          "name": "Catalog",
+          "type": "Binary",
+          "nullable": false,
+          "key": false,
+          "description": "Catalog binary data."
+        },
+        {
+          "name": "Dependency",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Catalog dependencies."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "SelfReg",
+      "description": "Self-registration table. Lists DLLs to self-register via DllRegisterServer.",
+      "required": false,
+      "columns": [
+        {
+          "name": "File_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "File reference."
+        },
+        {
+          "name": "Cost",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Self-registration cost."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "ServiceControl",
+      "description": "Service start/stop/delete. Controls Windows services during install and uninstall.",
+      "required": false,
+      "columns": [
+        {
+          "name": "ServiceControl",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Entry identifier."
+        },
+        {
+          "name": "Name",
+          "type": "Formatted",
+          "nullable": false,
+          "key": false,
+          "description": "Service name."
+        },
+        {
+          "name": "Event",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Control events bitmask."
+        },
+        {
+          "name": "Arguments",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Start arguments."
+        },
+        {
+          "name": "Wait",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Wait for completion."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Component reference."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "ServiceInstall",
+      "description": "Service installation table. Creates Windows services with name, display name, and start type.",
+      "required": false,
+      "columns": [
+        {
+          "name": "ServiceInstall",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Entry identifier."
+        },
+        {
+          "name": "Name",
+          "type": "Formatted",
+          "nullable": false,
+          "key": false,
+          "description": "Service name."
+        },
+        {
+          "name": "DisplayName",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Display name."
+        },
+        {
+          "name": "ServiceType",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Service type."
+        },
+        {
+          "name": "StartType",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Start type."
+        },
+        {
+          "name": "ErrorControl",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Error control."
+        },
+        {
+          "name": "LoadOrderGroup",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Load order group."
+        },
+        {
+          "name": "Dependencies",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Dependencies."
+        },
+        {
+          "name": "StartName",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Account name."
+        },
+        {
+          "name": "Password",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Account password."
+        },
+        {
+          "name": "Arguments",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Start arguments."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Component reference."
+        },
+        {
+          "name": "Description",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Service description."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Shortcut",
+      "description": "Shortcut creation table. Defines Start Menu and desktop shortcuts with targets and icons.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Shortcut",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Shortcut identifier."
+        },
+        {
+          "name": "Directory_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Shortcut directory."
+        },
+        {
+          "name": "Name",
+          "type": "Filename",
+          "nullable": false,
+          "key": false,
+          "description": "Shortcut filename."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Component reference."
+        },
+        {
+          "name": "Target",
+          "type": "Shortcut",
+          "nullable": false,
+          "key": false,
+          "description": "Shortcut target."
+        },
+        {
+          "name": "Arguments",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Command arguments."
+        },
+        {
+          "name": "Description",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Shortcut description."
+        },
+        {
+          "name": "Hotkey",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Hotkey."
+        },
+        {
+          "name": "Icon_",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Icon reference."
+        },
+        {
+          "name": "IconIndex",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Icon index."
+        },
+        {
+          "name": "ShowCmd",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Show command."
+        },
+        {
+          "name": "WkDir",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Working directory."
+        },
+        {
+          "name": "DisplayResourceDLL",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Resource DLL for display name."
+        },
+        {
+          "name": "DisplayResourceId",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Display name resource ID."
+        },
+        {
+          "name": "DescriptionResourceDLL",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Resource DLL for description."
+        },
+        {
+          "name": "DescriptionResourceId",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Description resource ID."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Signature",
+      "description": "File signature definitions. Describes files for AppSearch using name, version, size.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Signature",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Signature identifier."
+        },
+        {
+          "name": "FileName",
+          "type": "Filename",
+          "nullable": false,
+          "key": false,
+          "description": "Filename to search."
+        },
+        {
+          "name": "MinVersion",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Minimum version."
+        },
+        {
+          "name": "MaxVersion",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Maximum version."
+        },
+        {
+          "name": "MinSize",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Minimum file size."
+        },
+        {
+          "name": "MaxSize",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Maximum file size."
+        },
+        {
+          "name": "MinDate",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Minimum modification date."
+        },
+        {
+          "name": "MaxDate",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Maximum modification date."
+        },
+        {
+          "name": "Languages",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Language IDs."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "TextStyle",
+      "description": "Text formatting styles. Defines fonts, sizes, and colors for dialog text.",
+      "required": false,
+      "columns": [
+        {
+          "name": "TextStyle",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Text style identifier."
+        },
+        {
+          "name": "FaceName",
+          "type": "Text",
+          "nullable": false,
+          "key": false,
+          "description": "Font face name."
+        },
+        {
+          "name": "Size",
+          "type": "Integer",
+          "nullable": false,
+          "key": false,
+          "description": "Font size in points."
+        },
+        {
+          "name": "Color",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Text color (RGB)."
+        },
+        {
+          "name": "StyleBits",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Bold, italic, etc."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "TypeLib",
+      "description": "Type library registration. Registers COM type libraries (.tlb) with version and language.",
+      "required": false,
+      "columns": [
+        {
+          "name": "LibID",
+          "type": "GUID",
+          "nullable": false,
+          "key": true,
+          "description": "TypeLib GUID."
+        },
+        {
+          "name": "Language",
+          "type": "Integer",
+          "nullable": false,
+          "key": true,
+          "description": "Language ID."
+        },
+        {
+          "name": "Component_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Component reference."
+        },
+        {
+          "name": "Version",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "TypeLib version."
+        },
+        {
+          "name": "Description",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "TypeLib description."
+        },
+        {
+          "name": "Directory_",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Help directory."
+        },
+        {
+          "name": "Feature_",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Feature reference."
+        },
+        {
+          "name": "Cost",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Registration cost."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "UIText",
+      "description": "UI string table. Contains localized strings for dialog controls and messages.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Key",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "UI text key."
+        },
+        {
+          "name": "Text",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Localized text."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Upgrade",
+      "description": "Upgrade detection table. Finds related products by UpgradeCode for major upgrade handling.",
+      "required": false,
+      "columns": [
+        {
+          "name": "UpgradeCode",
+          "type": "GUID",
+          "nullable": false,
+          "key": true,
+          "description": "UpgradeCode GUID."
+        },
+        {
+          "name": "VersionMin",
+          "type": "Text",
+          "nullable": true,
+          "key": true,
+          "description": "Minimum version."
+        },
+        {
+          "name": "VersionMax",
+          "type": "Text",
+          "nullable": true,
+          "key": true,
+          "description": "Maximum version."
+        },
+        {
+          "name": "Language",
+          "type": "Text",
+          "nullable": true,
+          "key": true,
+          "description": "Language constraint."
+        },
+        {
+          "name": "Attributes",
+          "type": "Integer",
+          "nullable": false,
+          "key": true,
+          "description": "Upgrade attributes."
+        },
+        {
+          "name": "Remove",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Features to remove."
+        },
+        {
+          "name": "ActionProperty",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Property to receive product codes."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "Verb",
+      "description": "Shell verb registration. Defines shell commands (Open, Edit, Print) for file extensions.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Extension_",
+          "type": "Text",
+          "nullable": false,
+          "key": true,
+          "description": "Extension reference."
+        },
+        {
+          "name": "Verb",
+          "type": "Text",
+          "nullable": false,
+          "key": true,
+          "description": "Verb name (open, edit, print)."
+        },
+        {
+          "name": "Sequence",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Verb order."
+        },
+        {
+          "name": "Command",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Menu text."
+        },
+        {
+          "name": "Argument",
+          "type": "Formatted",
+          "nullable": true,
+          "key": false,
+          "description": "Command arguments."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "_Columns",
+      "description": "Schema metadata. Describes columns for all tables in the database.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Table",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Table name."
+        },
+        {
+          "name": "Number",
+          "type": "Integer",
+          "nullable": false,
+          "key": true,
+          "description": "Column number."
+        },
+        {
+          "name": "Name",
+          "type": "Identifier",
+          "nullable": false,
+          "key": false,
+          "description": "Column name."
+        },
+        {
+          "name": "Type",
+          "type": "Text",
+          "nullable": false,
+          "key": false,
+          "description": "Column type."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "_Storages",
+      "description": "Storage metadata. Lists embedded storages (substorage streams) in the MSI.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Name",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Storage name."
+        },
+        {
+          "name": "Data",
+          "type": "Binary",
+          "nullable": true,
+          "key": false,
+          "description": "Storage data."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "_Streams",
+      "description": "Stream metadata. Lists binary streams embedded in the MSI (cabs, icons, binaries).",
+      "required": false,
+      "columns": [
+        {
+          "name": "Name",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Stream name."
+        },
+        {
+          "name": "Data",
+          "type": "Binary",
+          "nullable": true,
+          "key": false,
+          "description": "Stream data."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "_Tables",
+      "description": "Table metadata. Lists all tables present in the MSI database.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Name",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Table name."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "_TransformView",
+      "description": "System table for viewing transform changes.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Table",
+          "type": "Identifier",
+          "nullable": true,
+          "key": true,
+          "description": "Table name."
+        },
+        {
+          "name": "Column",
+          "type": "Text",
+          "nullable": true,
+          "key": true,
+          "description": "Column name."
+        },
+        {
+          "name": "Row",
+          "type": "Text",
+          "nullable": true,
+          "key": true,
+          "description": "Row identifier."
+        },
+        {
+          "name": "Data",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Data value."
+        },
+        {
+          "name": "Current",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Current value."
+        }
+      ],
+      "documentation_url": null
+    },
+    {
+      "name": "_Validation",
+      "description": "Column validation rules. Contains data type, nullable, and range constraints for all columns.",
+      "required": false,
+      "columns": [
+        {
+          "name": "Table",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Table name."
+        },
+        {
+          "name": "Column",
+          "type": "Identifier",
+          "nullable": false,
+          "key": true,
+          "description": "Column name."
+        },
+        {
+          "name": "Nullable",
+          "type": "Text",
+          "nullable": false,
+          "key": false,
+          "description": "Is nullable (Y/N)."
+        },
+        {
+          "name": "MinValue",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Minimum value."
+        },
+        {
+          "name": "MaxValue",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Maximum value."
+        },
+        {
+          "name": "KeyTable",
+          "type": "Identifier",
+          "nullable": true,
+          "key": false,
+          "description": "Foreign key table."
+        },
+        {
+          "name": "KeyColumn",
+          "type": "Integer",
+          "nullable": true,
+          "key": false,
+          "description": "Foreign key column."
+        },
+        {
+          "name": "Category",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Column category."
+        },
+        {
+          "name": "Set",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Valid value set."
+        },
+        {
+          "name": "Description",
+          "type": "Text",
+          "nullable": true,
+          "key": false,
+          "description": "Column description."
+        }
+      ],
+      "documentation_url": null
+    }
+  ]
+}

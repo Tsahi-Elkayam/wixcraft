@@ -1,0 +1,237 @@
+{
+  "$schema": "../schema/snippets.schema.json",
+  "snippets": [
+    {
+      "name": "package",
+      "prefix": "pkg",
+      "description": "Create a basic WiX package",
+      "body": [
+        "<Wix xmlns=\"http://wixtoolset.org/schemas/v4/wxs\">",
+        "  <Package Name=\"${1:MyApp}\"",
+        "           Manufacturer=\"${2:MyCompany}\"",
+        "           Version=\"${3:1.0.0}\"",
+        "           UpgradeCode=\"${4:PUT-GUID-HERE}\">",
+        "",
+        "    <MajorUpgrade DowngradeErrorMessage=\"A newer version is already installed.\" />",
+        "    <MediaTemplate EmbedCab=\"yes\" />",
+        "",
+        "    <StandardDirectory Id=\"ProgramFilesFolder\">",
+        "      <Directory Id=\"INSTALLFOLDER\" Name=\"${1:MyApp}\">",
+        "        $0",
+        "      </Directory>",
+        "    </StandardDirectory>",
+        "",
+        "    <Feature Id=\"Main\" Title=\"${1:MyApp}\" Level=\"1\">",
+        "      <ComponentGroupRef Id=\"ProductComponents\" />",
+        "    </Feature>",
+        "  </Package>",
+        "</Wix>"
+      ]
+    },
+    {
+      "name": "component",
+      "prefix": "comp",
+      "description": "Create a component with a file",
+      "body": [
+        "<Component Guid=\"*\">",
+        "  <File Source=\"${1:path/to/file}\" KeyPath=\"yes\" />",
+        "</Component>"
+      ]
+    },
+    {
+      "name": "directory",
+      "prefix": "dir",
+      "description": "Create a directory",
+      "body": [
+        "<Directory Id=\"${1:DirId}\" Name=\"${2:dirname}\">",
+        "  $0",
+        "</Directory>"
+      ]
+    },
+    {
+      "name": "feature",
+      "prefix": "feat",
+      "description": "Create a feature",
+      "body": [
+        "<Feature Id=\"${1:FeatureId}\" Title=\"${2:Feature Title}\" Level=\"1\">",
+        "  <ComponentGroupRef Id=\"${3:ComponentGroupId}\" />",
+        "</Feature>"
+      ]
+    },
+    {
+      "name": "registry",
+      "prefix": "reg",
+      "description": "Create a registry value",
+      "body": [
+        "<RegistryValue Root=\"${1|HKLM,HKCU,HKCR|}\"",
+        "               Key=\"${2:Software\\\\MyCompany\\\\MyApp}\"",
+        "               Name=\"${3:ValueName}\"",
+        "               Value=\"${4:value}\"",
+        "               Type=\"${5|string,integer,binary,expandable,multiString|}\"",
+        "               KeyPath=\"${6|yes,no|}\" />"
+      ]
+    },
+    {
+      "name": "shortcut",
+      "prefix": "short",
+      "description": "Create a shortcut",
+      "body": [
+        "<Shortcut Id=\"${1:ShortcutId}\"",
+        "          Name=\"${2:Shortcut Name}\"",
+        "          Directory=\"${3:ProgramMenuFolder}\"",
+        "          WorkingDirectory=\"INSTALLFOLDER\"",
+        "          Advertise=\"yes\" />"
+      ]
+    },
+    {
+      "name": "service",
+      "prefix": "svc",
+      "description": "Install a Windows service",
+      "body": [
+        "<ServiceInstall Id=\"${1:ServiceId}\"",
+        "                Name=\"${2:ServiceName}\"",
+        "                DisplayName=\"${3:Service Display Name}\"",
+        "                Start=\"${4|auto,demand,disabled|}\"",
+        "                Type=\"ownProcess\"",
+        "                ErrorControl=\"normal\" />",
+        "<ServiceControl Id=\"${1:ServiceId}_Control\"",
+        "                Name=\"${2:ServiceName}\"",
+        "                Start=\"install\"",
+        "                Stop=\"both\"",
+        "                Remove=\"uninstall\"",
+        "                Wait=\"yes\" />"
+      ]
+    },
+    {
+      "name": "bundle",
+      "prefix": "bundle",
+      "description": "Create a bootstrapper bundle",
+      "body": [
+        "<Wix xmlns=\"http://wixtoolset.org/schemas/v4/wxs\">",
+        "  <Bundle Name=\"${1:Bundle Name}\"",
+        "          Version=\"${2:1.0.0}\"",
+        "          Manufacturer=\"${3:MyCompany}\"",
+        "          UpgradeCode=\"${4:PUT-GUID-HERE}\">",
+        "",
+        "    <BootstrapperApplication>",
+        "      <bal:WixStandardBootstrapperApplication",
+        "        xmlns:bal=\"http://wixtoolset.org/schemas/v4/wxs/bal\"",
+        "        LicenseUrl=\"${5:}\"",
+        "        Theme=\"hyperlinkLicense\" />",
+        "    </BootstrapperApplication>",
+        "",
+        "    <Chain>",
+        "      $0",
+        "    </Chain>",
+        "  </Bundle>",
+        "</Wix>"
+      ]
+    },
+    {
+      "name": "customaction",
+      "prefix": "ca",
+      "description": "Create a custom action",
+      "body": [
+        "<Binary Id=\"${1:CustomActionDll}\" SourceFile=\"${2:path/to/custom.dll}\" />",
+        "<CustomAction Id=\"${3:CA_Action}\"",
+        "              BinaryRef=\"${1:CustomActionDll}\"",
+        "              DllEntry=\"${4:EntryPoint}\"",
+        "              Execute=\"${5|deferred,immediate|}\"",
+        "              Impersonate=\"${6|no,yes|}\" />"
+      ]
+    },
+    {
+      "name": "environment",
+      "prefix": "env",
+      "description": "Set an environment variable",
+      "body": [
+        "<Environment Id=\"${1:EnvVarId}\"",
+        "             Name=\"${2:VARIABLE_NAME}\"",
+        "             Value=\"${3:value}\"",
+        "             Action=\"${4|set,create|}\"",
+        "             Part=\"${5|all,first,last|}\"",
+        "             System=\"${6|yes,no|}\" />"
+      ]
+    },
+    {
+      "name": "property",
+      "prefix": "prop",
+      "description": "Define a property",
+      "body": [
+        "<Property Id=\"${1:PROPERTYNAME}\" Value=\"${2:value}\" />"
+      ]
+    },
+    {
+      "name": "fragment",
+      "prefix": "frag",
+      "description": "Create a fragment",
+      "body": [
+        "<Fragment>",
+        "  <ComponentGroup Id=\"${1:ComponentGroupId}\">",
+        "    $0",
+        "  </ComponentGroup>",
+        "</Fragment>"
+      ]
+    },
+    {
+      "name": "msipackage",
+      "prefix": "msi",
+      "description": "Add MSI package to bundle chain",
+      "body": [
+        "<MsiPackage Id=\"${1:PackageId}\"",
+        "            SourceFile=\"${2:path/to/package.msi}\"",
+        "            Vital=\"${3|yes,no|}\" />"
+      ]
+    },
+    {
+      "name": "exepackage",
+      "prefix": "exe",
+      "description": "Add EXE package to bundle chain",
+      "body": [
+        "<ExePackage Id=\"${1:PackageId}\"",
+        "            SourceFile=\"${2:path/to/setup.exe}\"",
+        "            InstallCommand=\"${3:/S}\"",
+        "            UninstallCommand=\"${4:/uninstall /S}\"",
+        "            DetectCondition=\"${5:condition}\" />"
+      ]
+    },
+    {
+      "name": "removefile",
+      "prefix": "rmfile",
+      "description": "Remove a file on uninstall",
+      "body": [
+        "<RemoveFile Id=\"${1:RemoveId}\"",
+        "            Name=\"${2:filename.ext}\"",
+        "            On=\"${3|uninstall,install,both|}\" />"
+      ]
+    },
+    {
+      "name": "removefolder",
+      "prefix": "rmdir",
+      "description": "Remove a folder on uninstall",
+      "body": [
+        "<RemoveFolder Id=\"${1:RemoveFolderId}\"",
+        "              On=\"${2|uninstall,install,both|}\" />"
+      ]
+    },
+    {
+      "name": "condition",
+      "prefix": "cond",
+      "description": "Add a launch condition",
+      "body": [
+        "<Launch Condition=\"${1:condition}\"",
+        "        Message=\"${2:Error message if condition fails}\" />"
+      ]
+    },
+    {
+      "name": "upgrade",
+      "prefix": "upgrade",
+      "description": "Configure major upgrade behavior",
+      "body": [
+        "<MajorUpgrade Schedule=\"${1|afterInstallInitialize,afterInstallValidate,afterInstallExecute|}\"",
+        "              DowngradeErrorMessage=\"${2:A newer version is already installed.}\"",
+        "              AllowSameVersionUpgrades=\"${3|no,yes|}\" />"
+      ]
+    }
+  ]
+}

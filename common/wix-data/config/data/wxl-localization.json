@@ -1,0 +1,141 @@
+{
+  "_source": "WiX Toolset Documentation",
+  "_url": "https://docs.firegiant.com/wix/schema/wxl/",
+  "description": "WXL (WiX Localization) files contain localized strings for WiX installers. They separate translatable text from the installation logic.",
+  "file_extension": ".wxl",
+  "elements": [
+    {
+      "name": "WixLocalization",
+      "description": "Root element of a WXL localization file.",
+      "attributes": [
+        {"name": "Culture", "type": "string", "required": true, "description": "The culture/locale this file targets (e.g., en-US, de-DE, fr-FR)"},
+        {"name": "Codepage", "type": "integer", "required": false, "description": "Code page for the localized strings. Auto-detected if not specified."},
+        {"name": "Language", "type": "integer", "required": false, "description": "LCID (Locale ID) for Windows Installer language. Auto-detected from Culture if not specified."},
+        {"name": "xmlns", "type": "string", "required": true, "default": "http://wixtoolset.org/schemas/v4/wxl", "description": "XML namespace for WiX v4 localization"}
+      ],
+      "children": ["String", "UI"]
+    },
+    {
+      "name": "String",
+      "description": "Defines a localized string that can be referenced in WiX source files using !(loc.Id) syntax.",
+      "attributes": [
+        {"name": "Id", "type": "identifier", "required": true, "description": "Unique identifier for referencing this string"},
+        {"name": "Value", "type": "string", "required": false, "description": "The localized string value. Can also be specified as element content."},
+        {"name": "Overridable", "type": "yesno", "required": false, "default": "no", "description": "If yes, allows this string to be overridden by another WXL file"}
+      ],
+      "content": "The localized string text (alternative to Value attribute)"
+    },
+    {
+      "name": "UI",
+      "description": "Container for UI-specific localization (dialog control text).",
+      "attributes": [
+        {"name": "Dialog", "type": "identifier", "required": true, "description": "The dialog containing the control to localize"},
+        {"name": "Control", "type": "identifier", "required": true, "description": "The control to localize"},
+        {"name": "Text", "type": "string", "required": false, "description": "The localized text for the control"}
+      ]
+    }
+  ],
+  "common_cultures": [
+    {"code": "en-US", "language": "English (United States)", "lcid": 1033, "codepage": 1252},
+    {"code": "en-GB", "language": "English (United Kingdom)", "lcid": 2057, "codepage": 1252},
+    {"code": "de-DE", "language": "German (Germany)", "lcid": 1031, "codepage": 1252},
+    {"code": "fr-FR", "language": "French (France)", "lcid": 1036, "codepage": 1252},
+    {"code": "es-ES", "language": "Spanish (Spain)", "lcid": 3082, "codepage": 1252},
+    {"code": "it-IT", "language": "Italian (Italy)", "lcid": 1040, "codepage": 1252},
+    {"code": "pt-BR", "language": "Portuguese (Brazil)", "lcid": 1046, "codepage": 1252},
+    {"code": "ja-JP", "language": "Japanese", "lcid": 1041, "codepage": 932},
+    {"code": "ko-KR", "language": "Korean", "lcid": 1042, "codepage": 949},
+    {"code": "zh-CN", "language": "Chinese (Simplified)", "lcid": 2052, "codepage": 936},
+    {"code": "zh-TW", "language": "Chinese (Traditional)", "lcid": 1028, "codepage": 950},
+    {"code": "ru-RU", "language": "Russian", "lcid": 1049, "codepage": 1251},
+    {"code": "pl-PL", "language": "Polish", "lcid": 1045, "codepage": 1250},
+    {"code": "nl-NL", "language": "Dutch (Netherlands)", "lcid": 1043, "codepage": 1252},
+    {"code": "sv-SE", "language": "Swedish", "lcid": 1053, "codepage": 1252},
+    {"code": "nb-NO", "language": "Norwegian (Bokmal)", "lcid": 1044, "codepage": 1252},
+    {"code": "da-DK", "language": "Danish", "lcid": 1030, "codepage": 1252},
+    {"code": "fi-FI", "language": "Finnish", "lcid": 1035, "codepage": 1252},
+    {"code": "cs-CZ", "language": "Czech", "lcid": 1029, "codepage": 1250},
+    {"code": "hu-HU", "language": "Hungarian", "lcid": 1038, "codepage": 1250},
+    {"code": "he-IL", "language": "Hebrew", "lcid": 1037, "codepage": 1255},
+    {"code": "ar-SA", "language": "Arabic (Saudi Arabia)", "lcid": 1025, "codepage": 1256},
+    {"code": "tr-TR", "language": "Turkish", "lcid": 1055, "codepage": 1254},
+    {"code": "th-TH", "language": "Thai", "lcid": 1054, "codepage": 874}
+  ],
+  "wixui_strings": [
+    {"id": "WelcomeDlgTitle", "description": "Welcome dialog title"},
+    {"id": "WelcomeDlgDescription", "description": "Welcome dialog description text"},
+    {"id": "LicenseAgreementDlgTitle", "description": "License agreement dialog title"},
+    {"id": "InstallDirDlgTitle", "description": "Installation directory dialog title"},
+    {"id": "InstallDirDlgDescription", "description": "Installation directory description"},
+    {"id": "ProgressDlgTitleInstalling", "description": "Progress dialog title during install"},
+    {"id": "ProgressDlgTitleRemoving", "description": "Progress dialog title during uninstall"},
+    {"id": "ProgressDlgTitleRepairing", "description": "Progress dialog title during repair"},
+    {"id": "ExitDlgTitle", "description": "Exit/completion dialog title"},
+    {"id": "ExitDlgDescription", "description": "Exit dialog description"},
+    {"id": "MaintenanceTypeDlgTitle", "description": "Maintenance type selection dialog title"},
+    {"id": "MaintenanceTypeDlgChangeButton", "description": "Change button text"},
+    {"id": "MaintenanceTypeDlgRepairButton", "description": "Repair button text"},
+    {"id": "MaintenanceTypeDlgRemoveButton", "description": "Remove button text"},
+    {"id": "BrowseDlgDescription", "description": "Browse dialog description"},
+    {"id": "ButtonText_Back", "description": "Back button text"},
+    {"id": "ButtonText_Cancel", "description": "Cancel button text"},
+    {"id": "ButtonText_Exit", "description": "Exit button text"},
+    {"id": "ButtonText_Finish", "description": "Finish button text"},
+    {"id": "ButtonText_Install", "description": "Install button text"},
+    {"id": "ButtonText_Next", "description": "Next button text"},
+    {"id": "ButtonText_Repair", "description": "Repair button text"},
+    {"id": "ButtonText_Remove", "description": "Remove button text"},
+    {"id": "ButtonText_Browse", "description": "Browse button text"},
+    {"id": "ButtonText_Reset", "description": "Reset button text"},
+    {"id": "ButtonText_DiskCost", "description": "Disk Cost button text"},
+    {"id": "ButtonText_Print", "description": "Print button text"}
+  ],
+  "localization_patterns": [
+    {
+      "name": "Reference in WXS",
+      "syntax": "!(loc.StringId)",
+      "example": "<Property Id=\"ProductName\" Value=\"!(loc.ProductName)\" />",
+      "description": "Reference a localized string from a WXL file"
+    },
+    {
+      "name": "Literal with Localization",
+      "syntax": "[Property] and !(loc.StringId)",
+      "example": "Value=\"!(loc.InstallingTo) [INSTALLFOLDER]\"",
+      "description": "Combine localized strings with property references"
+    },
+    {
+      "name": "Default with Override",
+      "example": "<String Id=\"ProductName\" Overridable=\"yes\">My Product</String>",
+      "description": "Define overridable default that can be replaced"
+    }
+  ],
+  "examples": [
+    {
+      "name": "Basic WXL file",
+      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<WixLocalization xmlns=\"http://wixtoolset.org/schemas/v4/wxl\" Culture=\"en-US\">\n  <String Id=\"ProductName\">My Application</String>\n  <String Id=\"ProductDescription\">A powerful application for productivity.</String>\n  <String Id=\"LaunchAppText\">Launch [ProductName]</String>\n  <String Id=\"InstallDirTitle\">Installation Folder</String>\n</WixLocalization>"
+    },
+    {
+      "name": "German localization",
+      "content": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<WixLocalization xmlns=\"http://wixtoolset.org/schemas/v4/wxl\" Culture=\"de-DE\">\n  <String Id=\"ProductName\">Meine Anwendung</String>\n  <String Id=\"ProductDescription\">Eine leistungsstarke Anwendung fur Produktivitat.</String>\n  <String Id=\"LaunchAppText\">[ProductName] starten</String>\n  <String Id=\"InstallDirTitle\">Installationsordner</String>\n</WixLocalization>"
+    },
+    {
+      "name": "Using localization in WXS",
+      "content": "<Package Name=\"!(loc.ProductName)\" Version=\"1.0.0\" Manufacturer=\"!(loc.Manufacturer)\" />\n\n<!-- Reference WXL in build: wix build -culture en-US -loc en-US.wxl Product.wxs -->"
+    }
+  ],
+  "best_practices": [
+    "Use descriptive String IDs that indicate purpose (ProductName, WelcomeMessage, ErrorText)",
+    "Keep strings in WXL even for single-language products for maintainability",
+    "Test with longest expected translations to catch UI overflow issues",
+    "Use Overridable=\"yes\" for strings that might need customization",
+    "Include placeholders like [ProductName] for dynamic content",
+    "Keep one WXL file per culture, named consistently (en-US.wxl, de-DE.wxl)",
+    "Document placeholders and formatting requirements in comments",
+    "Test RTL (right-to-left) languages if supporting Arabic or Hebrew"
+  ],
+  "build_commands": [
+    {"description": "Single culture build", "command": "wix build -culture en-US -loc en-US.wxl Product.wxs -o Product.msi"},
+    {"description": "Multiple cultures", "command": "wix build -culture en-US -loc en-US.wxl -culture de-DE -loc de-DE.wxl Product.wxs"},
+    {"description": "Neutral culture with localized MST", "command": "wix build Product.wxs && wix msi transform Product.msi Product_de.msi -o de-DE.mst"}
+  ]
+}

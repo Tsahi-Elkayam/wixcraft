@@ -1,0 +1,24 @@
+[package]
+name = "wix-silent"
+version = "0.1.0"
+edition = "2021"
+description = "Silent install parameter generator and validator for MSI packages"
+license = "MIT"
+
+[[bin]]
+name = "wix-silent"
+path = "src/main.rs"
+
+[lib]
+name = "wix_silent"
+path = "src/lib.rs"
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+roxmltree = "0.20"
+
+[dev-dependencies]
+tempfile = "3"

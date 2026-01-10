@@ -1,0 +1,28 @@
+{
+  "preprocessor": [
+    {"directive": "define", "syntax": "<?define VarName = \"value\"?>", "description": "Defines a preprocessor variable"},
+    {"directive": "undef", "syntax": "<?undef VarName?>", "description": "Undefines a preprocessor variable"},
+    {"directive": "if", "syntax": "<?if $(var.VarName) = \"value\"?>", "description": "Conditional compilation - evaluates expression"},
+    {"directive": "ifdef", "syntax": "<?ifdef VarName?>", "description": "Conditional compilation - checks if variable is defined"},
+    {"directive": "ifndef", "syntax": "<?ifndef VarName?>", "description": "Conditional compilation - checks if variable is not defined"},
+    {"directive": "else", "syntax": "<?else?>", "description": "Alternative branch for conditional compilation"},
+    {"directive": "elseif", "syntax": "<?elseif $(var.VarName) = \"value\"?>", "description": "Additional conditional branch"},
+    {"directive": "endif", "syntax": "<?endif?>", "description": "Ends a conditional compilation block"},
+    {"directive": "include", "syntax": "<?include \"filename.wxi\"?>", "description": "Includes another WiX source file"},
+    {"directive": "foreach", "syntax": "<?foreach item in $(var.List)?>", "description": "Iterates over semicolon-separated list"},
+    {"directive": "endforeach", "syntax": "<?endforeach?>", "description": "Ends a foreach loop"},
+    {"directive": "error", "syntax": "<?error \"message\"?>", "description": "Generates a preprocessor error"},
+    {"directive": "warning", "syntax": "<?warning \"message\"?>", "description": "Generates a preprocessor warning"},
+    {"directive": "pragma", "syntax": "<?pragma once?>", "description": "Preprocessor pragma directive"}
+  ],
+  "builtinVariables": [
+    {"name": "sys.CURRENTDIR", "description": "Current directory during compilation"},
+    {"name": "sys.SOURCEFILEDIR", "description": "Directory of the current source file"},
+    {"name": "sys.SOURCEFILEPATH", "description": "Full path of the current source file"},
+    {"name": "sys.PLATFORM", "description": "Platform being built (x86, x64, arm, arm64)"},
+    {"name": "sys.BUILDARCH", "description": "Build architecture"},
+    {"name": "env.*", "description": "Environment variable access (e.g., env.PATH)"},
+    {"name": "var.*", "description": "User-defined variable access"},
+    {"name": "bind.*", "description": "Binder variable access"}
+  ]
+}

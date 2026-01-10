@@ -1,0 +1,2660 @@
+{
+  "_source": "Element parent relationships",
+  "_description": "Valid parent elements for each WiX element",
+  "element_parents": [
+    {
+      "element": "AdminExecuteSequence",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package"
+      ]
+    },
+    {
+      "element": "AdminUISequence",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package",
+        "UI"
+      ]
+    },
+    {
+      "element": "AdvertiseExecuteSequence",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package"
+      ]
+    },
+    {
+      "element": "All",
+      "parents": [
+        "PatchFamily"
+      ]
+    },
+    {
+      "element": "AllocateRegistrySpace",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "AppId",
+      "parents": [
+        "Component",
+        "File",
+        "Fragment",
+        "Module",
+        "Package",
+        "TypeLib"
+      ]
+    },
+    {
+      "element": "AppSearch",
+      "parents": [
+        "InstallExecuteSequence",
+        "InstallUISequence"
+      ]
+    },
+    {
+      "element": "ApprovedExeForElevation",
+      "parents": [
+        "Bundle"
+      ]
+    },
+    {
+      "element": "ArpEntry",
+      "parents": [
+        "ExePackage"
+      ]
+    },
+    {
+      "element": "AssemblyName",
+      "parents": [
+        "File"
+      ]
+    },
+    {
+      "element": "Billboard",
+      "parents": [
+        "BillboardAction"
+      ]
+    },
+    {
+      "element": "BillboardAction",
+      "parents": [
+        "UI"
+      ]
+    },
+    {
+      "element": "Binary",
+      "parents": [
+        "Control",
+        "Fragment",
+        "Module",
+        "Package",
+        "UI"
+      ]
+    },
+    {
+      "element": "BinaryRef",
+      "parents": [
+        "PatchFamily"
+      ]
+    },
+    {
+      "element": "BindImage",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "BootstrapperApplication",
+      "parents": [
+        "Bundle",
+        "Fragment"
+      ]
+    },
+    {
+      "element": "BootstrapperApplicationDll",
+      "parents": [
+        "BootstrapperApplication"
+      ]
+    },
+    {
+      "element": "BootstrapperApplicationPrerequisiteInformation",
+      "parents": [
+        "BootstrapperApplication"
+      ]
+    },
+    {
+      "element": "BootstrapperApplicationRef",
+      "parents": [
+        "Bundle",
+        "Fragment"
+      ]
+    },
+    {
+      "element": "BootstrapperExtension",
+      "parents": [
+        "Bundle",
+        "Fragment"
+      ]
+    },
+    {
+      "element": "BootstrapperExtensionRef",
+      "parents": [
+        "Bundle",
+        "Fragment"
+      ]
+    },
+    {
+      "element": "BroadcastEnvironmentChange",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "BroadcastSettingChange",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "Bundle",
+      "parents": [
+        "Wix"
+      ]
+    },
+    {
+      "element": "BundleAttribute",
+      "parents": [
+        "BundleElement"
+      ]
+    },
+    {
+      "element": "BundleAttributeDefinition",
+      "parents": [
+        "BundleCustomData"
+      ]
+    },
+    {
+      "element": "BundleCustomData",
+      "parents": [
+        "Bundle",
+        "Fragment"
+      ]
+    },
+    {
+      "element": "BundleCustomDataRef",
+      "parents": [
+        "Bundle",
+        "Fragment"
+      ]
+    },
+    {
+      "element": "BundleElement",
+      "parents": [
+        "BundleCustomData",
+        "BundleCustomDataRef"
+      ]
+    },
+    {
+      "element": "BundleExtension",
+      "parents": [
+        "Bundle",
+        "Fragment"
+      ]
+    },
+    {
+      "element": "BundleExtensionRef",
+      "parents": [
+        "Bundle",
+        "Fragment"
+      ]
+    },
+    {
+      "element": "BundlePackage",
+      "parents": [
+        "Chain",
+        "PackageGroup"
+      ]
+    },
+    {
+      "element": "BundlePackagePayload",
+      "parents": [
+        "BundlePackage",
+        "PayloadGroup"
+      ]
+    },
+    {
+      "element": "CCPSearch",
+      "parents": [
+        "InstallExecuteSequence",
+        "InstallUISequence"
+      ]
+    },
+    {
+      "element": "Category",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "Certificate",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "CertificateRef",
+      "parents": [
+        "WebSite"
+      ]
+    },
+    {
+      "element": "Chain",
+      "parents": [
+        "Bundle"
+      ]
+    },
+    {
+      "element": "CheckRebootRequired",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "Class",
+      "parents": [
+        "AppId",
+        "Component",
+        "File",
+        "TypeLib"
+      ]
+    },
+    {
+      "element": "CloseApplication",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "Column",
+      "parents": [
+        "CustomTable"
+      ]
+    },
+    {
+      "element": "ComPlusApplication",
+      "parents": [
+        "ComPlusPartition"
+      ]
+    },
+    {
+      "element": "ComPlusApplicationRole",
+      "parents": [
+        "ComPlusApplication"
+      ]
+    },
+    {
+      "element": "ComPlusAssembly",
+      "parents": [
+        "ComPlusApplication"
+      ]
+    },
+    {
+      "element": "ComPlusAssemblyDependency",
+      "parents": [
+        "ComPlusAssembly"
+      ]
+    },
+    {
+      "element": "ComPlusComponent",
+      "parents": [
+        "ComPlusAssembly"
+      ]
+    },
+    {
+      "element": "ComPlusGroupInApplicationRole",
+      "parents": [
+        "ComPlusApplicationRole"
+      ]
+    },
+    {
+      "element": "ComPlusGroupInPartitionRole",
+      "parents": [
+        "ComPlusPartitionRole"
+      ]
+    },
+    {
+      "element": "ComPlusInterface",
+      "parents": [
+        "ComPlusComponent"
+      ]
+    },
+    {
+      "element": "ComPlusMethod",
+      "parents": [
+        "ComPlusInterface"
+      ]
+    },
+    {
+      "element": "ComPlusPartition",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "ComPlusPartitionRole",
+      "parents": [
+        "ComPlusPartition"
+      ]
+    },
+    {
+      "element": "ComPlusPartitionUser",
+      "parents": [
+        "ComPlusPartition"
+      ]
+    },
+    {
+      "element": "ComPlusRoleForComponent",
+      "parents": [
+        "ComPlusComponent"
+      ]
+    },
+    {
+      "element": "ComPlusRoleForInterface",
+      "parents": [
+        "ComPlusInterface"
+      ]
+    },
+    {
+      "element": "ComPlusRoleForMethod",
+      "parents": [
+        "ComPlusMethod"
+      ]
+    },
+    {
+      "element": "ComPlusSubscription",
+      "parents": [
+        "ComPlusComponent"
+      ]
+    },
+    {
+      "element": "ComPlusUserInApplicationRole",
+      "parents": [
+        "ComPlusApplicationRole"
+      ]
+    },
+    {
+      "element": "ComPlusUserInPartitionRole",
+      "parents": [
+        "ComPlusPartitionRole"
+      ]
+    },
+    {
+      "element": "ComboBox",
+      "parents": [
+        "Control",
+        "UI"
+      ]
+    },
+    {
+      "element": "CommandLine",
+      "parents": [
+        "BundlePackage",
+        "ExePackage"
+      ]
+    },
+    {
+      "element": "ComplianceCheck",
+      "parents": [
+        "Fragment",
+        "Package"
+      ]
+    },
+    {
+      "element": "ComplianceDrive",
+      "parents": [
+        "ComplianceCheck",
+        "Property"
+      ]
+    },
+    {
+      "element": "Component",
+      "parents": [
+        "ComponentGroup",
+        "Directory",
+        "DirectoryRef",
+        "Feature",
+        "FeatureGroup",
+        "FeatureRef",
+        "Fragment",
+        "Module",
+        "Package",
+        "StandardDirectory"
+      ]
+    },
+    {
+      "element": "ComponentGroup",
+      "parents": [
+        "Fragment",
+        "Package"
+      ]
+    },
+    {
+      "element": "ComponentGroupRef",
+      "parents": [
+        "ComponentGroup",
+        "Feature",
+        "FeatureGroup",
+        "FeatureRef",
+        "Module",
+        "Package"
+      ]
+    },
+    {
+      "element": "ComponentRef",
+      "parents": [
+        "ComponentGroup",
+        "Feature",
+        "FeatureGroup",
+        "FeatureRef",
+        "Module",
+        "Package",
+        "PatchFamily"
+      ]
+    },
+    {
+      "element": "ComponentSearch",
+      "parents": [
+        "Fragment",
+        "Package"
+      ]
+    },
+    {
+      "element": "ComponentSearchRef",
+      "parents": [
+        "ComponentSearch"
+      ]
+    },
+    {
+      "element": "Condition",
+      "parents": [
+        "Bundle"
+      ]
+    },
+    {
+      "element": "Configuration",
+      "parents": [
+        "Module"
+      ]
+    },
+    {
+      "element": "ConfigurationData",
+      "parents": [
+        "Merge"
+      ]
+    },
+    {
+      "element": "Container",
+      "parents": [
+        "Bundle",
+        "Fragment"
+      ]
+    },
+    {
+      "element": "ContainerRef",
+      "parents": [
+        "Bundle"
+      ]
+    },
+    {
+      "element": "Control",
+      "parents": [
+        "Billboard",
+        "Dialog"
+      ]
+    },
+    {
+      "element": "CopyFile",
+      "parents": [
+        "Component",
+        "File"
+      ]
+    },
+    {
+      "element": "CostFinalize",
+      "parents": [
+        "AdminExecuteSequence",
+        "AdminUISequence",
+        "AdvertiseExecuteSequence",
+        "InstallExecuteSequence",
+        "InstallUISequence"
+      ]
+    },
+    {
+      "element": "CostInitialize",
+      "parents": [
+        "AdminExecuteSequence",
+        "AdminUISequence",
+        "AdvertiseExecuteSequence",
+        "InstallExecuteSequence",
+        "InstallUISequence"
+      ]
+    },
+    {
+      "element": "CreateFolder",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "CreateFolders",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "CreateShortcuts",
+      "parents": [
+        "AdvertiseExecuteSequence",
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "Custom",
+      "parents": [
+        "AdminExecuteSequence",
+        "AdminUISequence",
+        "AdvertiseExecuteSequence",
+        "InstallExecuteSequence",
+        "InstallUISequence"
+      ]
+    },
+    {
+      "element": "CustomAction",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package"
+      ]
+    },
+    {
+      "element": "CustomActionRef",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package",
+        "PatchFamily"
+      ]
+    },
+    {
+      "element": "CustomTable",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package"
+      ]
+    },
+    {
+      "element": "CustomTableRef",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package"
+      ]
+    },
+    {
+      "element": "Data",
+      "parents": [
+        "Row"
+      ]
+    },
+    {
+      "element": "DeleteServices",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "Dependency",
+      "parents": [
+        "Module"
+      ]
+    },
+    {
+      "element": "Dialog",
+      "parents": [
+        "UI"
+      ]
+    },
+    {
+      "element": "DialogRef",
+      "parents": [
+        "UI"
+      ]
+    },
+    {
+      "element": "DigitalCertificate",
+      "parents": [
+        "DigitalSignature",
+        "PackageCertificates",
+        "PatchCertificates"
+      ]
+    },
+    {
+      "element": "DigitalCertificateRef",
+      "parents": [
+        "PatchFamily"
+      ]
+    },
+    {
+      "element": "DigitalSignature",
+      "parents": [
+        "Media"
+      ]
+    },
+    {
+      "element": "Directory",
+      "parents": [
+        "Directory",
+        "DirectoryRef",
+        "Fragment",
+        "Module",
+        "Package",
+        "StandardDirectory"
+      ]
+    },
+    {
+      "element": "DirectoryRef",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package",
+        "PatchFamily"
+      ]
+    },
+    {
+      "element": "DirectorySearch",
+      "parents": [
+        "Fragment",
+        "Package"
+      ]
+    },
+    {
+      "element": "DirectorySearchRef",
+      "parents": [
+        "DirectorySearch"
+      ]
+    },
+    {
+      "element": "DisableRollback",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "DotNetCompatibilityCheck",
+      "parents": [
+        "Bundle",
+        "Fragment"
+      ]
+    },
+    {
+      "element": "DotNetCompatibilityCheckRef",
+      "parents": [
+        "Bundle",
+        "Chain"
+      ]
+    },
+    {
+      "element": "DotNetCoreSdkFeatureBandSearch",
+      "parents": [
+        "Bundle",
+        "Fragment"
+      ]
+    },
+    {
+      "element": "DotNetCoreSdkFeatureBandSearchRef",
+      "parents": [
+        "Bundle"
+      ]
+    },
+    {
+      "element": "DotNetCoreSdkSearch",
+      "parents": [
+        "Bundle",
+        "Fragment"
+      ]
+    },
+    {
+      "element": "DotNetCoreSdkSearchRef",
+      "parents": [
+        "Bundle"
+      ]
+    },
+    {
+      "element": "DotNetCoreSearch",
+      "parents": [
+        "Bundle",
+        "Fragment"
+      ]
+    },
+    {
+      "element": "DotNetCoreSearchRef",
+      "parents": [
+        "Bundle"
+      ]
+    },
+    {
+      "element": "DuplicateFiles",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "EmbeddedChainer",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package"
+      ]
+    },
+    {
+      "element": "EmbeddedChainerRef",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package"
+      ]
+    },
+    {
+      "element": "EmbeddedUI",
+      "parents": [
+        "UI"
+      ]
+    },
+    {
+      "element": "EmbeddedUIResource",
+      "parents": [
+        "EmbeddedUI"
+      ]
+    },
+    {
+      "element": "EnsureTable",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package"
+      ]
+    },
+    {
+      "element": "Environment",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "Error",
+      "parents": [
+        "UI"
+      ]
+    },
+    {
+      "element": "EventManifest",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "EventSource",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "Exclude",
+      "parents": [
+        "Files",
+        "Payloads"
+      ]
+    },
+    {
+      "element": "Exclusion",
+      "parents": [
+        "Module"
+      ]
+    },
+    {
+      "element": "ExePackage",
+      "parents": [
+        "Chain",
+        "PackageGroup"
+      ]
+    },
+    {
+      "element": "ExePackagePayload",
+      "parents": [
+        "ExePackage",
+        "PayloadGroup"
+      ]
+    },
+    {
+      "element": "ExecuteAction",
+      "parents": [
+        "AdminUISequence",
+        "InstallUISequence"
+      ]
+    },
+    {
+      "element": "ExitCode",
+      "parents": [
+        "BundlePackage",
+        "ExePackage"
+      ]
+    },
+    {
+      "element": "ExitEarlyWithSuccess",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "Extension",
+      "parents": [
+        "Component",
+        "ProgId"
+      ]
+    },
+    {
+      "element": "FailWhenDeferred",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "Failure",
+      "parents": [
+        "ServiceConfigFailureActions"
+      ]
+    },
+    {
+      "element": "Feature",
+      "parents": [
+        "Feature",
+        "FeatureGroup",
+        "FeatureRef",
+        "Fragment",
+        "Package"
+      ]
+    },
+    {
+      "element": "FeatureGroup",
+      "parents": [
+        "FeatureRef",
+        "Fragment"
+      ]
+    },
+    {
+      "element": "FeatureGroupRef",
+      "parents": [
+        "Feature",
+        "FeatureGroup",
+        "FeatureRef",
+        "Package"
+      ]
+    },
+    {
+      "element": "FeatureRef",
+      "parents": [
+        "Feature",
+        "FeatureGroup",
+        "FeatureRef",
+        "Fragment",
+        "Package",
+        "PatchFamily"
+      ]
+    },
+    {
+      "element": "File",
+      "parents": [
+        "Component",
+        "ComponentGroup",
+        "Directory",
+        "DirectoryRef",
+        "Feature",
+        "FeatureGroup",
+        "FeatureRef",
+        "Fragment",
+        "Module",
+        "Package",
+        "StandardDirectory"
+      ]
+    },
+    {
+      "element": "FileCost",
+      "parents": [
+        "AdminExecuteSequence",
+        "AdminUISequence",
+        "InstallExecuteSequence",
+        "InstallUISequence"
+      ]
+    },
+    {
+      "element": "FileSearch",
+      "parents": [
+        "Fragment",
+        "Package"
+      ]
+    },
+    {
+      "element": "FileSearchRef",
+      "parents": [
+        "FileSearch"
+      ]
+    },
+    {
+      "element": "FileShare",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "FileSharePermission",
+      "parents": [
+        "FileShare"
+      ]
+    },
+    {
+      "element": "FileTypeMask",
+      "parents": [
+        "Class"
+      ]
+    },
+    {
+      "element": "Files",
+      "parents": [
+        "ComponentGroup",
+        "Directory",
+        "DirectoryRef",
+        "Feature",
+        "FeatureGroup",
+        "FeatureRef",
+        "Fragment",
+        "Module",
+        "Package",
+        "StandardDirectory"
+      ]
+    },
+    {
+      "element": "FindRelatedProducts",
+      "parents": [
+        "InstallExecuteSequence",
+        "InstallUISequence"
+      ]
+    },
+    {
+      "element": "FindVisualStudio",
+      "parents": [
+        "Fragment",
+        "Package"
+      ]
+    },
+    {
+      "element": "FirewallException",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "ForceReboot",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "FormatFile",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "Fragment",
+      "parents": [
+        "Wix"
+      ]
+    },
+    {
+      "element": "GetCapabilities",
+      "parents": [
+        "Fragment",
+        "Package"
+      ]
+    },
+    {
+      "element": "Group",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "GroupRef",
+      "parents": [
+        "Group",
+        "User"
+      ]
+    },
+    {
+      "element": "HttpHeader",
+      "parents": [
+        "WebSite",
+        "WebVirtualDir"
+      ]
+    },
+    {
+      "element": "Icon",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package",
+        "Shortcut"
+      ]
+    },
+    {
+      "element": "IconRef",
+      "parents": [
+        "PatchFamily"
+      ]
+    },
+    {
+      "element": "IgnoreTable",
+      "parents": [
+        "Module"
+      ]
+    },
+    {
+      "element": "Include",
+      "parents": [
+        "Wix"
+      ]
+    },
+    {
+      "element": "IniFile",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "IniFileSearch",
+      "parents": [
+        "ComplianceCheck",
+        "Property"
+      ]
+    },
+    {
+      "element": "InstallAdminPackage",
+      "parents": [
+        "AdminExecuteSequence",
+        "AdminUISequence"
+      ]
+    },
+    {
+      "element": "InstallExecute",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "InstallExecuteAgain",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "InstallExecuteSequence",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package"
+      ]
+    },
+    {
+      "element": "InstallFiles",
+      "parents": [
+        "AdminExecuteSequence",
+        "AdminUISequence",
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "InstallFinalize",
+      "parents": [
+        "AdminExecuteSequence",
+        "AdminUISequence",
+        "AdvertiseExecuteSequence",
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "InstallInitialize",
+      "parents": [
+        "AdminExecuteSequence",
+        "AdminUISequence",
+        "AdvertiseExecuteSequence",
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "InstallODBC",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "InstallServices",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "InstallUISequence",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package",
+        "UI"
+      ]
+    },
+    {
+      "element": "InstallValidate",
+      "parents": [
+        "AdminExecuteSequence",
+        "AdminUISequence",
+        "AdvertiseExecuteSequence",
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "Instance",
+      "parents": [
+        "InstanceTransforms"
+      ]
+    },
+    {
+      "element": "InstanceTransforms",
+      "parents": [
+        "Package"
+      ]
+    },
+    {
+      "element": "Interface",
+      "parents": [
+        "FirewallException"
+      ]
+    },
+    {
+      "element": "InterfaceType",
+      "parents": [
+        "FirewallException"
+      ]
+    },
+    {
+      "element": "InternetShortcut",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "IsolateComponent",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "IsolateComponents",
+      "parents": [
+        "InstallExecuteSequence",
+        "InstallUISequence"
+      ]
+    },
+    {
+      "element": "Launch",
+      "parents": [
+        "Fragment",
+        "Package"
+      ]
+    },
+    {
+      "element": "LaunchConditions",
+      "parents": [
+        "AdminExecuteSequence",
+        "AdminUISequence",
+        "InstallExecuteSequence",
+        "InstallUISequence"
+      ]
+    },
+    {
+      "element": "Level",
+      "parents": [
+        "Feature"
+      ]
+    },
+    {
+      "element": "ListBox",
+      "parents": [
+        "Control",
+        "UI"
+      ]
+    },
+    {
+      "element": "ListItem",
+      "parents": [
+        "ComboBox",
+        "ListBox",
+        "ListView"
+      ]
+    },
+    {
+      "element": "ListView",
+      "parents": [
+        "Control",
+        "UI"
+      ]
+    },
+    {
+      "element": "LocalAddress",
+      "parents": [
+        "FirewallException"
+      ]
+    },
+    {
+      "element": "Log",
+      "parents": [
+        "Bundle"
+      ]
+    },
+    {
+      "element": "MIME",
+      "parents": [
+        "Extension"
+      ]
+    },
+    {
+      "element": "MajorUpgrade",
+      "parents": [
+        "Package"
+      ]
+    },
+    {
+      "element": "ManagedBootstrapperApplicationPrereqInformation",
+      "parents": [
+        "BootstrapperApplication"
+      ]
+    },
+    {
+      "element": "Media",
+      "parents": [
+        "Fragment",
+        "Package",
+        "Patch"
+      ]
+    },
+    {
+      "element": "MediaTemplate",
+      "parents": [
+        "Fragment",
+        "Package"
+      ]
+    },
+    {
+      "element": "Merge",
+      "parents": [
+        "Directory",
+        "DirectoryRef",
+        "StandardDirectory"
+      ]
+    },
+    {
+      "element": "MergeRef",
+      "parents": [
+        "Feature",
+        "FeatureGroup",
+        "FeatureRef"
+      ]
+    },
+    {
+      "element": "MessageQueue",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "MessageQueuePermission",
+      "parents": [
+        "MessageQueue"
+      ]
+    },
+    {
+      "element": "MigrateFeatureStates",
+      "parents": [
+        "InstallExecuteSequence",
+        "InstallUISequence"
+      ]
+    },
+    {
+      "element": "MimeMap",
+      "parents": [
+        "WebSite",
+        "WebVirtualDir"
+      ]
+    },
+    {
+      "element": "Module",
+      "parents": [
+        "Wix"
+      ]
+    },
+    {
+      "element": "MoveFiles",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "MsiPackage",
+      "parents": [
+        "Chain",
+        "PackageGroup"
+      ]
+    },
+    {
+      "element": "MsiPackagePayload",
+      "parents": [
+        "MsiPackage",
+        "PayloadGroup"
+      ]
+    },
+    {
+      "element": "MsiProperty",
+      "parents": [
+        "MsiPackage",
+        "MspPackage"
+      ]
+    },
+    {
+      "element": "MsiPublishAssemblies",
+      "parents": [
+        "AdvertiseExecuteSequence",
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "MsiUnpublishAssemblies",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "MspPackage",
+      "parents": [
+        "Chain",
+        "PackageGroup"
+      ]
+    },
+    {
+      "element": "MspPackagePayload",
+      "parents": [
+        "MspPackage",
+        "PayloadGroup"
+      ]
+    },
+    {
+      "element": "MsuPackage",
+      "parents": [
+        "Chain",
+        "PackageGroup"
+      ]
+    },
+    {
+      "element": "MsuPackagePayload",
+      "parents": [
+        "MsuPackage",
+        "PayloadGroup"
+      ]
+    },
+    {
+      "element": "MultiString",
+      "parents": [
+        "RegistryValue"
+      ]
+    },
+    {
+      "element": "MultiStringValue",
+      "parents": [
+        "RegistryValue"
+      ]
+    },
+    {
+      "element": "NativeImage",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "ODBCDataSource",
+      "parents": [
+        "Component",
+        "ODBCDriver"
+      ]
+    },
+    {
+      "element": "ODBCDriver",
+      "parents": [
+        "Component",
+        "File"
+      ]
+    },
+    {
+      "element": "ODBCTranslator",
+      "parents": [
+        "Component",
+        "File"
+      ]
+    },
+    {
+      "element": "OptimizeCustomActions",
+      "parents": [
+        "Patch"
+      ]
+    },
+    {
+      "element": "OptionalUpdateRegistration",
+      "parents": [
+        "Bundle"
+      ]
+    },
+    {
+      "element": "Package",
+      "parents": [
+        "Wix"
+      ]
+    },
+    {
+      "element": "PackageCertificates",
+      "parents": [
+        "Fragment",
+        "Package"
+      ]
+    },
+    {
+      "element": "PackageGroup",
+      "parents": [
+        "Fragment"
+      ]
+    },
+    {
+      "element": "PackageGroupRef",
+      "parents": [
+        "Chain",
+        "Container",
+        "PackageGroup"
+      ]
+    },
+    {
+      "element": "Patch",
+      "parents": [
+        "Wix"
+      ]
+    },
+    {
+      "element": "PatchBaseline",
+      "parents": [
+        "Media"
+      ]
+    },
+    {
+      "element": "PatchCertificates",
+      "parents": [
+        "Fragment",
+        "Package"
+      ]
+    },
+    {
+      "element": "PatchFamily",
+      "parents": [
+        "Fragment",
+        "Patch",
+        "PatchFamilyGroup"
+      ]
+    },
+    {
+      "element": "PatchFamilyGroup",
+      "parents": [
+        "Fragment",
+        "Patch"
+      ]
+    },
+    {
+      "element": "PatchFamilyGroupRef",
+      "parents": [
+        "Fragment",
+        "Patch",
+        "PatchFamilyGroup"
+      ]
+    },
+    {
+      "element": "PatchFamilyRef",
+      "parents": [
+        "Patch",
+        "PatchFamilyGroup"
+      ]
+    },
+    {
+      "element": "PatchFiles",
+      "parents": [
+        "AdminExecuteSequence",
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "PatchInformation",
+      "parents": [
+        "Patch"
+      ]
+    },
+    {
+      "element": "PatchProperty",
+      "parents": [
+        "Patch"
+      ]
+    },
+    {
+      "element": "Payload",
+      "parents": [
+        "BootstrapperApplication",
+        "BootstrapperApplicationRef",
+        "BootstrapperExtension",
+        "BundleExtension",
+        "BundlePackage",
+        "ExePackage",
+        "MsiPackage",
+        "MspPackage",
+        "MsuPackage",
+        "PayloadGroup"
+      ]
+    },
+    {
+      "element": "PayloadGroup",
+      "parents": [
+        "Bundle",
+        "Fragment"
+      ]
+    },
+    {
+      "element": "PayloadGroupRef",
+      "parents": [
+        "BootstrapperApplication",
+        "BootstrapperApplicationRef",
+        "BootstrapperExtension",
+        "Bundle",
+        "BundleExtension",
+        "BundlePackage",
+        "ExePackage",
+        "MsiPackage",
+        "MspPackage",
+        "MsuPackage",
+        "PayloadGroup"
+      ]
+    },
+    {
+      "element": "Payloads",
+      "parents": [
+        "BootstrapperApplication",
+        "BootstrapperApplicationRef",
+        "BootstrapperExtension",
+        "Bundle",
+        "BundlePackage",
+        "ExePackage",
+        "MsiPackage",
+        "MspPackage",
+        "MsuPackage",
+        "PayloadGroup"
+      ]
+    },
+    {
+      "element": "PerfCounter",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "PerfCounterManifest",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "PerformanceCategory",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "PerformanceCounter",
+      "parents": [
+        "PerformanceCategory"
+      ]
+    },
+    {
+      "element": "Permission",
+      "parents": [
+        "CreateFolder",
+        "File",
+        "RegistryKey",
+        "RegistryValue"
+      ]
+    },
+    {
+      "element": "PermissionEx",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "ProcessComponents",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "ProductSearch",
+      "parents": [
+        "Fragment",
+        "Package"
+      ]
+    },
+    {
+      "element": "ProductSearchRef",
+      "parents": [
+        "ProductSearch"
+      ]
+    },
+    {
+      "element": "ProgId",
+      "parents": [
+        "Class",
+        "Component",
+        "ProgId"
+      ]
+    },
+    {
+      "element": "ProgressText",
+      "parents": [
+        "UI"
+      ]
+    },
+    {
+      "element": "Property",
+      "parents": [
+        "Control",
+        "Fragment",
+        "Module",
+        "ODBCDataSource",
+        "ODBCDriver",
+        "Package",
+        "UI",
+        "Upgrade"
+      ]
+    },
+    {
+      "element": "PropertyRef",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package",
+        "PatchFamily",
+        "UI"
+      ]
+    },
+    {
+      "element": "Provides",
+      "parents": [
+        "BundlePackage",
+        "Component",
+        "ExePackage",
+        "MsiPackage",
+        "MspPackage",
+        "MsuPackage"
+      ]
+    },
+    {
+      "element": "Publish",
+      "parents": [
+        "Control",
+        "UI"
+      ]
+    },
+    {
+      "element": "PublishComponents",
+      "parents": [
+        "AdvertiseExecuteSequence",
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "PublishFeatures",
+      "parents": [
+        "AdvertiseExecuteSequence",
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "PublishProduct",
+      "parents": [
+        "AdvertiseExecuteSequence",
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "QueryNativeMachine",
+      "parents": [
+        "Bundle"
+      ]
+    },
+    {
+      "element": "QueryWindowsDirectories",
+      "parents": [
+        "Bundle"
+      ]
+    },
+    {
+      "element": "QueryWindowsDriverInfo",
+      "parents": [
+        "Bundle"
+      ]
+    },
+    {
+      "element": "QueryWindowsSuiteInfo",
+      "parents": [
+        "Bundle"
+      ]
+    },
+    {
+      "element": "QueryWindowsWellKnownSIDs",
+      "parents": [
+        "Bundle"
+      ]
+    },
+    {
+      "element": "RMCCPSearch",
+      "parents": [
+        "InstallExecuteSequence",
+        "InstallUISequence"
+      ]
+    },
+    {
+      "element": "RadioButton",
+      "parents": [
+        "RadioButtonGroup"
+      ]
+    },
+    {
+      "element": "RadioButtonGroup",
+      "parents": [
+        "Control",
+        "UI"
+      ]
+    },
+    {
+      "element": "RecycleTime",
+      "parents": [
+        "WebAppPool"
+      ]
+    },
+    {
+      "element": "RegisterClassInfo",
+      "parents": [
+        "AdvertiseExecuteSequence",
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "RegisterComPlus",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "RegisterExtensionInfo",
+      "parents": [
+        "AdvertiseExecuteSequence",
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "RegisterFonts",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "RegisterMIMEInfo",
+      "parents": [
+        "AdvertiseExecuteSequence",
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "RegisterProduct",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "RegisterProgIdInfo",
+      "parents": [
+        "AdvertiseExecuteSequence",
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "RegisterTypeLibraries",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "RegisterUser",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "RegistryKey",
+      "parents": [
+        "Component",
+        "RegistryKey"
+      ]
+    },
+    {
+      "element": "RegistrySearch",
+      "parents": [
+        "Fragment",
+        "Package"
+      ]
+    },
+    {
+      "element": "RegistrySearchRef",
+      "parents": [
+        "RegistrySearch"
+      ]
+    },
+    {
+      "element": "RegistryValue",
+      "parents": [
+        "Component",
+        "RegistryKey"
+      ]
+    },
+    {
+      "element": "RelatedBundle",
+      "parents": [
+        "Bundle",
+        "Fragment"
+      ]
+    },
+    {
+      "element": "RemoteAddress",
+      "parents": [
+        "FirewallException"
+      ]
+    },
+    {
+      "element": "RemoteBundle",
+      "parents": [
+        "BundlePackagePayload"
+      ]
+    },
+    {
+      "element": "RemoteRelatedBundle",
+      "parents": [
+        "RemoteBundle"
+      ]
+    },
+    {
+      "element": "RemoveDuplicateFiles",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "RemoveEnvironmentStrings",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "RemoveExistingProducts",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "RemoveFile",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "RemoveFiles",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "RemoveFolder",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "RemoveFolderEx",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "RemoveFolders",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "RemoveIniValues",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "RemoveODBC",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "RemoveRegistryKey",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "RemoveRegistryValue",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "RemoveRegistryValues",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "RemoveShortcuts",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "RequiredPrivilege",
+      "parents": [
+        "ServiceInstall"
+      ]
+    },
+    {
+      "element": "Requires",
+      "parents": [
+        "Bundle",
+        "Fragment",
+        "Module",
+        "Package",
+        "Provides"
+      ]
+    },
+    {
+      "element": "RequiresRef",
+      "parents": [
+        "Provides"
+      ]
+    },
+    {
+      "element": "ReserveCost",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "ResolveSource",
+      "parents": [
+        "AdminExecuteSequence",
+        "InstallExecuteSequence",
+        "InstallUISequence"
+      ]
+    },
+    {
+      "element": "RestartResource",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "RollbackBoundary",
+      "parents": [
+        "Chain",
+        "PackageGroup"
+      ]
+    },
+    {
+      "element": "Row",
+      "parents": [
+        "CustomTable",
+        "CustomTableRef"
+      ]
+    },
+    {
+      "element": "SFPCatalog",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package",
+        "SFPCatalog"
+      ]
+    },
+    {
+      "element": "SFPFile",
+      "parents": [
+        "SFPCatalog"
+      ]
+    },
+    {
+      "element": "ScheduleReboot",
+      "parents": [
+        "InstallExecuteSequence",
+        "InstallUISequence"
+      ]
+    },
+    {
+      "element": "SelfRegModules",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "SelfUnregModules",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "ServiceArgument",
+      "parents": [
+        "ServiceControl"
+      ]
+    },
+    {
+      "element": "ServiceConfig",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "ServiceConfigFailureActions",
+      "parents": [
+        "Component",
+        "ServiceInstall"
+      ]
+    },
+    {
+      "element": "ServiceControl",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "ServiceDependency",
+      "parents": [
+        "ServiceInstall"
+      ]
+    },
+    {
+      "element": "ServiceInstall",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "SetDirectory",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package"
+      ]
+    },
+    {
+      "element": "SetODBCFolders",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "SetProperty",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package"
+      ]
+    },
+    {
+      "element": "SetVariable",
+      "parents": [
+        "Bundle",
+        "Fragment"
+      ]
+    },
+    {
+      "element": "SetVariableRef",
+      "parents": [
+        "Bundle",
+        "Fragment"
+      ]
+    },
+    {
+      "element": "Shortcut",
+      "parents": [
+        "Component",
+        "CreateFolder",
+        "File"
+      ]
+    },
+    {
+      "element": "ShortcutProperty",
+      "parents": [
+        "Shortcut"
+      ]
+    },
+    {
+      "element": "Show",
+      "parents": [
+        "AdminUISequence",
+        "InstallUISequence"
+      ]
+    },
+    {
+      "element": "SlipstreamMsp",
+      "parents": [
+        "MsiPackage"
+      ]
+    },
+    {
+      "element": "SniSslCertificate",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "SoftwareTag",
+      "parents": [
+        "Bundle",
+        "Package"
+      ]
+    },
+    {
+      "element": "SoftwareTagRef",
+      "parents": [
+        "PatchFamily"
+      ]
+    },
+    {
+      "element": "SqlDatabase",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "SqlFileSpec",
+      "parents": [
+        "SqlDatabase"
+      ]
+    },
+    {
+      "element": "SqlLogFileSpec",
+      "parents": [
+        "SqlDatabase"
+      ]
+    },
+    {
+      "element": "SqlScript",
+      "parents": [
+        "SqlDatabase"
+      ]
+    },
+    {
+      "element": "SqlString",
+      "parents": [
+        "SqlDatabase"
+      ]
+    },
+    {
+      "element": "StandardDirectory",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package"
+      ]
+    },
+    {
+      "element": "StartServices",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "StopServices",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "Subscribe",
+      "parents": [
+        "Control"
+      ]
+    },
+    {
+      "element": "Substitution",
+      "parents": [
+        "Module"
+      ]
+    },
+    {
+      "element": "SummaryInformation",
+      "parents": [
+        "Module",
+        "Package"
+      ]
+    },
+    {
+      "element": "TargetProductCode",
+      "parents": [
+        "TargetProductCodes"
+      ]
+    },
+    {
+      "element": "TargetProductCodes",
+      "parents": [
+        "Patch"
+      ]
+    },
+    {
+      "element": "Text",
+      "parents": [
+        "Control"
+      ]
+    },
+    {
+      "element": "TextStyle",
+      "parents": [
+        "UI"
+      ]
+    },
+    {
+      "element": "TouchFile",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "TypeLib",
+      "parents": [
+        "Component",
+        "File"
+      ]
+    },
+    {
+      "element": "UI",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package"
+      ]
+    },
+    {
+      "element": "UIRef",
+      "parents": [
+        "Fragment",
+        "Module",
+        "Package",
+        "PatchFamily",
+        "UI"
+      ]
+    },
+    {
+      "element": "UIText",
+      "parents": [
+        "UI"
+      ]
+    },
+    {
+      "element": "UnpublishComponents",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "UnpublishFeatures",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "UnregisterClassInfo",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "UnregisterComPlus",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "UnregisterExtensionInfo",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "UnregisterFonts",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "UnregisterMIMEInfo",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "UnregisterProgIdInfo",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "UnregisterTypeLibraries",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "Update",
+      "parents": [
+        "Bundle"
+      ]
+    },
+    {
+      "element": "Upgrade",
+      "parents": [
+        "Fragment",
+        "Package"
+      ]
+    },
+    {
+      "element": "UpgradeVersion",
+      "parents": [
+        "Upgrade"
+      ]
+    },
+    {
+      "element": "UrlAce",
+      "parents": [
+        "UrlReservation"
+      ]
+    },
+    {
+      "element": "UrlReservation",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "User",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "Validate",
+      "parents": [
+        "PatchBaseline"
+      ]
+    },
+    {
+      "element": "ValidateProductID",
+      "parents": [
+        "InstallExecuteSequence",
+        "InstallUISequence"
+      ]
+    },
+    {
+      "element": "Variable",
+      "parents": [
+        "Bundle",
+        "Fragment"
+      ]
+    },
+    {
+      "element": "Verb",
+      "parents": [
+        "Extension"
+      ]
+    },
+    {
+      "element": "VsixPackage",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "WaitForEvent",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "WaitForEventDeferred",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "WebAddress",
+      "parents": [
+        "WebSite"
+      ]
+    },
+    {
+      "element": "WebAppPool",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "WebApplication",
+      "parents": [
+        "WebDir",
+        "WebSite",
+        "WebVirtualDir"
+      ]
+    },
+    {
+      "element": "WebApplicationExtension",
+      "parents": [
+        "WebApplication"
+      ]
+    },
+    {
+      "element": "WebDir",
+      "parents": [
+        "WebSite"
+      ]
+    },
+    {
+      "element": "WebDirProperties",
+      "parents": [
+        "WebDir",
+        "WebSite",
+        "WebVirtualDir"
+      ]
+    },
+    {
+      "element": "WebError",
+      "parents": [
+        "WebSite",
+        "WebVirtualDir"
+      ]
+    },
+    {
+      "element": "WebFilter",
+      "parents": [
+        "WebSite"
+      ]
+    },
+    {
+      "element": "WebLog",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "WebProperty",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "WebServiceExtension",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "WebSite",
+      "parents": [
+        "Component"
+      ]
+    },
+    {
+      "element": "WebVirtualDir",
+      "parents": [
+        "WebSite",
+        "WebVirtualDir"
+      ]
+    },
+    {
+      "element": "WindowsFeatureSearch",
+      "parents": [
+        "Fragment",
+        "Package"
+      ]
+    },
+    {
+      "element": "WindowsFeatureSearchRef",
+      "parents": [
+        "WindowsFeatureSearch"
+      ]
+    },
+    {
+      "element": "WixDotNetCoreBootstrapperApplicationHost",
+      "parents": [
+        "BootstrapperApplication"
+      ]
+    },
+    {
+      "element": "WixInternalUIBootstrapperApplication",
+      "parents": [
+        "BootstrapperApplication"
+      ]
+    },
+    {
+      "element": "WixManagedBootstrapperApplicationHost",
+      "parents": [
+        "BootstrapperApplication"
+      ]
+    },
+    {
+      "element": "WixPrerequisiteBootstrapperApplication",
+      "parents": [
+        "BootstrapperApplication"
+      ]
+    },
+    {
+      "element": "WixStandardBootstrapperApplication",
+      "parents": [
+        "BootstrapperApplication"
+      ]
+    },
+    {
+      "element": "WixUI",
+      "parents": [
+        "Fragment",
+        "Package"
+      ]
+    },
+    {
+      "element": "WixVariable",
+      "parents": [
+        "Bundle",
+        "Fragment",
+        "Module",
+        "Package"
+      ]
+    },
+    {
+      "element": "WriteEnvironmentStrings",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "WriteIniValues",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "WriteRegistryValues",
+      "parents": [
+        "InstallExecuteSequence"
+      ]
+    },
+    {
+      "element": "XmlConfig",
+      "parents": [
+        "Component",
+        "XmlConfig"
+      ]
+    },
+    {
+      "element": "XmlFile",
+      "parents": [
+        "Component"
+      ]
+    }
+  ]
+}

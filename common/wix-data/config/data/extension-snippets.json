@@ -1,0 +1,332 @@
+{
+  "snippets": [
+    {
+      "prefix": "util-user",
+      "name": "Create User",
+      "description": "Create a Windows user account",
+      "scope": "wxs",
+      "extension": "util",
+      "body": [
+        "<util:User Id=\"${1:UserId}\"",
+        "          Name=\"${2:username}\"",
+        "          Password=\"[${3:PASSWORD_PROPERTY}]\"",
+        "          CanNotChangePassword=\"yes\"",
+        "          PasswordNeverExpires=\"yes\"",
+        "          CreateUser=\"yes\"",
+        "          UpdateIfExists=\"yes\" />"
+      ]
+    },
+    {
+      "prefix": "util-group",
+      "name": "Create Group",
+      "description": "Create a Windows group",
+      "scope": "wxs",
+      "extension": "util",
+      "body": [
+        "<util:Group Id=\"${1:GroupId}\"",
+        "            Name=\"${2:GroupName}\"",
+        "            CreateGroup=\"yes\" />"
+      ]
+    },
+    {
+      "prefix": "util-permissionex",
+      "name": "Set Permissions",
+      "description": "Set file/folder permissions using PermissionEx",
+      "scope": "wxs",
+      "extension": "util",
+      "body": [
+        "<util:PermissionEx User=\"${1:Users}\"",
+        "                   GenericAll=\"yes\" />"
+      ]
+    },
+    {
+      "prefix": "util-xmlfile",
+      "name": "Modify XML File",
+      "description": "Modify an XML file during installation",
+      "scope": "wxs",
+      "extension": "util",
+      "body": [
+        "<util:XmlFile Id=\"${1:XmlFileId}\"",
+        "              File=\"[${2:INSTALLFOLDER}]${3:config.xml}\"",
+        "              Action=\"setValue\"",
+        "              ElementPath=\"${4://configuration/appSettings/add[@key='setting']}\"",
+        "              Name=\"value\"",
+        "              Value=\"${5:newvalue}\"",
+        "              Sequence=\"1\" />"
+      ]
+    },
+    {
+      "prefix": "util-eventsource",
+      "name": "Event Source",
+      "description": "Create Windows Event Log source",
+      "scope": "wxs",
+      "extension": "util",
+      "body": [
+        "<util:EventSource Id=\"${1:EventSourceId}\"",
+        "                  Name=\"${2:MyApplication}\"",
+        "                  Log=\"Application\"",
+        "                  EventMessageFile=\"[${3:INSTALLFOLDER}]${4:myapp.dll}\" />"
+      ]
+    },
+    {
+      "prefix": "util-fileshare",
+      "name": "File Share",
+      "description": "Create a Windows file share",
+      "scope": "wxs",
+      "extension": "util",
+      "body": [
+        "<util:FileShare Id=\"${1:ShareId}\"",
+        "                Name=\"${2:ShareName}\"",
+        "                Description=\"${3:Shared folder}\" >",
+        "    <util:FileSharePermission User=\"Everyone\" GenericRead=\"yes\" />",
+        "</util:FileShare>"
+      ]
+    },
+    {
+      "prefix": "util-serviceconfig",
+      "name": "Service Failure Actions",
+      "description": "Configure service failure recovery",
+      "scope": "wxs",
+      "extension": "util",
+      "body": [
+        "<util:ServiceConfig ServiceName=\"${1:MyService}\"",
+        "                    FirstFailureActionType=\"restart\"",
+        "                    SecondFailureActionType=\"restart\"",
+        "                    ThirdFailureActionType=\"none\"",
+        "                    RestartServiceDelayInSeconds=\"60\"",
+        "                    ResetPeriodInDays=\"1\" />"
+      ]
+    },
+    {
+      "prefix": "iis-website",
+      "name": "IIS Website",
+      "description": "Create an IIS website",
+      "scope": "wxs",
+      "extension": "iis",
+      "body": [
+        "<iis:WebSite Id=\"${1:WebSiteId}\"",
+        "             Description=\"${2:My Web Site}\"",
+        "             Directory=\"${3:INSTALLFOLDER}\"",
+        "             AutoStart=\"yes\">",
+        "    <iis:WebAddress Id=\"${4:WebAddressId}\"",
+        "                    Port=\"${5:80}\" />",
+        "</iis:WebSite>"
+      ]
+    },
+    {
+      "prefix": "iis-webapp",
+      "name": "IIS Web Application",
+      "description": "Create an IIS web application",
+      "scope": "wxs",
+      "extension": "iis",
+      "body": [
+        "<iis:WebApplication Id=\"${1:WebAppId}\"",
+        "                    Name=\"${2:MyApp}\"",
+        "                    WebAppPool=\"${3:AppPoolId}\" />"
+      ]
+    },
+    {
+      "prefix": "iis-apppool",
+      "name": "IIS Application Pool",
+      "description": "Create an IIS application pool",
+      "scope": "wxs",
+      "extension": "iis",
+      "body": [
+        "<iis:WebAppPool Id=\"${1:AppPoolId}\"",
+        "                Name=\"${2:MyAppPool}\"",
+        "                Identity=\"applicationPoolIdentity\"",
+        "                ManagedPipelineMode=\"Integrated\"",
+        "                ManagedRuntimeVersion=\"v4.0\" />"
+      ]
+    },
+    {
+      "prefix": "iis-vdir",
+      "name": "IIS Virtual Directory",
+      "description": "Create an IIS virtual directory",
+      "scope": "wxs",
+      "extension": "iis",
+      "body": [
+        "<iis:WebVirtualDir Id=\"${1:VDirId}\"",
+        "                   Alias=\"${2:myapp}\"",
+        "                   Directory=\"${3:INSTALLFOLDER}\"",
+        "                   WebSite=\"${4:WebSiteId}\" />"
+      ]
+    },
+    {
+      "prefix": "iis-certificate",
+      "name": "SSL Certificate",
+      "description": "Install an SSL certificate",
+      "scope": "wxs",
+      "extension": "iis",
+      "body": [
+        "<iis:Certificate Id=\"${1:CertId}\"",
+        "                 BinaryRef=\"${2:CertBinary}\"",
+        "                 Name=\"${3:MyCertificate}\"",
+        "                 StoreLocation=\"localMachine\"",
+        "                 StoreName=\"personal\"",
+        "                 PFXPassword=\"[${4:CERT_PASSWORD}]\" />"
+      ]
+    },
+    {
+      "prefix": "sql-database",
+      "name": "SQL Database",
+      "description": "Create a SQL Server database",
+      "scope": "wxs",
+      "extension": "sql",
+      "body": [
+        "<sql:SqlDatabase Id=\"${1:DatabaseId}\"",
+        "                 Server=\"${2:[SQL_SERVER]}\"",
+        "                 Database=\"${3:MyDatabase}\"",
+        "                 CreateOnInstall=\"yes\"",
+        "                 DropOnUninstall=\"yes\"",
+        "                 User=\"${4:SqlUserId}\">",
+        "    <sql:SqlScript Id=\"${5:CreateScript}\"",
+        "                   BinaryRef=\"${6:CreateSqlBinary}\"",
+        "                   ExecuteOnInstall=\"yes\" />",
+        "</sql:SqlDatabase>"
+      ]
+    },
+    {
+      "prefix": "sql-script",
+      "name": "SQL Script",
+      "description": "Execute a SQL script",
+      "scope": "wxs",
+      "extension": "sql",
+      "body": [
+        "<sql:SqlScript Id=\"${1:ScriptId}\"",
+        "               SqlDb=\"${2:DatabaseId}\"",
+        "               BinaryRef=\"${3:SqlScriptBinary}\"",
+        "               ExecuteOnInstall=\"yes\"",
+        "               RollbackOnInstall=\"yes\" />"
+      ]
+    },
+    {
+      "prefix": "netfx-dotnetcheck",
+      "name": ".NET Compatibility Check",
+      "description": "Check for .NET runtime in MSI",
+      "scope": "wxs",
+      "extension": "netfx",
+      "body": [
+        "<netfx:DotNetCompatibilityCheck Property=\"${1:DOTNETCHECK}\"",
+        "                                 RuntimeType=\"${2:desktop}\"",
+        "                                 Platform=\"${3:x64}\"",
+        "                                 Version=\"${4:8.0.0}\" />"
+      ]
+    },
+    {
+      "prefix": "netfx-dotnetsearch",
+      "name": ".NET Core Search (Bundle)",
+      "description": "Search for .NET runtime in bundle",
+      "scope": "wxs",
+      "extension": "netfx",
+      "body": [
+        "<netfx:DotNetCoreSearch RuntimeType=\"${1:desktop}\"",
+        "                        Platform=\"${2:x64}\"",
+        "                        MajorVersion=\"${3:8}\"",
+        "                        Variable=\"${4:DOTNET_VERSION}\" />"
+      ]
+    },
+    {
+      "prefix": "netfx-nativeimage",
+      "name": "NGEN Native Image",
+      "description": "Generate native image with NGEN",
+      "scope": "wxs",
+      "extension": "netfx",
+      "body": [
+        "<netfx:NativeImage Id=\"${1:NgenId}\"",
+        "                   Platform=\"${2:all}\"",
+        "                   Priority=\"${3:3}\" />"
+      ]
+    },
+    {
+      "prefix": "firewall-exception",
+      "name": "Firewall Exception",
+      "description": "Create Windows Firewall exception",
+      "scope": "wxs",
+      "extension": "firewall",
+      "body": [
+        "<firewall:FirewallException Id=\"${1:FwExceptionId}\"",
+        "                            Name=\"${2:My Application}\"",
+        "                            File=\"[#${3:MainExe}]\"",
+        "                            Scope=\"any\"",
+        "                            Profile=\"all\" />"
+      ]
+    },
+    {
+      "prefix": "firewall-port",
+      "name": "Firewall Port Exception",
+      "description": "Create firewall exception for a port",
+      "scope": "wxs",
+      "extension": "firewall",
+      "body": [
+        "<firewall:FirewallException Id=\"${1:FwPortId}\"",
+        "                            Name=\"${2:My Service Port}\"",
+        "                            Port=\"${3:8080}\"",
+        "                            Protocol=\"tcp\"",
+        "                            Scope=\"any\"",
+        "                            Profile=\"all\" />"
+      ]
+    },
+    {
+      "prefix": "bal-stdba",
+      "name": "Standard Bootstrapper Application",
+      "description": "WixStandardBootstrapperApplication for bundle",
+      "scope": "wxs",
+      "extension": "bal",
+      "body": [
+        "<bal:WixStandardBootstrapperApplication",
+        "    LicenseUrl=\"${1:https://example.com/license}\"",
+        "    Theme=\"${2:WixStandardBootstrapperApplication.HyperlinkLicense}\"",
+        "    LogoFile=\"${3:logo.png}\" />"
+      ]
+    },
+    {
+      "prefix": "bal-dotnetba",
+      "name": ".NET Core Bootstrapper Application Host",
+      "description": "Host for .NET Core/5+ bootstrapper application",
+      "scope": "wxs",
+      "extension": "bal",
+      "body": [
+        "<bal:WixDotNetCoreBootstrapperApplicationHost>",
+        "    <bal:BootstrapperApplicationDll SourceFile=\"${1:MyBA.dll}\" />",
+        "</bal:WixDotNetCoreBootstrapperApplicationHost>"
+      ]
+    },
+    {
+      "prefix": "http-urlreservation",
+      "name": "HTTP URL Reservation",
+      "description": "Reserve a URL with HTTP.SYS",
+      "scope": "wxs",
+      "extension": "http",
+      "body": [
+        "<http:UrlReservation Id=\"${1:UrlResId}\"",
+        "                     Url=\"${2:http://+:8080/myapp/}\" >",
+        "    <http:UrlAce Id=\"${3:UrlAceId}\"",
+        "                 SecurityPrincipal=\"${4:NT AUTHORITY\\\\NETWORK SERVICE}\" />",
+        "</http:UrlReservation>"
+      ]
+    },
+    {
+      "prefix": "dep-provides",
+      "name": "Dependency Provider",
+      "description": "Declare a dependency provider",
+      "scope": "wxs",
+      "extension": "dependency",
+      "body": [
+        "<dep:Provides Key=\"${1:MyApp_Dep}\" />"
+      ]
+    },
+    {
+      "prefix": "dep-requires",
+      "name": "Dependency Requirement",
+      "description": "Declare a dependency requirement",
+      "scope": "wxs",
+      "extension": "dependency",
+      "body": [
+        "<dep:Requires Id=\"${1:RequireId}\"",
+        "              ProviderKey=\"${2:SharedLib_Dep}\"",
+        "              Minimum=\"${3:1.0.0}\" />"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+# WiX Language Server Configuration
+# Place this file as .wix-lsp.yaml in your workspace root to customize settings
+
+engine:
+  name: wix-lsp
+  log_level: info
+  workspace_discovery: true
+
+plugins:
+  # Paths to search for wix-data directory (relative to workspace root)
+  data_search_paths:
+    - wix-data
+    - .wix-data
+    - src/core/wix-data
+    - ../wix-data
+    - ../../wix-data
+
+  # Required subdirectories to validate data path
+  required_subdirs:
+    - elements
+
+  # Enabled plugins (empty = all available)
+  enabled: []

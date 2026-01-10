@@ -1,0 +1,239 @@
+{
+  "prerequisites": [
+    {
+      "name": "netfx48",
+      "display_name": ".NET Framework 4.8",
+      "version": "4.8",
+      "download_url": "https://go.microsoft.com/fwlink/?linkid=2088631",
+      "detection_method": "registry",
+      "detection_key": "HKLM\\SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full",
+      "detection_value": "Release",
+      "detection_min": 528040,
+      "wix_property": "WIX_IS_NETFRAMEWORK_48_OR_LATER_INSTALLED",
+      "wix_package_group": "NetFx48Web"
+    },
+    {
+      "name": "netfx472",
+      "display_name": ".NET Framework 4.7.2",
+      "version": "4.7.2",
+      "download_url": "https://go.microsoft.com/fwlink/?linkid=863265",
+      "detection_method": "registry",
+      "detection_key": "HKLM\\SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full",
+      "detection_value": "Release",
+      "detection_min": 461808,
+      "wix_property": "WIX_IS_NETFRAMEWORK_472_OR_LATER_INSTALLED",
+      "wix_package_group": "NetFx472Web"
+    },
+    {
+      "name": "netfx471",
+      "display_name": ".NET Framework 4.7.1",
+      "version": "4.7.1",
+      "download_url": "https://go.microsoft.com/fwlink/?linkid=852104",
+      "detection_method": "registry",
+      "detection_key": "HKLM\\SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full",
+      "detection_value": "Release",
+      "detection_min": 461308,
+      "wix_property": "WIX_IS_NETFRAMEWORK_471_OR_LATER_INSTALLED",
+      "wix_package_group": "NetFx471Web"
+    },
+    {
+      "name": "netfx47",
+      "display_name": ".NET Framework 4.7",
+      "version": "4.7",
+      "download_url": "https://go.microsoft.com/fwlink/?linkid=825298",
+      "detection_method": "registry",
+      "detection_key": "HKLM\\SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full",
+      "detection_value": "Release",
+      "detection_min": 460798,
+      "wix_property": "WIX_IS_NETFRAMEWORK_47_OR_LATER_INSTALLED",
+      "wix_package_group": "NetFx47Web"
+    },
+    {
+      "name": "netfx462",
+      "display_name": ".NET Framework 4.6.2",
+      "version": "4.6.2",
+      "download_url": "https://go.microsoft.com/fwlink/?linkid=780596",
+      "detection_method": "registry",
+      "detection_key": "HKLM\\SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full",
+      "detection_value": "Release",
+      "detection_min": 394802,
+      "wix_property": "WIX_IS_NETFRAMEWORK_462_OR_LATER_INSTALLED",
+      "wix_package_group": "NetFx462Web"
+    },
+    {
+      "name": "netfx461",
+      "display_name": ".NET Framework 4.6.1",
+      "version": "4.6.1",
+      "download_url": "https://go.microsoft.com/fwlink/?linkid=671728",
+      "detection_method": "registry",
+      "detection_key": "HKLM\\SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full",
+      "detection_value": "Release",
+      "detection_min": 394254,
+      "wix_property": "WIX_IS_NETFRAMEWORK_461_OR_LATER_INSTALLED",
+      "wix_package_group": "NetFx461Web"
+    },
+    {
+      "name": "netfx46",
+      "display_name": ".NET Framework 4.6",
+      "version": "4.6",
+      "download_url": "https://go.microsoft.com/fwlink/?linkid=528222",
+      "detection_method": "registry",
+      "detection_key": "HKLM\\SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full",
+      "detection_value": "Release",
+      "detection_min": 393295,
+      "wix_property": "WIX_IS_NETFRAMEWORK_46_OR_LATER_INSTALLED",
+      "wix_package_group": "NetFx46Web"
+    },
+    {
+      "name": "dotnet8_desktop_x64",
+      "display_name": ".NET 8 Desktop Runtime (x64)",
+      "version": "8.0",
+      "download_url": "https://dotnet.microsoft.com/download/dotnet/8.0",
+      "detection_method": "dotnet_search",
+      "detection_runtime": "desktop",
+      "detection_platform": "x64",
+      "detection_major": 8,
+      "wix_element": "DotNetCoreSearch",
+      "wix_attributes": {"RuntimeType": "desktop", "Platform": "x64", "MajorVersion": "8"}
+    },
+    {
+      "name": "dotnet8_aspnet_x64",
+      "display_name": ".NET 8 ASP.NET Core Runtime (x64)",
+      "version": "8.0",
+      "download_url": "https://dotnet.microsoft.com/download/dotnet/8.0",
+      "detection_method": "dotnet_search",
+      "detection_runtime": "aspnet",
+      "detection_platform": "x64",
+      "detection_major": 8,
+      "wix_element": "DotNetCoreSearch",
+      "wix_attributes": {"RuntimeType": "aspnet", "Platform": "x64", "MajorVersion": "8"}
+    },
+    {
+      "name": "dotnet8_runtime_x64",
+      "display_name": ".NET 8 Runtime (x64)",
+      "version": "8.0",
+      "download_url": "https://dotnet.microsoft.com/download/dotnet/8.0",
+      "detection_method": "dotnet_search",
+      "detection_runtime": "core",
+      "detection_platform": "x64",
+      "detection_major": 8,
+      "wix_element": "DotNetCoreSearch",
+      "wix_attributes": {"RuntimeType": "core", "Platform": "x64", "MajorVersion": "8"}
+    },
+    {
+      "name": "dotnet9_desktop_x64",
+      "display_name": ".NET 9 Desktop Runtime (x64)",
+      "version": "9.0",
+      "download_url": "https://dotnet.microsoft.com/download/dotnet/9.0",
+      "detection_method": "dotnet_search",
+      "detection_runtime": "desktop",
+      "detection_platform": "x64",
+      "detection_major": 9,
+      "wix_element": "DotNetCoreSearch",
+      "wix_attributes": {"RuntimeType": "desktop", "Platform": "x64", "MajorVersion": "9"}
+    },
+    {
+      "name": "dotnet6_desktop_x64",
+      "display_name": ".NET 6 Desktop Runtime (x64)",
+      "version": "6.0",
+      "download_url": "https://dotnet.microsoft.com/download/dotnet/6.0",
+      "detection_method": "dotnet_search",
+      "detection_runtime": "desktop",
+      "detection_platform": "x64",
+      "detection_major": 6,
+      "wix_element": "DotNetCoreSearch",
+      "wix_attributes": {"RuntimeType": "desktop", "Platform": "x64", "MajorVersion": "6"}
+    },
+    {
+      "name": "vcredist_2015_2022_x64",
+      "display_name": "Visual C++ 2015-2022 Redistributable (x64)",
+      "version": "14.x",
+      "download_url": "https://aka.ms/vs/17/release/vc_redist.x64.exe",
+      "detection_method": "registry",
+      "detection_key": "HKLM\\SOFTWARE\\Microsoft\\VisualStudio\\14.0\\VC\\Runtimes\\x64",
+      "detection_value": "Installed",
+      "detection_min": 1,
+      "notes": "Covers VS 2015, 2017, 2019, 2022 - binary compatible"
+    },
+    {
+      "name": "vcredist_2015_2022_x86",
+      "display_name": "Visual C++ 2015-2022 Redistributable (x86)",
+      "version": "14.x",
+      "download_url": "https://aka.ms/vs/17/release/vc_redist.x86.exe",
+      "detection_method": "registry",
+      "detection_key": "HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\VisualStudio\\14.0\\VC\\Runtimes\\x86",
+      "detection_value": "Installed",
+      "detection_min": 1,
+      "notes": "Covers VS 2015, 2017, 2019, 2022 - binary compatible"
+    },
+    {
+      "name": "vcredist_2015_2022_arm64",
+      "display_name": "Visual C++ 2015-2022 Redistributable (ARM64)",
+      "version": "14.x",
+      "download_url": "https://aka.ms/vs/17/release/vc_redist.arm64.exe",
+      "detection_method": "registry",
+      "detection_key": "HKLM\\SOFTWARE\\Microsoft\\VisualStudio\\14.0\\VC\\Runtimes\\arm64",
+      "detection_value": "Installed",
+      "detection_min": 1,
+      "notes": "Covers VS 2015, 2017, 2019, 2022 - binary compatible"
+    },
+    {
+      "name": "vcredist_2013_x64",
+      "display_name": "Visual C++ 2013 Redistributable (x64)",
+      "version": "12.0",
+      "download_url": "https://aka.ms/highdpimfc2013x64enu",
+      "detection_method": "registry",
+      "detection_key": "HKLM\\SOFTWARE\\Microsoft\\VisualStudio\\12.0\\VC\\Runtimes\\x64",
+      "detection_value": "Installed",
+      "detection_min": 1
+    },
+    {
+      "name": "vcredist_2013_x86",
+      "display_name": "Visual C++ 2013 Redistributable (x86)",
+      "version": "12.0",
+      "download_url": "https://aka.ms/highdpimfc2013x86enu",
+      "detection_method": "registry",
+      "detection_key": "HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\VisualStudio\\12.0\\VC\\Runtimes\\x86",
+      "detection_value": "Installed",
+      "detection_min": 1
+    },
+    {
+      "name": "vcredist_2012_x64",
+      "display_name": "Visual C++ 2012 Redistributable (x64)",
+      "version": "11.0",
+      "download_url": "https://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU_4/vcredist_x64.exe",
+      "detection_method": "registry",
+      "detection_key": "HKLM\\SOFTWARE\\Microsoft\\VisualStudio\\11.0\\VC\\Runtimes\\x64",
+      "detection_value": "Installed",
+      "detection_min": 1
+    },
+    {
+      "name": "vcredist_2010_x64",
+      "display_name": "Visual C++ 2010 Redistributable (x64)",
+      "version": "10.0",
+      "download_url": "https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x64.exe",
+      "detection_method": "registry",
+      "detection_key": "HKLM\\SOFTWARE\\Microsoft\\VisualStudio\\10.0\\VC\\VCRedist\\x64",
+      "detection_value": "Installed",
+      "detection_min": 1
+    },
+    {
+      "name": "windows_installer_45",
+      "display_name": "Windows Installer 4.5",
+      "version": "4.5",
+      "detection_method": "file_version",
+      "detection_path": "%SystemRoot%\\System32\\msi.dll",
+      "detection_min": "4.5.0.0",
+      "notes": "Required for WiX 3.x features"
+    },
+    {
+      "name": "windows_installer_50",
+      "display_name": "Windows Installer 5.0",
+      "version": "5.0",
+      "detection_method": "file_version",
+      "detection_path": "%SystemRoot%\\System32\\msi.dll",
+      "detection_min": "5.0.0.0",
+      "notes": "Included in Windows 7+ and Server 2008 R2+"
+    }
+  ]
+}

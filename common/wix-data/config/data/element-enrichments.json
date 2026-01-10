@@ -1,0 +1,1951 @@
+{
+  "_source": "Element enrichments - examples and remarks",
+  "_description": "Curated WiX XML examples and usage notes for elements",
+  "element_enrichments": [
+    {
+      "name": "AdminExecuteSequence",
+      "example": "<AdminExecuteSequence>\n    <Custom Action=\"MyAdminAction\" After=\"CostFinalize\" />\n</AdminExecuteSequence>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "AdminUISequence",
+      "example": "<AdminUISequence>\n    <Custom Action=\"MyAdminUIAction\" After=\"CostFinalize\" />\n</AdminUISequence>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "AdvertiseExecuteSequence",
+      "example": "<AdvertiseExecuteSequence>\n    <Custom Action=\"MyAdvertiseAction\" After=\"CostFinalize\" />\n</AdvertiseExecuteSequence>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "All",
+      "example": "<All />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "AllocateRegistrySpace",
+      "example": "<AllocateRegistrySpace />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "AppId",
+      "example": "<AppId Id=\"{GUID}\"\n    ActivateAtStorage=\"yes\"\n    Description=\"My Application Server\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "AppSearch",
+      "example": "<AppSearch />",
+      "remarks": "Standard action that runs searches defined by RegistrySearch, FileSearch, etc."
+    },
+    {
+      "name": "ApprovedExeForElevation",
+      "example": "<ApprovedExeForElevation Id=\"MyUpdater\"\n    Key=\"SOFTWARE\\MyCompany\\MyApp\"\n    ValueName=\"UpdaterPath\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ArpEntry",
+      "example": "<ArpEntry Manufacturer=\"My Company\"\n    Contact=\"support@example.com\"\n    HelpLink=\"https://example.com/help\"\n    AboutUrl=\"https://example.com\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "AssemblyName",
+      "example": "<AssemblyName Name=\"MyAssembly\"\n    Version=\"1.0.0.0\"\n    Culture=\"neutral\"\n    PublicKeyToken=\"b77a5c561934e089\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Billboard",
+      "example": "<Billboard Id=\"Billboard1\" Feature=\"MainFeature\">\n    <Control Id=\"BillboardText\" Type=\"Text\" X=\"10\" Y=\"10\" Width=\"300\" Height=\"50\" />\n</Billboard>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "BillboardAction",
+      "example": "<BillboardAction Id=\"InstallFilesBillboard\"\n    Action=\"InstallFiles\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Binary",
+      "example": "<Binary Id=\"CustomActionDll\"\n    SourceFile=\"CustomActions.dll\" />",
+      "remarks": "Embeds a binary file in the MSI. Used for custom action DLLs, icons, and other resources."
+    },
+    {
+      "name": "BinaryRef",
+      "example": "<BinaryRef Id=\"CustomActionDll\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "BindImage",
+      "example": "<BindImage />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "BootstrapperApplication",
+      "example": "<BootstrapperApplication>\n    <bal:WixStandardBootstrapperApplication\n        Theme=\"hyperlinkLicense\"\n        LicenseUrl=\"https://example.com/license\" />\n</BootstrapperApplication>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "BootstrapperApplicationDll",
+      "example": "<BootstrapperApplicationDll\n    SourceFile=\"MyBootstrapperApp.dll\"\n    DpiAwareness=\"perMonitorV2\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "BootstrapperApplicationPrerequisiteInformation",
+      "example": "<bal:BootstrapperApplicationPrerequisiteInformation\n    PackageId=\"NetFx48Redist\"\n    LicenseUrl=\"https://go.microsoft.com/fwlink/?LinkId=2009380\" />",
+      "remarks": "Part of the Bal (Bootstrapper Application Library) extension. Requires WixToolset.Bal.wixext reference."
+    },
+    {
+      "name": "BootstrapperApplicationRef",
+      "example": "<BootstrapperApplicationRef Id=\"WixStandardBootstrapperApplication.HyperlinkLicense\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "BootstrapperExtension",
+      "example": "<BootstrapperExtension Id=\"MyExtension\"\n    SourceFile=\"MyExtension.dll\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "BootstrapperExtensionRef",
+      "example": "<BootstrapperExtensionRef Id=\"Bal.WixExtension\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "BroadcastEnvironmentChange",
+      "example": "<util:BroadcastEnvironmentChange />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "BroadcastSettingChange",
+      "example": "<util:BroadcastSettingChange />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "Bundle",
+      "example": "<Bundle Name=\"My Application Setup\"\n    Version=\"1.0.0.0\"\n    Manufacturer=\"My Company\"\n    UpgradeCode=\"{GUID}\">\n    <BootstrapperApplication>\n        <bal:WixStandardBootstrapperApplication Theme=\"hyperlinkLicense\" />\n    </BootstrapperApplication>\n    <Chain>\n        <MsiPackage SourceFile=\"MyApp.msi\" />\n    </Chain>\n</Bundle>",
+      "remarks": "Defines a bootstrapper bundle. Use for chaining multiple packages, prerequisites, or creating an installer that wraps MSI packages."
+    },
+    {
+      "name": "BundleAttribute",
+      "example": "<BundleAttribute Name=\"CustomAttribute\" Value=\"CustomValue\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "BundleAttributeDefinition",
+      "example": "<BundleAttributeDefinition Name=\"CustomAttribute\" Type=\"string\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "BundleCustomData",
+      "example": "<BundleCustomData Id=\"MyCustomData\"\n    Type=\"BootstrapperApplication\">\n    <BundleElement Id=\"Element1\">\n        <BundleAttribute Name=\"Attr1\" Value=\"Value1\" />\n    </BundleElement>\n</BundleCustomData>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "BundleCustomDataRef",
+      "example": "<BundleCustomDataRef Id=\"MyCustomData\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "BundleElement",
+      "example": "<BundleElement Id=\"ConfigElement\">\n    <BundleAttribute Name=\"Setting\" Value=\"Enabled\" />\n</BundleElement>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "BundleExtension",
+      "example": "<BundleExtension Id=\"MyBundleExtension\"\n    SourceFile=\"MyBundleExtension.dll\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "BundleExtensionRef",
+      "example": "<BundleExtensionRef Id=\"WixDependencyExtension\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "BundlePackage",
+      "example": "<BundlePackage SourceFile=\"SubBundle.exe\"\n    Compressed=\"yes\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "BundlePackagePayload",
+      "example": "<BundlePackagePayload SourceFile=\"SubBundle.exe\"\n    Name=\"SubBundle.exe\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "CCPSearch",
+      "example": "<CCPSearch />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Category",
+      "example": "<Category Id=\"MyCategory\"\n    AppData=\"My Application\"\n    Qualifier=\"1.0\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Certificate",
+      "example": "<iis:Certificate Id=\"MyCert\"\n    Name=\"My SSL Certificate\"\n    StoreLocation=\"localMachine\"\n    StoreName=\"MY\"\n    CertificatePath=\"cert.pfx\"\n    PFXPassword=\"[CERT_PASSWORD]\" />",
+      "remarks": "Installs SSL certificates for IIS bindings."
+    },
+    {
+      "name": "CertificateRef",
+      "example": "<iis:CertificateRef Id=\"MyCert\" />",
+      "remarks": "Part of the IIS extension for Internet Information Services configuration. Requires WixToolset.Iis.wixext reference."
+    },
+    {
+      "name": "Chain",
+      "example": "<Chain>\n    <MsiPackage SourceFile=\"prereq.msi\" />\n    <MsiPackage SourceFile=\"main.msi\" />\n</Chain>",
+      "remarks": "Contains the packages to install in a bundle. Packages install in order listed."
+    },
+    {
+      "name": "CheckRebootRequired",
+      "example": "<util:CheckRebootRequired />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "Class",
+      "example": "<Class Id=\"{GUID}\"\n    Context=\"InprocServer32\"\n    Description=\"My COM Class\"\n    ThreadingModel=\"apartment\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "CloseApplication",
+      "example": "<util:CloseApplication Id=\"CloseMyApp\"\n    Target=\"MyApp.exe\"\n    RebootPrompt=\"no\"\n    PromptToContinue=\"yes\"\n    Description=\"Please close [ProductName] before continuing.\" />",
+      "remarks": "Closes running applications before installation. Helps avoid 'files in use' errors."
+    },
+    {
+      "name": "Column",
+      "example": "<Column Id=\"Value\"\n    PrimaryKey=\"no\"\n    Type=\"string\"\n    Width=\"255\"\n    Nullable=\"yes\"\n    Category=\"text\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ComPlusApplication",
+      "example": "<complus:ComPlusApplication Id=\"MyApp\"\n    Name=\"My COM+ Application\"\n    Activation=\"local\"\n    Description=\"Sample COM+ application\" />",
+      "remarks": "Part of the ComPlus extension for COM+ application deployment. Requires WixToolset.ComPlus.wixext reference."
+    },
+    {
+      "name": "ComPlusApplicationRole",
+      "example": "<complus:ComPlusApplicationRole Id=\"AdminRole\"\n    Application=\"MyApp\"\n    Name=\"Administrators\"\n    Description=\"Administrative access\" />",
+      "remarks": "Part of the ComPlus extension for COM+ application deployment. Requires WixToolset.ComPlus.wixext reference."
+    },
+    {
+      "name": "ComPlusAssembly",
+      "example": "<complus:ComPlusAssembly Id=\"MyAssembly\"\n    Application=\"MyApp\"\n    Type=\".net\"\n    DllPath=\"[#MyDll]\" />",
+      "remarks": "Part of the ComPlus extension for COM+ application deployment. Requires WixToolset.ComPlus.wixext reference."
+    },
+    {
+      "name": "ComPlusAssemblyDependency",
+      "example": "<complus:ComPlusAssemblyDependency\n    RequiredAssembly=\"BaseAssembly\" />",
+      "remarks": "Part of the ComPlus extension for COM+ application deployment. Requires WixToolset.ComPlus.wixext reference."
+    },
+    {
+      "name": "ComPlusComponent",
+      "example": "<complus:ComPlusComponent Id=\"MyComponent\"\n    Assembly=\"MyAssembly\"\n    CLSID=\"{GUID}\" />",
+      "remarks": "Part of the ComPlus extension for COM+ application deployment. Requires WixToolset.ComPlus.wixext reference."
+    },
+    {
+      "name": "ComPlusGroupInApplicationRole",
+      "example": "<complus:ComPlusGroupInApplicationRole\n    ApplicationRole=\"AdminRole\"\n    Group=\"BUILTIN\\Administrators\" />",
+      "remarks": "Part of the ComPlus extension for COM+ application deployment. Requires WixToolset.ComPlus.wixext reference."
+    },
+    {
+      "name": "ComPlusGroupInPartitionRole",
+      "example": "<complus:ComPlusGroupInPartitionRole\n    PartitionRole=\"PartRole1\"\n    Group=\"DOMAIN\\Developers\" />",
+      "remarks": "Part of the ComPlus extension for COM+ application deployment. Requires WixToolset.ComPlus.wixext reference."
+    },
+    {
+      "name": "ComPlusInterface",
+      "example": "<complus:ComPlusInterface Id=\"IMyInterface\"\n    Component=\"MyComponent\"\n    IID=\"{GUID}\" />",
+      "remarks": "Part of the ComPlus extension for COM+ application deployment. Requires WixToolset.ComPlus.wixext reference."
+    },
+    {
+      "name": "ComPlusMethod",
+      "example": "<complus:ComPlusMethod Id=\"MyMethod\"\n    Interface=\"IMyInterface\"\n    Index=\"0\"\n    Name=\"DoWork\" />",
+      "remarks": "Part of the ComPlus extension for COM+ application deployment. Requires WixToolset.ComPlus.wixext reference."
+    },
+    {
+      "name": "ComPlusPartition",
+      "example": "<complus:ComPlusPartition Id=\"MyPartition\"\n    Name=\"Application Partition\"\n    Description=\"Partition for application isolation\" />",
+      "remarks": "Part of the ComPlus extension for COM+ application deployment. Requires WixToolset.ComPlus.wixext reference."
+    },
+    {
+      "name": "ComPlusPartitionRole",
+      "example": "<complus:ComPlusPartitionRole Id=\"PartRole1\"\n    Partition=\"MyPartition\"\n    Name=\"PartitionAdmins\" />",
+      "remarks": "Part of the ComPlus extension for COM+ application deployment. Requires WixToolset.ComPlus.wixext reference."
+    },
+    {
+      "name": "ComPlusPartitionUser",
+      "example": "<complus:ComPlusPartitionUser\n    Partition=\"MyPartition\"\n    User=\"DOMAIN\\AppUser\" />",
+      "remarks": "Part of the ComPlus extension for COM+ application deployment. Requires WixToolset.ComPlus.wixext reference."
+    },
+    {
+      "name": "ComPlusRoleForComponent",
+      "example": "<complus:ComPlusRoleForComponent\n    Component=\"MyComponent\"\n    ApplicationRole=\"AdminRole\" />",
+      "remarks": "Part of the ComPlus extension for COM+ application deployment. Requires WixToolset.ComPlus.wixext reference."
+    },
+    {
+      "name": "ComPlusRoleForInterface",
+      "example": "<complus:ComPlusRoleForInterface\n    Interface=\"IMyInterface\"\n    ApplicationRole=\"AdminRole\" />",
+      "remarks": "Part of the ComPlus extension for COM+ application deployment. Requires WixToolset.ComPlus.wixext reference."
+    },
+    {
+      "name": "ComPlusRoleForMethod",
+      "example": "<complus:ComPlusRoleForMethod\n    Method=\"MyMethod\"\n    ApplicationRole=\"AdminRole\" />",
+      "remarks": "Part of the ComPlus extension for COM+ application deployment. Requires WixToolset.ComPlus.wixext reference."
+    },
+    {
+      "name": "ComPlusSubscription",
+      "example": "<complus:ComPlusSubscription Id=\"EventSub\"\n    Component=\"MyComponent\"\n    EventCLSID=\"{GUID}\"\n    SubscriptionId=\"{GUID}\" />",
+      "remarks": "Part of the ComPlus extension for COM+ application deployment. Requires WixToolset.ComPlus.wixext reference."
+    },
+    {
+      "name": "ComPlusUserInApplicationRole",
+      "example": "<complus:ComPlusUserInApplicationRole\n    ApplicationRole=\"AdminRole\"\n    User=\"DOMAIN\\AppAdmin\" />",
+      "remarks": "Part of the ComPlus extension for COM+ application deployment. Requires WixToolset.ComPlus.wixext reference."
+    },
+    {
+      "name": "ComPlusUserInPartitionRole",
+      "example": "<complus:ComPlusUserInPartitionRole\n    PartitionRole=\"PartRole1\"\n    User=\"DOMAIN\\PartAdmin\" />",
+      "remarks": "Part of the ComPlus extension for COM+ application deployment. Requires WixToolset.ComPlus.wixext reference."
+    },
+    {
+      "name": "ComboBox",
+      "example": "<ComboBox Property=\"MYOPTION\">\n    <ListItem Value=\"Option1\" Text=\"First Option\" />\n    <ListItem Value=\"Option2\" Text=\"Second Option\" />\n</ComboBox>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "CommandLine",
+      "example": "<CommandLine InstallArgument=\"/passive\"\n    UninstallArgument=\"/quiet\"\n    RepairArgument=\"/repair\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ComplianceCheck",
+      "example": "<ComplianceCheck />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ComplianceDrive",
+      "example": "<ComplianceDrive />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Component",
+      "example": "<Component Id=\"MainExecutable\"\n    Guid=\"*\"\n    Directory=\"INSTALLDIR\">\n    <File Id=\"MyApp.exe\" Source=\"bin\\MyApp.exe\" KeyPath=\"yes\" />\n</Component>",
+      "remarks": "Components are the atomic unit of installation. Best practice: one file per component with Guid='*' for auto-generation."
+    },
+    {
+      "name": "ComponentGroup",
+      "example": "<ComponentGroup Id=\"ProductComponents\">\n    <ComponentRef Id=\"MainExecutable\" />\n    <ComponentRef Id=\"ConfigFile\" />\n</ComponentGroup>",
+      "remarks": "Groups components for easier referencing. Use to organize related components and simplify Feature definitions."
+    },
+    {
+      "name": "ComponentGroupRef",
+      "example": "<ComponentGroupRef Id=\"ProductComponents\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ComponentRef",
+      "example": "<ComponentRef Id=\"MainExecutable\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ComponentSearch",
+      "example": "<util:ComponentSearch Id=\"PrevInstallSearch\"\n    ComponentId=\"{GUID}\"\n    Variable=\"PREV_INSTALLED\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "ComponentSearchRef",
+      "example": "<util:ComponentSearchRef Id=\"PrevInstallSearch\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "Condition",
+      "example": "<bal:Condition Message=\"This bundle requires .NET 4.8 or later.\">\n    NETFRAMEWORK48\n</bal:Condition>",
+      "remarks": "Bundle condition displayed to user. Shows Message when condition is false."
+    },
+    {
+      "name": "Configuration",
+      "example": "<Configuration Name=\"LogLevel\"\n    Format=\"Text\"\n    DefaultValue=\"Info\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ConfigurationData",
+      "example": "<ConfigurationData Name=\"LogLevel\" Value=\"Debug\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Container",
+      "example": "<Container Id=\"MyContainer\"\n    Name=\"container.cab\"\n    Type=\"detached\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ContainerRef",
+      "example": "<ContainerRef Id=\"MyContainer\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Control",
+      "example": "<Control Id=\"NextButton\"\n    Type=\"PushButton\"\n    X=\"236\" Y=\"243\" Width=\"56\" Height=\"17\"\n    Default=\"yes\"\n    Text=\"&amp;Next\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "CopyFile",
+      "example": "<CopyFile Id=\"CopyConfig\"\n    FileRef=\"DefaultConfig\"\n    DestinationDirectory=\"INSTALLDIR\"\n    DestinationName=\"config.xml\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "CostFinalize",
+      "example": "<CostFinalize />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "CostInitialize",
+      "example": "<CostInitialize />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "CreateFolder",
+      "example": "<CreateFolder Directory=\"DataFolder\">\n    <Permission User=\"Everyone\" GenericRead=\"yes\" />\n</CreateFolder>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "CreateFolders",
+      "example": "<CreateFolders />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "CreateShortcuts",
+      "example": "<CreateShortcuts />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Custom",
+      "example": "<Custom Action=\"MyCustomAction\" After=\"InstallFiles\">\n    NOT Installed\n</Custom>",
+      "remarks": "Schedules a custom action in a sequence. Use Before/After to position relative to other actions."
+    },
+    {
+      "name": "CustomAction",
+      "example": "<CustomAction Id=\"SetInstallDir\"\n    Property=\"INSTALLDIR\"\n    Value=\"[ProgramFilesFolder]MyApp\" />",
+      "remarks": "Defines a custom action. Use sparingly; prefer built-in WiX elements. Deferred actions run with elevated privileges."
+    },
+    {
+      "name": "CustomActionRef",
+      "example": "<CustomActionRef Id=\"WixCloseApplications\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "CustomTable",
+      "example": "<CustomTable Id=\"MyTable\">\n    <Column Id=\"Key\" PrimaryKey=\"yes\" Type=\"string\" Width=\"72\" />\n    <Column Id=\"Value\" Type=\"string\" Width=\"255\" Nullable=\"yes\" />\n    <Row>\n        <Data Column=\"Key\">Setting1</Data>\n        <Data Column=\"Value\">Value1</Data>\n    </Row>\n</CustomTable>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "CustomTableRef",
+      "example": "<CustomTableRef Id=\"MyTable\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Data",
+      "example": "<Data Column=\"Value\">ConfigValue</Data>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "DeleteServices",
+      "example": "<DeleteServices />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Dependency",
+      "example": "<Dependency RequiredId=\"NetFx48\"\n    RequiredLanguage=\"0\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Dialog",
+      "example": "<Dialog Id=\"MyDialog\"\n    Width=\"370\" Height=\"270\"\n    Title=\"[ProductName] Setup\">\n    <Control Id=\"Title\" Type=\"Text\" X=\"10\" Y=\"10\" Width=\"350\" Height=\"20\" Text=\"Welcome\" />\n</Dialog>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "DialogRef",
+      "example": "<DialogRef Id=\"ErrorDlg\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "DigitalCertificate",
+      "example": "<DigitalCertificate Id=\"MyCert\"\n    SourceFile=\"cert.cer\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "DigitalCertificateRef",
+      "example": "<DigitalCertificateRef Id=\"MyCert\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "DigitalSignature",
+      "example": "<DigitalSignature SourceFile=\"signed.dll\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Directory",
+      "example": "<Directory Id=\"INSTALLDIR\" Name=\"MyApp\">\n    <Directory Id=\"ConfigDir\" Name=\"config\" />\n    <Directory Id=\"DataDir\" Name=\"data\" />\n</Directory>",
+      "remarks": "Defines a directory structure. Nest directories to create folder hierarchy. Use StandardDirectory for well-known Windows folders."
+    },
+    {
+      "name": "DirectoryRef",
+      "example": "<DirectoryRef Id=\"INSTALLDIR\">\n    <Component Id=\"ConfigFile\" Guid=\"*\">\n        <File Source=\"config.xml\" />\n    </Component>\n</DirectoryRef>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "DirectorySearch",
+      "example": "<util:DirectorySearch Id=\"FindAppDir\"\n    Path=\"[ProgramFilesFolder]MyApp\"\n    Variable=\"APP_DIR\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "DirectorySearchRef",
+      "example": "<util:DirectorySearchRef Id=\"FindAppDir\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "DisableRollback",
+      "example": "<DisableRollback />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "DotNetCompatibilityCheck",
+      "example": "<netfx:DotNetCompatibilityCheck\n    Id=\"DotNet6Check\"\n    RuntimeType=\"desktop\"\n    Version=\"6.0.0\"\n    RollForward=\"latestMinor\"\n    Property=\"DOTNET6_INSTALLED\" />",
+      "remarks": "Validates .NET compatibility for the application."
+    },
+    {
+      "name": "DotNetCompatibilityCheckRef",
+      "example": "<netfx:DotNetCompatibilityCheckRef Id=\"DotNet6Check\" />",
+      "remarks": "Part of the NetFx extension for .NET Framework and .NET Core detection. Requires WixToolset.Netfx.wixext reference."
+    },
+    {
+      "name": "DotNetCoreSdkFeatureBandSearch",
+      "example": "<netfx:DotNetCoreSdkFeatureBandSearch\n    Id=\"Sdk6Search\"\n    MajorVersion=\"6\"\n    Variable=\"DOTNET_SDK_6\" />",
+      "remarks": "Part of the NetFx extension for .NET Framework and .NET Core detection. Requires WixToolset.Netfx.wixext reference."
+    },
+    {
+      "name": "DotNetCoreSdkFeatureBandSearchRef",
+      "example": "<netfx:DotNetCoreSdkFeatureBandSearchRef Id=\"Sdk6Search\" />",
+      "remarks": "Part of the NetFx extension for .NET Framework and .NET Core detection. Requires WixToolset.Netfx.wixext reference."
+    },
+    {
+      "name": "DotNetCoreSdkSearch",
+      "example": "<netfx:DotNetCoreSdkSearch\n    Id=\"SdkSearch\"\n    Version=\"6.0.0\"\n    Variable=\"DOTNET_SDK\" />",
+      "remarks": "Part of the NetFx extension for .NET Framework and .NET Core detection. Requires WixToolset.Netfx.wixext reference."
+    },
+    {
+      "name": "DotNetCoreSdkSearchRef",
+      "example": "<netfx:DotNetCoreSdkSearchRef Id=\"SdkSearch\" />",
+      "remarks": "Part of the NetFx extension for .NET Framework and .NET Core detection. Requires WixToolset.Netfx.wixext reference."
+    },
+    {
+      "name": "DotNetCoreSearch",
+      "example": "<netfx:DotNetCoreSearch\n    Id=\"DotNetSearch\"\n    RuntimeType=\"desktop\"\n    Version=\"6.0.0\"\n    Variable=\"DOTNET6_VERSION\" />",
+      "remarks": "Detects installed .NET Core/.NET 5+ runtime versions."
+    },
+    {
+      "name": "DotNetCoreSearchRef",
+      "example": "<netfx:DotNetCoreSearchRef Id=\"DotNetSearch\" />",
+      "remarks": "Part of the NetFx extension for .NET Framework and .NET Core detection. Requires WixToolset.Netfx.wixext reference."
+    },
+    {
+      "name": "DuplicateFiles",
+      "example": "<DuplicateFiles />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "EmbeddedChainer",
+      "example": "<EmbeddedChainer Id=\"MyChainer\"\n    BinaryRef=\"ChainerDll\"\n    EntryPoint=\"DoChain\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "EmbeddedChainerRef",
+      "example": "<EmbeddedChainerRef Id=\"MyChainer\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "EmbeddedUI",
+      "example": "<EmbeddedUI Id=\"MyEmbeddedUI\"\n    SourceFile=\"MyUI.dll\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "EmbeddedUIResource",
+      "example": "<EmbeddedUIResource Id=\"Logo\"\n    Name=\"logo.png\"\n    SourceFile=\"logo.png\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "EnsureTable",
+      "example": "<EnsureTable Id=\"RemoveFile\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Environment",
+      "example": "<Environment Id=\"PathEnv\"\n    Name=\"PATH\"\n    Value=\"[INSTALLDIR]bin\"\n    Permanent=\"no\"\n    Part=\"last\"\n    Action=\"set\"\n    System=\"yes\" />",
+      "remarks": "Modifies environment variables. Use Part='last' to append to PATH safely."
+    },
+    {
+      "name": "Error",
+      "example": "<Error Id=\"25000\">Installation failed: [1]</Error>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "EventManifest",
+      "example": "<util:EventManifest\n    MessageFile=\"[#MyApp.exe]\"\n    ResourceFile=\"[#MyApp.exe]\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "EventSource",
+      "example": "<util:EventSource\n    Name=\"MyApplication\"\n    Log=\"Application\"\n    EventMessageFile=\"[#MyApp.exe]\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "Exclude",
+      "example": "<Exclude File=\"debug.pdb\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Exclusion",
+      "example": "<Exclusion ExcludedId=\"OldVersion\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ExePackage",
+      "example": "<ExePackage Id=\"VCRedist\"\n    SourceFile=\"vc_redist.x64.exe\"\n    InstallArguments=\"/quiet /norestart\"\n    UninstallArguments=\"/uninstall /quiet\"\n    DetectCondition=\"VCRedistInstalled\"\n    Permanent=\"no\"\n    Vital=\"yes\" />",
+      "remarks": "An EXE package in a bundle chain. Requires DetectCondition for upgrade detection."
+    },
+    {
+      "name": "ExePackagePayload",
+      "example": "<ExePackagePayload SourceFile=\"setup.exe\"\n    Name=\"setup.exe\"\n    DownloadUrl=\"https://example.com/setup.exe\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ExecuteAction",
+      "example": "<ExecuteAction />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ExitCode",
+      "example": "<ExitCode Value=\"3010\" Behavior=\"forceReboot\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ExitEarlyWithSuccess",
+      "example": "<util:ExitEarlyWithSuccess />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "Extension",
+      "example": "<Extension Id=\"myfile\"\n    ContentType=\"application/x-myfile\">\n    <Verb Id=\"open\" Command=\"Open\" TargetFile=\"MyApp.exe\" Argument='\"%1\"' />\n</Extension>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "FailWhenDeferred",
+      "example": "<util:FailWhenDeferred />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "Failure",
+      "example": "<Failure Condition=\"DOTNET_INSTALLED = 0\"\n    Message=\"This application requires .NET Framework.\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Feature",
+      "example": "<Feature Id=\"MainFeature\"\n    Title=\"Main Application\"\n    Description=\"Core application files\"\n    Level=\"1\">\n    <ComponentGroupRef Id=\"ProductComponents\" />\n</Feature>",
+      "remarks": "Features allow users to select what to install. Level='1' means installed by default; Level='0' means hidden/not installed."
+    },
+    {
+      "name": "FeatureGroup",
+      "example": "<FeatureGroup Id=\"AllFeatures\">\n    <FeatureRef Id=\"MainFeature\" />\n    <FeatureRef Id=\"Documentation\" />\n</FeatureGroup>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "FeatureGroupRef",
+      "example": "<FeatureGroupRef Id=\"AllFeatures\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "FeatureRef",
+      "example": "<FeatureRef Id=\"MainFeature\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "File",
+      "example": "<File Id=\"MyApp.exe\"\n    Name=\"MyApp.exe\"\n    Source=\"bin\\Release\\MyApp.exe\"\n    KeyPath=\"yes\">\n    <Shortcut Id=\"StartMenuShortcut\"\n        Directory=\"ProgramMenuFolder\"\n        Name=\"My Application\"\n        WorkingDirectory=\"INSTALLDIR\" />\n</File>",
+      "remarks": "Represents a file to be installed. The KeyPath file in a component determines component state for repair operations."
+    },
+    {
+      "name": "FileCost",
+      "example": "<FileCost />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "FileSearch",
+      "example": "<util:FileSearch Id=\"FindConfig\"\n    Path=\"[INSTALLDIR]config.xml\"\n    Variable=\"CONFIG_EXISTS\"\n    Result=\"exists\" />",
+      "remarks": "Searches for files during AppSearch. Use Result='exists' for presence check."
+    },
+    {
+      "name": "FileSearchRef",
+      "example": "<util:FileSearchRef Id=\"FindConfig\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "FileShare",
+      "example": "<util:FileShare Id=\"DataShare\"\n    Name=\"AppData$\"\n    Description=\"Application data share\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "FileSharePermission",
+      "example": "<util:FileSharePermission\n    User=\"Everyone\"\n    Read=\"yes\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "FileTypeMask",
+      "example": "<FileTypeMask Offset=\"0\" Mask=\"FF\" Value=\"4D5A\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Files",
+      "example": "<Files Include=\"bin\\*.dll\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "FindRelatedProducts",
+      "example": "<FindRelatedProducts />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "FindVisualStudio",
+      "example": "<vs:FindVisualStudio />",
+      "remarks": "Part of the VisualStudio extension. Requires WixToolset.VisualStudio.wixext reference."
+    },
+    {
+      "name": "FirewallException",
+      "example": "<firewall:FirewallException Id=\"MyAppFirewall\"\n    Name=\"My Application\"\n    Program=\"[#MyApp.exe]\"\n    Protocol=\"tcp\"\n    Port=\"8080\"\n    Scope=\"any\" />",
+      "remarks": "Creates Windows Firewall exception rule. Specify Port and Protocol for network access."
+    },
+    {
+      "name": "ForceReboot",
+      "example": "<ForceReboot />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "FormatFile",
+      "example": "<util:FormatFile Id=\"FormatConfig\"\n    Source=\"config.template\"\n    Destination=\"[INSTALLDIR]config.xml\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "Fragment",
+      "example": "<Fragment>\n    <ComponentGroup Id=\"SharedComponents\">\n        <Component Id=\"SharedDll\" Directory=\"INSTALLDIR\" Guid=\"*\">\n            <File Source=\"shared.dll\" />\n        </Component>\n    </ComponentGroup>\n</Fragment>",
+      "remarks": "A reusable fragment that can be referenced from other files. Use for modular installer design."
+    },
+    {
+      "name": "GetCapabilities",
+      "example": "<directx:GetCapabilities />",
+      "remarks": "Part of the DirectX extension. Requires WixToolset.DirectX.wixext reference."
+    },
+    {
+      "name": "Group",
+      "example": "<util:Group Id=\"AppUsers\"\n    Name=\"MyApp Users\"\n    Description=\"Users of My Application\" />",
+      "remarks": "Creates local groups. Useful for permission management."
+    },
+    {
+      "name": "GroupRef",
+      "example": "<util:GroupRef Id=\"AppUsers\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "HttpHeader",
+      "example": "<iis:HttpHeader Name=\"X-Frame-Options\" Value=\"SAMEORIGIN\" />",
+      "remarks": "Part of the IIS extension for Internet Information Services configuration. Requires WixToolset.Iis.wixext reference."
+    },
+    {
+      "name": "Icon",
+      "example": "<Icon Id=\"AppIcon\" SourceFile=\"app.ico\" />",
+      "remarks": "Defines an icon used for shortcuts or Add/Remove Programs. Reference with IconRef."
+    },
+    {
+      "name": "IconRef",
+      "example": "<IconRef Id=\"AppIcon\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "IgnoreTable",
+      "example": "<IgnoreTable Id=\"Font\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Include",
+      "example": "<Include xmlns=\"http://wixtoolset.org/schemas/v4/wxs\" />",
+      "remarks": "Marks a file as an include file for use with <?include?> preprocessor directive."
+    },
+    {
+      "name": "IniFile",
+      "example": "<IniFile Id=\"AppSettings\"\n    Name=\"app.ini\"\n    Directory=\"INSTALLDIR\"\n    Section=\"Settings\"\n    Key=\"InstallPath\"\n    Value=\"[INSTALLDIR]\"\n    Action=\"createLine\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "IniFileSearch",
+      "example": "<IniFileSearch Id=\"FindConfig\"\n    Name=\"app.ini\"\n    Section=\"Settings\"\n    Key=\"ConfigPath\"\n    Property=\"CONFIGPATH\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "InstallAdminPackage",
+      "example": "<InstallAdminPackage />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "InstallExecute",
+      "example": "<InstallExecute />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "InstallExecuteAgain",
+      "example": "<InstallExecuteAgain />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "InstallExecuteSequence",
+      "example": "<InstallExecuteSequence>\n    <Custom Action=\"MyCustomAction\" Before=\"InstallFinalize\">\n        NOT Installed\n    </Custom>\n</InstallExecuteSequence>",
+      "remarks": "Customizes the install execute sequence. Use Custom element to schedule custom actions."
+    },
+    {
+      "name": "InstallFiles",
+      "example": "<InstallFiles />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "InstallFinalize",
+      "example": "<InstallFinalize />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "InstallInitialize",
+      "example": "<InstallInitialize />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "InstallODBC",
+      "example": "<InstallODBC />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "InstallServices",
+      "example": "<InstallServices />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "InstallUISequence",
+      "example": "<InstallUISequence>\n    <Custom Action=\"MyUIAction\" After=\"CostFinalize\" />\n</InstallUISequence>",
+      "remarks": "Customizes the install UI sequence. Runs before InstallExecuteSequence."
+    },
+    {
+      "name": "InstallValidate",
+      "example": "<InstallValidate />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Instance",
+      "example": "<Instance Id=\"Instance1\"\n    ProductCode=\"{GUID}\"\n    ProductName=\"My App Instance 1\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "InstanceTransforms",
+      "example": "<InstanceTransforms Property=\"INSTANCEID\">\n    <Instance Id=\"I1\" ProductCode=\"{GUID}\" ProductName=\"Instance 1\" />\n</InstanceTransforms>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Interface",
+      "example": "<firewall:Interface Name=\"Ethernet\" />",
+      "remarks": "Part of the Firewall extension for Windows Firewall rules. Requires WixToolset.Firewall.wixext reference."
+    },
+    {
+      "name": "InterfaceType",
+      "example": "<firewall:InterfaceType Value=\"lan\" />",
+      "remarks": "Part of the Firewall extension for Windows Firewall rules. Requires WixToolset.Firewall.wixext reference."
+    },
+    {
+      "name": "InternetShortcut",
+      "example": "<util:InternetShortcut Id=\"WebsiteLink\"\n    Name=\"Visit Website\"\n    Target=\"https://www.example.com\"\n    Directory=\"ProgramMenuFolder\" />",
+      "remarks": "Creates .url internet shortcut files. Alternative to Shortcut for web links."
+    },
+    {
+      "name": "IsolateComponent",
+      "example": "<IsolateComponent Shared=\"SharedDll\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "IsolateComponents",
+      "example": "<IsolateComponents />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Launch",
+      "example": "<Launch Condition=\"VersionNT >= 603\"\n    Message=\"Windows 8.1 or later is required.\" />",
+      "remarks": "Launch condition that must be satisfied for installation to proceed. Shows message if condition fails."
+    },
+    {
+      "name": "LaunchConditions",
+      "example": "<LaunchConditions />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Level",
+      "example": "<Level Value=\"1\" Condition=\"PREMIUM\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ListBox",
+      "example": "<ListBox Property=\"LANGUAGESELECT\">\n    <ListItem Value=\"en-US\" Text=\"English (US)\" />\n    <ListItem Value=\"de-DE\" Text=\"German\" />\n</ListBox>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ListItem",
+      "example": "<ListItem Value=\"Option1\" Text=\"First Option\" Icon=\"Option1Icon\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ListView",
+      "example": "<ListView Property=\"FEATURESELECT\">\n    <ListItem Value=\"Feature1\" Text=\"Main Feature\" Icon=\"Feature1Icon\" />\n</ListView>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "LocalAddress",
+      "example": "<firewall:LocalAddress Value=\"192.168.1.0/24\" />",
+      "remarks": "Part of the Firewall extension for Windows Firewall rules. Requires WixToolset.Firewall.wixext reference."
+    },
+    {
+      "name": "Log",
+      "example": "<Log Name=\"MyApp_Install.log\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "MIME",
+      "example": "<MIME ContentType=\"application/x-myapp\" Default=\"yes\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "MajorUpgrade",
+      "example": "<MajorUpgrade\n    DowngradeErrorMessage=\"A newer version is already installed.\"\n    Schedule=\"afterInstallInitialize\"\n    AllowDowngrades=\"no\"\n    AllowSameVersionUpgrades=\"no\" />",
+      "remarks": "Handles major upgrade scenarios automatically. Recommended for most packages. Prevents downgrades by default."
+    },
+    {
+      "name": "ManagedBootstrapperApplicationPrereqInformation",
+      "example": "<bal:ManagedBootstrapperApplicationPrereqInformation\n    PackageId=\"NetFx48Redist\" />",
+      "remarks": "Part of the Bal (Bootstrapper Application Library) extension. Requires WixToolset.Bal.wixext reference."
+    },
+    {
+      "name": "Media",
+      "example": "<Media Id=\"1\" Cabinet=\"product.cab\" EmbedCab=\"yes\" />",
+      "remarks": "Defines a cabinet file for storing compressed files. Use MediaTemplate for simpler single-cabinet scenarios."
+    },
+    {
+      "name": "MediaTemplate",
+      "example": "<MediaTemplate EmbedCab=\"yes\" CompressionLevel=\"high\" />",
+      "remarks": "Simplified media definition. Creates single embedded cabinet. Recommended for most packages."
+    },
+    {
+      "name": "Merge",
+      "example": "<Merge Id=\"VCRedist\"\n    SourceFile=\"Microsoft_VC142_CRT_x64.msm\"\n    DiskId=\"1\"\n    Language=\"0\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "MergeRef",
+      "example": "<MergeRef Id=\"VCRedist\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "MessageQueue",
+      "example": "<msmq:MessageQueue Id=\"MyQueue\"\n    PathName=\".\\Private$\\MyQueue\"\n    Label=\"My Message Queue\"\n    Transactional=\"yes\" />",
+      "remarks": "Part of the Msmq extension for Microsoft Message Queuing. Requires WixToolset.Msmq.wixext reference."
+    },
+    {
+      "name": "MessageQueuePermission",
+      "example": "<msmq:MessageQueuePermission\n    User=\"DOMAIN\\AppUser\"\n    QueueGenericRead=\"yes\"\n    WriteMessage=\"yes\" />",
+      "remarks": "Part of the Msmq extension for Microsoft Message Queuing. Requires WixToolset.Msmq.wixext reference."
+    },
+    {
+      "name": "MigrateFeatureStates",
+      "example": "<MigrateFeatureStates />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "MimeMap",
+      "example": "<iis:MimeMap Id=\"JsonMime\"\n    Type=\"application/json\"\n    Extension=\".json\" />",
+      "remarks": "Part of the IIS extension for Internet Information Services configuration. Requires WixToolset.Iis.wixext reference."
+    },
+    {
+      "name": "Module",
+      "example": "<Module Id=\"MyModule\"\n    Language=\"1033\"\n    Version=\"1.0.0.0\">\n    <Package InstallerVersion=\"500\" />\n</Module>",
+      "remarks": "Defines a merge module (.msm). Use for creating reusable installation components that can be merged into multiple MSI packages."
+    },
+    {
+      "name": "MoveFiles",
+      "example": "<MoveFiles />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "MsiPackage",
+      "example": "<MsiPackage Id=\"MainProduct\"\n    SourceFile=\"MyApp.msi\"\n    DisplayInternalUI=\"no\"\n    Compressed=\"yes\"\n    Vital=\"yes\">\n    <MsiProperty Name=\"INSTALLDIR\" Value=\"[InstallFolder]\" />\n</MsiPackage>",
+      "remarks": "An MSI package in a bundle chain. Use DisplayInternalUI='yes' to show the MSI's own UI."
+    },
+    {
+      "name": "MsiPackagePayload",
+      "example": "<MsiPackagePayload SourceFile=\"product.msi\"\n    Name=\"product.msi\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "MsiProperty",
+      "example": "<MsiProperty Name=\"INSTALLLEVEL\" Value=\"3\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "MsiPublishAssemblies",
+      "example": "<MsiPublishAssemblies />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "MsiUnpublishAssemblies",
+      "example": "<MsiUnpublishAssemblies />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "MspPackage",
+      "example": "<MspPackage Id=\"HotFix1\"\n    SourceFile=\"hotfix.msp\"\n    Slipstream=\"no\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "MspPackagePayload",
+      "example": "<MspPackagePayload SourceFile=\"patch.msp\"\n    Name=\"patch.msp\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "MsuPackage",
+      "example": "<MsuPackage Id=\"WindowsUpdate\"\n    SourceFile=\"Windows10-KB123456-x64.msu\"\n    Permanent=\"yes\"\n    Vital=\"yes\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "MsuPackagePayload",
+      "example": "<MsuPackagePayload SourceFile=\"update.msu\"\n    Name=\"update.msu\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "MultiString",
+      "example": "<MultiString Id=\"PathList\">\n    <MultiStringValue>C:\\Path1</MultiStringValue>\n    <MultiStringValue>C:\\Path2</MultiStringValue>\n</MultiString>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "MultiStringValue",
+      "example": "<MultiStringValue>C:\\MyPath</MultiStringValue>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "NativeImage",
+      "example": "<netfx:NativeImage Id=\"MyNativeImage\"\n    Platform=\"all\"\n    Priority=\"1\"\n    AppBaseDirectory=\"INSTALLDIR\" />",
+      "remarks": "Schedules NGEN for .NET assemblies. Improves startup performance."
+    },
+    {
+      "name": "ODBCDataSource",
+      "example": "<ODBCDataSource Id=\"MyDataSource\"\n    Name=\"MyAppData\"\n    DriverName=\"SQL Server\"\n    Registration=\"perMachine\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ODBCDriver",
+      "example": "<ODBCDriver Id=\"MyDriver\"\n    Name=\"My ODBC Driver\"\n    File=\"driver.dll\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ODBCTranslator",
+      "example": "<ODBCTranslator Id=\"MyTranslator\"\n    Name=\"My ODBC Translator\"\n    File=\"translator.dll\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "OptimizeCustomActions",
+      "example": "<OptimizeCustomActions />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "OptionalUpdateRegistration",
+      "example": "<OptionalUpdateRegistration\n    Manufacturer=\"My Company\"\n    Department=\"Engineering\"\n    ProductFamily=\"My Product Line\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Package",
+      "example": "<Package Name=\"My Application\"\n    Version=\"1.0.0\"\n    Manufacturer=\"My Company\"\n    UpgradeCode=\"{GUID}\"\n    Scope=\"perMachine\"\n    Compressed=\"yes\">\n    <MajorUpgrade DowngradeErrorMessage=\"A newer version is installed.\" />\n</Package>",
+      "remarks": "Defines an MSI package. This is the main container for MSI-based installations. Use Bundle for bootstrapper/chainer scenarios."
+    },
+    {
+      "name": "PackageCertificates",
+      "example": "<PackageCertificates>\n    <DigitalCertificate Id=\"Cert1\" SourceFile=\"cert.cer\" />\n</PackageCertificates>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "PackageGroup",
+      "example": "<PackageGroup Id=\"Prerequisites\">\n    <ExePackage Id=\"VCRedist\" SourceFile=\"vc_redist.exe\" />\n</PackageGroup>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "PackageGroupRef",
+      "example": "<PackageGroupRef Id=\"Prerequisites\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Patch",
+      "example": "<Patch AllowRemoval=\"yes\"\n    Manufacturer=\"My Company\"\n    DisplayName=\"My Application Hotfix 1\"\n    MoreInfoURL=\"https://example.com/hotfix1\">\n    <PatchFamily Id=\"MyPatch\" Version=\"1.0.0.1\" />\n</Patch>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "PatchBaseline",
+      "example": "<PatchBaseline Id=\"Baseline1\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "PatchCertificates",
+      "example": "<PatchCertificates>\n    <DigitalCertificate Id=\"PatchCert\" SourceFile=\"patchcert.cer\" />\n</PatchCertificates>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "PatchFamily",
+      "example": "<PatchFamily Id=\"MainPatch\"\n    Version=\"1.0.1\"\n    Supersede=\"yes\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "PatchFamilyGroup",
+      "example": "<PatchFamilyGroup Id=\"AllPatches\">\n    <PatchFamilyRef Id=\"MainPatch\" />\n</PatchFamilyGroup>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "PatchFamilyGroupRef",
+      "example": "<PatchFamilyGroupRef Id=\"AllPatches\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "PatchFamilyRef",
+      "example": "<PatchFamilyRef Id=\"MainPatch\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "PatchFiles",
+      "example": "<PatchFiles />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "PatchInformation",
+      "example": "<PatchInformation Manufacturer=\"My Company\"\n    Description=\"Security update for My Application\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "PatchProperty",
+      "example": "<PatchProperty Name=\"AllowRemoval\" Value=\"1\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Payload",
+      "example": "<Payload SourceFile=\"data.zip\"\n    Name=\"data.zip\"\n    Compressed=\"yes\" />",
+      "remarks": "Additional file included in a bundle. Use for resources needed by bootstrapper application."
+    },
+    {
+      "name": "PayloadGroup",
+      "example": "<PayloadGroup Id=\"DataFiles\">\n    <Payload SourceFile=\"file1.dat\" />\n    <Payload SourceFile=\"file2.dat\" />\n</PayloadGroup>",
+      "remarks": "Groups payloads for reuse across packages."
+    },
+    {
+      "name": "PayloadGroupRef",
+      "example": "<PayloadGroupRef Id=\"DataFiles\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Payloads",
+      "example": "<Payloads>\n    <Payload SourceFile=\"setup.exe\" />\n</Payloads>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "PerfCounter",
+      "example": "<util:PerfCounter Name=\"Requests\"\n    Help=\"Number of requests processed\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "PerfCounterManifest",
+      "example": "<util:PerfCounterManifest ResourceFileDirectory=\"INSTALLDIR\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "PerformanceCategory",
+      "example": "<util:PerformanceCategory Id=\"MyAppPerf\"\n    Name=\"My Application\"\n    Help=\"Performance counters for My Application\"\n    MultiInstance=\"yes\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "PerformanceCounter",
+      "example": "<util:PerformanceCounter\n    Name=\"ActiveConnections\"\n    Type=\"numberOfItems32\"\n    Help=\"Current active connections\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "Permission",
+      "example": "<Permission User=\"Everyone\"\n    GenericRead=\"yes\"\n    GenericExecute=\"yes\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "PermissionEx",
+      "example": "<util:PermissionEx\n    User=\"BUILTIN\\Users\"\n    GenericRead=\"yes\"\n    Read=\"yes\" />",
+      "remarks": "Sets DACL permissions on files, directories, or registry. More flexible than Permission element."
+    },
+    {
+      "name": "ProcessComponents",
+      "example": "<ProcessComponents />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ProductSearch",
+      "example": "<util:ProductSearch Id=\"FindOtherApp\"\n    UpgradeCode=\"{GUID}\"\n    Variable=\"OTHER_APP_VERSION\" />",
+      "remarks": "Detects installed products by UpgradeCode. Useful for prerequisite checking."
+    },
+    {
+      "name": "ProductSearchRef",
+      "example": "<util:ProductSearchRef Id=\"FindOtherApp\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "ProgId",
+      "example": "<ProgId Id=\"MyApp.Document\"\n    Description=\"My Application Document\"\n    Icon=\"AppIcon\">\n    <Extension Id=\"mydoc\" ContentType=\"application/x-mydoc\">\n        <Verb Id=\"open\" Command=\"Open\" TargetFile=\"MyApp.exe\" Argument='\"%1\"' />\n    </Extension>\n</ProgId>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ProgressText",
+      "example": "<ProgressText Action=\"InstallFiles\">Copying files...</ProgressText>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Property",
+      "example": "<Property Id=\"INSTALLDIR\" Value=\"C:\\Program Files\\MyApp\" />",
+      "remarks": "Defines a property. PUBLIC properties (UPPERCASE) can be set from command line. Private properties (lowercase) cannot."
+    },
+    {
+      "name": "PropertyRef",
+      "example": "<PropertyRef Id=\"NETFRAMEWORK48\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Provides",
+      "example": "<Provides Key=\"MyApp\" Version=\"1.0.0\" DisplayName=\"My Application\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Publish",
+      "example": "<Publish Dialog=\"WelcomeDlg\"\n    Control=\"Next\"\n    Event=\"NewDialog\"\n    Value=\"InstallDirDlg\">1</Publish>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "PublishComponents",
+      "example": "<PublishComponents />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "PublishFeatures",
+      "example": "<PublishFeatures />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "PublishProduct",
+      "example": "<PublishProduct />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "QueryNativeMachine",
+      "example": "<util:QueryNativeMachine />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "QueryWindowsDirectories",
+      "example": "<util:QueryWindowsDirectories />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "QueryWindowsDriverInfo",
+      "example": "<util:QueryWindowsDriverInfo />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "QueryWindowsSuiteInfo",
+      "example": "<util:QueryWindowsSuiteInfo />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "QueryWindowsWellKnownSIDs",
+      "example": "<util:QueryWindowsWellKnownSIDs />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "RMCCPSearch",
+      "example": "<RMCCPSearch />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RadioButton",
+      "example": "<RadioButton Value=\"Option1\"\n    X=\"10\" Y=\"10\" Width=\"200\" Height=\"17\"\n    Text=\"First Option\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RadioButtonGroup",
+      "example": "<RadioButtonGroup Property=\"SELECTOPTION\">\n    <RadioButton Value=\"1\" X=\"10\" Y=\"10\" Width=\"200\" Height=\"17\" Text=\"Option 1\" />\n    <RadioButton Value=\"2\" X=\"10\" Y=\"30\" Width=\"200\" Height=\"17\" Text=\"Option 2\" />\n</RadioButtonGroup>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RecycleTime",
+      "example": "<iis:RecycleTime Value=\"03:00:00\" />",
+      "remarks": "Part of the IIS extension for Internet Information Services configuration. Requires WixToolset.Iis.wixext reference."
+    },
+    {
+      "name": "RegisterClassInfo",
+      "example": "<RegisterClassInfo />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RegisterComPlus",
+      "example": "<RegisterComPlus />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RegisterExtensionInfo",
+      "example": "<RegisterExtensionInfo />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RegisterFonts",
+      "example": "<RegisterFonts />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RegisterMIMEInfo",
+      "example": "<RegisterMIMEInfo />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RegisterProduct",
+      "example": "<RegisterProduct />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RegisterProgIdInfo",
+      "example": "<RegisterProgIdInfo />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RegisterTypeLibraries",
+      "example": "<RegisterTypeLibraries />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RegisterUser",
+      "example": "<RegisterUser />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RegistryKey",
+      "example": "<RegistryKey Root=\"HKLM\"\n    Key=\"SOFTWARE\\MyCompany\\MyApp\">\n    <RegistryValue Name=\"Version\" Type=\"string\" Value=\"1.0.0\" />\n    <RegistryValue Name=\"InstallDir\" Type=\"string\" Value=\"[INSTALLDIR]\" />\n</RegistryKey>",
+      "remarks": "Container for registry values. Use Root='HKLM' for per-machine, Root='HKCU' for per-user settings."
+    },
+    {
+      "name": "RegistrySearch",
+      "example": "<util:RegistrySearch Id=\"FindJavaHome\"\n    Root=\"HKLM\"\n    Key=\"SOFTWARE\\JavaSoft\\JDK\"\n    Value=\"CurrentVersion\"\n    Variable=\"JAVA_VERSION\" />",
+      "remarks": "Searches registry during AppSearch. Use Result attribute to specify what to retrieve."
+    },
+    {
+      "name": "RegistrySearchRef",
+      "example": "<util:RegistrySearchRef Id=\"FindJavaHome\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "RegistryValue",
+      "example": "<RegistryValue Root=\"HKLM\"\n    Key=\"SOFTWARE\\MyCompany\\MyApp\"\n    Name=\"Installed\"\n    Type=\"integer\"\n    Value=\"1\"\n    KeyPath=\"yes\" />",
+      "remarks": "Creates a registry value. Can be used as KeyPath for components in user profile directories."
+    },
+    {
+      "name": "RelatedBundle",
+      "example": "<RelatedBundle Id=\"{UPGRADE-CODE-GUID}\"\n    Action=\"upgrade\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RemoteAddress",
+      "example": "<firewall:RemoteAddress Value=\"10.0.0.0/8\" />",
+      "remarks": "Part of the Firewall extension for Windows Firewall rules. Requires WixToolset.Firewall.wixext reference."
+    },
+    {
+      "name": "RemoteBundle",
+      "example": "<RemoteBundle BundleId=\"{BUNDLE-ID-GUID}\"\n    Version=\"1.0.0\"\n    UpgradeCode=\"{UPGRADE-CODE-GUID}\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RemoteRelatedBundle",
+      "example": "<RemoteRelatedBundle Id=\"{BUNDLE-ID}\"\n    Action=\"detect\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RemoveDuplicateFiles",
+      "example": "<RemoveDuplicateFiles />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RemoveEnvironmentStrings",
+      "example": "<RemoveEnvironmentStrings />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RemoveExistingProducts",
+      "example": "<RemoveExistingProducts />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RemoveFile",
+      "example": "<RemoveFile Id=\"RemoveLogFiles\"\n    Name=\"*.log\"\n    On=\"uninstall\"\n    Directory=\"INSTALLDIR\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RemoveFiles",
+      "example": "<RemoveFiles />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RemoveFolder",
+      "example": "<RemoveFolder Id=\"RemoveInstallDir\"\n    On=\"uninstall\"\n    Directory=\"INSTALLDIR\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RemoveFolderEx",
+      "example": "<util:RemoveFolderEx On=\"uninstall\"\n    Property=\"INSTALLDIR\" />",
+      "remarks": "Removes folders and contents on uninstall. More powerful than RemoveFolder."
+    },
+    {
+      "name": "RemoveFolders",
+      "example": "<RemoveFolders />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RemoveIniValues",
+      "example": "<RemoveIniValues />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RemoveODBC",
+      "example": "<RemoveODBC />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RemoveRegistryKey",
+      "example": "<RemoveRegistryKey Id=\"RemoveAppKey\"\n    Root=\"HKLM\"\n    Key=\"SOFTWARE\\MyCompany\\MyApp\"\n    Action=\"removeOnUninstall\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RemoveRegistryValue",
+      "example": "<RemoveRegistryValue Root=\"HKCU\"\n    Key=\"SOFTWARE\\MyCompany\\MyApp\"\n    Name=\"TempValue\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RemoveRegistryValues",
+      "example": "<RemoveRegistryValues />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RemoveShortcuts",
+      "example": "<RemoveShortcuts />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RequiredPrivilege",
+      "example": "<RequiredPrivilege Name=\"SeServiceLogonRight\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Requires",
+      "example": "<Requires Id=\"NetFx48\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RequiresRef",
+      "example": "<RequiresRef Id=\"NetFx48\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ReserveCost",
+      "example": "<ReserveCost Id=\"ReserveSpace\"\n    Directory=\"INSTALLDIR\"\n    RunLocal=\"1048576\"\n    RunFromSource=\"0\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ResolveSource",
+      "example": "<ResolveSource />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "RestartResource",
+      "example": "<util:RestartResource Id=\"RestartMyService\"\n    Path=\"[System64Folder]svchost.exe\"\n    ServiceName=\"MyService\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "RollbackBoundary",
+      "example": "<RollbackBoundary Id=\"AfterPrereqs\"\n    Vital=\"yes\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Row",
+      "example": "<Row>\n    <Data Column=\"Property\">CustomSetting</Data>\n    <Data Column=\"Value\">CustomValue</Data>\n</Row>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "SFPCatalog",
+      "example": "<SFPCatalog Name=\"MyCatalog\"\n    SourceFile=\"catalog.cat\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "SFPFile",
+      "example": "<SFPFile Id=\"ProtectedFile\"\n    File=\"SystemFile\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ScheduleReboot",
+      "example": "<ScheduleReboot />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "SelfRegModules",
+      "example": "<SelfRegModules />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "SelfUnregModules",
+      "example": "<SelfUnregModules />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ServiceArgument",
+      "example": "<ServiceArgument>-config \"[INSTALLDIR]service.config\"</ServiceArgument>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ServiceConfig",
+      "example": "<util:ServiceConfig\n    ServiceName=\"MyService\"\n    FirstFailureActionType=\"restart\"\n    SecondFailureActionType=\"restart\"\n    ThirdFailureActionType=\"none\"\n    ResetPeriodInDays=\"1\" />",
+      "remarks": "Configures service failure actions. Use with ServiceInstall for robust service management."
+    },
+    {
+      "name": "ServiceConfigFailureActions",
+      "example": "<ServiceConfigFailureActions\n    OnInstall=\"yes\"\n    OnReinstall=\"yes\"\n    OnUninstall=\"no\"\n    ResetPeriod=\"86400\">\n    <Failure Action=\"restart\" Delay=\"60\" />\n    <Failure Action=\"restart\" Delay=\"120\" />\n    <Failure Action=\"none\" Delay=\"0\" />\n</ServiceConfigFailureActions>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ServiceControl",
+      "example": "<ServiceControl Id=\"ControlMyService\"\n    Name=\"MyService\"\n    Start=\"install\"\n    Stop=\"both\"\n    Remove=\"uninstall\"\n    Wait=\"yes\" />",
+      "remarks": "Controls service start/stop during install/uninstall. Always pair with ServiceInstall."
+    },
+    {
+      "name": "ServiceDependency",
+      "example": "<ServiceDependency Id=\"MSSQLSERVER\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ServiceInstall",
+      "example": "<ServiceInstall Id=\"MyService\"\n    Name=\"MyService\"\n    DisplayName=\"My Application Service\"\n    Description=\"Background service for My Application\"\n    Type=\"ownProcess\"\n    Start=\"auto\"\n    ErrorControl=\"normal\"\n    Account=\"NT AUTHORITY\\LocalService\" />",
+      "remarks": "Installs a Windows service. Must be paired with ServiceControl for proper lifecycle management."
+    },
+    {
+      "name": "SetDirectory",
+      "example": "<SetDirectory Id=\"INSTALLDIR\"\n    Value=\"[WindowsVolume]MyApp\"\n    Sequence=\"execute\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "SetODBCFolders",
+      "example": "<SetODBCFolders />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "SetProperty",
+      "example": "<SetProperty Id=\"INSTALLDIR\"\n    Value=\"[ProgramFilesFolder]MyCompany\\MyApp\"\n    Before=\"CostInitialize\"\n    Sequence=\"execute\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "SetVariable",
+      "example": "<SetVariable Id=\"InstallFolder\"\n    Value=\"[ProgramFilesFolder]MyApp\"\n    Type=\"string\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "SetVariableRef",
+      "example": "<SetVariableRef Id=\"InstallFolder\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Shortcut",
+      "example": "<Shortcut Id=\"DesktopShortcut\"\n    Name=\"My Application\"\n    Description=\"Launch My Application\"\n    Directory=\"DesktopFolder\"\n    Target=\"[#MyApp.exe]\"\n    WorkingDirectory=\"INSTALLDIR\"\n    Icon=\"AppIcon\" />",
+      "remarks": "Creates a shortcut. Must be inside a Component. Use Directory attribute to specify location (DesktopFolder, ProgramMenuFolder)."
+    },
+    {
+      "name": "ShortcutProperty",
+      "example": "<ShortcutProperty Key=\"System.AppUserModel.ID\"\n    Value=\"MyCompany.MyApp\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Show",
+      "example": "<Show Dialog=\"WelcomeDlg\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "SlipstreamMsp",
+      "example": "<SlipstreamMsp Id=\"PatchMsp\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "SniSslCertificate",
+      "example": "<http:SniSslCertificate\n    Host=\"myapp.example.com\"\n    Port=\"443\"\n    HandleExisting=\"replace\"\n    Store=\"MY\"\n    Thumbprint=\"[CERT_THUMBPRINT]\" />",
+      "remarks": "Part of the Http extension for HTTP namespace reservations and SSL bindings. Requires WixToolset.Http.wixext reference."
+    },
+    {
+      "name": "SoftwareTag",
+      "example": "<SoftwareTag Regid=\"example.com\"\n    InstallDirectory=\"INSTALLDIR\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "SoftwareTagRef",
+      "example": "<SoftwareTagRef Id=\"MainTag\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "SqlDatabase",
+      "example": "<sql:SqlDatabase Id=\"MyDatabase\"\n    Server=\"[SQL_SERVER]\"\n    Database=\"MyAppDb\"\n    CreateOnInstall=\"yes\"\n    DropOnUninstall=\"yes\" />",
+      "remarks": "Creates or connects to a SQL Server database. Set CreateOnInstall='yes' to create during installation."
+    },
+    {
+      "name": "SqlFileSpec",
+      "example": "<sql:SqlFileSpec Id=\"PrimaryFile\"\n    Name=\"MyAppDb\"\n    Filename=\"[SQL_DATA]MyAppDb.mdf\"\n    Size=\"10MB\"\n    GrowthSize=\"10%\" />",
+      "remarks": "Part of the Sql extension for SQL Server database deployment. Requires WixToolset.Sql.wixext reference."
+    },
+    {
+      "name": "SqlLogFileSpec",
+      "example": "<sql:SqlLogFileSpec Id=\"LogFile\"\n    Name=\"MyAppDb_log\"\n    Filename=\"[SQL_LOG]MyAppDb_log.ldf\"\n    Size=\"5MB\" />",
+      "remarks": "Part of the Sql extension for SQL Server database deployment. Requires WixToolset.Sql.wixext reference."
+    },
+    {
+      "name": "SqlScript",
+      "example": "<sql:SqlScript Id=\"CreateTables\"\n    BinaryRef=\"CreateTablesScript\"\n    ExecuteOnInstall=\"yes\"\n    RollbackOnInstall=\"yes\"\n    SqlDb=\"MyDatabase\"\n    Sequence=\"1\" />",
+      "remarks": "Executes SQL script during installation. Use RollbackScript for transactional safety."
+    },
+    {
+      "name": "SqlString",
+      "example": "<sql:SqlString Id=\"InsertVersion\"\n    SqlDb=\"MyDatabase\"\n    SQL=\"INSERT INTO Version (Ver) VALUES ('1.0.0')\"\n    ExecuteOnInstall=\"yes\"\n    Sequence=\"2\" />",
+      "remarks": "Executes inline SQL statement. Use SqlScript for complex scripts."
+    },
+    {
+      "name": "StandardDirectory",
+      "example": "<StandardDirectory Id=\"ProgramFilesFolder\">\n    <Directory Id=\"INSTALLDIR\" Name=\"MyApp\" />\n</StandardDirectory>",
+      "remarks": "References a well-known Windows folder like ProgramFilesFolder. Preferred over DirectoryRef for standard locations."
+    },
+    {
+      "name": "StartServices",
+      "example": "<StartServices />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "StopServices",
+      "example": "<StopServices />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Subscribe",
+      "example": "<Subscribe Event=\"SelectionChange\"\n    Attribute=\"Enabled\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Substitution",
+      "example": "<Substitution Table=\"Property\"\n    Row=\"INSTALLDIR\"\n    Column=\"Value\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "SummaryInformation",
+      "example": "<SummaryInformation\n    Keywords=\"Installer\"\n    Description=\"My Application Installer Package\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "TargetProductCode",
+      "example": "<TargetProductCode Id=\"{PRODUCT-CODE-GUID}\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "TargetProductCodes",
+      "example": "<TargetProductCodes Replace=\"yes\">\n    <TargetProductCode Id=\"{GUID1}\" />\n    <TargetProductCode Id=\"{GUID2}\" />\n</TargetProductCodes>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Text",
+      "example": "<Text>Welcome to the installation wizard.</Text>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "TextStyle",
+      "example": "<TextStyle Id=\"TitleFont\"\n    FaceName=\"Tahoma\"\n    Size=\"12\"\n    Bold=\"yes\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "TouchFile",
+      "example": "<util:TouchFile Id=\"TouchConfig\"\n    Path=\"[INSTALLDIR]config.xml\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "TypeLib",
+      "example": "<TypeLib Id=\"{GUID}\"\n    Language=\"0\"\n    MajorVersion=\"1\"\n    MinorVersion=\"0\"\n    Description=\"My Type Library\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "UI",
+      "example": "<UI>\n    <UIRef Id=\"WixUI_InstallDir\" />\n    <Property Id=\"WIXUI_INSTALLDIR\" Value=\"INSTALLDIR\" />\n</UI>",
+      "remarks": "Container for UI elements. Use UIRef to reference built-in WiX UI sets like WixUI_Minimal or WixUI_InstallDir."
+    },
+    {
+      "name": "UIRef",
+      "example": "<UIRef Id=\"WixUI_Minimal\" />",
+      "remarks": "References a built-in UI set. Common values: WixUI_Minimal, WixUI_InstallDir, WixUI_FeatureTree, WixUI_Mondo."
+    },
+    {
+      "name": "UIText",
+      "example": "<UIText Id=\"WelcomeTitle\">Welcome to [ProductName]</UIText>",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "UnpublishComponents",
+      "example": "<UnpublishComponents />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "UnpublishFeatures",
+      "example": "<UnpublishFeatures />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "UnregisterClassInfo",
+      "example": "<UnregisterClassInfo />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "UnregisterComPlus",
+      "example": "<UnregisterComPlus />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "UnregisterExtensionInfo",
+      "example": "<UnregisterExtensionInfo />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "UnregisterFonts",
+      "example": "<UnregisterFonts />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "UnregisterMIMEInfo",
+      "example": "<UnregisterMIMEInfo />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "UnregisterProgIdInfo",
+      "example": "<UnregisterProgIdInfo />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "UnregisterTypeLibraries",
+      "example": "<UnregisterTypeLibraries />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Update",
+      "example": "<Update Property=\"ProductVersion\" Value=\"1.0.1\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Upgrade",
+      "example": "<Upgrade Id=\"{UPGRADE-CODE-GUID}\">\n    <UpgradeVersion Minimum=\"1.0.0\"\n        IncludeMinimum=\"yes\"\n        Maximum=\"2.0.0\"\n        IncludeMaximum=\"no\"\n        Property=\"PREVIOUSVERSIONSINSTALLED\" />\n</Upgrade>",
+      "remarks": "Lower-level upgrade detection. Use MajorUpgrade for simpler scenarios; Upgrade for complex version handling."
+    },
+    {
+      "name": "UpgradeVersion",
+      "example": "<UpgradeVersion Minimum=\"1.0.0\"\n    Maximum=\"1.9.9\"\n    IncludeMinimum=\"yes\"\n    IncludeMaximum=\"yes\"\n    OnlyDetect=\"no\"\n    Property=\"UPGRADEFOUND\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "UrlAce",
+      "example": "<http:UrlAce\n    Id=\"MyUrlAce\"\n    SecurityPrincipal=\"NT AUTHORITY\\NETWORK SERVICE\"\n    Rights=\"all\" />",
+      "remarks": "Part of the Http extension for HTTP namespace reservations and SSL bindings. Requires WixToolset.Http.wixext reference."
+    },
+    {
+      "name": "UrlReservation",
+      "example": "<http:UrlReservation\n    Id=\"MyUrlReservation\"\n    Url=\"http://+:8080/myapp/\"\n    HandleExisting=\"replace\">\n    <http:UrlAce SecurityPrincipal=\"BUILTIN\\Users\" Rights=\"all\" />\n</http:UrlReservation>",
+      "remarks": "Part of the Http extension for HTTP namespace reservations and SSL bindings. Requires WixToolset.Http.wixext reference."
+    },
+    {
+      "name": "User",
+      "example": "<util:User Id=\"ServiceUser\"\n    Name=\"MyAppService\"\n    Password=\"[SERVICE_PASSWORD]\"\n    CreateUser=\"yes\"\n    CanNotChangePassword=\"yes\"\n    PasswordNeverExpires=\"yes\" />",
+      "remarks": "Creates local user accounts. Consider security implications; prefer service accounts for services."
+    },
+    {
+      "name": "Validate",
+      "example": "<Validate ProductId=\"*\"\n    ProductLanguage=\"*\"\n    ProductVersion=\"*\"\n    UpgradeCode=\"{UPGRADE-CODE-GUID}\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "ValidateProductID",
+      "example": "<ValidateProductID />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "Variable",
+      "example": "<Variable Name=\"InstallFolder\"\n    bal:Overridable=\"yes\"\n    Type=\"string\"\n    Value=\"[ProgramFilesFolder]MyApp\" />",
+      "remarks": "Bundle variable for passing data between packages or storing state. Use bal:Overridable='yes' to allow command-line override."
+    },
+    {
+      "name": "Verb",
+      "example": "<Verb Id=\"open\"\n    Command=\"Open\"\n    Sequence=\"1\"\n    Argument='\"%1\"' />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "VsixPackage",
+      "example": "<vs:VsixPackage\n    File=\"MyExtension.vsix\"\n    PackageId=\"MyExtension.{GUID}\"\n    Permanent=\"no\"\n    Target=\"Community,Pro,Enterprise\"\n    TargetVersion=\"17.0\"\n    Vital=\"yes\" />",
+      "remarks": "Part of the VisualStudio extension. Requires WixToolset.VisualStudio.wixext reference."
+    },
+    {
+      "name": "WaitForEvent",
+      "example": "<util:WaitForEvent Id=\"WaitForShutdown\"\n    Name=\"Global\\MyAppShutdown\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "WaitForEventDeferred",
+      "example": "<util:WaitForEventDeferred Id=\"WaitDeferred\"\n    Name=\"Global\\MyAppReady\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "WebAddress",
+      "example": "<iis:WebAddress Id=\"AllHttp\"\n    Port=\"80\"\n    IP=\"*\" />",
+      "remarks": "Part of the IIS extension for Internet Information Services configuration. Requires WixToolset.Iis.wixext reference."
+    },
+    {
+      "name": "WebAppPool",
+      "example": "<iis:WebAppPool Id=\"MyAppPool\"\n    Name=\"MyApplication Pool\"\n    Identity=\"applicationPoolIdentity\"\n    ManagedRuntimeVersion=\"v4.0\"\n    ManagedPipelineMode=\"Integrated\" />",
+      "remarks": "Creates an IIS application pool. Recommended: use ApplicationPoolIdentity for security."
+    },
+    {
+      "name": "WebApplication",
+      "example": "<iis:WebApplication Id=\"MyWebApp\"\n    Name=\"myapp\"\n    WebAppPool=\"MyAppPool\" />",
+      "remarks": "Creates an IIS application under a website."
+    },
+    {
+      "name": "WebApplicationExtension",
+      "example": "<iis:WebApplicationExtension\n    Executable=\"[ASPNET_ISAPI]\"\n    Extension=\"aspx\"\n    Verbs=\"GET,HEAD,POST\" />",
+      "remarks": "Part of the IIS extension for Internet Information Services configuration. Requires WixToolset.Iis.wixext reference."
+    },
+    {
+      "name": "WebDir",
+      "example": "<iis:WebDir Id=\"ImagesDir\"\n    Path=\"images\"\n    DirProperties=\"DefaultDirProperties\" />",
+      "remarks": "Part of the IIS extension for Internet Information Services configuration. Requires WixToolset.Iis.wixext reference."
+    },
+    {
+      "name": "WebDirProperties",
+      "example": "<iis:WebDirProperties Id=\"DefaultDirProperties\"\n    Read=\"yes\"\n    Script=\"yes\"\n    Execute=\"no\" />",
+      "remarks": "Part of the IIS extension for Internet Information Services configuration. Requires WixToolset.Iis.wixext reference."
+    },
+    {
+      "name": "WebError",
+      "example": "<iis:WebError ErrorCode=\"404\"\n    SubCode=\"0\"\n    File=\"[INSTALLDIR]errors\\404.html\" />",
+      "remarks": "Part of the IIS extension for Internet Information Services configuration. Requires WixToolset.Iis.wixext reference."
+    },
+    {
+      "name": "WebFilter",
+      "example": "<iis:WebFilter Id=\"MyFilter\"\n    Name=\"My ISAPI Filter\"\n    Path=\"[#filter.dll]\"\n    LoadOrder=\"1\" />",
+      "remarks": "Part of the IIS extension for Internet Information Services configuration. Requires WixToolset.Iis.wixext reference."
+    },
+    {
+      "name": "WebLog",
+      "example": "<iis:WebLog Id=\"MyWebLog\"\n    Type=\"IIS\" />",
+      "remarks": "Part of the IIS extension for Internet Information Services configuration. Requires WixToolset.Iis.wixext reference."
+    },
+    {
+      "name": "WebProperty",
+      "example": "<iis:WebProperty Id=\"LogInUTF8\" Value=\"1\" />",
+      "remarks": "Part of the IIS extension for Internet Information Services configuration. Requires WixToolset.Iis.wixext reference."
+    },
+    {
+      "name": "WebServiceExtension",
+      "example": "<iis:WebServiceExtension Id=\"AspNetExt\"\n    File=\"[ASPNET_ISAPI]\"\n    Description=\"ASP.NET\"\n    Allow=\"yes\" />",
+      "remarks": "Part of the IIS extension for Internet Information Services configuration. Requires WixToolset.Iis.wixext reference."
+    },
+    {
+      "name": "WebSite",
+      "example": "<iis:WebSite Id=\"MyWebSite\"\n    Description=\"My Website\"\n    Directory=\"INSTALLDIR\"\n    AutoStart=\"yes\">\n    <iis:WebAddress Id=\"AllHttp\" Port=\"80\" />\n</iis:WebSite>",
+      "remarks": "Creates or configures an IIS website. Requires IIS to be installed on target machine."
+    },
+    {
+      "name": "WebVirtualDir",
+      "example": "<iis:WebVirtualDir Id=\"MyVirtualDir\"\n    Alias=\"api\"\n    Directory=\"APIDIR\"\n    WebSite=\"MyWebSite\" />",
+      "remarks": "Creates an IIS virtual directory."
+    },
+    {
+      "name": "WindowsFeatureSearch",
+      "example": "<util:WindowsFeatureSearch Id=\"IisSearch\"\n    Feature=\"IIS-WebServer\"\n    Variable=\"IIS_INSTALLED\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "WindowsFeatureSearchRef",
+      "example": "<util:WindowsFeatureSearchRef Id=\"IisSearch\" />",
+      "remarks": "Part of the Util extension with utility elements. Requires WixToolset.Util.wixext reference."
+    },
+    {
+      "name": "Wix",
+      "example": "<Wix xmlns=\"http://wixtoolset.org/schemas/v4/wxs\">\n    <Package Name=\"My Application\"\n        Version=\"1.0.0\"\n        Manufacturer=\"My Company\"\n        UpgradeCode=\"{GUID}\">\n        <!-- Package contents here -->\n    </Package>\n</Wix>",
+      "remarks": "Root element of every WiX source file. Must declare the WiX namespace."
+    },
+    {
+      "name": "WixDotNetCoreBootstrapperApplicationHost",
+      "example": "<bal:WixDotNetCoreBootstrapperApplicationHost\n    Theme=\"standard\"\n    LicenseFile=\"License.rtf\"\n    LogoFile=\"logo.png\" />",
+      "remarks": "Part of the Bal (Bootstrapper Application Library) extension. Requires WixToolset.Bal.wixext reference."
+    },
+    {
+      "name": "WixInternalUIBootstrapperApplication",
+      "example": "<bal:WixInternalUIBootstrapperApplication\n    Theme=\"standard\"\n    LogoFile=\"logo.png\" />",
+      "remarks": "Part of the Bal (Bootstrapper Application Library) extension. Requires WixToolset.Bal.wixext reference."
+    },
+    {
+      "name": "WixManagedBootstrapperApplicationHost",
+      "example": "<bal:WixManagedBootstrapperApplicationHost\n    Theme=\"standard\"\n    LicenseFile=\"License.rtf\" />",
+      "remarks": "Part of the Bal (Bootstrapper Application Library) extension. Requires WixToolset.Bal.wixext reference."
+    },
+    {
+      "name": "WixPrerequisiteBootstrapperApplication",
+      "example": "<bal:WixPrerequisiteBootstrapperApplication\n    Theme=\"standard\"\n    LicenseFile=\"License.rtf\"\n    LogoFile=\"logo.png\" />",
+      "remarks": "Part of the Bal (Bootstrapper Application Library) extension. Requires WixToolset.Bal.wixext reference."
+    },
+    {
+      "name": "WixStandardBootstrapperApplication",
+      "example": "<bal:WixStandardBootstrapperApplication\n    Theme=\"hyperlinkLicense\"\n    LicenseUrl=\"https://example.com/license\"\n    LogoFile=\"logo.png\"\n    ShowVersion=\"yes\" />",
+      "remarks": "The standard WiX bootstrapper UI. Choose Theme for different layouts (hyperlinkLicense, rtfLicense, etc.)."
+    },
+    {
+      "name": "WixUI",
+      "example": "<ui:WixUI Id=\"WixUI_InstallDir\"\n    InstallDirectory=\"INSTALLDIR\" />",
+      "remarks": "Part of the UI extension for WiX UI dialogs. Requires WixToolset.UI.wixext reference."
+    },
+    {
+      "name": "WixVariable",
+      "example": "<WixVariable Id=\"WixUILicenseRtf\"\n    Value=\"License.rtf\" />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "WriteEnvironmentStrings",
+      "example": "<WriteEnvironmentStrings />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "WriteIniValues",
+      "example": "<WriteIniValues />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "WriteRegistryValues",
+      "example": "<WriteRegistryValues />",
+      "remarks": "Core WiX element. See documentation for usage details and examples."
+    },
+    {
+      "name": "XmlConfig",
+      "example": "<util:XmlConfig Id=\"SetConnectionString\"\n    File=\"[INSTALLDIR]web.config\"\n    ElementPath=\"/configuration/connectionStrings/add[@name='Default']\"\n    Name=\"connectionString\"\n    Value=\"[CONNECTION_STRING]\"\n    Action=\"create\"\n    On=\"install\"\n    Node=\"value\" />",
+      "remarks": "More powerful XML modification than XmlFile. Supports element creation and complex XPath."
+    },
+    {
+      "name": "XmlFile",
+      "example": "<util:XmlFile Id=\"UpdateAppSetting\"\n    File=\"[INSTALLDIR]app.config\"\n    Action=\"setValue\"\n    ElementPath=\"/configuration/appSettings/add[@key='ServerUrl']/@value\"\n    Value=\"[SERVER_URL]\" />",
+      "remarks": "Modifies XML files during installation. Use for config file customization. Test thoroughly with various existing configs."
+    }
+  ]
+}

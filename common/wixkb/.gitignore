@@ -1,0 +1,12 @@
+# Build artifacts
+target/
+
+# Database files (generated)
+database/*.db
+
+# Harvest cache
+.cache/
+
+# IDE
+.idea/
+.vscode/

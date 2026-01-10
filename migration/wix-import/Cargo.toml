@@ -1,0 +1,24 @@
+[package]
+name = "wix-import"
+version = "0.1.0"
+edition = "2021"
+description = "Import installers from NSIS, InnoSetup, and other formats to WiX"
+license = "MIT"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+regex = "1"
+thiserror = "2"
+
+[dev-dependencies]
+tempfile = "3"
+
+[[bin]]
+name = "wix-import"
+path = "src/main.rs"
+
+[lib]
+name = "wix_import"
+path = "src/lib.rs"

@@ -1,0 +1,110 @@
+{
+  "_description": "Code snippets for WiX include files (.wxi)",
+  "snippets": [
+    {
+      "prefix": "wxi",
+      "name": "WXI Include File Template",
+      "description": "Complete WXI include file template",
+      "scope": "wxi",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Include xmlns=\"http://wixtoolset.org/schemas/v4/wxs\">\n  $0\n</Include>"
+    },
+    {
+      "prefix": "wxi-variables",
+      "name": "Variables Include File",
+      "description": "Include file for preprocessor variables",
+      "scope": "wxi",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Include xmlns=\"http://wixtoolset.org/schemas/v4/wxs\">\n  <?define ProductName = \"${1:My Application}\" ?>\n  <?define ProductVersion = \"${2:1.0.0}\" ?>\n  <?define Manufacturer = \"${3:Company Name}\" ?>\n  <?define UpgradeCode = \"${4:PUT-GUID-HERE}\" ?>\n  $0\n</Include>"
+    },
+    {
+      "prefix": "wxi-paths",
+      "name": "Paths Include File",
+      "description": "Include file for path variables",
+      "scope": "wxi",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Include xmlns=\"http://wixtoolset.org/schemas/v4/wxs\">\n  <?define SourceDir = \"${1:..\\\\bin\\\\Release}\" ?>\n  <?define ResourceDir = \"${2:..\\\\resources}\" ?>\n  <?define LicenseFile = \"${3:$(var.ResourceDir)\\\\license.rtf}\" ?>\n  $0\n</Include>"
+    },
+    {
+      "prefix": "wxi-fragment",
+      "name": "Fragment Include",
+      "description": "Include file with a Fragment wrapper",
+      "scope": "wxi",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Include xmlns=\"http://wixtoolset.org/schemas/v4/wxs\">\n  <Fragment>\n    $0\n  </Fragment>\n</Include>"
+    },
+    {
+      "prefix": "wxi-componentgroup",
+      "name": "Component Group Include",
+      "description": "Include file with reusable component group",
+      "scope": "wxi",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Include xmlns=\"http://wixtoolset.org/schemas/v4/wxs\">\n  <Fragment>\n    <ComponentGroup Id=\"${1:ComponentGroupName}\" Directory=\"${2:INSTALLFOLDER}\">\n      <Component Id=\"${3:ComponentName}\">\n        <File Source=\"${4:$(var.SourceDir)\\\\file.dll}\" />\n      </Component>\n      $0\n    </ComponentGroup>\n  </Fragment>\n</Include>"
+    },
+    {
+      "prefix": "wxi-feature",
+      "name": "Feature Include",
+      "description": "Include file with feature definition",
+      "scope": "wxi",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Include xmlns=\"http://wixtoolset.org/schemas/v4/wxs\">\n  <Fragment>\n    <Feature Id=\"${1:FeatureName}\" Title=\"${2:Feature Title}\" Level=\"1\">\n      <ComponentGroupRef Id=\"${3:ComponentGroupName}\" />\n      $0\n    </Feature>\n  </Fragment>\n</Include>"
+    },
+    {
+      "prefix": "wxi-properties",
+      "name": "Properties Include",
+      "description": "Include file with property definitions",
+      "scope": "wxi",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Include xmlns=\"http://wixtoolset.org/schemas/v4/wxs\">\n  <Fragment>\n    <Property Id=\"${1:PROPERTYNAME}\" Value=\"${2:DefaultValue}\" />\n    <Property Id=\"ARPPRODUCTICON\" Value=\"ProductIcon.ico\" />\n    <Property Id=\"ARPHELPLINK\" Value=\"${3:https://example.com/support}\" />\n    <Property Id=\"ARPURLINFOABOUT\" Value=\"${4:https://example.com}\" />\n    $0\n  </Fragment>\n</Include>"
+    },
+    {
+      "prefix": "wxi-directories",
+      "name": "Directories Include",
+      "description": "Include file with directory structure",
+      "scope": "wxi",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Include xmlns=\"http://wixtoolset.org/schemas/v4/wxs\">\n  <Fragment>\n    <StandardDirectory Id=\"ProgramFiles6432Folder\">\n      <Directory Id=\"CompanyFolder\" Name=\"${1:$(var.Manufacturer)}\">\n        <Directory Id=\"INSTALLFOLDER\" Name=\"${2:$(var.ProductName)}\" />\n      </Directory>\n    </StandardDirectory>\n    $0\n  </Fragment>\n</Include>"
+    },
+    {
+      "prefix": "wxi-registry",
+      "name": "Registry Include",
+      "description": "Include file with registry entries",
+      "scope": "wxi",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Include xmlns=\"http://wixtoolset.org/schemas/v4/wxs\">\n  <Fragment>\n    <ComponentGroup Id=\"${1:RegistryComponents}\">\n      <Component Id=\"RegistryEntries\" Directory=\"INSTALLFOLDER\">\n        <RegistryKey Root=\"HKLM\" Key=\"SOFTWARE\\\\${2:$(var.Manufacturer)}\\\\${3:$(var.ProductName)}\">\n          <RegistryValue Name=\"InstallPath\" Type=\"string\" Value=\"[INSTALLFOLDER]\" />\n          <RegistryValue Name=\"Version\" Type=\"string\" Value=\"${4:$(var.ProductVersion)}\" />\n        </RegistryKey>\n      </Component>\n    </ComponentGroup>\n  </Fragment>\n</Include>"
+    },
+    {
+      "prefix": "wxi-shortcuts",
+      "name": "Shortcuts Include",
+      "description": "Include file with shortcut definitions",
+      "scope": "wxi",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Include xmlns=\"http://wixtoolset.org/schemas/v4/wxs\">\n  <Fragment>\n    <ComponentGroup Id=\"${1:ShortcutComponents}\">\n      <Component Id=\"StartMenuShortcut\" Directory=\"ProgramMenuFolder\">\n        <Shortcut Id=\"StartMenuShortcut\" Name=\"${2:$(var.ProductName)}\" Target=\"[INSTALLFOLDER]${3:app.exe}\" WorkingDirectory=\"INSTALLFOLDER\" />\n        <RemoveFolder Id=\"RemoveStartMenuFolder\" On=\"uninstall\" />\n        <RegistryValue Root=\"HKCU\" Key=\"SOFTWARE\\\\${4:$(var.Manufacturer)}\\\\${5:$(var.ProductName)}\" Name=\"StartMenuShortcut\" Type=\"integer\" Value=\"1\" KeyPath=\"yes\" />\n      </Component>\n    </ComponentGroup>\n  </Fragment>\n</Include>"
+    },
+    {
+      "prefix": "wxi-service",
+      "name": "Service Include",
+      "description": "Include file with Windows service definition",
+      "scope": "wxi",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Include xmlns=\"http://wixtoolset.org/schemas/v4/wxs\">\n  <Fragment>\n    <ComponentGroup Id=\"${1:ServiceComponents}\" Directory=\"INSTALLFOLDER\">\n      <Component Id=\"ServiceComponent\">\n        <File Id=\"ServiceExe\" Source=\"${2:$(var.SourceDir)\\\\service.exe}\" KeyPath=\"yes\" />\n        <ServiceInstall Id=\"ServiceInstall\" Name=\"${3:MyService}\" DisplayName=\"${4:My Service}\" Description=\"${5:Service description}\" Start=\"auto\" Type=\"ownProcess\" ErrorControl=\"normal\" />\n        <ServiceControl Id=\"ServiceControl\" Name=\"${3:MyService}\" Start=\"install\" Stop=\"both\" Remove=\"uninstall\" Wait=\"yes\" />\n      </Component>\n    </ComponentGroup>\n  </Fragment>\n</Include>"
+    },
+    {
+      "prefix": "wxi-customaction",
+      "name": "Custom Actions Include",
+      "description": "Include file with custom action definitions",
+      "scope": "wxi",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Include xmlns=\"http://wixtoolset.org/schemas/v4/wxs\">\n  <Fragment>\n    <Binary Id=\"CustomActionDll\" SourceFile=\"${1:$(var.SourceDir)\\\\CustomActions.CA.dll}\" />\n    \n    <CustomAction Id=\"${2:MyCustomAction}\" DllEntry=\"${3:CustomActionMethod}\" BinaryRef=\"CustomActionDll\" Execute=\"deferred\" Impersonate=\"no\" Return=\"check\" />\n    \n    <InstallExecuteSequence>\n      <Custom Action=\"${2:MyCustomAction}\" Before=\"InstallFinalize\">\n        <![CDATA[NOT Installed]]>\n      </Custom>\n    </InstallExecuteSequence>\n  </Fragment>\n</Include>"
+    },
+    {
+      "prefix": "wxi-condition-ifdef",
+      "name": "Conditional Include",
+      "description": "Include with conditional compilation",
+      "scope": "wxi",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Include xmlns=\"http://wixtoolset.org/schemas/v4/wxs\">\n  <?ifdef ${1:Debug} ?>\n    <!-- Debug-only content -->\n    $0\n  <?else ?>\n    <!-- Release content -->\n  <?endif ?>\n</Include>"
+    },
+    {
+      "prefix": "wxi-arch",
+      "name": "Architecture-Specific Include",
+      "description": "Include with architecture-specific content",
+      "scope": "wxi",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Include xmlns=\"http://wixtoolset.org/schemas/v4/wxs\">\n  <?if $(sys.BUILDARCH) = \"x64\" ?>\n    <?define PlatformProgramFilesFolder = \"ProgramFiles64Folder\" ?>\n    <?define Win64 = \"yes\" ?>\n  <?else ?>\n    <?define PlatformProgramFilesFolder = \"ProgramFilesFolder\" ?>\n    <?define Win64 = \"no\" ?>\n  <?endif ?>\n  $0\n</Include>"
+    },
+    {
+      "prefix": "wxi-version",
+      "name": "Version Variables Include",
+      "description": "Include with version information variables",
+      "scope": "wxi",
+      "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Include xmlns=\"http://wixtoolset.org/schemas/v4/wxs\">\n  <?define MajorVersion = \"${1:1}\" ?>\n  <?define MinorVersion = \"${2:0}\" ?>\n  <?define BuildVersion = \"${3:0}\" ?>\n  <?define RevisionVersion = \"${4:0}\" ?>\n  <?define ProductVersion = \"$(var.MajorVersion).$(var.MinorVersion).$(var.BuildVersion).$(var.RevisionVersion)\" ?>\n  <?define ShortVersion = \"$(var.MajorVersion).$(var.MinorVersion).$(var.BuildVersion)\" ?>\n  $0\n</Include>"
+    }
+  ]
+}

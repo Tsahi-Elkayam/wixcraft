@@ -1,0 +1,20 @@
+[package]
+name = "wix-guid"
+version = "0.1.0"
+edition = "2021"
+description = "GUID generator for WiX installers"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+rand = "0.9"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+
+[lib]
+name = "wix_guid"
+path = "src/lib.rs"
+
+[[bin]]
+name = "wix-guid"
+path = "src/main.rs"

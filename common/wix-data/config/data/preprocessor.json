@@ -1,0 +1,96 @@
+{
+  "_source": "WiX Documentation, Preprocessor Reference",
+  "_url": "https://wixtoolset.org/docs/tools/preprocessor/",
+  "directives": [
+    {"name": "define", "syntax": "<?define VarName=Value?>", "description": "Defines a preprocessor variable that can be referenced later", "example": "<?define ProductVersion=1.0.0?>", "notes": "Variables are scoped to the current file and includes"},
+    {"name": "undef", "syntax": "<?undef VarName?>", "description": "Undefines a previously defined preprocessor variable", "example": "<?undef ProductVersion?>", "notes": "Use to clear variables before redefining"},
+    {"name": "if", "syntax": "<?if $(var.Condition)?>", "description": "Conditional compilation - includes content if condition is true", "example": "<?if $(var.Debug) = 1?>", "notes": "Supports comparison operators"},
+    {"name": "ifdef", "syntax": "<?ifdef VarName?>", "description": "Conditional compilation - includes content if variable is defined", "example": "<?ifdef Debug?>", "notes": "Does not check variable value, only existence"},
+    {"name": "ifndef", "syntax": "<?ifndef VarName?>", "description": "Conditional compilation - includes content if variable is not defined", "example": "<?ifndef Release?>", "notes": "Useful for default value patterns"},
+    {"name": "else", "syntax": "<?else?>", "description": "Alternative branch for conditional compilation", "example": "<?else?>", "notes": "Can follow if, ifdef, ifndef, or elseif"},
+    {"name": "elseif", "syntax": "<?elseif $(var.Condition)?>", "description": "Additional conditional branch with new condition", "example": "<?elseif $(var.Platform) = x64?>", "notes": "Can chain multiple elseif blocks"},
+    {"name": "endif", "syntax": "<?endif?>", "description": "Ends conditional compilation block", "example": "<?endif?>", "notes": "Must match opening if, ifdef, or ifndef"},
+    {"name": "include", "syntax": "<?include FileName.wxi?>", "description": "Includes another WiX source file", "example": "<?include Variables.wxi?>", "notes": "Relative paths are resolved from current file"},
+    {"name": "foreach", "syntax": "<?foreach VarName in List?>", "description": "Iterates over a semicolon-delimited list", "example": "<?foreach File in $(var.Files)?>", "notes": "List items separated by semicolons"},
+    {"name": "endforeach", "syntax": "<?endforeach?>", "description": "Ends a foreach loop", "example": "<?endforeach?>", "notes": "Must match opening foreach"},
+    {"name": "error", "syntax": "<?error Message?>", "description": "Emits a preprocessor error and stops build", "example": "<?error Missing required variable?>", "notes": "Use for required variable checks"},
+    {"name": "warning", "syntax": "<?warning Message?>", "description": "Emits a preprocessor warning but continues build", "example": "<?warning This feature is deprecated?>", "notes": "Does not stop compilation"},
+    {"name": "pragma", "syntax": "<?pragma directive?>", "description": "Compiler directive for special processing", "example": "<?pragma once?>", "notes": "Implementation-specific directives"},
+    {"name": "require", "syntax": "<?require WixToolset.Extension?>", "description": "Specifies required WiX extension", "example": "<?require WixToolset.Util?>", "notes": "Ensures extension is loaded"}
+  ],
+
+  "functions": [
+    {"name": "var", "syntax": "$(var.Name)", "description": "References a preprocessor variable defined with <?define?>", "example": "$(var.ProductVersion)", "context": "Compile-time"},
+    {"name": "env", "syntax": "$(env.Name)", "description": "References an environment variable from the build environment", "example": "$(env.USERNAME)", "context": "Compile-time"},
+    {"name": "sys", "syntax": "$(sys.Property)", "description": "References a system property", "example": "$(sys.CURRENTDIR)", "context": "Compile-time"},
+    {"name": "loc", "syntax": "!(loc.StringId)", "description": "References a localized string from .wxl file", "example": "!(loc.ProductName)", "context": "Compile-time"},
+    {"name": "wix", "syntax": "!(wix.Property)", "description": "References a WiX property set by the toolset", "example": "!(wix.ProductCode)", "context": "Compile-time"},
+    {"name": "bind", "syntax": "!(bind.Property)", "description": "Bind-time variable reference, resolved during linking", "example": "!(bind.fileVersion.MainExe)", "context": "Link-time"},
+    {"name": "bindpath", "syntax": "!(bindpath.Name)", "description": "References a bind path for file resolution", "example": "!(bindpath.BinDir)", "context": "Link-time"}
+  ],
+
+  "systemProperties": [
+    {"name": "sys.BUILDARCH", "description": "Target architecture of the build (x86, x64, arm, arm64)", "example": "$(sys.BUILDARCH)"},
+    {"name": "sys.BUILDARCHINT", "description": "Target architecture as integer (32, 64)", "example": "$(sys.BUILDARCHINT)"},
+    {"name": "sys.CURRENTDIR", "description": "Current working directory", "example": "$(sys.CURRENTDIR)"},
+    {"name": "sys.SOURCEFILEDIR", "description": "Directory containing the current source file", "example": "$(sys.SOURCEFILEDIR)"},
+    {"name": "sys.SOURCEFILEPATH", "description": "Full path to the current source file", "example": "$(sys.SOURCEFILEPATH)"},
+    {"name": "sys.PLATFORM", "description": "Target platform name", "example": "$(sys.PLATFORM)"},
+    {"name": "sys.PROCESSORARCHITECTURE", "description": "Build machine processor architecture", "example": "$(sys.PROCESSORARCHITECTURE)"},
+    {"name": "sys.WIXMAJORVERSION", "description": "WiX toolset major version", "example": "$(sys.WIXMAJORVERSION)"},
+    {"name": "sys.WIXVERSION", "description": "Full WiX toolset version", "example": "$(sys.WIXVERSION)"}
+  ],
+
+  "operators": [
+    {"name": "=", "description": "Equality comparison", "example": "$(var.Debug) = 1"},
+    {"name": "!=", "description": "Inequality comparison", "example": "$(var.Debug) != 0"},
+    {"name": "<", "description": "Less than comparison (numeric)", "example": "$(var.Version) < 2"},
+    {"name": ">", "description": "Greater than comparison (numeric)", "example": "$(var.Version) > 1"},
+    {"name": "<=", "description": "Less than or equal comparison", "example": "$(var.Version) <= 5"},
+    {"name": ">=", "description": "Greater than or equal comparison", "example": "$(var.Version) >= 1"},
+    {"name": "~=", "description": "Case-insensitive equality comparison", "example": "$(var.Platform) ~= X64"},
+    {"name": "and", "description": "Logical AND - both conditions must be true", "example": "$(var.Debug) = 1 and $(var.Verbose) = 1"},
+    {"name": "or", "description": "Logical OR - either condition can be true", "example": "$(var.Platform) = x86 or $(var.Platform) = x64"},
+    {"name": "not", "description": "Logical NOT - inverts the condition", "example": "not $(var.Release)"}
+  ],
+
+  "bindVariables": [
+    {"name": "bind.fileVersion.FileId", "description": "File version from specified file", "example": "!(bind.fileVersion.MainExe)"},
+    {"name": "bind.fileHash.FileId", "description": "File hash from specified file", "example": "!(bind.fileHash.MainExe)"},
+    {"name": "bind.fileSize.FileId", "description": "File size from specified file", "example": "!(bind.fileSize.MainExe)"},
+    {"name": "bind.assemblyName.FileId", "description": "Assembly name from specified assembly", "example": "!(bind.assemblyName.MainDll)"},
+    {"name": "bind.assemblyVersion.FileId", "description": "Assembly version from specified assembly", "example": "!(bind.assemblyVersion.MainDll)"},
+    {"name": "bind.assemblyPublicKeyToken.FileId", "description": "Assembly public key token", "example": "!(bind.assemblyPublicKeyToken.MainDll)"},
+    {"name": "bind.property.PropertyId", "description": "Bind-time property value", "example": "!(bind.property.ProductVersion)"}
+  ],
+
+  "wixProperties": [
+    {"name": "wix.ProductCode", "description": "Auto-generated product GUID", "example": "!(wix.ProductCode)"},
+    {"name": "wix.ProductVersion", "description": "Product version", "example": "!(wix.ProductVersion)"},
+    {"name": "wix.ProductName", "description": "Product name", "example": "!(wix.ProductName)"},
+    {"name": "wix.ProductLanguage", "description": "Product language LCID", "example": "!(wix.ProductLanguage)"},
+    {"name": "wix.ProductManufacturer", "description": "Product manufacturer", "example": "!(wix.ProductManufacturer)"},
+    {"name": "wix.UpgradeCode", "description": "Product upgrade code GUID", "example": "!(wix.UpgradeCode)"}
+  ],
+
+  "autoFunctions": [
+    {"name": "fun.AutoVersion", "syntax": "!(fun.AutoVersion(major.minor))", "description": "Generates version with build number from date/time", "example": "!(fun.AutoVersion(1.0))"},
+    {"name": "fun.FileVersion", "syntax": "!(fun.FileVersion(filepath))", "description": "Extracts file version from PE file", "example": "!(fun.FileVersion($(var.BinDir)\\app.exe))"}
+  ],
+
+  "commonPatterns": [
+    {"name": "Platform detection", "pattern": "<?if $(sys.BUILDARCH) = x64 ?>\n  <!-- 64-bit content -->\n<?else?>\n  <!-- 32-bit content -->\n<?endif?>", "description": "Conditionally include content based on target architecture"},
+    {"name": "Debug/Release builds", "pattern": "<?ifdef Debug ?>\n  <!-- Debug-only content -->\n<?endif?>", "description": "Include content only in debug builds"},
+    {"name": "Default values", "pattern": "<?ifndef ProductVersion ?>\n  <?define ProductVersion = 1.0.0 ?>\n<?endif?>", "description": "Set default value if not already defined"},
+    {"name": "File list iteration", "pattern": "<?foreach File in file1.dll;file2.dll;file3.dll ?>\n  <File Source=\"$(var.BinDir)\\$(var.File)\" />\n<?endforeach?>", "description": "Generate elements for multiple files"},
+    {"name": "Required variable check", "pattern": "<?ifndef RequiredVar ?>\n  <?error RequiredVar must be defined ?>\n<?endif?>", "description": "Fail build if required variable not set"},
+    {"name": "Environment-based paths", "pattern": "<?define BinDir = $(env.BUILD_OUTPUT)\\bin ?>", "description": "Use environment variables for paths"},
+    {"name": "Conditional includes", "pattern": "<?ifdef IncludeExtras ?>\n  <?include Extras.wxi ?>\n<?endif?>", "description": "Conditionally include additional files"}
+  ],
+
+  "localizationPatterns": [
+    {"name": "Simple string", "pattern": "!(loc.WelcomeMessage)", "description": "Reference localized string"},
+    {"name": "WXL file structure", "pattern": "<WixLocalization Culture=\"en-US\" xmlns=\"http://wixtoolset.org/schemas/v4/wxl\">\n  <String Id=\"WelcomeMessage\">Welcome!</String>\n</WixLocalization>", "description": "Localization file format"},
+    {"name": "Culture-specific build", "pattern": "wix build -culture en-US", "description": "Build with specific culture"}
+  ]
+}

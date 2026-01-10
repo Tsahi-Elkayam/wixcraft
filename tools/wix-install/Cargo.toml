@@ -1,0 +1,23 @@
+[package]
+name = "wix-install"
+version = "0.1.0"
+edition = "2021"
+description = "MSI installer runner with enhanced options"
+license = "MIT"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+
+[dev-dependencies]
+tempfile = "3"
+
+[[bin]]
+name = "wix-install"
+path = "src/main.rs"
+
+[lib]
+name = "wix_install"
+path = "src/lib.rs"

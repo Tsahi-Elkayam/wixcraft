@@ -1,0 +1,24 @@
+[package]
+name = "wix-doctor"
+version = "0.1.0"
+edition = "2021"
+description = "Error decoder and log analyzer for WiX/MSI"
+license = "MIT"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+regex = "1"
+thiserror = "2"
+
+[dev-dependencies]
+tempfile = "3"
+
+[[bin]]
+name = "wix-doctor"
+path = "src/main.rs"
+
+[lib]
+name = "wix_doctor"
+path = "src/lib.rs"

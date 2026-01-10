@@ -1,0 +1,179 @@
+{
+  "extension_elements": [
+    {
+      "extension": "util",
+      "elements": [
+        {"name": "CloseApplication", "description": "Closes applications during install/uninstall"},
+        {"name": "ComponentSearch", "description": "Searches for a component by GUID"},
+        {"name": "ComponentSearchRef", "description": "References a ComponentSearch"},
+        {"name": "DirectorySearch", "description": "Searches for a directory path"},
+        {"name": "DirectorySearchRef", "description": "References a DirectorySearch"},
+        {"name": "EventSource", "description": "Creates an event source for Windows Event Log"},
+        {"name": "FileSearch", "description": "Searches for a file by path"},
+        {"name": "FileSearchRef", "description": "References a FileSearch"},
+        {"name": "FileShare", "description": "Creates a Windows file share"},
+        {"name": "FileSharePermission", "description": "Sets permissions on a file share"},
+        {"name": "FormatFile", "description": "Formats a file during installation"},
+        {"name": "Group", "description": "Creates or references a Windows group"},
+        {"name": "GroupRef", "description": "References a Group"},
+        {"name": "InternetShortcut", "description": "Creates an internet shortcut (.url file)"},
+        {"name": "PerformanceCategory", "description": "Creates a performance counter category"},
+        {"name": "PerformanceCounter", "description": "Creates a performance counter"},
+        {"name": "PerfCounter", "description": "Legacy performance counter element"},
+        {"name": "PerfCounterManifest", "description": "Installs a performance counter manifest"},
+        {"name": "EventManifest", "description": "Installs an event manifest for ETW"},
+        {"name": "PermissionEx", "description": "Sets ACLs on files, folders, registry keys"},
+        {"name": "ProductSearch", "description": "Searches for an installed product"},
+        {"name": "ProductSearchRef", "description": "References a ProductSearch"},
+        {"name": "RemoveFolderEx", "description": "Removes folders including non-empty ones"},
+        {"name": "RestartResource", "description": "Registers a resource for Restart Manager"},
+        {"name": "RegistrySearch", "description": "Searches the registry"},
+        {"name": "RegistrySearchRef", "description": "References a RegistrySearch"},
+        {"name": "ServiceConfig", "description": "Configures service failure actions"},
+        {"name": "TouchFile", "description": "Updates file timestamps"},
+        {"name": "User", "description": "Creates or references a Windows user"},
+        {"name": "WindowsFeatureSearch", "description": "Searches for a Windows feature"},
+        {"name": "WindowsFeatureSearchRef", "description": "References a WindowsFeatureSearch"},
+        {"name": "XmlFile", "description": "Modifies XML files during installation"},
+        {"name": "XmlConfig", "description": "Advanced XML file configuration"}
+      ]
+    },
+    {
+      "extension": "iis",
+      "elements": [
+        {"name": "Certificate", "description": "Installs/uninstalls SSL certificates"},
+        {"name": "CertificateRef", "description": "References a Certificate"},
+        {"name": "HttpHeader", "description": "Adds custom HTTP headers"},
+        {"name": "MimeMap", "description": "Maps file extensions to MIME types"},
+        {"name": "RecycleTime", "description": "Specifies app pool recycle times"},
+        {"name": "WebAddress", "description": "Defines website IP/port bindings"},
+        {"name": "WebApplication", "description": "Defines IIS application settings"},
+        {"name": "WebApplicationExtension", "description": "Configures script mappings"},
+        {"name": "WebAppPool", "description": "Creates/configures application pools"},
+        {"name": "WebDir", "description": "Creates IIS web directories"},
+        {"name": "WebDirProperties", "description": "Sets directory properties"},
+        {"name": "WebError", "description": "Configures custom error pages"},
+        {"name": "WebFilter", "description": "Installs ISAPI filters"},
+        {"name": "WebLog", "description": "Configures IIS logging"},
+        {"name": "WebProperty", "description": "Sets IIS metabase properties"},
+        {"name": "WebServiceExtension", "description": "Registers web service extensions"},
+        {"name": "WebSite", "description": "Creates/configures IIS websites"},
+        {"name": "WebVirtualDir", "description": "Creates virtual directories"}
+      ]
+    },
+    {
+      "extension": "bal",
+      "elements": [
+        {"name": "Condition", "description": "Bootstrapper application condition"},
+        {"name": "WixInternalUIBootstrapperApplication", "description": "Shows MSI internal UI"},
+        {"name": "WixStandardBootstrapperApplication", "description": "Standard wizard UI for bundles"},
+        {"name": "WixManagedBootstrapperApplicationHost", "description": "Hosts .NET Framework BA (deprecated in v5)"},
+        {"name": "WixDotNetCoreBootstrapperApplicationHost", "description": "Hosts .NET Core/.NET 5+ BA"},
+        {"name": "WixPrerequisiteBootstrapperApplication", "description": "BA for prerequisites"},
+        {"name": "ManagedBootstrapperApplicationPrereqInformation", "description": "MBA prerequisite info"},
+        {"name": "BootstrapperApplicationPrerequisiteInformation", "description": "BA prerequisite info"}
+      ]
+    },
+    {
+      "extension": "sql",
+      "elements": [
+        {"name": "SqlDatabase", "description": "Creates/references SQL Server databases"},
+        {"name": "SqlFileSpec", "description": "Specifies database file properties"},
+        {"name": "SqlLogFileSpec", "description": "Specifies log file properties"},
+        {"name": "SqlScript", "description": "Executes SQL scripts"},
+        {"name": "SqlString", "description": "Executes inline SQL statements"}
+      ]
+    },
+    {
+      "extension": "netfx",
+      "elements": [
+        {"name": "NativeImage", "description": "Generates native images via NGEN"},
+        {"name": "DotNetCoreSearch", "description": "Searches for .NET Core/.NET 5+ runtime"},
+        {"name": "DotNetCoreSearchRef", "description": "References a DotNetCoreSearch"},
+        {"name": "DotNetCoreSdkSearch", "description": "Searches for .NET SDK"},
+        {"name": "DotNetCoreSdkSearchRef", "description": "References a DotNetCoreSdkSearch"},
+        {"name": "DotNetCoreSdkFeatureBandSearch", "description": "Searches for .NET SDK feature band"},
+        {"name": "DotNetCoreSdkFeatureBandSearchRef", "description": "References a DotNetCoreSdkFeatureBandSearch"},
+        {"name": "DotNetCompatibilityCheck", "description": "Checks .NET runtime compatibility"},
+        {"name": "DotNetCompatibilityCheckRef", "description": "References a DotNetCompatibilityCheck"}
+      ]
+    },
+    {
+      "extension": "firewall",
+      "elements": [
+        {"name": "FirewallException", "description": "Creates Windows Firewall exceptions"},
+        {"name": "LocalAddress", "description": "Specifies local addresses for firewall rules"},
+        {"name": "Interface", "description": "Specifies network interfaces"},
+        {"name": "InterfaceType", "description": "Specifies interface types (LAN/Wireless/RemoteAccess)"},
+        {"name": "RemoteAddress", "description": "Specifies remote addresses for firewall rules"}
+      ]
+    },
+    {
+      "extension": "http",
+      "elements": [
+        {"name": "SniSslCertificate", "description": "Associates SNI SSL certificate with HTTP.SYS"},
+        {"name": "UrlReservation", "description": "Creates HTTP.SYS URL reservations"},
+        {"name": "UrlAce", "description": "Sets permissions on URL reservations"}
+      ]
+    },
+    {
+      "extension": "complus",
+      "elements": [
+        {"name": "ComPlusPartition", "description": "Creates COM+ partitions"},
+        {"name": "ComPlusPartitionRole", "description": "Creates partition roles"},
+        {"name": "ComPlusUserInPartitionRole", "description": "Assigns users to partition roles"},
+        {"name": "ComPlusGroupInPartitionRole", "description": "Assigns groups to partition roles"},
+        {"name": "ComPlusPartitionUser", "description": "Assigns partition users"},
+        {"name": "ComPlusApplication", "description": "Creates COM+ applications"},
+        {"name": "ComPlusApplicationRole", "description": "Creates application roles"},
+        {"name": "ComPlusUserInApplicationRole", "description": "Assigns users to application roles"},
+        {"name": "ComPlusGroupInApplicationRole", "description": "Assigns groups to application roles"},
+        {"name": "ComPlusAssembly", "description": "Registers COM+ assemblies"},
+        {"name": "ComPlusAssemblyDependency", "description": "Declares assembly dependencies"},
+        {"name": "ComPlusComponent", "description": "Configures COM+ components"},
+        {"name": "ComPlusRoleForComponent", "description": "Assigns roles to components"},
+        {"name": "ComPlusInterface", "description": "Configures COM+ interfaces"},
+        {"name": "ComPlusRoleForInterface", "description": "Assigns roles to interfaces"},
+        {"name": "ComPlusMethod", "description": "Configures COM+ methods"},
+        {"name": "ComPlusRoleForMethod", "description": "Assigns roles to methods"},
+        {"name": "ComPlusSubscription", "description": "Creates COM+ subscriptions"}
+      ]
+    },
+    {
+      "extension": "dependency",
+      "elements": [
+        {"name": "Provides", "description": "Declares a dependency provider"},
+        {"name": "Requires", "description": "Declares a dependency requirement"},
+        {"name": "RequiresRef", "description": "References a Requires element"}
+      ]
+    },
+    {
+      "extension": "vs",
+      "elements": [
+        {"name": "VsixPackage", "description": "Installs VSIX extensions"},
+        {"name": "FindVisualStudio", "description": "Locates Visual Studio installations"}
+      ]
+    },
+    {
+      "extension": "directx",
+      "elements": [
+        {"name": "GetCapabilities", "description": "Detects DirectX capabilities"}
+      ]
+    },
+    {
+      "extension": "msmq",
+      "elements": [
+        {"name": "MessageQueue", "description": "Creates MSMQ queues"},
+        {"name": "MessageQueuePermission", "description": "Sets queue permissions"}
+      ]
+    },
+    {
+      "extension": "powershell",
+      "elements": [
+        {"name": "FormatsFile", "description": "Registers PowerShell format files"},
+        {"name": "SnapIn", "description": "Registers PowerShell snap-ins"},
+        {"name": "TypesFile", "description": "Registers PowerShell type files"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "_source": "Microsoft Learn and WiX Toolset Documentation",
+  "_urls": [
+    "https://learn.microsoft.com/en-us/windows/win32/msi/about-transforms",
+    "https://learn.microsoft.com/en-us/windows/win32/msi/database-transforms"
+  ],
+  "description": "MST (Transform) files contain modifications to be applied to an MSI during installation. They can add, remove, or modify table data without changing the base MSI.",
+  "file_extension": ".mst",
+  "transform_types": [
+    {
+      "name": "Embedded Transform",
+      "description": "Transform stored inside the MSI package in a substorage",
+      "use_case": "Language transforms, configuration variants",
+      "storage_name": "Starts with colon (:) character"
+    },
+    {
+      "name": "External Transform",
+      "description": "Standalone MST file applied at installation time",
+      "use_case": "Enterprise customization, per-deployment configuration"
+    },
+    {
+      "name": "Secured Transform",
+      "description": "Transform cached securely for repair and maintenance",
+      "use_case": "Transforms that should persist across repair operations"
+    }
+  ],
+  "what_transforms_can_modify": [
+    "Property values (installation paths, features to install)",
+    "Feature states (select/deselect features)",
+    "Registry entries",
+    "Shortcuts",
+    "Environment variables",
+    "Custom action parameters",
+    "UI text and dialog sequences",
+    "File installation options"
+  ],
+  "what_transforms_cannot_modify": [
+    "Summary information stream",
+    "Embedded cabinets",
+    "Binary table streams (icons, DLLs)",
+    "Substorages (except via patches)",
+    "Digital signatures"
+  ],
+  "creation_methods": [
+    {
+      "method": "WiX command line",
+      "description": "Create transform from two MSI files",
+      "command": "wix msi transform BaseProduct.msi ModifiedProduct.msi -o CustomConfig.mst",
+      "steps": [
+        "Build base MSI with default configuration",
+        "Build modified MSI with desired changes",
+        "Generate transform capturing the differences"
+      ]
+    },
+    {
+      "method": "Orca tool",
+      "description": "Microsoft SDK tool for manual transform creation",
+      "steps": [
+        "Open base MSI in Orca",
+        "Transform > New Transform",
+        "Make modifications to tables",
+        "Transform > Generate Transform"
+      ]
+    },
+    {
+      "method": "MsiDatabaseGenerateTransform API",
+      "description": "Programmatic transform creation",
+      "language": "C++, VBScript, PowerShell"
+    }
+  ],
+  "application_methods": [
+    {
+      "method": "Command line",
+      "command": "msiexec /i Product.msi TRANSFORMS=Config.mst",
+      "description": "Apply single transform"
+    },
+    {
+      "method": "Multiple transforms",
+      "command": "msiexec /i Product.msi TRANSFORMS=\"Lang.mst;Config.mst\"",
+      "description": "Apply multiple transforms in order (semicolon-separated)"
+    },
+    {
+      "method": "Embedded transform",
+      "command": "msiexec /i Product.msi TRANSFORMS=:Language",
+      "description": "Apply embedded transform (note colon prefix)"
+    },
+    {
+      "method": "Secure transform from URL",
+      "command": "msiexec /i Product.msi TRANSFORMS=@https://server/Config.mst",
+      "description": "Secured transform from network location"
+    },
+    {
+      "method": "Group Policy",
+      "description": "Transforms applied via Active Directory software deployment"
+    }
+  ],
+  "transform_properties": [
+    {"name": "TRANSFORMS", "description": "Semicolon-delimited list of transforms to apply"},
+    {"name": "TRANSFORMSSECURE", "description": "Set to 1 to cache transforms securely"},
+    {"name": "TRANSFORMSATSOURCE", "description": "Set to 1 to look for transforms at source location"}
+  ],
+  "validation_flags": {
+    "description": "Transform summary information contains validation flags controlling when transform can be applied",
+    "flags": [
+      {"name": "Language", "value": 1, "description": "Validate product language matches"},
+      {"name": "Product", "value": 2, "description": "Validate product code matches"},
+      {"name": "Platform", "value": 4, "description": "Validate platform matches"},
+      {"name": "MajorVer", "value": 8, "description": "Validate major version matches"},
+      {"name": "MinorVer", "value": 16, "description": "Validate minor version matches"},
+      {"name": "UpdateVer", "value": 32, "description": "Validate update version matches"},
+      {"name": "NewEqualBase", "value": 64, "description": "Installed version >= base version"},
+      {"name": "NewLessBase", "value": 128, "description": "Installed version < base version"},
+      {"name": "UpgradeCode", "value": 256, "description": "Validate upgrade code matches"}
+    ]
+  },
+  "error_suppression_flags": {
+    "description": "Control which errors to suppress during transform application",
+    "flags": [
+      {"name": "AddExistingRow", "value": 1, "description": "Suppress error when adding row that exists"},
+      {"name": "DeleteNonExistingRow", "value": 2, "description": "Suppress error when deleting row that doesn't exist"},
+      {"name": "AddExistingTable", "value": 4, "description": "Suppress error when adding table that exists"},
+      {"name": "DeleteNonExistingTable", "value": 8, "description": "Suppress error when deleting table that doesn't exist"},
+      {"name": "UpdateNonExistingRow", "value": 16, "description": "Suppress error when updating row that doesn't exist"},
+      {"name": "ChangeCodePage", "value": 32, "description": "Suppress error when changing code page"}
+    ]
+  },
+  "common_use_cases": [
+    {
+      "use_case": "Language customization",
+      "description": "Apply language-specific resources to a language-neutral MSI",
+      "example": "Product.msi + de-DE.mst = German installation"
+    },
+    {
+      "use_case": "Enterprise configuration",
+      "description": "Set default installation path, feature selection, and settings",
+      "common_changes": [
+        "INSTALLFOLDER property",
+        "Feature ADDDEFAULT/REMOVE",
+        "License acceptance bypass",
+        "Server connection strings"
+      ]
+    },
+    {
+      "use_case": "OEM customization",
+      "description": "Rebrand installer for different customers",
+      "common_changes": [
+        "ProductName",
+        "Manufacturer",
+        "Icon and branding resources",
+        "Default settings"
+      ]
+    },
+    {
+      "use_case": "Silent installation preparation",
+      "description": "Pre-configure all user-input values",
+      "common_changes": [
+        "AGREETOLICENSE=Yes",
+        "INSTALLFOLDER",
+        "Feature states",
+        "All required properties"
+      ]
+    }
+  ],
+  "wix_examples": [
+    {
+      "name": "Create transform from two MSIs",
+      "commands": [
+        "# Build base MSI",
+        "wix build Product.wxs -d INSTALLFOLDER=\"C:\\DefaultPath\" -o Base.msi",
+        "# Build modified MSI",
+        "wix build Product.wxs -d INSTALLFOLDER=\"D:\\CustomPath\" -o Modified.msi",
+        "# Generate transform",
+        "wix msi transform Base.msi Modified.msi -o CustomPath.mst"
+      ]
+    }
+  ],
+  "best_practices": [
+    "Document what each transform modifies",
+    "Test transforms on all targeted MSI versions",
+    "Use validation flags to prevent applying to wrong products",
+    "Consider secured transforms for enterprise deployments",
+    "Keep transform files with the MSI for supportability",
+    "Order multiple transforms correctly (language before config)",
+    "Validate transforms work with repair and uninstall scenarios",
+    "Use descriptive filenames indicating purpose"
+  ],
+  "troubleshooting": [
+    {"issue": "Transform rejected at installation", "solution": "Check validation flags match product, version, language"},
+    {"issue": "Changes not applied", "solution": "Verify table/column names match exactly"},
+    {"issue": "Transform causes installation failure", "solution": "Use error suppression flags for expected differences"},
+    {"issue": "Repair doesn't use transform", "solution": "Use TRANSFORMSSECURE=1 or secured transform syntax (@)"},
+    {"issue": "Multiple transforms conflict", "solution": "Check application order, later transforms override earlier"}
+  ],
+  "tools": [
+    {"name": "Orca", "description": "Microsoft SDK tool for editing MSI/MST", "source": "Windows SDK"},
+    {"name": "wix msi transform", "description": "WiX command to generate transforms", "source": "WiX Toolset"},
+    {"name": "msitran.exe", "description": "Microsoft SDK command-line transform tool", "source": "Windows SDK"},
+    {"name": "InstEd", "description": "Free MSI editor with transform support", "source": "Third-party"},
+    {"name": "SuperOrca", "description": "Enhanced Orca alternative", "source": "Third-party"}
+  ]
+}

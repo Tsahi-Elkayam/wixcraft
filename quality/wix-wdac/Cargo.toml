@@ -1,0 +1,21 @@
+[package]
+name = "wix-wdac"
+version = "0.1.0"
+edition = "2021"
+description = "WDAC (Windows Defender Application Control) compatibility checker for WiX installers"
+license = "MIT"
+
+[[bin]]
+name = "wix-wdac"
+path = "src/main.rs"
+
+[lib]
+name = "wix_wdac"
+path = "src/lib.rs"
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+roxmltree = "0.20"

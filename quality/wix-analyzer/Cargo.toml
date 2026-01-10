@@ -1,0 +1,31 @@
+[package]
+name = "wix-analyzer"
+version = "0.1.0"
+edition = "2021"
+description = "Unified WiX analyzer - validation, best practices, security, and auto-fix"
+authors = ["Tsahi Elkayam"]
+license = "MIT"
+repository = "https://github.com/tsahi/wixcraft"
+keywords = ["wix", "installer", "analyzer", "lint", "security"]
+categories = ["development-tools", "command-line-utilities"]
+
+[dependencies]
+roxmltree = "0.20"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+clap = { version = "4", features = ["derive"] }
+walkdir = "2"
+colored = "2"
+regex = "1"
+glob = "0.3"
+atty = "0.2"
+sha2 = "0.10"
+chrono = { version = "0.4", features = ["serde"] }
+rayon = "1.10"
+notify = { version = "6", default-features = false, features = ["macos_kqueue"] }
+tower-lsp = "0.20"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "io-std"] }
+dashmap = "6"
+
+[dev-dependencies]
+tempfile = "3"

@@ -1,0 +1,116 @@
+# Sample Azure DevOps Pipeline with WixCraft Quality Gates
+# Copy this to your WiX project and customize as needed
+
+trigger:
+  branches:
+    include:
+      - main
+      - develop
+  paths:
+    include:
+      - '**/*.wxs'
+      - '**/*.wxi'
+
+pr:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  WIXCRAFT_PATH: '$(Agent.ToolsDirectory)/wixcraft'
+
+stages:
+- stage: Quality
+  displayName: 'WiX Quality Gates'
+  jobs:
+  - job: Lint
+    displayName: 'Lint & Format'
+    steps:
+    - task: PowerShell@2
+      displayName: 'Install WixCraft Tools'
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Download and install WixCraft tools
+          # Replace with actual download URL when published
+          $toolsPath = "$(WIXCRAFT_PATH)"
+          New-Item -ItemType Directory -Path $toolsPath -Force
+          # curl -L https://github.com/wixcraft/wixcraft/releases/latest/download/wixcraft-windows.zip -o wixcraft.zip
+          # Expand-Archive wixcraft.zip -DestinationPath $toolsPath
+          Write-Host "WixCraft tools would be installed to: $toolsPath"
+
+    - task: WixLint@0
+      displayName: 'WiX Lint'
+      inputs:
+        files: '**/*.wxs'
+        failOnWarning: false
+        outputFormat: 'text'
+
+  - job: Security
+    displayName: 'Security Scan'
+    steps:
+    - task: WixSecurity@0
+      displayName: 'WiX Security Scan'
+      inputs:
+        files: '**/*.wxs'
+        failOnSeverity: 'high'
+        minSeverity: 'low'
+        outputFormat: 'sarif'
+        sarifOutput: '$(Build.ArtifactStagingDirectory)/wix-security.sarif'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Security Results'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/wix-security.sarif'
+        ArtifactName: 'CodeAnalysisLogs'
+      condition: always()
+
+  - job: Upgrade
+    displayName: 'Upgrade Validation'
+    steps:
+    - task: WixUpgrade@0
+      displayName: 'Validate Upgrade Readiness'
+      inputs:
+        files: '**/*.wxs'
+        failOnSeverity: 'error'
+
+    - task: WixUpgrade@0
+      displayName: 'Compare with Main Branch'
+      inputs:
+        files: '**/*.wxs'
+        enableComparison: true
+        baselineBranch: 'main'
+        failOnSeverity: 'error'
+      condition: eq(variables['Build.Reason'], 'PullRequest')
+
+- stage: Build
+  displayName: 'Build MSI'
+  dependsOn: Quality
+  jobs:
+  - job: BuildMSI
+    displayName: 'Build MSI Package'
+    steps:
+    - task: NuGetToolInstaller@1
+      displayName: 'Install NuGet'
+
+    - task: NuGetCommand@2
+      displayName: 'Restore WiX packages'
+      inputs:
+        command: 'restore'
+        restoreSolution: '**/*.sln'
+
+    - task: MSBuild@1
+      displayName: 'Build WiX Project'
+      inputs:
+        solution: '**/*.wixproj'
+        configuration: 'Release'
+        msbuildArguments: '/p:Platform=x64'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish MSI'
+      inputs:
+        PathtoPublish: '$(Build.SourcesDirectory)/bin/Release'
+        ArtifactName: 'MSI'

@@ -1,0 +1,3924 @@
+{
+  "_source": "Rule evaluation conditions for WiX linter",
+  "_description": "Each rule has one or more conditions that define HOW the rule is evaluated",
+  "rule_conditions": [
+    {
+      "rule_id": "64BIT001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Component",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Win64",
+          "operator": "equals",
+          "value": "yes"
+        },
+        {
+          "condition_type": "xpath",
+          "target": "//Package/@Platform",
+          "operator": "not_equals",
+          "value": "x64"
+        }
+      ]
+    },
+    {
+      "rule_id": "BNDL001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Bundle",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Bundle/@UpgradeCode",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "BNDL002",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Bundle",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "element",
+          "target": "Chain/*",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "BNDL003",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "MsiPackage|ExePackage|MspPackage|MsuPackage",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@DetectCondition",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "BNDL004",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Variable",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Variable/@Name",
+          "operator": "matches",
+          "value": "^(WixBundleAction|WixBundleInstalled|WixBundleProviderKey|WixBundleTag|WixBundleVersion|WixBundleName|WixBundleManufacturer|WixBundleOriginalSource|WixBundleOriginalSourceFolder|WixBundleLastUsedSource|WixBundleElevated)$"
+        }
+      ]
+    },
+    {
+      "rule_id": "BNDL005",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "MsiPackage|ExePackage|MspPackage|MsuPackage",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "*Package/@Vital",
+          "operator": "equals",
+          "value": "no"
+        }
+      ]
+    },
+    {
+      "rule_id": "BNDL006",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Payload",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Payload/@SourceFile",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "BNDL007",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Payload|*Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "*/@DownloadUrl",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "*/@Hash",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "BNDL008",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "RollbackBoundary",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "RollbackBoundary position in Chain",
+          "operator": "matches",
+          "value": "not-first"
+        }
+      ]
+    },
+    {
+      "rule_id": "BNDL009",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "ExePackage",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "ExePackage/@RepairCommand",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "BNDL010",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "MsiPackage",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "MsiPackage/@DisplayInternalUI",
+          "operator": "equals",
+          "value": "no"
+        }
+      ]
+    },
+    {
+      "rule_id": "BNDL011",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "MsuPackage",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "MsuPackage/@KB",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "BNDL012",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "PackageGroupRef",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "PackageGroup references",
+          "operator": "matches",
+          "value": "circular"
+        }
+      ]
+    },
+    {
+      "rule_id": "BUNDLE001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Bundle",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "element",
+          "target": "Component|Feature|Directory|File",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "BUNDLE002",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "ExePackage",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@DetectCondition",
+          "operator": "not_exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Permanent",
+          "operator": "not_equals",
+          "value": "yes"
+        }
+      ]
+    },
+    {
+      "rule_id": "BUNDLE003",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "ExePackage",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Name",
+          "operator": "matches",
+          "value": "vc.*redist|vcredist"
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Protocol",
+          "operator": "not_equals",
+          "value": "burn"
+        }
+      ]
+    },
+    {
+      "rule_id": "CA001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "CustomAction",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Id",
+          "operator": "matches",
+          "value": "^(InstallFiles|InstallFinalize|InstallInitialize|InstallValidate|CostFinalize|CostInitialize|FileCost|AppSearch|LaunchConditions|FindRelatedProducts|MigrateFeatureStates|InstallAdminPackage|InstallSFPCatalogFile|MsiConfigureServices|MsiPublishAssemblies|MsiUnpublishAssemblies|ProcessComponents|PublishComponents|PublishFeatures|PublishProduct|RegisterClassInfo|RegisterComPlus|RegisterExtensionInfo|RegisterFonts|RegisterMIMEInfo|RegisterProduct|RegisterProgIdInfo|RegisterTypeLibraries|RegisterUser|RemoveEnvironmentStrings|RemoveExistingProducts|RemoveFiles|RemoveFolders|RemoveIniValues|RemoveODBC|RemoveRegistryValues|RemoveShortcuts|ResolveSource|RMCCPSearch|ScheduleReboot|SelfRegModules|SelfUnregModules|SetODBCFolders|StartServices|StopServices|UnpublishComponents|UnpublishFeatures|UnregisterClassInfo|UnregisterComPlus|UnregisterExtensionInfo|UnregisterFonts|UnregisterMIMEInfo|UnregisterProgIdInfo|UnregisterTypeLibraries|ValidateProductID|WriteEnvironmentStrings|WriteIniValues|WriteRegistryValues)$"
+        }
+      ]
+    },
+    {
+      "rule_id": "CA002",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Custom",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "ancestor::AdvertiseExecuteSequence",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "//CustomAction[@Id=current()/@Action]/@Type",
+          "operator": "not_matches",
+          "value": "^(19|35|51)$"
+        }
+      ]
+    },
+    {
+      "rule_id": "CA003",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "CustomAction",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Execute",
+          "operator": "matches",
+          "value": "deferred|rollback|commit"
+        },
+        {
+          "condition_type": "xpath",
+          "target": "//Custom[@Action=current()/@Id and (preceding::Custom[@Action='InstallInitialize'] and following::Custom[@Action='InstallFinalize'])]",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "CA004",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "CustomAction",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@FileRef",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "//Custom[@Action=current()/@Id and following::Custom[@Action='CostFinalize']]",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "CA005",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "CustomAction",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "CustomAction/@DllEntry",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "DllEntry value",
+          "operator": "matches",
+          "value": "undefined"
+        }
+      ]
+    },
+    {
+      "rule_id": "CA006",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "CustomAction",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "CustomAction/@Execute",
+          "operator": "equals",
+          "value": "deferred"
+        },
+        {
+          "condition_type": "attribute",
+          "target": "CustomAction/@Impersonate",
+          "operator": "equals",
+          "value": "yes"
+        }
+      ]
+    },
+    {
+      "rule_id": "CA007",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "CustomAction",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "CustomAction/@BinaryRef",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "BinaryRef target",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "CA008",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "CustomAction",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Custom action scheduled in sequence",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "CA009",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "CustomAction",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "CustomAction/@Execute",
+          "operator": "equals",
+          "value": "immediate"
+        },
+        {
+          "condition_type": "pattern",
+          "target": "CustomAction scheduled before InstallFiles",
+          "operator": "equals",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "CA010",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "CustomAction",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "CustomAction/@Return",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Return type mismatch",
+          "operator": "matches",
+          "value": "invalid"
+        }
+      ]
+    },
+    {
+      "rule_id": "CA011",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "CustomAction",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "CustomAction/@Return",
+          "operator": "equals",
+          "value": "asyncWait"
+        }
+      ]
+    },
+    {
+      "rule_id": "CA012",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "CustomAction",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "CustomAction/@Execute",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Execute type vs sequence",
+          "operator": "matches",
+          "value": "mismatch"
+        }
+      ]
+    },
+    {
+      "rule_id": "CA013",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "CustomAction",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "CustomAction/@Property",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "CustomAction/@Value",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "CA014",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "CustomAction",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "CustomAction/@Execute",
+          "operator": "equals",
+          "value": "deferred"
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Deferred CA reads session property",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "CA015",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "CustomAction",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "CustomAction/@Script",
+          "operator": "equals",
+          "value": "powershell"
+        }
+      ]
+    },
+    {
+      "rule_id": "COMP001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Component",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Guid",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "COMP002",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Component",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "count(File)",
+          "operator": "greater_than",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "rule_id": "COMP003",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Component",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "descendant::*[@KeyPath='yes']",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "COMP004",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Component",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "count(File)",
+          "operator": "equals",
+          "value": "1"
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Component/@Id != File/@Id",
+          "operator": "matches",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "COMP005",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Component",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Guid",
+          "operator": "not_exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Permanent",
+          "operator": "not_equals",
+          "value": "yes"
+        }
+      ]
+    },
+    {
+      "rule_id": "COMP006",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Component",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Permanent",
+          "operator": "equals",
+          "value": "yes"
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Guid",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "COMP007",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Component",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "RegistryValue[starts-with(@Root,'HKCU')]",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "RegistryValue[starts-with(@Root,'HKLM')]",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "COMP008",
+      "conditions": [
+        {
+          "condition_type": "xpath",
+          "target": "//File[@Source]",
+          "operator": "duplicate",
+          "value": "@Source"
+        }
+      ]
+    },
+    {
+      "rule_id": "COMP009",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Component",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "ancestor::Directory[contains(@Id,'AppData') or contains(@Id,'Profile')]",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "RegistryValue[@Root='HKCU' and @KeyPath='yes']",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "COMP010",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Component",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Component Id referenced by Feature",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "COMP011",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Component",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Component/@Directory",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Component/@Directory value",
+          "operator": "matches",
+          "value": "invalid-ref"
+        }
+      ]
+    },
+    {
+      "rule_id": "COMP012",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Component",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "Component[not(*)]",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "COMP013",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Component",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Component/@Win64",
+          "operator": "equals",
+          "value": "yes"
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Package/@Platform",
+          "operator": "equals",
+          "value": "x86"
+        }
+      ]
+    },
+    {
+      "rule_id": "COMP014",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Component",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Component/@Id",
+          "operator": "matches",
+          "value": "^.{73,}$"
+        }
+      ]
+    },
+    {
+      "rule_id": "COMP015",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Component",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Component/@Transitive",
+          "operator": "equals",
+          "value": "yes"
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Component/@Condition",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "DEPR001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Class|TypeLib|ProgId|AppId|Extension|Verb|MIME|ServiceArgument",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "DEPR002",
+      "conditions": [
+        {
+          "condition_type": "attribute",
+          "target": "@src|@long|@LongName|@ShortName",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "DEPR003",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Product|Module",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Wix/@xmlns",
+          "operator": "matches",
+          "value": "schemas.microsoft.com/wix/2006"
+        }
+      ]
+    },
+    {
+      "rule_id": "DEPR004",
+      "conditions": [
+        {
+          "condition_type": "attribute",
+          "target": "*/@xmlns",
+          "operator": "matches",
+          "value": "schemas.microsoft.com/wix/(2006|200[0-5])"
+        }
+      ]
+    },
+    {
+      "rule_id": "DEPR005",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Product",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "DEPR006",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "DirectoryRef",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "DirectoryRef/@Id",
+          "operator": "matches",
+          "value": "^(TARGETDIR|ProgramFilesFolder|ProgramFiles64Folder|CommonFilesFolder|CommonFiles64Folder|SystemFolder|System64Folder|WindowsFolder|TempFolder)$"
+        }
+      ]
+    },
+    {
+      "rule_id": "DIR001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Directory",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Name",
+          "operator": "not_exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Id",
+          "operator": "not_matches",
+          "value": "^(TARGETDIR|ProgramFilesFolder|ProgramFiles64Folder|CommonFilesFolder|CommonFiles64Folder|SystemFolder|System64Folder|WindowsFolder|TempFolder|LocalAppDataFolder|AppDataFolder|DesktopFolder|FavoritesFolder|FontsFolder|PersonalFolder|ProgramMenuFolder|SendToFolder|StartMenuFolder|StartupFolder|TemplateFolder)$"
+        }
+      ]
+    },
+    {
+      "rule_id": "DIR002",
+      "conditions": [
+        {
+          "condition_type": "attribute",
+          "target": "Directory/@Name|DirectoryRef/@Id",
+          "operator": "matches",
+          "value": "^[A-Z]:\\\\|^/|^\\\\\\\\"
+        }
+      ]
+    },
+    {
+      "rule_id": "DIR003",
+      "conditions": [
+        {
+          "condition_type": "xpath",
+          "target": "count(ancestor::Directory)",
+          "operator": "greater_than",
+          "value": "5"
+        }
+      ]
+    },
+    {
+      "rule_id": "DIR004",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Directory",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "//Directory[not(parent::Directory) and not(parent::Fragment) and not(parent::Package) and @Id!='TARGETDIR']",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "DIR005",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Directory",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "ancestor::Directory[contains(@Id,'AppData') or contains(@Id,'Profile')]",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "//RemoveFolder[@Id=current()/@Id]",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "DIR006",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Directory",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Directory/@Name",
+          "operator": "matches",
+          "value": "\\s"
+        }
+      ]
+    },
+    {
+      "rule_id": "DIR007",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "StandardDirectory|Directory",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "StandardDirectory/@Id",
+          "operator": "not_equals",
+          "value": "ProgramFilesFolder"
+        },
+        {
+          "condition_type": "attribute",
+          "target": "StandardDirectory/@Id",
+          "operator": "not_equals",
+          "value": "ProgramFiles64Folder"
+        }
+      ]
+    },
+    {
+      "rule_id": "DIR008",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Directory",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "Directory[not(.//File)]",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "element",
+          "target": "CreateFolder",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "DIR009",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "StandardDirectory",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "StandardDirectory/@Id",
+          "operator": "matches",
+          "value": "^(?!(TARGETDIR|ProgramFilesFolder|ProgramFiles64Folder|CommonFilesFolder|CommonFiles64Folder|SystemFolder|System64Folder|WindowsFolder|TempFolder|DesktopFolder|StartMenuFolder|ProgramMenuFolder|AppDataFolder|LocalAppDataFolder|PersonalFolder|FontsFolder|SendToFolder|StartupFolder|FavoritesFolder|TemplateFolder)).*$"
+        }
+      ]
+    },
+    {
+      "rule_id": "DIR010",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Directory|RemoveFolder",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "RemoveFolder/@On",
+          "operator": "equals",
+          "value": "uninstall"
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Directory only removed on uninstall",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "EXT001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "iis:WebSite",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "iis:WebSite[not(iis:WebAddress)]",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "EXT002",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "iis:WebAppPool",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "iis:WebAppPool/@Identity",
+          "operator": "equals",
+          "value": "localSystem"
+        }
+      ]
+    },
+    {
+      "rule_id": "EXT003",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "sql:SqlDatabase",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "sql:SqlDatabase/@ContinueOnError",
+          "operator": "equals",
+          "value": "yes"
+        }
+      ]
+    },
+    {
+      "rule_id": "EXT004",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "util:User",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "util:User/@Domain",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Domain account permissions",
+          "operator": "matches",
+          "value": "elevated"
+        }
+      ]
+    },
+    {
+      "rule_id": "EXT005",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "netfx:NativeImage",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "netfx:NativeImage/@Platform",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "NetFx version availability",
+          "operator": "matches",
+          "value": "unavailable"
+        }
+      ]
+    },
+    {
+      "rule_id": "EXT006",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "firewall:FirewallException",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "firewall:FirewallException/@Protocol",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "EXT007",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "util:XmlFile|util:XmlConfig",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "*/@Action",
+          "operator": "equals",
+          "value": "setValue"
+        },
+        {
+          "condition_type": "pattern",
+          "target": "XML transformation complexity",
+          "operator": "matches",
+          "value": "complex"
+        }
+      ]
+    },
+    {
+      "rule_id": "EXT008",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Environment",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Environment/@Name",
+          "operator": "equals",
+          "value": "PATH"
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Environment/@Action",
+          "operator": "equals",
+          "value": "set"
+        }
+      ]
+    },
+    {
+      "rule_id": "FEAT001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Feature",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Id",
+          "operator": "length_greater_than",
+          "value": "38"
+        }
+      ]
+    },
+    {
+      "rule_id": "FEAT002",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Feature",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "child::Feature",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@FollowParent",
+          "operator": "equals",
+          "value": "yes"
+        }
+      ]
+    },
+    {
+      "rule_id": "FEAT003",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Component",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "//ComponentRef[@Id=current()/@Id] | //Feature/Component[@Id=current()/@Id]",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "FEAT004",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Feature",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Feature/@Id",
+          "operator": "matches",
+          "value": "^.{39,}$"
+        }
+      ]
+    },
+    {
+      "rule_id": "FEAT005",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "FeatureRef",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "FeatureRef references",
+          "operator": "matches",
+          "value": "circular"
+        }
+      ]
+    },
+    {
+      "rule_id": "FEAT006",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Feature",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "Feature//Feature//Feature//Feature",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "FEAT007",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Feature",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Feature count",
+          "operator": "matches",
+          "value": ">32"
+        }
+      ]
+    },
+    {
+      "rule_id": "FEAT008",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Feature",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Feature/@Description",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "FEAT009",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Feature",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Feature/@Display",
+          "operator": "equals",
+          "value": "hidden"
+        },
+        {
+          "condition_type": "xpath",
+          "target": "Feature[@Display='hidden'][ComponentRef]",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "FEAT010",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package|Product",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "//Feature[not(ancestor::Feature)]",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "FILE001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "File",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Source",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "FILE002",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "File",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Id",
+          "operator": "matches",
+          "value": "[^a-zA-Z0-9_.]"
+        }
+      ]
+    },
+    {
+      "rule_id": "FILE003",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "File",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Name",
+          "operator": "matches",
+          "value": "^.{9,}\\..{4,}$|^[^.]{9,}$"
+        }
+      ]
+    },
+    {
+      "rule_id": "FILE004",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "File",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Name",
+          "operator": "matches",
+          "value": "\\.(ttf|otf|ttc|fon)$"
+        },
+        {
+          "condition_type": "xpath",
+          "target": "ancestor::Directory[@Id='FontsFolder' or @Name='Fonts']",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "FILE005",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "File",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Name",
+          "operator": "matches",
+          "value": "\\.(dll|exe|ocx)$"
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@DefaultLanguage",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "FILE006",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "File",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@CompanionFile",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@KeyPath",
+          "operator": "equals",
+          "value": "yes"
+        }
+      ]
+    },
+    {
+      "rule_id": "FILE007",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "File",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "File/@Source",
+          "operator": "matches",
+          "value": "\\.(dll|exe)$"
+        },
+        {
+          "condition_type": "attribute",
+          "target": "File/@Assembly",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Assembly manifest",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "FILE008",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "File",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "File/@Source",
+          "operator": "matches",
+          "value": "\\.dll$"
+        },
+        {
+          "condition_type": "pattern",
+          "target": "DLL version info",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "FILE009",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "File",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "File/@Name",
+          "operator": "matches",
+          "value": "[<>:\"|?*]"
+        }
+      ]
+    },
+    {
+      "rule_id": "FILE010",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "File",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "File/@Source",
+          "operator": "matches",
+          "value": "^.{260,}$"
+        }
+      ]
+    },
+    {
+      "rule_id": "FILE011",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "File",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "File/@Source",
+          "operator": "matches",
+          "value": "\\.exe$"
+        },
+        {
+          "condition_type": "attribute",
+          "target": "File/@Checksum",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "FILE012",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "File",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "File/@Source",
+          "operator": "matches",
+          "value": "\\.(ttf|otf|fon|ttc)$"
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Font not in FontsFolder",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "FILE013",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "File",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "File size",
+          "operator": "matches",
+          "value": ">50MB"
+        }
+      ]
+    },
+    {
+      "rule_id": "FILE014",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "File",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "File/@Source",
+          "operator": "matches",
+          "value": "\\.pdb$"
+        }
+      ]
+    },
+    {
+      "rule_id": "FILE015",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "File",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "File/@Source",
+          "operator": "matches",
+          "value": "\\.(tmp|temp|bak|log)$"
+        }
+      ]
+    },
+    {
+      "rule_id": "LOC001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Control|Dialog",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "*/@Text",
+          "operator": "matches",
+          "value": "^[^!\\(\\[]"
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Text not localized",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "LOC002",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "String",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "String/@Id",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Missing translation for culture",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "LOC003",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "String",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "String/@Id",
+          "operator": "matches",
+          "value": "^[^A-Z]|[^a-zA-Z0-9_]"
+        }
+      ]
+    },
+    {
+      "rule_id": "LOC004",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "String",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "String/@Id",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "String Id not referenced",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "MEDIA001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "element",
+          "target": "Media[@DiskId='1']|MediaTemplate",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "MEDIA002",
+      "conditions": [
+        {
+          "condition_type": "xpath",
+          "target": "count(//Media)",
+          "operator": "greater_than",
+          "value": "80"
+        }
+      ]
+    },
+    {
+      "rule_id": "NAME001",
+      "conditions": [
+        {
+          "condition_type": "attribute",
+          "target": "*/@Id",
+          "operator": "matches",
+          "value": ".*"
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Naming convention inconsistent",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "NAME002",
+      "conditions": [
+        {
+          "condition_type": "attribute",
+          "target": "*/@Id",
+          "operator": "matches",
+          "value": "^(ALLUSERS|ARPAUTHORIZEDCDFPREFIX|ARPCOMMENTS|ARPCONTACT|ARPINSTALLLOCATION|ARPNOMODIFY|ARPNOREMOVE|ARPNOREPAIR|ARPPRODUCTICON|ARPREADME|ARPSIZE|ARPSYSTEMCOMPONENT|ARPURLINFOABOUT|ARPURLUPDATEINFO|PRIMARYFOLDER|Manufacturer|ProductCode|ProductLanguage|ProductName|ProductVersion|UpgradeCode)$"
+        }
+      ]
+    },
+    {
+      "rule_id": "NAME003",
+      "conditions": [
+        {
+          "condition_type": "attribute",
+          "target": "*/@Id",
+          "operator": "matches",
+          "value": "^(Id[0-9]+|Temp[0-9]*|Test[0-9]*|Foo|Bar|Baz|Component[0-9]+|Feature[0-9]+|File[0-9]+)$"
+        }
+      ]
+    },
+    {
+      "rule_id": "NAME004",
+      "conditions": [
+        {
+          "condition_type": "attribute",
+          "target": "*/@Id",
+          "operator": "matches",
+          "value": "^[0-9]"
+        }
+      ]
+    },
+    {
+      "rule_id": "NAME005",
+      "conditions": [
+        {
+          "condition_type": "attribute",
+          "target": "*/@Id",
+          "operator": "matches",
+          "value": "^[a-z].*[A-Z]|^[A-Z].*[a-z].*[A-Z]"
+        }
+      ]
+    },
+    {
+      "rule_id": "PERF001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Feature",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "count(ComponentRef|Component)",
+          "operator": "greater_than",
+          "value": "1600"
+        }
+      ]
+    },
+    {
+      "rule_id": "PERF002",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "File",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Compressed",
+          "operator": "equals",
+          "value": "no"
+        }
+      ]
+    },
+    {
+      "rule_id": "PERF003",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Component",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "count(File)",
+          "operator": "greater_than",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "rule_id": "PERF004",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Media|MediaTemplate",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Media/@Cabinet",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "PERF005",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "CustomAction",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "CustomAction count",
+          "operator": "matches",
+          "value": ">20"
+        }
+      ]
+    },
+    {
+      "rule_id": "PERF006",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Custom",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "InstallUISequence//Custom",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "CustomAction/@Return",
+          "operator": "not_equals",
+          "value": "asyncNoWait"
+        }
+      ]
+    },
+    {
+      "rule_id": "PERF007",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Feature",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "Feature//Feature//Feature//Feature//Feature",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "PERF008",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Binary",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Binary table size",
+          "operator": "matches",
+          "value": ">10MB"
+        }
+      ]
+    },
+    {
+      "rule_id": "PKG001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@UpgradeCode",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "PKG002",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "element",
+          "target": "MajorUpgrade",
+          "operator": "not_exists",
+          "value": null
+        },
+        {
+          "condition_type": "element",
+          "target": "Upgrade",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "PKG003",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Version",
+          "operator": "not_matches",
+          "value": "^\\d+\\.\\d+\\.\\d+(\\.\\d+)?$"
+        }
+      ]
+    },
+    {
+      "rule_id": "PKG004",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@ProductCode",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@ProductCode",
+          "operator": "not_equals",
+          "value": "*"
+        }
+      ]
+    },
+    {
+      "rule_id": "PKG005",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Package/@Manufacturer",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "PKG006",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Package/@Name",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "PKG007",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Package/@InstallerVersion",
+          "operator": "matches",
+          "value": "^[0-2][0-9]{0,2}$"
+        }
+      ]
+    },
+    {
+      "rule_id": "PKG008",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Package/@Compressed",
+          "operator": "equals",
+          "value": "no"
+        }
+      ]
+    },
+    {
+      "rule_id": "PKG009",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Package/@Language",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "PKG010",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Package/@ProductCode",
+          "operator": "matches",
+          "value": "^(?!\\{?[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\\}?$)"
+        }
+      ]
+    },
+    {
+      "rule_id": "PKG011",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Package/@UpgradeCode",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Package/@ProductCode",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "UpgradeCode equals ProductCode",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "PKG012",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Package/@Version",
+          "operator": "matches",
+          "value": "^[0-9]+\\.[0-9]+\\.[0-9]+\\.[1-9]"
+        }
+      ]
+    },
+    {
+      "rule_id": "PKG013",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Package/@Scope",
+          "operator": "equals",
+          "value": "perUser"
+        }
+      ]
+    },
+    {
+      "rule_id": "PKG014",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Package/@Codepage",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "PKG015",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Package/@AdminImage",
+          "operator": "equals",
+          "value": "yes"
+        }
+      ]
+    },
+    {
+      "rule_id": "PROP001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Property",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Id",
+          "operator": "matches",
+          "value": "^[A-Z][a-z]|^[a-z].*[A-Z]"
+        }
+      ]
+    },
+    {
+      "rule_id": "PROP002",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Property",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Id",
+          "operator": "matches",
+          "value": "^(INSTALLFOLDER|INSTALLDIR|TARGETDIR|ProductCode|ProductLanguage|ProductName|ProductVersion|Manufacturer|UpgradeCode|ALLUSERS|ARPPRODUCTICON|ARPURLINFOABOUT|ARPNOMODIFY|ARPNOREMOVE|ARPNOREPAIR|ARPSYSTEMCOMPONENT|REINSTALLMODE|REBOOT|MSIINSTALLPERUSER|MSIDISABLERMRESTART|MSIRMSHUTDOWN|AdminUser|Privileged|MsiLogFileLocation|MsiRunningElevated|MsiUILevel|VersionNT|VersionNT64|WindowsBuild|ServicePackLevel|ServicePackLevelMinor|SystemLanguageID|ComputerName|UserName|UserLanguageID|ScreenX|ScreenY|ColorBits|TextHeight|ProgramFilesFolder|ProgramFiles64Folder|CommonFilesFolder|CommonFiles64Folder|AppDataFolder|LocalAppDataFolder|DesktopFolder|FavoritesFolder|FontsFolder|PersonalFolder|SendToFolder|StartMenuFolder|StartupFolder|SystemFolder|System64Folder|TempFolder|WindowsFolder|WindowsVolume)$"
+        }
+      ]
+    },
+    {
+      "rule_id": "PROP003",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "CustomAction",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Execute",
+          "operator": "matches",
+          "value": "deferred"
+        },
+        {
+          "condition_type": "xpath",
+          "target": "//Property[@Id=current()/@Property and not(contains(//Package/@SecureCustomProperties, current()/@Property))]",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "PROP004",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Property",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Property/@Value",
+          "operator": "matches",
+          "value": "^.{256,}$"
+        }
+      ]
+    },
+    {
+      "rule_id": "PROP005",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Property",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Property/@Id",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Property not referenced",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "PROP006",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Property",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Property/@Id",
+          "operator": "matches",
+          "value": "[^a-zA-Z0-9_.]"
+        }
+      ]
+    },
+    {
+      "rule_id": "PROP007",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Property",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Property/@Id",
+          "operator": "matches",
+          "value": "^(Installed|REINSTALL|REINSTALLMODE|ADDLOCAL|ADDSOURCE|ADDDEFAULT|REMOVE|ADVERTISE|FILEADDLOCAL|FILEADDSOURCE|FILEADDDEFAULT|FILEREMOVE|COMPADDLOCAL|COMPADDSOURCE|COMPADDDEFAULT)$"
+        }
+      ]
+    },
+    {
+      "rule_id": "PROP008",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Property",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Property/@Admin",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Admin value differs from default",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "PROP009",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Property",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Property/@Id",
+          "operator": "matches",
+          "value": "(PASSWORD|SECRET|KEY|TOKEN|CREDENTIAL|API_KEY)"
+        }
+      ]
+    },
+    {
+      "rule_id": "PROP010",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Condition",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Property used in condition not defined",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "REG001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "RegistryValue",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Key",
+          "operator": "matches",
+          "value": "SOFTWARE\\\\Classes\\\\CLSID|SOFTWARE\\\\Classes\\\\TypeLib|SOFTWARE\\\\Classes\\\\Interface|SOFTWARE\\\\Classes\\\\.\\w+|SYSTEM\\\\CurrentControlSet\\\\Services"
+        }
+      ]
+    },
+    {
+      "rule_id": "REG002",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "RegistryValue",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Name",
+          "operator": "not_exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Type",
+          "operator": "not_equals",
+          "value": "string"
+        }
+      ]
+    },
+    {
+      "rule_id": "REG003",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "RegistryValue",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Type",
+          "operator": "equals",
+          "value": "integer"
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Value",
+          "operator": "not_matches",
+          "value": "^#?-?\\d+$|^#x[0-9A-Fa-f]+$"
+        }
+      ]
+    },
+    {
+      "rule_id": "REG004",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "RegistryKey|RegistryValue",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "*/@Key",
+          "operator": "matches",
+          "value": "^.{256,}$"
+        }
+      ]
+    },
+    {
+      "rule_id": "REG005",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "RegistryValue",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "RegistryValue/@Name",
+          "operator": "matches",
+          "value": "\\\\"
+        }
+      ]
+    },
+    {
+      "rule_id": "REG006",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "RegistryKey|RegistryValue",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "*/@Root",
+          "operator": "equals",
+          "value": "HKCR"
+        }
+      ]
+    },
+    {
+      "rule_id": "REG007",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "RegistryValue",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "RegistryValue/@Type",
+          "operator": "equals",
+          "value": "expandable"
+        },
+        {
+          "condition_type": "attribute",
+          "target": "RegistryValue/@Value",
+          "operator": "not_matches",
+          "value": "%[^%]+%"
+        }
+      ]
+    },
+    {
+      "rule_id": "REG008",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "RegistryValue",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "RegistryValue/@Action",
+          "operator": "equals",
+          "value": "write"
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Registry value exists",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "REG009",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "RegistryValue",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "RegistryValue/@Type",
+          "operator": "matches",
+          "value": "^(?!(string|integer|binary|expandable|multiString)$)"
+        }
+      ]
+    },
+    {
+      "rule_id": "REG010",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "RegistryKey|RegistryValue",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "*/@Key",
+          "operator": "matches",
+          "value": "^(SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run|SOFTWARE\\\\Microsoft\\\\Windows NT\\\\CurrentVersion|SYSTEM\\\\CurrentControlSet)"
+        }
+      ]
+    },
+    {
+      "rule_id": "SEC001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Property",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Id",
+          "operator": "matches",
+          "value": "(?i)password|credential|secret|apikey|token|auth"
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Value",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "SEC002",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "CustomAction",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Execute",
+          "operator": "matches",
+          "value": "deferred"
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Impersonate",
+          "operator": "equals",
+          "value": "no"
+        }
+      ]
+    },
+    {
+      "rule_id": "SEC003",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "PermissionEx|Permission",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@User",
+          "operator": "matches",
+          "value": "(?i)everyone|users|authenticated"
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@GenericWrite|@GenericAll|@FullControl",
+          "operator": "equals",
+          "value": "yes"
+        }
+      ]
+    },
+    {
+      "rule_id": "SEC004",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "element",
+          "target": "DigitalSignature",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "SEC005",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "CustomAction",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "CustomAction/@DllEntry",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "DLL search order vulnerability",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "SEC006",
+      "conditions": [
+        {
+          "condition_type": "attribute",
+          "target": "*/@DownloadUrl|*/@SourceFile",
+          "operator": "matches",
+          "value": "^http://"
+        }
+      ]
+    },
+    {
+      "rule_id": "SEC007",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "RegistryKey",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "RegistryKey[Permission]",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Permission/@GenericAll",
+          "operator": "equals",
+          "value": "yes"
+        }
+      ]
+    },
+    {
+      "rule_id": "SEC008",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "ServiceInstall",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "ServiceInstall/@Account",
+          "operator": "matches",
+          "value": "(LocalSystem|SYSTEM|Administrator)"
+        }
+      ]
+    },
+    {
+      "rule_id": "SEC009",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "firewall:FirewallException",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "firewall:FirewallException/@Scope",
+          "operator": "equals",
+          "value": "any"
+        }
+      ]
+    },
+    {
+      "rule_id": "SEC010",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "File|Binary",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "*/@Source",
+          "operator": "matches",
+          "value": "\\.(exe|dll|msi|msp)$"
+        },
+        {
+          "condition_type": "pattern",
+          "target": "File not signed",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "SEC011",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "CustomAction",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "CustomAction/@Script",
+          "operator": "matches",
+          "value": "(powershell|vbscript|jscript)"
+        }
+      ]
+    },
+    {
+      "rule_id": "SEC012",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Directory",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Directory/@Id",
+          "operator": "matches",
+          "value": "CommonAppDataFolder"
+        },
+        {
+          "condition_type": "xpath",
+          "target": "Directory[Permission[@GenericWrite='yes']]",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "SHORT001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Shortcut",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Advertise",
+          "operator": "not_equals",
+          "value": "yes"
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Target",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "ancestor::Component[not(contains(@Directory, //File[@Id=substring-after(current()/@Target,'#')]/../@Directory))]",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "SHORT002",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Shortcut",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Advertise",
+          "operator": "not_equals",
+          "value": "yes"
+        },
+        {
+          "condition_type": "xpath",
+          "target": "//File[@Id=substring-after(current()/@Target,'#') and @Assembly='global']",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "SHORT003",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Shortcut",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Directory",
+          "operator": "matches",
+          "value": "^[A-Z_]+$"
+        },
+        {
+          "condition_type": "xpath",
+          "target": "//Property[@Id=current()/@Directory]",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "SHRT001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Shortcut",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Shortcut/@Target",
+          "operator": "not_exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Shortcut/@Advertise",
+          "operator": "not_equals",
+          "value": "yes"
+        }
+      ]
+    },
+    {
+      "rule_id": "SHRT002",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Shortcut",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Shortcut/@Directory",
+          "operator": "matches",
+          "value": "^(?!(DesktopFolder|ProgramMenuFolder|StartMenuFolder|StartupFolder|SendToFolder))"
+        }
+      ]
+    },
+    {
+      "rule_id": "SHRT003",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Shortcut",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Shortcut/@Icon",
+          "operator": "not_exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Shortcut/@IconIndex",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "SHRT004",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Shortcut",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Shortcut/@WorkingDirectory",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "WorkingDirectory reference invalid",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "SHRT005",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Shortcut",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Shortcut/@Target",
+          "operator": "matches",
+          "value": "\\s"
+        }
+      ]
+    },
+    {
+      "rule_id": "SHRT006",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Shortcut",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Shortcut/@Advertise",
+          "operator": "equals",
+          "value": "yes"
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Package/@Scope",
+          "operator": "equals",
+          "value": "perUser"
+        }
+      ]
+    },
+    {
+      "rule_id": "SHRT007",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Shortcut",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Multiple shortcuts to same target",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "SHRT008",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Shortcut",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Shortcut/@Name",
+          "operator": "matches",
+          "value": "[<>:\"|?*\\\\]"
+        }
+      ]
+    },
+    {
+      "rule_id": "SHRT009",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Shortcut",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Shortcut/@Directory",
+          "operator": "equals",
+          "value": "DesktopFolder"
+        },
+        {
+          "condition_type": "xpath",
+          "target": "Shortcut[not(ancestor::Component/Condition)]",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "SHRT010",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Shortcut",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Shortcut/@Target",
+          "operator": "matches",
+          "value": "^https?://"
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Shortcut/@Icon",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "SUMMARY001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Name",
+          "operator": "length_greater_than",
+          "value": "63"
+        }
+      ]
+    },
+    {
+      "rule_id": "SUMMARY002",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "SummaryInformation",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Keywords|@Description|@Manufacturer",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "SVC001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "ServiceInstall",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Name|@Start|@ErrorControl|@Type",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "SVC002",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "ServiceInstall",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "//ServiceControl[@Name=current()/@Name]",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "SVC003",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "ServiceControl",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Start",
+          "operator": "equals",
+          "value": "install"
+        },
+        {
+          "condition_type": "xpath",
+          "target": "//Custom[@Action=concat('Start',current()/@Name) and following::Custom[@Action='InstallFiles']]",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "SVC004",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "ServiceInstall",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "ServiceInstall/@Account",
+          "operator": "matches",
+          "value": "(LocalSystem|SYSTEM)"
+        }
+      ]
+    },
+    {
+      "rule_id": "SVC005",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "ServiceInstall",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "ServiceInstall/@Name",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Service executable not found",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "SVC006",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "ServiceInstall",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "ServiceInstall/@Description",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "SVC007",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "ServiceInstall",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "ServiceInstall/@Dependencies",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Service dependencies circular",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "SVC008",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "ServiceInstall",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "ServiceInstall/@Start",
+          "operator": "equals",
+          "value": "auto"
+        },
+        {
+          "condition_type": "element",
+          "target": "ServiceConfig",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "SVC009",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "ServiceInstall",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "ServiceInstall/@Account",
+          "operator": "matches",
+          "value": "^[^\\[\\$]"
+        }
+      ]
+    },
+    {
+      "rule_id": "SVC010",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "ServiceInstall",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "ServiceInstall/@Interactive",
+          "operator": "equals",
+          "value": "yes"
+        }
+      ]
+    },
+    {
+      "rule_id": "UI001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "UI",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "element",
+          "target": "Dialog",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "element",
+          "target": "Error|UIRef[@Id='WixUI_ErrorProgressText']",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "UI002",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "UI",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "element",
+          "target": "Dialog[@Id='LicenseAgreementDlg']|UIRef[contains(@Id,'License')]",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "UI003",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Control",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Control rectangles overlap",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "UI004",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Dialog",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "Dialog[not(Control[@Type='PushButton'][@Cancel='yes'])]",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "UI005",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Control",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Control/@Type",
+          "operator": "equals",
+          "value": "Text"
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Text exceeds control width",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "UI006",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Dialog",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Dialog/@DefaultAction",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "DefaultAction control not found",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "UI007",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Control",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Control/@Type",
+          "operator": "equals",
+          "value": "Bitmap"
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Control/@Bitmap",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Bitmap file not found",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "UI008",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Control",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Control/@Type",
+          "operator": "equals",
+          "value": "Bitmap"
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Bitmap file size",
+          "operator": "matches",
+          "value": ">500KB"
+        }
+      ]
+    },
+    {
+      "rule_id": "UI009",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "UIRef",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "Package[UIRef][not(.//Dialog)]",
+          "operator": "exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "UI010",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "ProgressText",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "ProgressText/@Action",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "ProgressText missing for action",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "UPG001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Upgrade",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "UpgradeVersion/@Maximum",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "UpgradeVersion/@IncludeMaximum",
+          "operator": "equals",
+          "value": "yes"
+        }
+      ]
+    },
+    {
+      "rule_id": "UPG002",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "element",
+          "target": "MajorUpgrade",
+          "operator": "not_exists",
+          "value": null
+        },
+        {
+          "condition_type": "xpath",
+          "target": "Upgrade/UpgradeVersion[@OnlyDetect='yes']",
+          "operator": "not_exists",
+          "value": null
+        }
+      ]
+    },
+    {
+      "rule_id": "UPG003",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "MajorUpgrade|Upgrade",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Upgrade version gap exists",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "UPG004",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "MajorUpgrade",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "MajorUpgrade/@Schedule",
+          "operator": "matches",
+          "value": "(afterInstallExecute|afterInstallFinalize)"
+        }
+      ]
+    },
+    {
+      "rule_id": "UPG005",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "Small update without version change",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "UPG006",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Package",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "Package/@UpgradeCode",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "pattern",
+          "target": "UpgradeCode differs from previous version",
+          "operator": "matches",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "rule_id": "UPGRADE001",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "MajorUpgrade",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Schedule",
+          "operator": "equals",
+          "value": "afterInstallValidate"
+        }
+      ]
+    },
+    {
+      "rule_id": "UPGRADE002",
+      "conditions": [
+        {
+          "condition_type": "element",
+          "target": "Upgrade",
+          "operator": "exists",
+          "value": null
+        },
+        {
+          "condition_type": "attribute",
+          "target": "@Id",
+          "operator": "not_matches",
+          "value": "^\\{?[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\\}?$"
+        }
+      ]
+    }
+  ]
+}

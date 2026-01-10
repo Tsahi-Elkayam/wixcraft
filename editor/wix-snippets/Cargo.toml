@@ -1,0 +1,18 @@
+[package]
+name = "wix-snippets"
+version = "0.1.0"
+edition = "2021"
+description = "Snippet library for common WiX patterns"
+license = "MIT"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+
+[dev-dependencies]
+tempfile = "3"
+
+[lib]
+name = "wix_snippets"
+path = "src/lib.rs"

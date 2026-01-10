@@ -1,0 +1,21 @@
+[package]
+name = "wix-analytics"
+version = "0.1.0"
+edition = "2021"
+description = "Installation telemetry and analytics for MSI packages"
+license = "MIT"
+
+[[bin]]
+name = "wix-analytics"
+path = "src/main.rs"
+
+[lib]
+name = "wix_analytics"
+path = "src/lib.rs"
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+chrono = { version = "0.4", features = ["serde"] }

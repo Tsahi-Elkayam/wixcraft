@@ -1,0 +1,25 @@
+[package]
+name = "wix-hover"
+version = "0.1.0"
+edition = "2021"
+description = "WiX hover documentation provider - shared library for editor integrations"
+license = "MIT"
+keywords = ["wix", "hover", "documentation", "lsp"]
+categories = ["development-tools"]
+
+[[bin]]
+name = "wix-hover"
+path = "src/main.rs"
+
+[lib]
+name = "wix_hover"
+path = "src/lib.rs"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+clap = { version = "4", features = ["derive"] }
+
+[dev-dependencies]
+tempfile = "3"

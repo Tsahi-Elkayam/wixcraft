@@ -1,0 +1,81 @@
+{
+  "_description": "Descriptions for elements missing in the database",
+  "patches": [
+    {
+      "name": "RemoteAddress",
+      "namespace": "firewall",
+      "description": "Defines a remote IP address or range for Windows Firewall rules. Used within FirewallException to specify allowed/blocked remote addresses."
+    },
+    {
+      "name": "MessageQueuePermission",
+      "namespace": "msmq",
+      "description": "Sets access permissions on a message queue for a specific user or group. Allows controlling read, write, and admin access to MSMQ queues."
+    },
+    {
+      "name": "AdminExecuteSequence",
+      "namespace": "wix",
+      "description": "Contains the sequence of actions for administrative installation (msiexec /a). Used to customize the admin install process for network deployment."
+    },
+    {
+      "name": "AdminUISequence",
+      "namespace": "wix",
+      "description": "Contains the sequence of UI actions during administrative installation. Controls dialogs and user interaction during admin image creation."
+    },
+    {
+      "name": "AdvertiseExecuteSequence",
+      "namespace": "wix",
+      "description": "Contains the sequence of actions for advertised installation. Used when features are advertised for install-on-demand scenarios."
+    },
+    {
+      "name": "EmbeddedChainer",
+      "namespace": "wix",
+      "description": "Defines an embedded chainer for multiple package installation (MSI 4.5+). Allows chaining multiple MSI packages within a single transaction."
+    },
+    {
+      "name": "EmbeddedUI",
+      "namespace": "wix",
+      "description": "Specifies a custom embedded UI DLL that replaces the standard Windows Installer UI. Allows fully customized installation experience."
+    },
+    {
+      "name": "Error",
+      "namespace": "wix",
+      "description": "Defines custom error messages for the Error table. Associates error codes with localized message text shown during installation failures."
+    },
+    {
+      "name": "InstallExecuteSequence",
+      "namespace": "wix",
+      "description": "Contains the main sequence of installation actions. Controls the order of file copying, registration, and all installation operations."
+    },
+    {
+      "name": "InstallUISequence",
+      "namespace": "wix",
+      "description": "Contains the sequence of UI actions during normal installation. Controls dialog display order and user interaction during setup."
+    },
+    {
+      "name": "ProgressText",
+      "namespace": "wix",
+      "description": "Defines progress text displayed during installation actions. Maps action names to user-friendly descriptions shown in the progress dialog."
+    },
+    {
+      "name": "Publish",
+      "namespace": "wix",
+      "description": "Publishes a control event from a dialog control. Used to trigger actions like navigating dialogs, setting properties, or executing custom actions when users interact with UI controls."
+    },
+    {
+      "name": "Show",
+      "namespace": "wix",
+      "description": "Controls the visibility and state of a dialog control based on conditions. Shows, hides, enables, or disables UI controls dynamically during installation."
+    },
+    {
+      "name": "TextStyle",
+      "namespace": "wix",
+      "description": "Defines a text style for dialog controls. Specifies font name, size, color, and style (bold, italic) used by UI elements."
+    },
+    {
+      "name": "UpgradeVersion",
+      "namespace": "wix",
+      "description": "Defines a version range for upgrade detection within an Upgrade element. Specifies which installed product versions trigger an upgrade."
+    }
+  ]
+}
+

@@ -1,0 +1,1799 @@
+{
+  "_source": "Harvested from WiX GitHub and Microsoft Learn",
+  "_harvested_from": [
+    "https://github.com/wixtoolset/wix/tree/HEAD/src/ext/UI/wixlib",
+    "https://learn.microsoft.com/en-us/windows/win32/msi/controls"
+  ],
+  "controls": [
+    {
+      "name": "Billboard",
+      "description": "Displays billboards based on progress messages."
+    },
+    {
+      "name": "Bitmap",
+      "description": "Displays a static picture of a bitmap."
+    },
+    {
+      "name": "CheckBox",
+      "description": "A two-state check box."
+    },
+    {
+      "name": "ComboBox",
+      "description": "A drop-down list with an edit field."
+    },
+    {
+      "name": "DirectoryCombo",
+      "description": "Select all except the last segment of the path."
+    },
+    {
+      "name": "DirectoryList",
+      "description": "Displays folders below the main part of path."
+    },
+    {
+      "name": "Edit",
+      "description": "A regular edit field for any string or integer."
+    },
+    {
+      "name": "GroupBox",
+      "description": "Displays a rectangle that groups other controls together."
+    },
+    {
+      "name": "Hyperlink",
+      "description": "Displays a HTML link to an address, which opens in the default browser.Windows Installer 4.5 and earlier: Not supported."
+    },
+    {
+      "name": "Icon",
+      "description": "Displays a static picture of an icon."
+    },
+    {
+      "name": "Line",
+      "description": "Displays a horizontal line."
+    },
+    {
+      "name": "ListBox",
+      "description": "A drop-down list without an edit field."
+    },
+    {
+      "name": "ListView",
+      "description": "Displays a column of values with icons for selection."
+    },
+    {
+      "name": "MaskedEdit",
+      "description": "An edit field with a mask in the text field."
+    },
+    {
+      "name": "PathEdit",
+      "description": "Displays folder name or entire path in an edit field."
+    },
+    {
+      "name": "ProgressBar",
+      "description": "Bar graph that changes length as it receives progress messages."
+    },
+    {
+      "name": "PushButton",
+      "description": "Displays a basic push button."
+    },
+    {
+      "name": "RadioButtonGroup",
+      "description": "A group of radio buttons."
+    },
+    {
+      "name": "ScrollableText",
+      "description": "Displays a long string of text."
+    },
+    {
+      "name": "SelectionTree",
+      "description": "Displays information from the Feature table and enables the user to change their selection state."
+    },
+    {
+      "name": "Text",
+      "description": "Displays static text."
+    },
+    {
+      "name": "VolumeCostList",
+      "description": "Displays costing information on different volumes."
+    },
+    {
+      "name": "VolumeSelectCombo",
+      "description": "Selects volume from an alphabetical list."
+    }
+  ],
+  "dialog_sets": [
+    {
+      "name": "WixUI_Minimal",
+      "description": "Minimal UI with welcome and completion dialogs only",
+      "use_case": "Simple installers with no user choices needed",
+      "dialogs": [
+        "WelcomeDlg",
+        "ProgressDlg",
+        "ExitDialog"
+      ]
+    },
+    {
+      "name": "WixUI_InstallDir",
+      "description": "Adds installation directory selection to minimal UI",
+      "use_case": "Standard applications where users need to choose install directory",
+      "dialogs": [
+        "WelcomeDlg",
+        "LicenseAgreementDlg",
+        "InstallDirDlg",
+        "VerifyReadyDlg",
+        "ProgressDlg",
+        "ExitDialog"
+      ]
+    },
+    {
+      "name": "WixUI_FeatureTree",
+      "description": "Feature selection tree for component choices",
+      "use_case": "Applications with optional features or components",
+      "dialogs": [
+        "WelcomeDlg",
+        "LicenseAgreementDlg",
+        "CustomizeDlg",
+        "VerifyReadyDlg",
+        "ProgressDlg",
+        "ExitDialog"
+      ]
+    },
+    {
+      "name": "WixUI_Mondo",
+      "description": "Full UI with setup type selection (Typical/Custom/Complete)",
+      "use_case": "Complex installers with multiple setup types",
+      "dialogs": [
+        "WelcomeDlg",
+        "LicenseAgreementDlg",
+        "SetupTypeDlg",
+        "CustomizeDlg",
+        "VerifyReadyDlg",
+        "ProgressDlg",
+        "ExitDialog"
+      ]
+    },
+    {
+      "name": "WixUI_Advanced",
+      "description": "Advanced UI with per-user/per-machine installation choice",
+      "use_case": "Installers needing per-user vs per-machine choice",
+      "dialogs": [
+        "WelcomeDlg",
+        "InstallScopeDlg",
+        "InstallDirDlg",
+        "FeaturesDlg",
+        "VerifyReadyDlg",
+        "ProgressDlg",
+        "ExitDialog"
+      ]
+    }
+  ],
+  "dialogs": [
+    {
+      "name": "BrowseDlg",
+      "title": "!(loc.BrowseDlg_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "CancelDlg",
+      "title": "!(loc.CancelDlg_Title)",
+      "width": "260",
+      "height": "85"
+    },
+    {
+      "name": "CustomizeDlg",
+      "title": "!(loc.CustomizeDlg_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "DiskCostDlg",
+      "title": "!(loc.DiskCostDlg_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "ErrorDlg",
+      "title": "!(loc.ErrorDlg_Title)",
+      "width": "270",
+      "height": "105"
+    },
+    {
+      "name": "ExitDialog",
+      "title": "!(loc.ExitDialog_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "FatalError",
+      "title": "!(loc.FatalError_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "FeaturesDlg",
+      "title": "!(loc.FeaturesDlg_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "FilesInUse",
+      "title": "!(loc.FilesInUse_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "InstallDirDlg",
+      "title": "!(loc.InstallDirDlg_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "InstallScopeDlg",
+      "title": "!(loc.InstallScopeDlg_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "LicenseAgreementDlg",
+      "title": "!(loc.LicenseAgreementDlg_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "MaintenanceTypeDlg",
+      "title": "!(loc.MaintenanceTypeDlg_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "MaintenanceWelcomeDlg",
+      "title": "!(loc.MaintenanceWelcomeDlg_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "MsiRMFilesInUse",
+      "title": "!(loc.MsiRMFilesInUse_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "OutOfDiskDlg",
+      "title": "!(loc.OutOfDiskDlg_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "OutOfRbDiskDlg",
+      "title": "!(loc.OutOfRbDiskDlg_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "PrepareDlg",
+      "title": "!(loc.PrepareDlg_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "ProgressDlg",
+      "title": "!(loc.ProgressDlg_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "ResumeDlg",
+      "title": "!(loc.ResumeDlg_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "SetupTypeDlg",
+      "title": "!(loc.SetupTypeDlg_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "UserExit",
+      "title": "!(loc.UserExit_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "VerifyReadyDlg",
+      "title": "!(loc.VerifyReadyDlg_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "WaitForCostingDlg",
+      "title": "!(loc.WaitForCostingDlg_Title)",
+      "width": "260",
+      "height": "85"
+    },
+    {
+      "name": "WelcomeDlg",
+      "title": "!(loc.WelcomeDlg_Title)",
+      "width": "370",
+      "height": "270"
+    },
+    {
+      "name": "WelcomeEulaDlg",
+      "title": "!(loc.WelcomeEulaDlg_Title)",
+      "width": "370",
+      "height": "270"
+    }
+  ],
+  "control_events": [
+    {
+      "name": "NewDialog",
+      "description": "Navigate to a different dialog"
+    },
+    {
+      "name": "EndDialog",
+      "description": "Close dialog with result (Exit, Return, Retry, Ignore)"
+    },
+    {
+      "name": "SetProperty",
+      "description": "Set a property value"
+    },
+    {
+      "name": "SpawnDialog",
+      "description": "Open modal dialog on top of current"
+    },
+    {
+      "name": "DoAction",
+      "description": "Execute a custom action"
+    },
+    {
+      "name": "Reset",
+      "description": "Reset all properties to default values"
+    },
+    {
+      "name": "SpawnWaitDialog",
+      "description": "Display wait dialog during action"
+    },
+    {
+      "name": "AddLocal",
+      "description": "Set feature to install locally"
+    },
+    {
+      "name": "AddSource",
+      "description": "Set feature to run from source"
+    },
+    {
+      "name": "Remove",
+      "description": "Set feature to not install"
+    },
+    {
+      "name": "Reinstall",
+      "description": "Reinstall feature"
+    },
+    {
+      "name": "ReinstallMode",
+      "description": "Set reinstall mode"
+    }
+  ],
+  "control_conditions": [
+    {
+      "name": "Default",
+      "description": "Control is the default button"
+    },
+    {
+      "name": "Disable",
+      "description": "Control is disabled (grayed out)"
+    },
+    {
+      "name": "Enable",
+      "description": "Control is enabled"
+    },
+    {
+      "name": "Hide",
+      "description": "Control is hidden"
+    },
+    {
+      "name": "Show",
+      "description": "Control is visible"
+    }
+  ],
+  "harvested_controls": [
+    {
+      "dialog": "BrowseDlg",
+      "id": "PathEdit",
+      "type": "PathEdit"
+    },
+    {
+      "dialog": "BrowseDlg",
+      "id": "OK",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "BrowseDlg",
+      "id": "Cancel",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "BrowseDlg",
+      "id": "ComboLabel",
+      "type": "Text"
+    },
+    {
+      "dialog": "BrowseDlg",
+      "id": "DirectoryCombo",
+      "type": "DirectoryCombo"
+    },
+    {
+      "dialog": "BrowseDlg",
+      "id": "WixUI_Bmp_Up",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "BrowseDlg",
+      "id": "NewFolder",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "BrowseDlg",
+      "id": "DirectoryList",
+      "type": "DirectoryList"
+    },
+    {
+      "dialog": "BrowseDlg",
+      "id": "PathLabel",
+      "type": "Text"
+    },
+    {
+      "dialog": "BrowseDlg",
+      "id": "BannerBitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "BrowseDlg",
+      "id": "BannerLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "BrowseDlg",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "BrowseDlg",
+      "id": "Description",
+      "type": "Text"
+    },
+    {
+      "dialog": "BrowseDlg",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "CancelDlg",
+      "id": "No",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "CancelDlg",
+      "id": "Yes",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "CancelDlg",
+      "id": "Text",
+      "type": "Text"
+    },
+    {
+      "dialog": "CancelDlg",
+      "id": "Icon",
+      "type": "Icon"
+    },
+    {
+      "dialog": "CustomizeDlg",
+      "id": "Tree",
+      "type": "SelectionTree"
+    },
+    {
+      "dialog": "CustomizeDlg",
+      "id": "Browse",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "CustomizeDlg",
+      "id": "Reset",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "CustomizeDlg",
+      "id": "DiskCost",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "CustomizeDlg",
+      "id": "Back",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "CustomizeDlg",
+      "id": "Next",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "CustomizeDlg",
+      "id": "Cancel",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "CustomizeDlg",
+      "id": "BannerBitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "CustomizeDlg",
+      "id": "Text",
+      "type": "Text"
+    },
+    {
+      "dialog": "CustomizeDlg",
+      "id": "BannerLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "CustomizeDlg",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "CustomizeDlg",
+      "id": "Description",
+      "type": "Text"
+    },
+    {
+      "dialog": "CustomizeDlg",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "CustomizeDlg",
+      "id": "Box",
+      "type": "GroupBox"
+    },
+    {
+      "dialog": "CustomizeDlg",
+      "id": "ItemDescription",
+      "type": "Text"
+    },
+    {
+      "dialog": "CustomizeDlg",
+      "id": "ItemSize",
+      "type": "Text"
+    },
+    {
+      "dialog": "CustomizeDlg",
+      "id": "Location",
+      "type": "Text"
+    },
+    {
+      "dialog": "CustomizeDlg",
+      "id": "LocationLabel",
+      "type": "Text"
+    },
+    {
+      "dialog": "DiskCostDlg",
+      "id": "OK",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "DiskCostDlg",
+      "id": "BannerBitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "DiskCostDlg",
+      "id": "Text",
+      "type": "Text"
+    },
+    {
+      "dialog": "DiskCostDlg",
+      "id": "BannerLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "DiskCostDlg",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "DiskCostDlg",
+      "id": "Description",
+      "type": "Text"
+    },
+    {
+      "dialog": "DiskCostDlg",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "DiskCostDlg",
+      "id": "VolumeList",
+      "type": "VolumeCostList"
+    },
+    {
+      "dialog": "ErrorDlg",
+      "id": "ErrorText",
+      "type": "Text"
+    },
+    {
+      "dialog": "ErrorDlg",
+      "id": "Y",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "ErrorDlg",
+      "id": "A",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "ErrorDlg",
+      "id": "C",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "ErrorDlg",
+      "id": "ErrorIcon",
+      "type": "Icon"
+    },
+    {
+      "dialog": "ErrorDlg",
+      "id": "I",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "ErrorDlg",
+      "id": "N",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "ErrorDlg",
+      "id": "O",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "ErrorDlg",
+      "id": "R",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "ExitDialog",
+      "id": "Finish",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "ExitDialog",
+      "id": "Cancel",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "ExitDialog",
+      "id": "Bitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "ExitDialog",
+      "id": "Back",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "ExitDialog",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "ExitDialog",
+      "id": "Description",
+      "type": "Text"
+    },
+    {
+      "dialog": "ExitDialog",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "ExitDialog",
+      "id": "OptionalText",
+      "type": "Text"
+    },
+    {
+      "dialog": "ExitDialog",
+      "id": "OptionalCheckBox",
+      "type": "CheckBox"
+    },
+    {
+      "dialog": "FatalError",
+      "id": "Finish",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "FatalError",
+      "id": "Cancel",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "FatalError",
+      "id": "Bitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "FatalError",
+      "id": "Back",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "FatalError",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "FatalError",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "FatalError",
+      "id": "Description",
+      "type": "Text"
+    },
+    {
+      "dialog": "FeaturesDlg",
+      "id": "Tree",
+      "type": "SelectionTree"
+    },
+    {
+      "dialog": "FeaturesDlg",
+      "id": "Back",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "FeaturesDlg",
+      "id": "Install",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "FeaturesDlg",
+      "id": "InstallNoShield",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "FeaturesDlg",
+      "id": "Change",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "FeaturesDlg",
+      "id": "ChangeNoShield",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "FeaturesDlg",
+      "id": "Cancel",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "FeaturesDlg",
+      "id": "BannerBitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "FeaturesDlg",
+      "id": "BannerLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "FeaturesDlg",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "FeaturesDlg",
+      "id": "Description",
+      "type": "Text"
+    },
+    {
+      "dialog": "FeaturesDlg",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "FeaturesDlg",
+      "id": "ItemDescription",
+      "type": "Text"
+    },
+    {
+      "dialog": "FeaturesDlg",
+      "id": "ItemSize",
+      "type": "Text"
+    },
+    {
+      "dialog": "FilesInUse",
+      "id": "Retry",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "FilesInUse",
+      "id": "Ignore",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "FilesInUse",
+      "id": "Exit",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "FilesInUse",
+      "id": "BannerBitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "FilesInUse",
+      "id": "Text",
+      "type": "Text"
+    },
+    {
+      "dialog": "FilesInUse",
+      "id": "BannerLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "FilesInUse",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "FilesInUse",
+      "id": "Description",
+      "type": "Text"
+    },
+    {
+      "dialog": "FilesInUse",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "FilesInUse",
+      "id": "List",
+      "type": "ListBox"
+    },
+    {
+      "dialog": "InstallDirDlg",
+      "id": "Next",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "InstallDirDlg",
+      "id": "Back",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "InstallDirDlg",
+      "id": "Cancel",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "InstallDirDlg",
+      "id": "Description",
+      "type": "Text"
+    },
+    {
+      "dialog": "InstallDirDlg",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "InstallDirDlg",
+      "id": "BannerBitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "InstallDirDlg",
+      "id": "BannerLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "InstallDirDlg",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "InstallDirDlg",
+      "id": "FolderLabel",
+      "type": "Text"
+    },
+    {
+      "dialog": "InstallDirDlg",
+      "id": "Folder",
+      "type": "PathEdit"
+    },
+    {
+      "dialog": "InstallDirDlg",
+      "id": "ChangeFolder",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "InstallScopeDlg",
+      "id": "BannerBitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "InstallScopeDlg",
+      "id": "BannerLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "InstallScopeDlg",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "InstallScopeDlg",
+      "id": "Description",
+      "type": "Text"
+    },
+    {
+      "dialog": "InstallScopeDlg",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "InstallScopeDlg",
+      "id": "BothScopes",
+      "type": "RadioButtonGroup"
+    },
+    {
+      "dialog": "InstallScopeDlg",
+      "id": "PerUserDescription",
+      "type": "Text"
+    },
+    {
+      "dialog": "InstallScopeDlg",
+      "id": "NoPerUserDescription",
+      "type": "Text"
+    },
+    {
+      "dialog": "InstallScopeDlg",
+      "id": "PerMachineDescription",
+      "type": "Text"
+    },
+    {
+      "dialog": "InstallScopeDlg",
+      "id": "Back",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "InstallScopeDlg",
+      "id": "Next",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "InstallScopeDlg",
+      "id": "Cancel",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "LicenseAgreementDlg",
+      "id": "BannerBitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "LicenseAgreementDlg",
+      "id": "BannerLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "LicenseAgreementDlg",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "LicenseAgreementDlg",
+      "id": "Description",
+      "type": "Text"
+    },
+    {
+      "dialog": "LicenseAgreementDlg",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "LicenseAgreementDlg",
+      "id": "LicenseAcceptedCheckBox",
+      "type": "CheckBox"
+    },
+    {
+      "dialog": "LicenseAgreementDlg",
+      "id": "Print",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "LicenseAgreementDlg",
+      "id": "Back",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "LicenseAgreementDlg",
+      "id": "Next",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "LicenseAgreementDlg",
+      "id": "Cancel",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "LicenseAgreementDlg",
+      "id": "LicenseText",
+      "type": "ScrollableText"
+    },
+    {
+      "dialog": "MaintenanceTypeDlg",
+      "id": "ChangeButton",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "MaintenanceTypeDlg",
+      "id": "ChangeText",
+      "type": "Text"
+    },
+    {
+      "dialog": "MaintenanceTypeDlg",
+      "id": "ChangeDisabledText",
+      "type": "Text"
+    },
+    {
+      "dialog": "MaintenanceTypeDlg",
+      "id": "RepairButton",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "MaintenanceTypeDlg",
+      "id": "RepairText",
+      "type": "Text"
+    },
+    {
+      "dialog": "MaintenanceTypeDlg",
+      "id": "RepairDisabledText",
+      "type": "Text"
+    },
+    {
+      "dialog": "MaintenanceTypeDlg",
+      "id": "RemoveButton",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "MaintenanceTypeDlg",
+      "id": "RemoveText",
+      "type": "Text"
+    },
+    {
+      "dialog": "MaintenanceTypeDlg",
+      "id": "RemoveDisabledText",
+      "type": "Text"
+    },
+    {
+      "dialog": "MaintenanceTypeDlg",
+      "id": "Back",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "MaintenanceTypeDlg",
+      "id": "Next",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "MaintenanceTypeDlg",
+      "id": "Cancel",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "MaintenanceTypeDlg",
+      "id": "BannerBitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "MaintenanceTypeDlg",
+      "id": "BannerLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "MaintenanceTypeDlg",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "MaintenanceTypeDlg",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "MaintenanceTypeDlg",
+      "id": "Description",
+      "type": "Text"
+    },
+    {
+      "dialog": "MaintenanceWelcomeDlg",
+      "id": "Next",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "MaintenanceWelcomeDlg",
+      "id": "Cancel",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "MaintenanceWelcomeDlg",
+      "id": "Bitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "MaintenanceWelcomeDlg",
+      "id": "Back",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "MaintenanceWelcomeDlg",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "MaintenanceWelcomeDlg",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "MaintenanceWelcomeDlg",
+      "id": "Description",
+      "type": "Text"
+    },
+    {
+      "dialog": "MsiRMFilesInUse",
+      "id": "OK",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "MsiRMFilesInUse",
+      "id": "Cancel",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "MsiRMFilesInUse",
+      "id": "ShutdownOption",
+      "type": "RadioButtonGroup"
+    },
+    {
+      "dialog": "MsiRMFilesInUse",
+      "id": "List",
+      "type": "ListBox"
+    },
+    {
+      "dialog": "MsiRMFilesInUse",
+      "id": "BannerBitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "MsiRMFilesInUse",
+      "id": "Text",
+      "type": "Text"
+    },
+    {
+      "dialog": "MsiRMFilesInUse",
+      "id": "BannerLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "MsiRMFilesInUse",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "MsiRMFilesInUse",
+      "id": "Description",
+      "type": "Text"
+    },
+    {
+      "dialog": "MsiRMFilesInUse",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "OutOfDiskDlg",
+      "id": "OK",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "OutOfDiskDlg",
+      "id": "BannerBitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "OutOfDiskDlg",
+      "id": "Text",
+      "type": "Text"
+    },
+    {
+      "dialog": "OutOfDiskDlg",
+      "id": "BannerLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "OutOfDiskDlg",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "OutOfDiskDlg",
+      "id": "Description",
+      "type": "Text"
+    },
+    {
+      "dialog": "OutOfDiskDlg",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "OutOfDiskDlg",
+      "id": "VolumeList",
+      "type": "VolumeCostList"
+    },
+    {
+      "dialog": "OutOfRbDiskDlg",
+      "id": "No",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "OutOfRbDiskDlg",
+      "id": "Yes",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "OutOfRbDiskDlg",
+      "id": "BannerBitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "OutOfRbDiskDlg",
+      "id": "Text",
+      "type": "Text"
+    },
+    {
+      "dialog": "OutOfRbDiskDlg",
+      "id": "BannerLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "OutOfRbDiskDlg",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "OutOfRbDiskDlg",
+      "id": "Description",
+      "type": "Text"
+    },
+    {
+      "dialog": "OutOfRbDiskDlg",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "OutOfRbDiskDlg",
+      "id": "VolumeList",
+      "type": "VolumeCostList"
+    },
+    {
+      "dialog": "PrepareDlg",
+      "id": "Cancel",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "PrepareDlg",
+      "id": "Bitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "PrepareDlg",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "PrepareDlg",
+      "id": "Description",
+      "type": "Text"
+    },
+    {
+      "dialog": "PrepareDlg",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "PrepareDlg",
+      "id": "Back",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "PrepareDlg",
+      "id": "Next",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "PrepareDlg",
+      "id": "ActionData",
+      "type": "Text"
+    },
+    {
+      "dialog": "PrepareDlg",
+      "id": "ActionText",
+      "type": "Text"
+    },
+    {
+      "dialog": "ProgressDlg",
+      "id": "Cancel",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "ProgressDlg",
+      "id": "BannerBitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "ProgressDlg",
+      "id": "Back",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "ProgressDlg",
+      "id": "Next",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "ProgressDlg",
+      "id": "BannerLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "ProgressDlg",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "ProgressDlg",
+      "id": "TextInstalling",
+      "type": "Text"
+    },
+    {
+      "dialog": "ProgressDlg",
+      "id": "TitleInstalling",
+      "type": "Text"
+    },
+    {
+      "dialog": "ProgressDlg",
+      "id": "TextChanging",
+      "type": "Text"
+    },
+    {
+      "dialog": "ProgressDlg",
+      "id": "TitleChanging",
+      "type": "Text"
+    },
+    {
+      "dialog": "ProgressDlg",
+      "id": "TextRepairing",
+      "type": "Text"
+    },
+    {
+      "dialog": "ProgressDlg",
+      "id": "TitleRepairing",
+      "type": "Text"
+    },
+    {
+      "dialog": "ProgressDlg",
+      "id": "TextRemoving",
+      "type": "Text"
+    },
+    {
+      "dialog": "ProgressDlg",
+      "id": "TitleRemoving",
+      "type": "Text"
+    },
+    {
+      "dialog": "ProgressDlg",
+      "id": "TextUpdating",
+      "type": "Text"
+    },
+    {
+      "dialog": "ProgressDlg",
+      "id": "TitleUpdating",
+      "type": "Text"
+    },
+    {
+      "dialog": "ProgressDlg",
+      "id": "ActionText",
+      "type": "Text"
+    },
+    {
+      "dialog": "ProgressDlg",
+      "id": "ProgressBar",
+      "type": "ProgressBar"
+    },
+    {
+      "dialog": "ProgressDlg",
+      "id": "StatusLabel",
+      "type": "Text"
+    },
+    {
+      "dialog": "ResumeDlg",
+      "id": "Install",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "ResumeDlg",
+      "id": "InstallNoShield",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "ResumeDlg",
+      "id": "Cancel",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "ResumeDlg",
+      "id": "Bitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "ResumeDlg",
+      "id": "Back",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "ResumeDlg",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "ResumeDlg",
+      "id": "Description",
+      "type": "Text"
+    },
+    {
+      "dialog": "ResumeDlg",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "SetupTypeDlg",
+      "id": "TypicalButton",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "SetupTypeDlg",
+      "id": "CustomButton",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "SetupTypeDlg",
+      "id": "CompleteButton",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "SetupTypeDlg",
+      "id": "Back",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "SetupTypeDlg",
+      "id": "Next",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "SetupTypeDlg",
+      "id": "Cancel",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "SetupTypeDlg",
+      "id": "BannerBitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "SetupTypeDlg",
+      "id": "BannerLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "SetupTypeDlg",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "SetupTypeDlg",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "SetupTypeDlg",
+      "id": "Description",
+      "type": "Text"
+    },
+    {
+      "dialog": "SetupTypeDlg",
+      "id": "TypicalText",
+      "type": "Text"
+    },
+    {
+      "dialog": "SetupTypeDlg",
+      "id": "CustomText",
+      "type": "Text"
+    },
+    {
+      "dialog": "SetupTypeDlg",
+      "id": "CompleteText",
+      "type": "Text"
+    },
+    {
+      "dialog": "UserExit",
+      "id": "Finish",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "UserExit",
+      "id": "Cancel",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "UserExit",
+      "id": "Bitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "UserExit",
+      "id": "Back",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "UserExit",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "UserExit",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "UserExit",
+      "id": "Description",
+      "type": "Text"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "Install",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "InstallNoShield",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "Change",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "ChangeNoShield",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "Repair",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "Remove",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "RemoveNoShield",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "Update",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "UpdateNoShield",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "InstallTitle",
+      "type": "Text"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "InstallText",
+      "type": "Text"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "ChangeTitle",
+      "type": "Text"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "ChangeText",
+      "type": "Text"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "RepairTitle",
+      "type": "Text"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "RepairText",
+      "type": "Text"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "RemoveTitle",
+      "type": "Text"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "RemoveText",
+      "type": "Text"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "UpdateTitle",
+      "type": "Text"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "UpdateText",
+      "type": "Text"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "Cancel",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "Back",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "BannerBitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "BannerLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "VerifyReadyDlg",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "WaitForCostingDlg",
+      "id": "Return",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "WaitForCostingDlg",
+      "id": "Text",
+      "type": "Text"
+    },
+    {
+      "dialog": "WaitForCostingDlg",
+      "id": "Icon",
+      "type": "Icon"
+    },
+    {
+      "dialog": "WelcomeDlg",
+      "id": "Next",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "WelcomeDlg",
+      "id": "Cancel",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "WelcomeDlg",
+      "id": "Bitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "WelcomeDlg",
+      "id": "Back",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "WelcomeDlg",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "WelcomeDlg",
+      "id": "Description",
+      "type": "Text"
+    },
+    {
+      "dialog": "WelcomeDlg",
+      "id": "PatchDescription",
+      "type": "Text"
+    },
+    {
+      "dialog": "WelcomeDlg",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "WelcomeEulaDlg",
+      "id": "Bitmap",
+      "type": "Bitmap"
+    },
+    {
+      "dialog": "WelcomeEulaDlg",
+      "id": "Title",
+      "type": "Text"
+    },
+    {
+      "dialog": "WelcomeEulaDlg",
+      "id": "BottomLine",
+      "type": "Line"
+    },
+    {
+      "dialog": "WelcomeEulaDlg",
+      "id": "LicenseAcceptedCheckBox",
+      "type": "CheckBox"
+    },
+    {
+      "dialog": "WelcomeEulaDlg",
+      "id": "Print",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "WelcomeEulaDlg",
+      "id": "Back",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "WelcomeEulaDlg",
+      "id": "Install",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "WelcomeEulaDlg",
+      "id": "InstallNoShield",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "WelcomeEulaDlg",
+      "id": "Cancel",
+      "type": "PushButton"
+    },
+    {
+      "dialog": "WelcomeEulaDlg",
+      "id": "LicenseText",
+      "type": "ScrollableText"
+    }
+  ]
+}

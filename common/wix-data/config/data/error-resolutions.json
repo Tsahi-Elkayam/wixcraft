@@ -1,0 +1,345 @@
+{
+  "_description": "Error resolutions for WiX build errors and MSIEXEC exit codes",
+  "resolutions": [
+    {
+      "code": "AlreadyDefinedBootstrapperApplicationSource",
+      "resolution": "Remove duplicate BootstrapperApplication elements. Only one BootstrapperApplication can be specified per Bundle. If using both BootstrapperApplicationRef and a custom BA, choose one approach."
+    },
+    {
+      "code": "BAContainerCannotContainRemotePayload",
+      "resolution": "Move remote payloads to a separate container or make them embedded. BootstrapperApplication payloads must be embedded in the BA container for security. Use SourceFile attribute instead of DownloadUrl."
+    },
+    {
+      "code": "BackendNotFound",
+      "resolution": "Ensure the WiX extension for the output type is installed. For .msi use 'wix extension add WixToolset.BootstrapperApplications.wixext' or similar. Check output file extension matches intended type."
+    },
+    {
+      "code": "DefiningStandardDirectoryDeprecated",
+      "resolution": "Remove the Directory element defining the standard directory. Use StandardDirectory element to reference standard folders like ProgramFilesFolder, ProgramFiles64Folder, etc."
+    },
+    {
+      "code": "DirectoryRefStandardDirectoryDeprecated",
+      "resolution": "Replace DirectoryRef with StandardDirectory element. Change: <DirectoryRef Id='ProgramFilesFolder'> to <StandardDirectory Id='ProgramFilesFolder'>."
+    },
+    {
+      "code": "DiscouragedVersionAttribute",
+      "resolution": "Remove the Version attribute from the Provides element in MSI packages. The version is automatically taken from the Package/@Version attribute."
+    },
+    {
+      "code": "DuplicateBindPathVariableOnCommandLine",
+      "resolution": "Remove duplicate -bindpath variables from the command line. Each bind path variable should only be specified once."
+    },
+    {
+      "code": "DuplicateSymbol",
+      "resolution": "Rename one of the duplicate identifiers or use access modifiers (internal, public, protected) to scope symbols appropriately. Each identifier must be unique within its scope."
+    },
+    {
+      "code": "DuplicateSymbol2",
+      "resolution": "This indicates the location of the duplicate symbol. Check both locations and decide which one to keep or rename."
+    },
+    {
+      "code": "ExampleRegid",
+      "resolution": "Replace the placeholder regid value with your organization's actual reverse domain identifier (e.g., 'com.mycompany' becomes 'regid.YYYY-MM.com.mycompany')."
+    },
+    {
+      "code": "IllegalBundleVariableName",
+      "resolution": "Rename the bundle variable to start with a letter or underscore, followed by letters, digits, or underscores. Avoid reserved variable names and special characters."
+    },
+    {
+      "code": "IllegalCharactersInProvider",
+      "resolution": "Remove special characters from the provider key. Use only alphanumeric characters, periods, hyphens, and underscores. Provider keys must be valid identifier strings."
+    },
+    {
+      "code": "IllegalName",
+      "resolution": "Change the Tag/@Name attribute to use only valid filename characters. Remove characters like: \\ / : * ? \" < > |"
+    },
+    {
+      "code": "LayoutPayloadInContainer",
+      "resolution": "Remove layout-only payloads from containers. If the payload is for layout only, don't add it to a container. Use separate ExternalPayload for layout purposes."
+    },
+    {
+      "code": "OrphanedPayload",
+      "resolution": "Either add the payload to a PackageGroup, Chain, or BootstrapperApplication, or remove it if unused. All payloads must be referenced by a package or BA."
+    },
+    {
+      "code": "PackageInMultipleContainers",
+      "resolution": "Remove the package from one of the containers. Each package can only belong to one container. Consider restructuring your containers."
+    },
+    {
+      "code": "PatchCreationDeprecated",
+      "resolution": "Use the new WiX v4+ patch creation workflow. Create transforms manually or use 'wix msi diff' to generate patches instead of PatchCreation element."
+    },
+    {
+      "code": "PayloadInMultipleContainers",
+      "resolution": "Remove the payload reference from one container. Each payload can only be in one container. If needed in multiple places, create separate payload definitions."
+    },
+    {
+      "code": "PayloadSharedWithBA",
+      "resolution": "Do not share payloads between BootstrapperApplication and regular packages. Create a separate payload definition for each usage context."
+    },
+    {
+      "code": "PropertyRemoved",
+      "resolution": "Update your code to use the replacement property or approach. Check WiX migration documentation for the new equivalent."
+    },
+    {
+      "code": "ProvidesKeyNotFound",
+      "resolution": "Ensure the referenced Provides element exists and the key matches exactly. Check for typos in the Key attribute value."
+    },
+    {
+      "code": "ReadonlyLogVariableTarget",
+      "resolution": "Do not set a log variable as a target for SetVariable. Log variables are read-only at install time. Use a different variable name."
+    },
+    {
+      "code": "RequiresKeyNotFound",
+      "resolution": "Add the missing Provides element or correct the RequiresKey attribute. The Requires element must reference an existing Provides key."
+    },
+    {
+      "code": "ReservedValue",
+      "resolution": "Use a different value that is not reserved by the system. Check WiX documentation for reserved identifiers and values to avoid."
+    },
+    {
+      "code": "UnableToCopyFile",
+      "resolution": "Check file permissions, ensure the source file exists and is not locked. Verify the destination path is accessible and has sufficient disk space."
+    },
+    {
+      "code": "UnableToDeleteFile",
+      "resolution": "Check file permissions and ensure the file is not in use by another process. Run as administrator if deleting from protected locations."
+    },
+    {
+      "code": "UnableToMoveFile",
+      "resolution": "Verify source file exists, destination is writable, and both are on the same volume for atomic moves. Check for file locks."
+    },
+    {
+      "code": "UnableToOpenFile",
+      "resolution": "Verify the file path is correct and the file exists. Check file permissions and ensure it's not locked by another process."
+    },
+    {
+      "code": "UncompressedPayloadInContainer",
+      "resolution": "Either compress the payload or remove it from the container. Containers require compressed payloads. Set Compressed='yes' on the payload."
+    },
+    {
+      "code": "UnscheduledChainPackage",
+      "resolution": "Add the package to the Chain element. All packages must be scheduled in the Chain to be installed."
+    },
+    {
+      "code": "UnscheduledRollbackBoundary",
+      "resolution": "Add the RollbackBoundary to the Chain element where you want it to apply. RollbackBoundary must be explicitly placed in the installation sequence."
+    },
+    {
+      "code": "VirtualSymbolMustBeOverridden",
+      "resolution": "Provide an implementation for the virtual symbol. Create a concrete element with the same identifier in your consuming project."
+    },
+    {
+      "code": "VirtualSymbolNotFoundForOverride",
+      "resolution": "Ensure the virtual symbol exists in the referenced library. Check the symbol name for typos and verify the library is referenced correctly."
+    },
+    {
+      "code": "Win64Component",
+      "resolution": "Set Win64='yes' on 64-bit components or ensure MSIX/64-bit architecture is specified. For x64 installs, all components in Program Files should be Win64."
+    },
+    {
+      "code": "MSIEXEC_0",
+      "resolution": "Success - no action needed. The installation completed successfully."
+    },
+    {
+      "code": "MSIEXEC_13",
+      "resolution": "Invalid data error. The MSI database or a parameter is corrupt. Rebuild the MSI package or check command line parameters."
+    },
+    {
+      "code": "MSIEXEC_87",
+      "resolution": "Invalid parameter. Check command line syntax. Common issues: missing quotes around paths with spaces, invalid property names."
+    },
+    {
+      "code": "MSIEXEC_1259",
+      "resolution": "AppHelp block - installation blocked by Application Compatibility policy. Check Group Policy or remove conflicting compatibility shims."
+    },
+    {
+      "code": "MSIEXEC_1601",
+      "resolution": "Windows Installer service not accessible. Ensure the service is running: 'net start msiserver'. May require administrator privileges."
+    },
+    {
+      "code": "MSIEXEC_1602",
+      "resolution": "User cancelled installation. This is expected when user clicks Cancel. For silent installs, check if a conflicting dialog appeared."
+    },
+    {
+      "code": "MSIEXEC_1603",
+      "resolution": "Fatal installation error. Check the MSI log file (msiexec /l*v log.txt) for specific error. Common causes: missing prerequisites, file in use, permissions."
+    },
+    {
+      "code": "MSIEXEC_1604",
+      "resolution": "Installation suspended. Restart the computer and retry the installation."
+    },
+    {
+      "code": "MSIEXEC_1605",
+      "resolution": "Product not installed. The ProductCode doesn't match any installed product. Verify the correct product is targeted."
+    },
+    {
+      "code": "MSIEXEC_1606",
+      "resolution": "Feature not found. The requested feature ID doesn't exist in the product. Check ADDLOCAL or REMOVE property values."
+    },
+    {
+      "code": "MSIEXEC_1607",
+      "resolution": "Component not found. The ComponentId doesn't exist in the product. This may indicate a corrupt installation database."
+    },
+    {
+      "code": "MSIEXEC_1608",
+      "resolution": "Unknown property. The property name used doesn't exist. Check PUBLIC properties (all caps) are defined in Property table."
+    },
+    {
+      "code": "MSIEXEC_1609",
+      "resolution": "Invalid handle state. The installation handle is in an invalid state. Restart the installer service and retry."
+    },
+    {
+      "code": "MSIEXEC_1610",
+      "resolution": "Bad configuration data for this product. Reinstall or repair the product. May need to clean up registry entries."
+    },
+    {
+      "code": "MSIEXEC_1611",
+      "resolution": "Component qualifier not present. The assembly or component qualifier is missing from the registry."
+    },
+    {
+      "code": "MSIEXEC_1612",
+      "resolution": "Installation source not found. The original MSI or source files are unavailable. Point to correct source using SOURCELIST property."
+    },
+    {
+      "code": "MSIEXEC_1613",
+      "resolution": "Package version mismatch. The MSI package version doesn't match what's installed. Use the correct package version."
+    },
+    {
+      "code": "MSIEXEC_1614",
+      "resolution": "Product is already uninstalled. No action needed, or check if another version exists."
+    },
+    {
+      "code": "MSIEXEC_1618",
+      "resolution": "Another installation is in progress. Wait for the other installation to complete, or run 'msiexec /unregister' then 'msiexec /regserver'."
+    },
+    {
+      "code": "MSIEXEC_1619",
+      "resolution": "Cannot open MSI package. The file may be corrupt, missing, or blocked. Unblock downloaded files in file properties."
+    },
+    {
+      "code": "MSIEXEC_1620",
+      "resolution": "Invalid MSI package. The file is not a valid Windows Installer package. Re-download or rebuild the MSI."
+    },
+    {
+      "code": "MSIEXEC_1621",
+      "resolution": "UI failure in installer. There was a problem with the installer UI. Try silent install with /qn or check dialog resources."
+    },
+    {
+      "code": "MSIEXEC_1622",
+      "resolution": "Cannot open log file. Check permissions on log file location or choose different path. Ensure path exists."
+    },
+    {
+      "code": "MSIEXEC_1623",
+      "resolution": "Language not supported. The MSI doesn't support the system's language. Check ProductLanguage in Property table."
+    },
+    {
+      "code": "MSIEXEC_1624",
+      "resolution": "Transform application error. The MST transform file is invalid or doesn't apply to this MSI. Verify transform compatibility."
+    },
+    {
+      "code": "MSIEXEC_1625",
+      "resolution": "Installation forbidden by policy. Group Policy blocks this installation. Check Software Restriction Policies and DisableMSI settings."
+    },
+    {
+      "code": "MSIEXEC_1627",
+      "resolution": "Function failed during execution. Check MSI log for specific custom action or operation that failed."
+    },
+    {
+      "code": "MSIEXEC_1628",
+      "resolution": "Invalid script. A script-based custom action contains errors. Check VBScript or JavaScript custom actions."
+    },
+    {
+      "code": "MSIEXEC_1629",
+      "resolution": "Remote install not allowed. Remote installation from a share requires admin rights or different policy settings."
+    },
+    {
+      "code": "MSIEXEC_1630",
+      "resolution": "This MSI cannot be installed on this Windows version. Check the OS requirements in LaunchCondition table."
+    },
+    {
+      "code": "MSIEXEC_1631",
+      "resolution": "Failed to prepare rollback script. Disk space or permissions issue. Ensure temp folder has space and is writable."
+    },
+    {
+      "code": "MSIEXEC_1632",
+      "resolution": "Temp folder is full or inaccessible. Clear temp folder or set different temp location via TEMP environment variable."
+    },
+    {
+      "code": "MSIEXEC_1633",
+      "resolution": "Platform not supported. This MSI requires a different architecture (x86/x64/ARM). Use the correct package for your platform."
+    },
+    {
+      "code": "MSIEXEC_1634",
+      "resolution": "Component not found in feature. Internal MSI database error. Rebuild the MSI package."
+    },
+    {
+      "code": "MSIEXEC_1635",
+      "resolution": "Patch package cannot be opened. The MSP file is corrupt or requires a different base product. Verify patch applicability."
+    },
+    {
+      "code": "MSIEXEC_1636",
+      "resolution": "Cannot find patch target file. The base file for patching doesn't exist. Repair the base installation first."
+    },
+    {
+      "code": "MSIEXEC_1637",
+      "resolution": "Patch is inapplicable. This patch doesn't target the installed product version. Check ProductCode and UpgradeCode."
+    },
+    {
+      "code": "MSIEXEC_1638",
+      "resolution": "Another version of this product is installed. Uninstall the existing version first or use MajorUpgrade element."
+    },
+    {
+      "code": "MSIEXEC_1639",
+      "resolution": "Invalid command line argument. Check syntax of msiexec command, especially property assignments (PROPERTY=value)."
+    },
+    {
+      "code": "MSIEXEC_1640",
+      "resolution": "SafeMode installation not possible. Cannot install in Windows Safe Mode. Boot normally and retry."
+    },
+    {
+      "code": "MSIEXEC_1641",
+      "resolution": "Reboot initiated. Installation succeeded but system restart was required. This is informational, not an error."
+    },
+    {
+      "code": "MSIEXEC_1642",
+      "resolution": "Patch cannot be applied. The installed product version doesn't match patch targets. Verify patch applies to installed version."
+    },
+    {
+      "code": "MSIEXEC_1643",
+      "resolution": "Patch superseded. A more recent patch has already been applied. No action needed."
+    },
+    {
+      "code": "MSIEXEC_1644",
+      "resolution": "Sequence information invalid. The patch sequencing information is corrupt or conflicts with other patches."
+    },
+    {
+      "code": "MSIEXEC_1645",
+      "resolution": "Patch removal disallowed. The patch was created with AllowRemoval='no'. Cannot uninstall this patch."
+    },
+    {
+      "code": "MSIEXEC_1646",
+      "resolution": "Invalid patch XML. The patch file contains malformed XML. Rebuild the patch package."
+    },
+    {
+      "code": "MSIEXEC_1647",
+      "resolution": "Patch not managed by WIM. Cannot patch a per-machine installation as per-user. Use correct installation context."
+    },
+    {
+      "code": "MSIEXEC_1648",
+      "resolution": "PatchCache policy prevents patching. Windows is configured to not cache patches. Update policy or use full file patches."
+    },
+    {
+      "code": "MSIEXEC_1649",
+      "resolution": "Product in advertised state. Cannot apply patch to advertised product. Complete the installation first."
+    },
+    {
+      "code": "MSIEXEC_1650",
+      "resolution": "Cannot patch per-machine MSI with per-user patch. Match the installation context (ALLUSERS setting)."
+    },
+    {
+      "code": "MSIEXEC_3010",
+      "resolution": "Success, reboot required. Installation succeeded but a restart is needed to complete. Schedule a system restart."
+    }
+  ]
+}

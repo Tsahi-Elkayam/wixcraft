@@ -1,0 +1,189 @@
+{
+  "from": "v3",
+  "to": "v4",
+  "description": "Breaking changes and migration guide from WiX v3 to v4",
+  "changes": [
+    {
+      "type": "namespace",
+      "old": "http://schemas.microsoft.com/wix/2006/wi",
+      "new": "http://wixtoolset.org/schemas/v4/wxs",
+      "description": "XML namespace changed"
+    },
+    {
+      "type": "element_renamed",
+      "old": "Product",
+      "new": "Package",
+      "description": "Product element renamed to Package"
+    },
+    {
+      "type": "element_renamed",
+      "old": "Module",
+      "new": "Module",
+      "description": "Module element structure changed"
+    },
+    {
+      "type": "attribute_removed",
+      "element": "Package",
+      "old": "Id",
+      "description": "ProductCode moved to Package/@ProductCode or auto-generated"
+    },
+    {
+      "type": "attribute_renamed",
+      "element": "Package",
+      "old": "InstallerVersion",
+      "new": "InstallerVersion",
+      "description": "Now specified on Package element directly"
+    },
+    {
+      "type": "attribute_removed",
+      "element": "Package",
+      "old": "Compressed",
+      "description": "Compression now controlled by MediaTemplate"
+    },
+    {
+      "type": "element_removed",
+      "old": "WixVariable",
+      "description": "Use <?define?> preprocessor directive instead"
+    },
+    {
+      "type": "attribute_renamed",
+      "element": "File",
+      "old": "KeyPath",
+      "new": "KeyPath",
+      "description": "KeyPath now only valid values are 'yes' (removed 'no')"
+    },
+    {
+      "type": "element_added",
+      "new": "StandardDirectory",
+      "description": "New element to reference standard directories (replaces Directory/@Id references)"
+    },
+    {
+      "type": "attribute_removed",
+      "element": "Directory",
+      "old": "FileSource",
+      "description": "Use SourceFile attribute on File element instead"
+    },
+    {
+      "type": "element_renamed",
+      "old": "EmbeddedChainer",
+      "new": "BundlePackagePayload",
+      "description": "Burn bootstrapper element renamed"
+    },
+    {
+      "type": "attribute_changed",
+      "element": "CustomAction",
+      "old": "BinaryKey",
+      "new": "BinaryRef",
+      "description": "Attribute renamed for consistency"
+    },
+    {
+      "type": "attribute_changed",
+      "element": "CustomAction",
+      "old": "FileKey",
+      "new": "FileRef",
+      "description": "Attribute renamed for consistency"
+    },
+    {
+      "type": "attribute_changed",
+      "element": "CustomAction",
+      "old": "PropertyRef",
+      "new": "Property",
+      "description": "Attribute simplified"
+    },
+    {
+      "type": "extension_namespace",
+      "old": "http://schemas.microsoft.com/wix/UtilExtension",
+      "new": "http://wixtoolset.org/schemas/v4/wxs/util",
+      "description": "Util extension namespace changed"
+    },
+    {
+      "type": "extension_namespace",
+      "old": "http://schemas.microsoft.com/wix/NetFxExtension",
+      "new": "http://wixtoolset.org/schemas/v4/wxs/netfx",
+      "description": "NetFx extension namespace changed"
+    },
+    {
+      "type": "extension_namespace",
+      "old": "http://schemas.microsoft.com/wix/BalExtension",
+      "new": "http://wixtoolset.org/schemas/v4/wxs/bal",
+      "description": "Bal extension namespace changed"
+    },
+    {
+      "type": "tool_renamed",
+      "old": "candle.exe",
+      "new": "wix build",
+      "description": "Candle compiler replaced by wix build command"
+    },
+    {
+      "type": "tool_renamed",
+      "old": "light.exe",
+      "new": "wix build",
+      "description": "Light linker replaced by wix build command"
+    },
+    {
+      "type": "tool_renamed",
+      "old": "heat.exe",
+      "new": "wix heat",
+      "description": "Heat harvester now a wix subcommand"
+    },
+    {
+      "type": "tool_renamed",
+      "old": "dark.exe",
+      "new": "wix decompile",
+      "description": "Dark decompiler now a wix subcommand"
+    },
+    {
+      "type": "tool_renamed",
+      "old": "torch.exe",
+      "new": "wix diff",
+      "description": "Torch diff tool now a wix subcommand"
+    },
+    {
+      "type": "tool_removed",
+      "old": "lit.exe",
+      "description": "Library tool functionality merged into wix build"
+    },
+    {
+      "type": "element_changed",
+      "element": "Component",
+      "description": "Win64 attribute removed, now determined by Platform"
+    },
+    {
+      "type": "attribute_added",
+      "element": "Package",
+      "new": "Scope",
+      "description": "New attribute to specify per-user or per-machine installation"
+    },
+    {
+      "type": "file_extension",
+      "old": ".wxs",
+      "new": ".wxs",
+      "description": "Source files keep .wxs extension"
+    },
+    {
+      "type": "file_extension",
+      "old": ".wixobj",
+      "new": ".wixobj",
+      "description": "Intermediate files keep .wixobj extension"
+    },
+    {
+      "type": "file_extension",
+      "old": ".wixlib",
+      "new": ".wixlib",
+      "description": "Library files keep .wixlib extension"
+    },
+    {
+      "type": "attribute_changed",
+      "element": "Feature",
+      "old": "AllowAbsent",
+      "new": "AllowAbsent",
+      "description": "Simplified to yes/no values"
+    },
+    {
+      "type": "element_renamed",
+      "old": "UIRef/@Id='WixUI_Mondo'",
+      "new": "ui:WixUI[@Id='WixUI_Mondo']",
+      "description": "UI references now use extension syntax"
+    }
+  ]
+}

@@ -1,0 +1,245 @@
+{
+  "_description": "Keywords for WiX syntax highlighting and completion",
+  "elements": [
+    "Wix", "Include", "Package", "Fragment", "Module", "Bundle", "PatchCreation",
+    "Product", "Patch", "PatchFamily", "PatchSequence", "PatchMetadata",
+
+    "Component", "ComponentGroup", "ComponentRef", "ComponentGroupRef", "ComponentSearch",
+    "Directory", "DirectoryRef", "StandardDirectory", "DirectorySearch", "DirectorySearchRef",
+    "File", "Files", "Binary", "BinaryRef", "Assembly", "AssemblyName", "CopyFile",
+    "Feature", "FeatureRef", "FeatureGroup", "FeatureGroupRef",
+    "Property", "PropertyRef", "SetProperty", "SetDirectory", "AppSearch",
+    "CustomAction", "CustomActionRef", "InstallExecuteSequence", "InstallUISequence",
+    "AdminExecuteSequence", "AdminUISequence", "AdvertiseExecuteSequence",
+
+    "RegistryKey", "RegistryValue", "RegistrySearch", "RegistrySearchRef", "RemoveRegistryKey", "RemoveRegistryValue",
+    "ServiceInstall", "ServiceControl", "ServiceDependency", "ServiceArgument", "ServiceConfig", "ServiceConfigFailureActions",
+    "Shortcut", "Icon", "ShortcutProperty",
+    "Media", "MediaTemplate", "DigitalCertificate", "DigitalSignature",
+    "MajorUpgrade", "Upgrade", "UpgradeVersion",
+    "Condition", "Launch", "LaunchConditions", "Publish", "Subscribe",
+
+    "UI", "UIRef", "Dialog", "Control", "Billboard", "BillboardAction", "TextStyle",
+    "Error", "ProgressText", "ActionText", "UIText", "ListItem", "ListBox", "ComboBox",
+    "CheckBox", "RadioButton", "RadioButtonGroup", "PushButton", "Property",
+
+    "Variable", "WixVariable", "Localization", "String",
+    "Chain", "MsiPackage", "ExePackage", "MsuPackage", "MspPackage", "BundlePackage",
+    "BootstrapperApplication", "BootstrapperApplicationRef", "BootstrapperApplicationDll",
+    "Payload", "PayloadGroup", "PayloadGroupRef", "RemotePayload", "Container", "ContainerRef",
+    "PackageGroup", "PackageGroupRef", "RelatedBundle", "UpdateBundle",
+    "RollbackBoundary", "ExitCode", "CommandLine", "Log",
+
+    "CreateFolder", "RemoveFolder", "RemoveFile", "CopyFile", "MoveFile",
+    "Environment", "IniFile", "IniFileSearch", "ReserveCost",
+    "Permission", "PermissionEx", "FileShare", "FileSharePermission",
+    "ODBCDriver", "ODBCDataSource", "ODBCTranslator",
+    "Class", "Progid", "Extension", "MIME", "Verb", "TypeLib", "AppId", "Interface",
+    "Category", "Merge", "MergeRef", "PatchBaseline", "PatchFamily",
+    "Publish", "Subscribe", "Dependency", "ProvidesDependency", "RequiresDependency",
+
+    "Module", "ModuleComponent", "ModuleConfiguration", "ModuleDependency",
+    "ModuleExclusion", "ModuleIgnoreTable", "ModuleSignature", "ModuleSubstitution",
+    "CustomTable", "Row", "Column", "Data",
+
+    "EmbeddedChainer", "EmbeddedChainerRef", "EmbeddedUI", "EmbeddedUIResource",
+    "MsiProperty", "SlipstreamMsp", "OptionalUpdateRegistration", "Update"
+  ],
+
+  "extension_elements": {
+    "bal": [
+      "Condition", "Overridable", "PrereqLicense", "PrereqPackage", "WixManagedBootstrapperApplicationHost",
+      "WixStandardBootstrapperApplication", "WixDotNetCoreBootstrapperApplicationHost"
+    ],
+    "complus": [
+      "ComPlusApplication", "ComPlusApplicationRole", "ComPlusAssembly", "ComPlusComponent",
+      "ComPlusGroupInApplicationRole", "ComPlusInterface", "ComPlusMethod", "ComPlusPartition",
+      "ComPlusPartitionRole", "ComPlusPartitionUser", "ComPlusRoleForComponent", "ComPlusRoleForInterface",
+      "ComPlusRoleForMethod", "ComPlusSubscription", "ComPlusUserInApplicationRole"
+    ],
+    "dependency": [
+      "Provides", "Requires", "RequiresRef"
+    ],
+    "directx": [
+      "Extension"
+    ],
+    "firewall": [
+      "FirewallException", "RemoteAddress"
+    ],
+    "http": [
+      "SslCertificate", "UrlReservation", "UrlAce"
+    ],
+    "iis": [
+      "Certificate", "CertificateRef", "HttpHeader", "MimeMap", "RecycleTime",
+      "WebAddress", "WebApplication", "WebAppPool", "WebDir", "WebDirProperties",
+      "WebError", "WebFilter", "WebLog", "WebProperty", "WebServiceExtension",
+      "WebSite", "WebVirtualDir"
+    ],
+    "msmq": [
+      "MessageQueue", "MessageQueuePermission"
+    ],
+    "netfx": [
+      "NativeImage", "DotNetCompatibilityCheck", "DotNetCoreSearch"
+    ],
+    "powershell": [
+      "FormatsFile", "SnapIn", "TypesFile"
+    ],
+    "sql": [
+      "SqlDatabase", "SqlFileSpec", "SqlLogFileSpec", "SqlScript", "SqlString"
+    ],
+    "ui": [
+      "WixUI", "WixUIExtension"
+    ],
+    "util": [
+      "BroadcastEnvironmentChange", "BroadcastSettingChange", "CloseApplication",
+      "ComponentSearch", "ComponentSearchRef", "DirectorySearch", "DirectorySearchRef",
+      "EventManifest", "EventSource", "FileSearch", "FileSearchRef", "FileShare", "FileSharePermission",
+      "Group", "GroupRef", "InternetShortcut", "PerformanceCategory", "PerformanceCounter",
+      "PermissionEx", "ProductSearch", "ProductSearchRef", "RegistrySearch", "RegistrySearchRef",
+      "RemoveFolderEx", "RestartResource", "ServiceConfig", "TouchFile", "User",
+      "WindowsFeature", "WindowsFeatureSearch", "XmlConfig", "XmlFile"
+    ],
+    "vs": [
+      "FindVisualStudio", "VsixPackage"
+    ]
+  },
+
+  "preprocessor": {
+    "directives": [
+      "define", "undef", "include", "if", "ifdef", "ifndef", "else", "elseif", "endif",
+      "foreach", "endforeach", "error", "warning", "pragma", "require"
+    ],
+    "functions": [
+      "fun.AutoVersion", "fun.FileVersion", "fun.env", "fun.var",
+      "sys.BUILDARCH", "sys.BUILDARCHINT", "sys.CURRENTDIR", "sys.SOURCEFILEDIR", "sys.SOURCEFILEPATH",
+      "sys.PLATFORM", "sys.PROCESSORARCHITECTURE"
+    ],
+    "operators": [
+      "and", "or", "not"
+    ]
+  },
+
+  "builtin_variables": {
+    "system": [
+      "sys.BUILDARCH", "sys.BUILDARCHINT", "sys.CURRENTDIR", "sys.SOURCEFILEDIR",
+      "sys.SOURCEFILEPATH", "sys.PLATFORM", "sys.PROCESSORARCHITECTURE"
+    ],
+    "prefixes": [
+      "env.", "var.", "wix.", "bind."
+    ]
+  },
+
+  "standard_directories": [
+    "TARGETDIR", "ProgramFilesFolder", "ProgramFiles64Folder", "ProgramFiles6432Folder",
+    "CommonFilesFolder", "CommonFiles64Folder", "CommonFiles6432Folder",
+    "ProgramMenuFolder", "StartMenuFolder", "StartupFolder", "DesktopFolder",
+    "AppDataFolder", "LocalAppDataFolder", "CommonAppDataFolder",
+    "SystemFolder", "System64Folder", "System16Folder", "WindowsFolder", "WindowsVolume",
+    "TempFolder", "FontsFolder", "FavoritesFolder", "MyPicturesFolder", "PersonalFolder",
+    "SendToFolder", "TemplateFolder", "AdminToolsFolder", "NetHoodFolder", "PrintHoodFolder", "RecentFolder"
+  ],
+
+  "builtin_properties": [
+    "ProductName", "ProductCode", "ProductVersion", "Manufacturer", "UpgradeCode", "ProductLanguage",
+    "ProductID", "TARGETDIR", "SourceDir", "INSTALLDIR", "INSTALLLEVEL", "ROOTDRIVE",
+    "ALLUSERS", "AdminUser", "Privileged", "MsiRunningElevated", "MsiUILevel", "UILevel",
+    "ComputerName", "LogonUser", "UserSID", "USERNAME", "COMPANYNAME",
+    "VersionNT", "VersionNT64", "WindowsBuild", "ServicePackLevel", "ServicePackLevelMinor",
+    "Intel", "Intel64", "Msix64", "PhysicalMemory", "VirtualMemory",
+    "ScreenX", "ScreenY", "ColorBits", "TextHeight",
+    "SystemLanguageID", "UserLanguageID", "Date", "Time",
+    "ACTION", "EXECUTEACTION", "RESUME", "Preselected", "REBOOT", "REBOOTPROMPT",
+    "Installed", "PATCH", "TRANSFORMS", "REINSTALL", "REINSTALLMODE",
+    "REMOVE", "ADDLOCAL", "ADDSOURCE", "ADDDEFAULT", "ADVERTISE",
+    "LIMITUI", "CostingComplete", "OutOfDiskSpace", "OutOfNoRbDiskSpace",
+    "SecureCustomProperties", "MsiHiddenProperties", "EnableUserControl", "MsiLogFileLocation", "MsiLogging"
+  ],
+
+  "burn_variables": [
+    "WixBundleAction", "WixBundleActiveParent", "WixBundleCommandLineAction",
+    "WixBundleDirectoryLayout", "WixBundleElevated", "WixBundleExecutePackageAction",
+    "WixBundleExecutePackageCacheFolder", "WixBundleForcedRestartPackage",
+    "WixBundleInstalled", "WixBundleLastUsedSource", "WixBundleLog",
+    "WixBundleManufacturer", "WixBundleName", "WixBundleOriginalSource",
+    "WixBundleOriginalSourceFolder", "WixBundleProviderKey", "WixBundleSourceProcessFolder",
+    "WixBundleSourceProcessPath", "WixBundleTag", "WixBundleUILevel", "WixBundleVersion"
+  ],
+
+  "attribute_values": {
+    "yes_no": ["yes", "no"],
+    "action": ["install", "uninstall", "both", "none"],
+    "execute": ["immediate", "deferred", "rollback", "commit", "oncePerProcess", "secondSequence"],
+    "return": ["check", "ignore", "asyncNoWait", "asyncWait"],
+    "type": ["directory", "file", "registry", "raw"],
+    "start": ["auto", "demand", "disabled", "boot", "system", "delayedAuto"],
+    "error_control": ["ignore", "normal", "critical"],
+    "root": ["HKCR", "HKCU", "HKLM", "HKU", "HKMU"],
+    "registry_type": ["string", "integer", "binary", "expandable", "multiString"],
+    "advertise": ["yes", "no", "system"],
+    "absent": ["allow", "disallow"],
+    "display": ["collapse", "expand", "hidden"],
+    "installdefault": ["followParent", "local", "source"],
+    "typical": ["install", "dont"],
+    "vital": ["yes", "no"],
+    "compressed": ["yes", "no", "default"],
+    "install_scope": ["perMachine", "perUser"],
+    "platform": ["x86", "x64", "arm", "arm64"],
+    "sequence": ["both", "first", "execute", "ui"],
+    "cache": ["yes", "no", "always", "remove", "force"],
+    "permanent": ["yes", "no"]
+  },
+
+  "condition_operators": [
+    "AND", "OR", "NOT", "XOR", "EQV", "IMP",
+    "=", "<>", "<", ">", "<=", ">=",
+    "><", "<<", ">>", "~=", "~<>", "~<", "~>", "~<=", "~>="
+  ],
+
+  "standard_actions": [
+    "InstallFiles", "InstallFinalize", "InstallInitialize", "InstallValidate",
+    "CostFinalize", "CostInitialize", "FileCost",
+    "RemoveFiles", "RemoveFolders", "RemoveRegistryValues", "RemoveShortcuts",
+    "CreateFolders", "CreateShortcuts",
+    "RegisterComPlus", "RegisterExtensionInfo", "RegisterFonts", "RegisterMIMEInfo",
+    "RegisterProgIdInfo", "RegisterTypeLibraries", "RegisterUser",
+    "UnregisterComPlus", "UnregisterExtensionInfo", "UnregisterFonts", "UnregisterMIMEInfo",
+    "UnregisterProgIdInfo", "UnregisterTypeLibraries",
+    "ProcessComponents", "PublishComponents", "PublishFeatures", "PublishProduct",
+    "StartServices", "StopServices", "DeleteServices", "InstallServices",
+    "WriteEnvironmentStrings", "RemoveEnvironmentStrings",
+    "WriteIniValues", "RemoveIniValues",
+    "WriteRegistryValues", "RemoveRegistryValues",
+    "AllocateRegistrySpace", "AppSearch", "BindImage", "CCPSearch",
+    "DuplicateFiles", "ExecuteAction", "ForceReboot",
+    "IsolateComponents", "LaunchConditions", "MigrateFeatureStates",
+    "MoveFiles", "MsiConfigureServices", "MsiPublishAssemblies", "MsiUnpublishAssemblies",
+    "PatchFiles", "RMCCPSearch", "ResolveSource", "ScheduleReboot",
+    "SelfRegModules", "SelfUnregModules", "SetODBCFolders",
+    "UnpublishComponents", "UnpublishFeatures", "ValidateProductID",
+    "InstallAdminPackage", "InstallSFPCatalogFile", "MsiLockPermissionsEx"
+  ],
+
+  "msi_tables": [
+    "ActionText", "AdminExecuteSequence", "AdminUISequence", "AdvtExecuteSequence", "AdvtUISequence",
+    "AppId", "AppSearch", "BBControl", "Billboard", "Binary",
+    "CheckBox", "Class", "ComboBox", "CompLocator", "Component", "Condition",
+    "Control", "ControlCondition", "ControlEvent", "CreateFolder",
+    "CustomAction", "Dialog", "Directory", "DrLocator", "DuplicateFile",
+    "Environment", "Error", "EventMapping", "Extension",
+    "Feature", "FeatureComponents", "File", "FileSFPCatalog", "Font",
+    "Icon", "IniFile", "IniLocator", "InstallExecuteSequence", "InstallUISequence",
+    "IsolatedComponent", "LaunchCondition", "ListBox", "ListView", "LockPermissions",
+    "Media", "MIME", "MoveFile", "MsiAssembly", "MsiAssemblyName",
+    "MsiDigitalCertificate", "MsiDigitalSignature", "MsiEmbeddedChainer", "MsiEmbeddedUI",
+    "MsiFileHash", "MsiLockPermissionsEx", "MsiPackageCertificate", "MsiPatchCertificate",
+    "MsiPatchHeaders", "MsiPatchMetadata", "MsiPatchOldAssemblyFile", "MsiPatchOldAssemblyName",
+    "MsiPatchSequence", "MsiServiceConfig", "MsiServiceConfigFailureActions",
+    "MsiShortcutProperty", "ODBCAttribute", "ODBCDataSource", "ODBCDriver",
+    "ODBCSourceAttribute", "ODBCTranslator", "Patch", "PatchPackage",
+    "ProgId", "Property", "PublishComponent", "RadioButton",
+    "Registry", "RegLocator", "RemoveFile", "RemoveIniFile", "RemoveRegistry",
+    "ReserveCost", "SelfReg", "ServiceControl", "ServiceInstall",
+    "SFPCatalog", "Shortcut", "Signature", "TextStyle", "TypeLib",
+    "UIText", "Upgrade", "Verb", "_Columns", "_Tables", "_Validation"
+  ]
+}

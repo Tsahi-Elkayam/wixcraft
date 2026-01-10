@@ -1,0 +1,59 @@
+# WixCraft Pre-commit Hooks
+# Add these to your project's .pre-commit-config.yaml:
+#
+#   repos:
+#     - repo: https://github.com/yourusername/wixcraft
+#       rev: v0.1.0
+#       hooks:
+#         - id: wix-lint
+#         - id: wix-fmt
+#         - id: wix-security
+#         - id: wix-upgrade
+
+- id: wix-lint
+  name: WiX Linter
+  description: Lint WiX source files for common issues
+  entry: wix-lint
+  language: system
+  types: [file]
+  files: \.(wxs|wxi|wxl)$
+  pass_filenames: true
+  args: []
+
+- id: wix-fmt
+  name: WiX Formatter Check
+  description: Check WiX file formatting
+  entry: wix-fmt --check
+  language: system
+  types: [file]
+  files: \.(wxs|wxi)$
+  pass_filenames: true
+
+- id: wix-fmt-fix
+  name: WiX Formatter Fix
+  description: Auto-format WiX files
+  entry: wix-fmt --write
+  language: system
+  types: [file]
+  files: \.(wxs|wxi)$
+  pass_filenames: true
+
+- id: wix-security
+  name: WiX Security Scanner
+  description: Scan for privilege escalation vulnerabilities
+  entry: wix-security scan
+  language: system
+  types: [file]
+  files: \.(wxs|wxi)$
+  pass_filenames: true
+  args: ['--fail-on', 'high']
+
+- id: wix-upgrade
+  name: WiX Upgrade Validator
+  description: Validate upgrade readiness
+  entry: wix-upgrade validate
+  language: system
+  types: [file]
+  files: \.(wxs|wxi)$
+  pass_filenames: true
+  args: ['--fail-on', 'error']

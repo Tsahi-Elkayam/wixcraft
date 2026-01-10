@@ -1,0 +1,106 @@
+{
+  "_description": "WiX UI extension elements",
+  "extension_elements": [
+    {
+      "extension": "ui",
+      "elements": [
+        {
+          "name": "WixUI_Advanced",
+          "description": "Complete UI with install scope choice (per-user/per-machine), feature selection, and directory browse. Best for complex installers."
+        },
+        {
+          "name": "WixUI_FeatureTree",
+          "description": "UI with feature tree for selecting which features to install. Shows hierarchical feature structure."
+        },
+        {
+          "name": "WixUI_InstallDir",
+          "description": "Simple UI that allows users to select installation directory. Good for single-directory installs."
+        },
+        {
+          "name": "WixUI_Minimal",
+          "description": "Minimal UI with just welcome and license dialogs. Fastest installation experience."
+        },
+        {
+          "name": "WixUI_Mondo",
+          "description": "Full-featured UI with Complete/Custom/Typical setup types. Most comprehensive built-in UI."
+        },
+        {
+          "name": "WixUI_Common",
+          "description": "Common dialog resources shared by all WixUI variants. Automatically included."
+        },
+        {
+          "name": "WixUI_ErrorProgressText",
+          "description": "Progress and error dialog customization. Use with other WixUI sets."
+        },
+        {
+          "name": "UIRef",
+          "description": "References a WixUI dialog set by Id. Use to include a built-in UI library."
+        },
+        {
+          "name": "UI",
+          "description": "Container for custom UI elements. Child of Package element."
+        },
+        {
+          "name": "Dialog",
+          "description": "Defines a dialog window. Contains Control elements for UI components."
+        },
+        {
+          "name": "DialogRef",
+          "description": "References a dialog defined elsewhere. Used to include dialogs from libraries."
+        },
+        {
+          "name": "Control",
+          "description": "UI control within a dialog. Types include Text, PushButton, CheckBox, Edit, etc."
+        },
+        {
+          "name": "TextStyle",
+          "description": "Defines font styling for dialog text. Specifies face name, size, and attributes."
+        },
+        {
+          "name": "Billboard",
+          "description": "Large image displayed during file copying. Shows progress information."
+        },
+        {
+          "name": "BillboardAction",
+          "description": "Associates a billboard with an action for display timing."
+        },
+        {
+          "name": "ProgressText",
+          "description": "Custom text shown during specific actions in the progress dialog."
+        },
+        {
+          "name": "Error",
+          "description": "Custom error message for a specific error code."
+        },
+        {
+          "name": "UIText",
+          "description": "Localizable UI string for controls and dialogs."
+        },
+        {
+          "name": "Publish",
+          "description": "Associates a control event with a control. Triggers actions on user interaction."
+        },
+        {
+          "name": "Subscribe",
+          "description": "Subscribes a control to receive events from other controls."
+        },
+        {
+          "name": "Condition",
+          "description": "Conditional expression that affects control state or visibility."
+        },
+        {
+          "name": "ListItem",
+          "description": "Item in a ListBox or ComboBox control."
+        },
+        {
+          "name": "RadioButton",
+          "description": "Radio button option within a RadioButtonGroup."
+        },
+        {
+          "name": "RadioButtonGroup",
+          "description": "Group of mutually exclusive radio buttons."
+        }
+      ]
+    }
+  ]
+}

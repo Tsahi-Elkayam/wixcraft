@@ -1,0 +1,108 @@
+{
+  "extensions": [
+    {
+      "name": "bal",
+      "namespace": "http://wixtoolset.org/schemas/v4/wxs/bal",
+      "prefix": "bal",
+      "description": "Bootstrapper Application Layer - UI for Burn bundles",
+      "nuget_package": "WixToolset.Bal.wixext",
+      "xsd_url": "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/bal.xsd"
+    },
+    {
+      "name": "util",
+      "namespace": "http://wixtoolset.org/schemas/v4/wxs/util",
+      "prefix": "util",
+      "description": "Utility extension - users, groups, shares, permissions, XML config",
+      "nuget_package": "WixToolset.Util.wixext",
+      "xsd_url": "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/util.xsd"
+    },
+    {
+      "name": "netfx",
+      "namespace": "http://wixtoolset.org/schemas/v4/wxs/netfx",
+      "prefix": "netfx",
+      "description": ".NET Framework detection and prerequisites",
+      "nuget_package": "WixToolset.Netfx.wixext",
+      "xsd_url": "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/netfx.xsd"
+    },
+    {
+      "name": "iis",
+      "namespace": "http://wixtoolset.org/schemas/v4/wxs/iis",
+      "prefix": "iis",
+      "description": "IIS web server configuration",
+      "nuget_package": "WixToolset.Iis.wixext",
+      "xsd_url": "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/iis.xsd"
+    },
+    {
+      "name": "sql",
+      "namespace": "http://wixtoolset.org/schemas/v4/wxs/sql",
+      "prefix": "sql",
+      "description": "SQL Server database deployment",
+      "nuget_package": "WixToolset.Sql.wixext",
+      "xsd_url": "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/sql.xsd"
+    },
+    {
+      "name": "firewall",
+      "namespace": "http://wixtoolset.org/schemas/v4/wxs/firewall",
+      "prefix": "firewall",
+      "description": "Windows Firewall rules",
+      "nuget_package": "WixToolset.Firewall.wixext",
+      "xsd_url": "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/firewall.xsd"
+    },
+    {
+      "name": "http",
+      "namespace": "http://wixtoolset.org/schemas/v4/wxs/http",
+      "prefix": "http",
+      "description": "HTTP URL reservations and SSL certificates",
+      "nuget_package": "WixToolset.Http.wixext",
+      "xsd_url": "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/http.xsd"
+    },
+    {
+      "name": "vs",
+      "namespace": "http://wixtoolset.org/schemas/v4/wxs/vs",
+      "prefix": "vs",
+      "description": "Visual Studio integration",
+      "nuget_package": "WixToolset.VisualStudio.wixext",
+      "xsd_url": "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/vs.xsd"
+    },
+    {
+      "name": "directx",
+      "namespace": "http://wixtoolset.org/schemas/v4/wxs/directx",
+      "prefix": "directx",
+      "description": "DirectX capability detection",
+      "nuget_package": "WixToolset.DirectX.wixext",
+      "xsd_url": "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/directx.xsd"
+    },
+    {
+      "name": "complus",
+      "namespace": "http://wixtoolset.org/schemas/v4/wxs/complus",
+      "prefix": "complus",
+      "description": "COM+ application deployment",
+      "nuget_package": "WixToolset.ComPlus.wixext",
+      "xsd_url": "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/complus.xsd"
+    },
+    {
+      "name": "dependency",
+      "namespace": "http://wixtoolset.org/schemas/v4/wxs/dependency",
+      "prefix": "dep",
+      "description": "Dependency provider/requires for shared components",
+      "nuget_package": "WixToolset.Dependency.wixext",
+      "xsd_url": "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/dependency.xsd"
+    },
+    {
+      "name": "ui",
+      "namespace": "http://wixtoolset.org/schemas/v4/wxs/ui",
+      "prefix": "ui",
+      "description": "WiX UI dialogs and wizard sequences",
+      "nuget_package": "WixToolset.UI.wixext",
+      "xsd_url": "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/ui.xsd"
+    },
+    {
+      "name": "msmq",
+      "namespace": "http://wixtoolset.org/schemas/v4/wxs/msmq",
+      "prefix": "msmq",
+      "description": "MSMQ message queue configuration",
+      "nuget_package": "WixToolset.Msmq.wixext",
+      "xsd_url": "https://raw.githubusercontent.com/wixtoolset/wix/HEAD/src/xsd/msmq.xsd"
+    }
+  ]
+}

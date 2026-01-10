@@ -1,0 +1,170 @@
+{
+  "_description": "Comprehensive WiX documentation entries for AI assistance",
+  "entries": [
+    {
+      "source": "tutorial",
+      "topic": "Getting Started with WiX v4",
+      "content": "WiX v4 uses a simplified workflow. Create a .wxs file with Package element (replacing Product from v3). Use 'wix build Product.wxs -o Product.msi' to compile. Key changes from v3: namespace changed to http://wixtoolset.org/schemas/v4/wxs, Product renamed to Package, most default values are sensible, StandardDirectory replaces hard-coded directory IDs."
+    },
+    {
+      "source": "tutorial",
+      "topic": "Creating Your First MSI",
+      "content": "Minimal MSI structure: <Wix><Package Name='MyApp' Manufacturer='MyCompany' Version='1.0.0'><MajorUpgrade DowngradeErrorMessage='A newer version is installed.'/><MediaTemplate/><StandardDirectory Id='ProgramFilesFolder'><Directory Id='INSTALLFOLDER' Name='MyApp'><Component><File Source='MyApp.exe'/></Component></Directory></StandardDirectory><Feature Id='Main' Title='Main'><ComponentRef Id='...'/></Feature></Package></Wix>"
+    },
+    {
+      "source": "tutorial",
+      "topic": "Creating a Burn Bundle",
+      "content": "Burn bundles wrap multiple installers. Structure: <Wix><Bundle Name='MyBundle' Version='1.0.0' Manufacturer='MyCompany' UpgradeCode='GUID'><BootstrapperApplication><WixStandardBootstrapperApplication LicenseUrl='license.html' Theme='hyperlinkLicense'/></BootstrapperApplication><Chain><MsiPackage SourceFile='Product.msi'/></Chain></Bundle></Wix>. Build with 'wix build Bundle.wxs -ext WixToolset.Bal.wixext'."
+    },
+    {
+      "source": "troubleshooting",
+      "topic": "ICE03 Invalid Identifier",
+      "content": "ICE03 indicates an identifier is too long (max 72 chars) or contains invalid characters. Identifiers must start with letter/underscore, contain only alphanumerics and underscores. Common in auto-generated IDs. Fix: Shorten the Name attribute or provide explicit Id attribute. For File elements, use shorter filenames or explicit Id."
+    },
+    {
+      "source": "troubleshooting",
+      "topic": "ICE38 Component in User Profile",
+      "content": "ICE38 fires when a component installs to per-user location but uses HKLM registry KeyPath. Fix: Change KeyPath to HKCU registry value, or use File KeyPath, or move component to per-machine location. Per-user components should use HKCU registry for proper multi-user support."
+    },
+    {
+      "source": "troubleshooting",
+      "topic": "ICE57 Component Has Multiple Files",
+      "content": "ICE57 warns when component has multiple files without explicit KeyPath. Best practice: one file per component. If multiple files needed, set KeyPath='yes' on the main file. This ensures proper repair and patching behavior."
+    },
+    {
+      "source": "troubleshooting",
+      "topic": "ICE64 Bad Directory Reference",
+      "content": "ICE64 occurs when Directory/DirectoryRef references non-existent directory. Check spelling of directory Id. Ensure parent directory is defined before reference. Use StandardDirectory for system folders instead of hardcoding paths."
+    },
+    {
+      "source": "troubleshooting",
+      "topic": "Error 2732 Directory Manager Not Initialized",
+      "content": "Error 2732 means CostFinalize action was not run before accessing directory properties. Common in custom actions. Ensure CostInitialize, FileCost, CostFinalize sequence in InstallExecuteSequence before any directory-dependent actions."
+    },
+    {
+      "source": "troubleshooting",
+      "topic": "Error 1603 Fatal Error During Installation",
+      "content": "Generic error 1603 requires log analysis. Enable verbose logging: msiexec /i Product.msi /l*vx install.log. Search log for 'Return value 3' to find failing action. Common causes: permission issues, missing prerequisites, failed custom actions, file in use."
+    },
+    {
+      "source": "troubleshooting",
+      "topic": "Error 1722 Problem With Windows Installer Package",
+      "content": "Error 1722 indicates custom action failed. Enable logging to find the specific CA. Common causes: DLL entry point not found, script error, missing dependencies. For deferred CAs, ensure properties are passed via CustomActionData."
+    },
+    {
+      "source": "troubleshooting",
+      "topic": "Error 2726 Action Not Found",
+      "content": "Error 2726 occurs when scheduled action doesn't exist. Check spelling in sequence table. Ensure custom action is defined with matching Id. For built-in actions, verify they're available in your Windows Installer version."
+    },
+    {
+      "source": "concept",
+      "topic": "Component Rules",
+      "content": "Windows Installer Component Rules: 1) Each component has unique GUID that never changes. 2) All resources in component install to same directory. 3) Resources in component share install state. 4) Component GUID determines upgrade/patch behavior. Breaking rules causes repair and patching failures. Use Guid='*' for auto-generation based on KeyPath."
+    },
+    {
+      "source": "concept",
+      "topic": "KeyPath Explained",
+      "content": "KeyPath is the resource Windows Installer checks to determine component state. Can be File, RegistryValue, or Directory. One KeyPath per component. Missing KeyPath = missing component during repair. For auto-GUID (Guid='*'), KeyPath determines GUID value. Choose stable KeyPath that won't change location between versions."
+    },
+    {
+      "source": "concept",
+      "topic": "Feature vs Component",
+      "content": "Features are user-visible install options (e.g., 'Documentation', 'Examples'). Components are atomic install units containing files/registry. Features contain ComponentRefs. One component can be in multiple features. Users select features; components install automatically based on feature selection."
+    },
+    {
+      "source": "concept",
+      "topic": "Immediate vs Deferred Custom Actions",
+      "content": "Immediate CAs run during UI/planning with user context. Can read/write properties. Deferred CAs run during installation with SYSTEM context. Cannot read properties directly (use CustomActionData). Deferred is required for system changes. Schedule deferred after InstallInitialize, before InstallFinalize."
+    },
+    {
+      "source": "concept",
+      "topic": "Rollback Custom Actions",
+      "content": "Rollback CAs undo deferred CA changes on failure. Execute='rollback', Before='<DeferredCA>'. Runs only if transaction fails after deferred CA. Must handle partial completion. Put rollback CA immediately before its deferred counterpart. Not needed for built-in actions (MSI handles rollback)."
+    },
+    {
+      "source": "concept",
+      "topic": "Condition Syntax",
+      "content": "MSI conditions use specific syntax: Property comparisons (Prop = 'value'), version checks (VersionNT >= 603), feature/component state ($ComponentId = 3 means local install). Operators: AND, OR, NOT, comparison (<, >, =, <>). Properties are case-sensitive. Empty string = false, non-empty = true."
+    },
+    {
+      "source": "concept",
+      "topic": "Major vs Minor vs Patch Upgrades",
+      "content": "Major upgrade: Changes ProductCode, removes old version first. Use for significant changes. MajorUpgrade element handles this. Minor upgrade: Same ProductCode, increments Version. Updates in place. Patch: MSP file, smallest changes. ProductCode and UpgradeCode must match. Minor/patch require same component GUIDs."
+    },
+    {
+      "source": "concept",
+      "topic": "Per-User vs Per-Machine Installation",
+      "content": "Per-machine (ALLUSERS=1): Installs to Program Files, HKLM registry, requires admin. Default for most software. Per-user (ALLUSERS=''): Installs to AppData, HKCU registry, no admin needed. Scope attribute on Package controls default. WixUI_Advanced lets users choose."
+    },
+    {
+      "source": "pattern",
+      "topic": "Service Installation Pattern",
+      "content": "Windows service pattern: <Component><File Source='MyService.exe' KeyPath='yes'/><ServiceInstall Name='MyService' DisplayName='My Service' Start='auto' Type='ownProcess' ErrorControl='normal' Account='LocalSystem'/><ServiceControl Id='StartService' Name='MyService' Start='install' Stop='both' Remove='uninstall' Wait='yes'/></Component>"
+    },
+    {
+      "source": "pattern",
+      "topic": "Registry Key Pattern",
+      "content": "Registry pattern: <Component><RegistryKey Root='HKLM' Key='SOFTWARE\\MyCompany\\MyApp'><RegistryValue Name='InstallPath' Type='string' Value='[INSTALLFOLDER]' KeyPath='yes'/><RegistryValue Name='Version' Type='string' Value='[ProductVersion]'/></RegistryKey></Component>. Use HKCU for per-user, HKLM for per-machine."
+    },
+    {
+      "source": "pattern",
+      "topic": "Environment Variable Pattern",
+      "content": "Environment variable pattern: <Component><Environment Id='PathEnv' Name='PATH' Value='[INSTALLFOLDER]' Permanent='no' Part='last' Action='set' System='yes'/><RegistryValue Root='HKLM' Key='SOFTWARE\\MyApp' Name='Installed' Type='integer' Value='1' KeyPath='yes'/></Component>. BroadcastEnvironmentChange from util extension notifies running apps."
+    },
+    {
+      "source": "pattern",
+      "topic": "Shortcut Pattern",
+      "content": "Start Menu shortcut: <Component Directory='ProgramMenuFolder'><Shortcut Id='AppShortcut' Name='My Application' Target='[INSTALLFOLDER]MyApp.exe' WorkingDirectory='INSTALLFOLDER'/><RemoveFolder Id='RemoveMenuFolder' On='uninstall'/><RegistryValue Root='HKCU' Key='SOFTWARE\\MyApp' Name='Shortcut' Type='integer' Value='1' KeyPath='yes'/></Component>"
+    },
+    {
+      "source": "pattern",
+      "topic": "File Association Pattern",
+      "content": "File association pattern: <Component><ProgId Id='MyApp.Document' Description='My Document'><Extension Id='mydoc' ContentType='application/x-mydoc'><Verb Id='open' Command='Open' TargetFile='[#MyApp.exe]' Argument='\"%1\"'/></Extension></ProgId><RegistryValue Root='HKCU' Key='SOFTWARE\\MyApp' Name='FileAssoc' Type='integer' Value='1' KeyPath='yes'/></Component>"
+    },
+    {
+      "source": "pattern",
+      "topic": "Conditional Component Pattern",
+      "content": "Conditional installation: <Component Condition='VersionNT64'>...64-bit resources...</Component><Component Condition='NOT VersionNT64'>...32-bit resources...</Component>. Use NETFRAMEWORK* properties for .NET checks. Custom properties set via AppSearch for other prerequisites."
+    },
+    {
+      "source": "pattern",
+      "topic": "Custom Action Data Pattern",
+      "content": "Passing data to deferred CA: <SetProperty Id='MyDeferredCA' Before='MyDeferredCA' Value='InstallDir=[INSTALLFOLDER];Mode=Install'/><CustomAction Id='MyDeferredCA' DllEntry='MyFunction' BinaryRef='MyBinary' Execute='deferred' Impersonate='no'/>. In CA code, access via session.CustomActionData collection."
+    },
+    {
+      "source": "bundle",
+      "topic": "Bundle Package Detection",
+      "content": "DetectCondition determines if package is installed: <MsiPackage DetectCondition='ProductCode' ...> for MSI, <ExePackage DetectCondition='RegistryValue OR FileExists' ...> for EXE. Use RegistrySearch, FileSearch, ProductSearch to set variables for conditions. Missing DetectCondition means always install."
+    },
+    {
+      "source": "bundle",
+      "topic": "Bundle Install Conditions",
+      "content": "InstallCondition controls whether package should install: <MsiPackage InstallCondition='VersionNT64' ...> only installs on 64-bit. Differs from DetectCondition (is it there?) vs InstallCondition (should we install it?). Use for feature toggles, architecture selection."
+    },
+    {
+      "source": "bundle",
+      "topic": "Bundle Variables and Searches",
+      "content": "Define variables: <Variable Name='InstallMode' Value='full'/>. Registry search: <RegistrySearch Variable='PreviousVersion' Root='HKLM' Key='SOFTWARE\\MyApp' Value='Version' Result='value'/>. Use in conditions: DetectCondition='PreviousVersion'. WixBundleLog, WixBundleOriginalSource are builtin."
+    },
+    {
+      "source": "bundle",
+      "topic": "Bundle Rollback Boundaries",
+      "content": "RollbackBoundary groups packages for atomic rollback. <Chain><RollbackBoundary/><MsiPackage .../><MsiPackage .../><RollbackBoundary/><ExePackage .../></Chain>. If ExePackage fails, only it rolls back. If first MsiPackage fails, both MSIs roll back. Place boundaries strategically for transactional integrity."
+    },
+    {
+      "source": "security",
+      "topic": "Secure Custom Actions",
+      "content": "Security best practices for CAs: 1) Use deferred with Impersonate='no' for system changes. 2) Validate all CustomActionData inputs. 3) Use full paths, never relative. 4) Don't store secrets in properties. 5) Run with minimum required privileges. 6) Log actions for audit trail. 7) Handle errors gracefully."
+    },
+    {
+      "source": "security",
+      "topic": "Code Signing",
+      "content": "Sign MSI and CAB files for security. Use signtool: signtool sign /f cert.pfx /p password /t http://timestamp.url Product.msi. For Burn bundles, sign the bundle EXE and engine separately. Unsigned installers trigger SmartScreen warnings. Use EV certificates for best reputation."
+    },
+    {
+      "source": "security",
+      "topic": "Secure Property Handling",
+      "content": "Public properties (UPPERCASE) can be set from command line. Use Secure='yes' attribute to allow from elevated process. Never store passwords in plain properties. Use MsiHiddenProperties to hide sensitive values from logs. Validate property values in conditions."
+    }
+  ]
+}

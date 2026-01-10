@@ -1,0 +1,150 @@
+{
+  "_source": "CLI command reference",
+  "_description": "Command syntax for WiX and msiexec commands",
+  "cli_commands": [
+    {
+      "name": "/passive",
+      "description": "Unattended mode - progress bar only, no user interaction",
+      "syntax": "/passive",
+      "category": "msiexec_display"
+    },
+    {
+      "name": "/q",
+      "description": "Set user interface level",
+      "syntax": "/q [n|b|r|f]",
+      "category": "msiexec_display"
+    },
+    {
+      "name": "/a",
+      "description": "Administrative install - extracts files to a network location",
+      "syntax": "/a <package>",
+      "category": "msiexec_install"
+    },
+    {
+      "name": "/f",
+      "description": "Repair a product installation",
+      "syntax": "/f [p|o|e|d|c|a|u|m|s|v] <package|ProductCode>",
+      "category": "msiexec_install"
+    },
+    {
+      "name": "/i",
+      "description": "Install or configure a product",
+      "syntax": "/i <package|ProductCode>",
+      "category": "msiexec_install"
+    },
+    {
+      "name": "/j",
+      "description": "Advertise a product",
+      "syntax": "/j [u|m] <package> [/t <transform>] [/g <languageID>]",
+      "category": "msiexec_install"
+    },
+    {
+      "name": "/p",
+      "description": "Apply a patch (.msp file)",
+      "syntax": "/p <patch> [;patch2;...]",
+      "category": "msiexec_install"
+    },
+    {
+      "name": "/x",
+      "description": "Uninstall a product",
+      "syntax": "/x <package|ProductCode>",
+      "category": "msiexec_install"
+    },
+    {
+      "name": "/l",
+      "description": "Enable logging",
+      "syntax": "/l [i|w|e|a|r|u|c|m|o|p|v|x|+|!|*] <logfile>",
+      "category": "msiexec_logging"
+    },
+    {
+      "name": "/forcerestart",
+      "description": "Always restart after installation completes",
+      "syntax": "msiexec.exe /forcerestart /i package.msi",
+      "category": "msiexec_restart"
+    },
+    {
+      "name": "/norestart",
+      "description": "Suppress any restarts after installation completes",
+      "syntax": "msiexec.exe /norestart /i package.msi",
+      "category": "msiexec_restart"
+    },
+    {
+      "name": "/promptrestart",
+      "description": "Prompt user if a restart is required",
+      "syntax": "msiexec.exe /promptrestart /i package.msi",
+      "category": "msiexec_restart"
+    },
+    {
+      "name": "wix build",
+      "description": "Build WiX source files into installer packages",
+      "syntax": "wix build <source> [options]",
+      "category": "wix"
+    },
+    {
+      "name": "wix burn attach",
+      "description": "Attach a Burn engine to a bundle",
+      "syntax": "wix burn attach <bundle.exe> -engine <engine.exe>",
+      "category": "wix"
+    },
+    {
+      "name": "wix burn detach",
+      "description": "Detach the Burn engine from a bundle",
+      "syntax": "wix burn detach <bundle.exe> -engine <engine.exe>",
+      "category": "wix"
+    },
+    {
+      "name": "wix burn extract",
+      "description": "Extract all payloads from a Burn bundle",
+      "syntax": "wix burn extract <bundle> -o <folder>",
+      "category": "wix"
+    },
+    {
+      "name": "wix convert",
+      "description": "Convert WiX v3 source files to v4 format",
+      "syntax": "wix convert <source> [options]",
+      "category": "wix"
+    },
+    {
+      "name": "wix extension add",
+      "description": "Add a WiX extension to the cache",
+      "syntax": "wix extension add <extension> [options]",
+      "category": "wix"
+    },
+    {
+      "name": "wix extension list",
+      "description": "List installed WiX extensions",
+      "syntax": "wix extension list [options]",
+      "category": "wix"
+    },
+    {
+      "name": "wix extension remove",
+      "description": "Remove a WiX extension from the cache",
+      "syntax": "wix extension remove <extension>",
+      "category": "wix"
+    },
+    {
+      "name": "wix format",
+      "description": "Format WiX source files",
+      "syntax": "wix format <source> [options]",
+      "category": "wix"
+    },
+    {
+      "name": "wix msi decompile",
+      "description": "Decompile an MSI package back to WiX source",
+      "syntax": "wix msi decompile <msi> [options]",
+      "category": "wix"
+    },
+    {
+      "name": "wix msi transform",
+      "description": "Create a transform (MST) file from two MSI files",
+      "syntax": "wix msi transform <base.msi> <target.msi> -o <output.mst>",
+      "category": "wix"
+    },
+    {
+      "name": "wix msi validate",
+      "description": "Validate an MSI package using ICE rules",
+      "syntax": "wix msi validate <msi> [options]",
+      "category": "wix"
+    }
+  ]
+}

@@ -1,7 +1,6 @@
 # Build artifacts
 target/
 dist/
-build/
 *.exe
 *.msi
 *.wixobj

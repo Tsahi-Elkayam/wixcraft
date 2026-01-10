@@ -1,0 +1,200 @@
+{
+  "_description": "WiX Toolset v4/v5 CLI command reference",
+  "commands": [
+    {
+      "name": "wix build",
+      "description": "Build WiX source files into installer packages",
+      "syntax": "wix build <source> [options]",
+      "category": "build",
+      "options": [
+        {"name": "-o, --output", "description": "Output file path"},
+        {"name": "-outputType", "description": "Output type: msi, msm, wixlib, pdb"},
+        {"name": "-arch", "description": "Target architecture: x86, x64, arm64"},
+        {"name": "-d", "description": "Define preprocessor variable: -d Name=Value"},
+        {"name": "-i, --include", "description": "Include search path for source files"},
+        {"name": "-ext", "description": "Extension assembly to load"},
+        {"name": "-culture", "description": "Culture for localization (e.g., en-US)"},
+        {"name": "-loc", "description": "Localization file (.wxl) to use"},
+        {"name": "-b", "description": "Bind path for source files"},
+        {"name": "-cc", "description": "Cabinet cache folder path"},
+        {"name": "-pdb", "description": "PDB output file path"},
+        {"name": "-pdbType", "description": "PDB type: full, none"},
+        {"name": "-intermediateFolder", "description": "Folder for intermediate files"},
+        {"name": "-sw", "description": "Suppress specific warning (e.g., -sw1076)"},
+        {"name": "-wx", "description": "Treat warnings as errors"},
+        {"name": "-v", "description": "Verbose output"},
+        {"name": "-nologo", "description": "Suppress logo output"}
+      ],
+      "examples": [
+        "wix build Product.wxs -o Product.msi",
+        "wix build Product.wxs -arch x64 -o Product_x64.msi",
+        "wix build Product.wxs -ext WixToolset.UI.wixext -d Version=1.0.0"
+      ]
+    },
+    {
+      "name": "wix msi decompile",
+      "description": "Decompile an MSI package back to WiX source",
+      "syntax": "wix msi decompile <msi> [options]",
+      "category": "msi",
+      "options": [
+        {"name": "-o, --output", "description": "Output WiX source file path"},
+        {"name": "-x", "description": "Extract embedded files to folder"},
+        {"name": "-sdet", "description": "Suppress decompiling custom tables"},
+        {"name": "-sras", "description": "Suppress relative action sequencing"},
+        {"name": "-sui", "description": "Suppress decompiling UI elements"}
+      ],
+      "examples": [
+        "wix msi decompile Product.msi -o Product.wxs",
+        "wix msi decompile Product.msi -o Product.wxs -x ExtractedFiles"
+      ]
+    },
+    {
+      "name": "wix msi validate",
+      "description": "Validate an MSI package using ICE rules",
+      "syntax": "wix msi validate <msi> [options]",
+      "category": "msi",
+      "options": [
+        {"name": "-ice", "description": "Run specific ICE (can specify multiple)"},
+        {"name": "-sice", "description": "Suppress specific ICE"},
+        {"name": "-cub", "description": "Additional .cub file for validation"}
+      ],
+      "examples": [
+        "wix msi validate Product.msi",
+        "wix msi validate Product.msi -sice:ICE03 -sice:ICE82"
+      ]
+    },
+    {
+      "name": "wix msi transform",
+      "description": "Create a transform (MST) file from two MSI files",
+      "syntax": "wix msi transform <base.msi> <target.msi> -o <output.mst>",
+      "category": "msi",
+      "options": [
+        {"name": "-o, --output", "description": "Output MST file path"},
+        {"name": "-p", "description": "Preserve unmodified streams"},
+        {"name": "-val", "description": "Validation flags"}
+      ],
+      "examples": [
+        "wix msi transform base.msi modified.msi -o changes.mst"
+      ]
+    },
+    {
+      "name": "wix burn detach",
+      "description": "Detach the Burn engine from a bundle",
+      "syntax": "wix burn detach <bundle.exe> -engine <engine.exe>",
+      "category": "burn",
+      "options": [
+        {"name": "-engine", "description": "Output path for detached engine"}
+      ],
+      "examples": [
+        "wix burn detach Setup.exe -engine engine.exe"
+      ]
+    },
+    {
+      "name": "wix burn attach",
+      "description": "Attach a Burn engine to a bundle",
+      "syntax": "wix burn attach <bundle.exe> -engine <engine.exe>",
+      "category": "burn",
+      "options": [
+        {"name": "-engine", "description": "Path to engine to attach"},
+        {"name": "-o, --output", "description": "Output bundle path"}
+      ],
+      "examples": [
+        "wix burn attach Setup.exe -engine signed-engine.exe -o SignedSetup.exe"
+      ]
+    },
+    {
+      "name": "wix burn extract",
+      "description": "Extract all payloads from a Burn bundle",
+      "syntax": "wix burn extract <bundle> -o <folder>",
+      "category": "burn",
+      "options": [
+        {"name": "-o, --output", "description": "Output folder for extracted files"}
+      ],
+      "examples": [
+        "wix burn extract Setup.exe -o ExtractedPayloads"
+      ]
+    },
+    {
+      "name": "wix extension add",
+      "description": "Add a WiX extension to the cache",
+      "syntax": "wix extension add <extension> [options]",
+      "category": "extension",
+      "options": [
+        {"name": "-g, --global", "description": "Add to global extension cache"},
+        {"name": "-v, --version", "description": "Specific version to add"}
+      ],
+      "examples": [
+        "wix extension add WixToolset.UI.wixext",
+        "wix extension add WixToolset.Util.wixext -v 4.0.4"
+      ]
+    },
+    {
+      "name": "wix extension remove",
+      "description": "Remove a WiX extension from the cache",
+      "syntax": "wix extension remove <extension>",
+      "category": "extension",
+      "options": [
+        {"name": "-g, --global", "description": "Remove from global cache"}
+      ],
+      "examples": [
+        "wix extension remove WixToolset.UI.wixext"
+      ]
+    },
+    {
+      "name": "wix extension list",
+      "description": "List installed WiX extensions",
+      "syntax": "wix extension list [options]",
+      "category": "extension",
+      "options": [
+        {"name": "-g, --global", "description": "List global extensions only"}
+      ]
+    },
+    {
+      "name": "wix convert",
+      "description": "Convert WiX v3 source files to v4 format",
+      "syntax": "wix convert <source> [options]",
+      "category": "convert",
+      "options": [
+        {"name": "-o, --output", "description": "Output file (defaults to overwriting)"},
+        {"name": "-r, --recurse", "description": "Process files recursively"},
+        {"name": "--dry-run", "description": "Show changes without applying"},
+        {"name": "-indent", "description": "Indentation level (spaces)"}
+      ],
+      "examples": [
+        "wix convert Product.wxs",
+        "wix convert src/ -r",
+        "wix convert Product.wxs --dry-run"
+      ]
+    },
+    {
+      "name": "wix format",
+      "description": "Format WiX source files",
+      "syntax": "wix format <source> [options]",
+      "category": "format",
+      "options": [
+        {"name": "-o, --output", "description": "Output file path"},
+        {"name": "-r, --recurse", "description": "Process files recursively"}
+      ],
+      "examples": [
+        "wix format Product.wxs",
+        "wix format src/*.wxs"
+      ]
+    }
+  ],
+  "common_extensions": [
+    {"name": "WixToolset.UI.wixext", "description": "Standard UI dialog sets (WixUI_Minimal, WixUI_InstallDir, etc.)"},
+    {"name": "WixToolset.Util.wixext", "description": "Utility extension: users, XML config, file shares, permissions"},
+    {"name": "WixToolset.Netfx.wixext", "description": ".NET Framework detection and prerequisites"},
+    {"name": "WixToolset.Bal.wixext", "description": "Bootstrapper Application Layer for Burn bundles"},
+    {"name": "WixToolset.BootstrapperApplications.wixext", "description": "Standard bootstrapper applications"},
+    {"name": "WixToolset.Firewall.wixext", "description": "Windows Firewall rules"},
+    {"name": "WixToolset.Http.wixext", "description": "HTTP URL reservations and SSL certificates"},
+    {"name": "WixToolset.Iis.wixext", "description": "IIS web server configuration"},
+    {"name": "WixToolset.Sql.wixext", "description": "SQL Server database deployment"},
+    {"name": "WixToolset.Msmq.wixext", "description": "MSMQ message queue configuration"},
+    {"name": "WixToolset.ComPlus.wixext", "description": "COM+ application deployment"},
+    {"name": "WixToolset.Vs.wixext", "description": "Visual Studio integration"},
+    {"name": "WixToolset.DirectX.wixext", "description": "DirectX capability detection"},
+    {"name": "WixToolset.Dependency.wixext", "description": "Dependency provider/requires for shared components"}
+  ]
+}

@@ -1,0 +1,236 @@
+{
+  "_description": "WixUI extension dialog sets and customization reference",
+  "_source": "WiX Toolset UI Extension",
+  "dialog_sets": [
+    {
+      "id": "WixUI_Minimal",
+      "name": "Minimal",
+      "description": "Welcome and license agreement dialogs only. No user configuration options.",
+      "dialogs": ["WelcomeDlg", "LicenseAgreementDlg", "ProgressDlg", "ExitDlg"],
+      "use_case": "Simple installers with no user choices"
+    },
+    {
+      "id": "WixUI_InstallDir",
+      "name": "Install Directory",
+      "description": "Adds installation directory selection to Minimal set.",
+      "dialogs": ["WelcomeDlg", "LicenseAgreementDlg", "InstallDirDlg", "VerifyReadyDlg", "ProgressDlg", "ExitDlg"],
+      "required_property": "WIXUI_INSTALLDIR",
+      "use_case": "When users need to choose installation folder"
+    },
+    {
+      "id": "WixUI_FeatureTree",
+      "name": "Feature Tree",
+      "description": "Displays features in a tree for selection. No install directory choice.",
+      "dialogs": ["WelcomeDlg", "LicenseAgreementDlg", "CustomizeDlg", "VerifyReadyDlg", "ProgressDlg", "ExitDlg"],
+      "use_case": "Multiple optional features to install"
+    },
+    {
+      "id": "WixUI_Mondo",
+      "name": "Mondo",
+      "description": "Full UI with Typical/Custom/Complete install types, feature tree, and directory selection.",
+      "dialogs": ["WelcomeDlg", "LicenseAgreementDlg", "SetupTypeDlg", "CustomizeDlg", "InstallDirDlg", "VerifyReadyDlg", "ProgressDlg", "ExitDlg"],
+      "use_case": "Enterprise software with many configuration options"
+    },
+    {
+      "id": "WixUI_Advanced",
+      "name": "Advanced",
+      "description": "Adds per-user/per-machine choice to InstallDir. Supports both installation scopes.",
+      "dialogs": ["WelcomeDlg", "LicenseAgreementDlg", "InstallScopeDlg", "InstallDirDlg", "VerifyReadyDlg", "ProgressDlg", "ExitDlg"],
+      "required_property": "WIXUI_INSTALLDIR",
+      "use_case": "Software that supports both per-user and per-machine installation"
+    }
+  ],
+  "standard_dialogs": [
+    {
+      "id": "WelcomeDlg",
+      "name": "Welcome Dialog",
+      "description": "First dialog showing product name and version. Offers Next and Cancel buttons.",
+      "customizable_text": ["WelcomeDlgTitle", "WelcomeDlgDescription"]
+    },
+    {
+      "id": "LicenseAgreementDlg",
+      "name": "License Agreement Dialog",
+      "description": "Displays license text with accept/decline radio buttons.",
+      "customizable_text": ["LicenseAgreementDlgTitle", "LicenseAgreementDlgDescription"],
+      "required_property": "WixUILicenseRtf",
+      "notes": "Set WixUILicenseRtf to path of RTF license file"
+    },
+    {
+      "id": "InstallDirDlg",
+      "name": "Install Directory Dialog",
+      "description": "Allows user to choose installation directory with Browse button.",
+      "customizable_text": ["InstallDirDlgTitle", "InstallDirDlgDescription"],
+      "required_property": "WIXUI_INSTALLDIR"
+    },
+    {
+      "id": "CustomizeDlg",
+      "name": "Customize Dialog",
+      "description": "Feature tree for selecting which features to install.",
+      "customizable_text": ["CustomizeDlgTitle", "CustomizeDlgDescription"]
+    },
+    {
+      "id": "SetupTypeDlg",
+      "name": "Setup Type Dialog",
+      "description": "Choose between Typical, Custom, and Complete installation types.",
+      "customizable_text": ["SetupTypeDlgTitle", "SetupTypeDlgTypicalButton", "SetupTypeDlgCustomButton", "SetupTypeDlgCompleteButton"]
+    },
+    {
+      "id": "VerifyReadyDlg",
+      "name": "Verify Ready Dialog",
+      "description": "Summary dialog before installation begins. Shows selected options.",
+      "customizable_text": ["VerifyReadyDlgTitle", "VerifyReadyDlgDescription"]
+    },
+    {
+      "id": "ProgressDlg",
+      "name": "Progress Dialog",
+      "description": "Shows installation progress with status text and progress bar.",
+      "customizable_text": ["ProgressDlgTitleInstalling", "ProgressDlgTitleRemoving", "ProgressDlgTitleRepairing"]
+    },
+    {
+      "id": "ExitDlg",
+      "name": "Exit Dialog",
+      "description": "Final dialog after installation completes. Can include launch checkbox.",
+      "customizable_text": ["ExitDlgTitle", "ExitDlgDescription"],
+      "optional_control": "LaunchCheckBox"
+    },
+    {
+      "id": "MaintenanceTypeDlg",
+      "name": "Maintenance Type Dialog",
+      "description": "Shown for installed products. Offers Change, Repair, or Remove.",
+      "customizable_text": ["MaintenanceTypeDlgTitle", "MaintenanceTypeDlgChangeButton", "MaintenanceTypeDlgRepairButton", "MaintenanceTypeDlgRemoveButton"]
+    },
+    {
+      "id": "MaintenanceWelcomeDlg",
+      "name": "Maintenance Welcome Dialog",
+      "description": "Welcome dialog for maintenance mode (modify/repair/remove).",
+      "customizable_text": ["MaintenanceWelcomeDlgTitle", "MaintenanceWelcomeDlgDescription"]
+    },
+    {
+      "id": "InstallScopeDlg",
+      "name": "Install Scope Dialog",
+      "description": "Choose between per-user and per-machine installation. WixUI_Advanced only.",
+      "customizable_text": ["InstallScopeDlgTitle", "InstallScopeDlgPerUser", "InstallScopeDlgPerMachine"]
+    },
+    {
+      "id": "BrowseDlg",
+      "name": "Browse Dialog",
+      "description": "Folder browser for selecting installation directory.",
+      "customizable_text": ["BrowseDlgTitle", "BrowseDlgDescription"]
+    },
+    {
+      "id": "DiskCostDlg",
+      "name": "Disk Cost Dialog",
+      "description": "Shows disk space requirements by volume.",
+      "customizable_text": ["DiskCostDlgTitle", "DiskCostDlgDescription"]
+    },
+    {
+      "id": "ErrorDlg",
+      "name": "Error Dialog",
+      "description": "Displays error messages during installation.",
+      "customizable_text": ["ErrorDlgTitle"]
+    },
+    {
+      "id": "FatalError",
+      "name": "Fatal Error Dialog",
+      "description": "Shown when installation fails catastrophically.",
+      "customizable_text": ["FatalErrorTitle", "FatalErrorDescription"]
+    },
+    {
+      "id": "UserExit",
+      "name": "User Exit Dialog",
+      "description": "Shown when user cancels installation.",
+      "customizable_text": ["UserExitTitle", "UserExitDescription"]
+    },
+    {
+      "id": "FilesInUse",
+      "name": "Files In Use Dialog",
+      "description": "Shown when files are locked by running applications.",
+      "customizable_text": ["FilesInUseTitle", "FilesInUseDescription"]
+    },
+    {
+      "id": "MsiRMFilesInUse",
+      "name": "Restart Manager Files In Use Dialog",
+      "description": "Vista+ dialog for Restart Manager file conflicts.",
+      "customizable_text": ["MsiRMFilesInUseTitle", "MsiRMFilesInUseDescription"]
+    },
+    {
+      "id": "OutOfDiskDlg",
+      "name": "Out of Disk Space Dialog",
+      "description": "Shown when insufficient disk space is available.",
+      "customizable_text": ["OutOfDiskDlgTitle", "OutOfDiskDlgDescription"]
+    },
+    {
+      "id": "OutOfRbDiskDlg",
+      "name": "Out of Rollback Disk Space Dialog",
+      "description": "Shown when insufficient space for rollback.",
+      "customizable_text": ["OutOfRbDiskDlgTitle", "OutOfRbDiskDlgDescription"]
+    },
+    {
+      "id": "ResumeDlg",
+      "name": "Resume Dialog",
+      "description": "Shown when resuming a suspended installation.",
+      "customizable_text": ["ResumeDlgTitle", "ResumeDlgDescription"]
+    },
+    {
+      "id": "WaitForCostingDlg",
+      "name": "Wait for Costing Dialog",
+      "description": "Shown while calculating disk space requirements.",
+      "customizable_text": ["WaitForCostingDlgTitle"]
+    }
+  ],
+  "customization_examples": [
+    {
+      "name": "Set license file",
+      "wix": "<WixVariable Id=\"WixUILicenseRtf\" Value=\"License.rtf\" />"
+    },
+    {
+      "name": "Set banner image (top)",
+      "wix": "<WixVariable Id=\"WixUIBannerBmp\" Value=\"banner.bmp\" />",
+      "notes": "493x58 pixels recommended"
+    },
+    {
+      "name": "Set dialog background image",
+      "wix": "<WixVariable Id=\"WixUIDialogBmp\" Value=\"dialog.bmp\" />",
+      "notes": "493x312 pixels recommended"
+    },
+    {
+      "name": "Set exclamation icon",
+      "wix": "<WixVariable Id=\"WixUIExclamationIco\" Value=\"exclaim.ico\" />"
+    },
+    {
+      "name": "Set info icon",
+      "wix": "<WixVariable Id=\"WixUIInfoIco\" Value=\"info.ico\" />"
+    },
+    {
+      "name": "Set new folder icon",
+      "wix": "<WixVariable Id=\"WixUINewIco\" Value=\"new.ico\" />"
+    },
+    {
+      "name": "Set up folder icon",
+      "wix": "<WixVariable Id=\"WixUIUpIco\" Value=\"up.ico\" />"
+    },
+    {
+      "name": "Add launch checkbox to exit dialog",
+      "wix": "<Property Id=\"WIXUI_EXITDIALOGOPTIONALCHECKBOX\" Value=\"1\" />\n<Property Id=\"WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT\" Value=\"Launch [ProductName]\" />\n<Property Id=\"WixShellExecTarget\" Value=\"[#MyApp.exe]\" />\n<CustomAction Id=\"LaunchApplication\" DllEntry=\"WixShellExec\" Impersonate=\"yes\" BinaryRef=\"Wix4UtilCA_X86\" />",
+      "notes": "Requires util extension"
+    },
+    {
+      "name": "Skip license dialog",
+      "wix": "<Publish Dialog=\"WelcomeDlg\" Control=\"Next\" Event=\"NewDialog\" Value=\"InstallDirDlg\">1</Publish>\n<Publish Dialog=\"InstallDirDlg\" Control=\"Back\" Event=\"NewDialog\" Value=\"WelcomeDlg\">1</Publish>"
+    },
+    {
+      "name": "Use WixUI_InstallDir",
+      "wix": "<Property Id=\"WIXUI_INSTALLDIR\" Value=\"INSTALLFOLDER\" />\n<UIRef Id=\"WixUI_InstallDir\" />"
+    }
+  ],
+  "usage_examples": [
+    {
+      "name": "Basic WixUI_Minimal",
+      "wix": "<Package ...>\n  <WixVariable Id=\"WixUILicenseRtf\" Value=\"License.rtf\" />\n  <UIRef Id=\"WixUI_Minimal\" />\n</Package>"
+    },
+    {
+      "name": "WixUI_InstallDir with customization",
+      "wix": "<Package ...>\n  <Property Id=\"WIXUI_INSTALLDIR\" Value=\"INSTALLFOLDER\" />\n  <WixVariable Id=\"WixUILicenseRtf\" Value=\"License.rtf\" />\n  <WixVariable Id=\"WixUIBannerBmp\" Value=\"banner.bmp\" />\n  <WixVariable Id=\"WixUIDialogBmp\" Value=\"dialog.bmp\" />\n  <UIRef Id=\"WixUI_InstallDir\" />\n</Package>"
+    }
+  ]
+}

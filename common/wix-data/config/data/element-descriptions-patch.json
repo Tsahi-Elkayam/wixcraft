@@ -1,0 +1,76 @@
+{
+  "_description": "Descriptions for elements missing from XSD documentation",
+  "_source": "Derived from MSI SDK documentation and WiX schema specifications",
+  "patches": [
+    {
+      "name": "UpgradeVersion",
+      "namespace": "wix",
+      "description": "Specifies a range of product versions to detect for upgrade processing. Used within the Upgrade element to find installed products matching the UpgradeCode."
+    },
+    {
+      "name": "Show",
+      "namespace": "wix",
+      "description": "Controls the visibility of a dialog control based on a condition. When the condition evaluates to true, the control is shown or hidden accordingly."
+    },
+    {
+      "name": "InstallUISequence",
+      "namespace": "wix",
+      "description": "Defines the sequence of actions to execute during the user interface phase of installation. Contains Custom, Show, and standard action elements."
+    },
+    {
+      "name": "InstallExecuteSequence",
+      "namespace": "wix",
+      "description": "Defines the sequence of actions to execute during the execution phase of installation. Contains Custom and standard action elements that run with elevated privileges."
+    },
+    {
+      "name": "AdminUISequence",
+      "namespace": "wix",
+      "description": "Defines the sequence of actions to execute during the user interface phase of administrative installation (creating a network image)."
+    },
+    {
+      "name": "AdminExecuteSequence",
+      "namespace": "wix",
+      "description": "Defines the sequence of actions to execute during the execution phase of administrative installation (creating a network image)."
+    },
+    {
+      "name": "AdvertiseExecuteSequence",
+      "namespace": "wix",
+      "description": "Defines the sequence of actions to execute during feature advertisement. Advertisement registers shortcuts and file associations without installing files."
+    },
+    {
+      "name": "EmbeddedChainer",
+      "namespace": "wix",
+      "description": "Defines an embedded chainer that runs after the MSI installation completes. Used for installing multiple packages in sequence from a single installer."
+    },
+    {
+      "name": "EmbeddedUI",
+      "namespace": "wix",
+      "description": "Embeds a custom external UI handler DLL in the MSI package. The embedded UI replaces the standard Windows Installer dialogs with a custom user interface."
+    },
+    {
+      "name": "Error",
+      "namespace": "wix",
+      "description": "Defines a localized error message that can be displayed during installation. Maps an error number to message text for the Error table."
+    },
+    {
+      "name": "Publish",
+      "namespace": "wix",
+      "description": "Publishes a ControlEvent when a dialog control is activated. Used to define button actions like navigating to another dialog or setting property values."
+    },
+    {
+      "name": "ProgressText",
+      "namespace": "wix",
+      "description": "Specifies the text displayed in the progress dialog during a specific action. Provides user feedback about what step is currently executing."
+    },
+    {
+      "name": "TextStyle",
+      "namespace": "wix",
+      "description": "Defines a reusable text style for installer dialogs. Specifies font name, size, color, and attributes like bold or italic for UI text rendering."
+    },
+    {
+      "name": "MessageQueuePermission",
+      "namespace": "msmq",
+      "description": "Grants permissions on a message queue to a user or group. Used with the MSMQ extension to configure queue access rights during installation."
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+[package]
+name = "wix-sublime"
+version = "0.1.0"
+edition = "2021"
+description = "Sublime Text package generator for WiX"
+license = "MIT"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+
+[[bin]]
+name = "wix-sublime"
+path = "src/main.rs"
+
+[lib]
+name = "wix_sublime"
+path = "src/lib.rs"

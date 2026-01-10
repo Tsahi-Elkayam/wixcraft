@@ -1,0 +1,93 @@
+{
+  "_source": "Microsoft Learn - Conditional Statement Syntax",
+  "_url": "https://learn.microsoft.com/en-us/windows/win32/msi/conditional-statement-syntax",
+  "logical_operators": [
+    {"operator": "NOT", "precedence": 1, "description": "Prefix unary NOT operator. Inverts boolean result.", "example": "NOT Installed", "notes": "Highest precedence among logical operators"},
+    {"operator": "AND", "precedence": 2, "description": "Logical AND. Both conditions must be true.", "example": "VersionNT >= 600 AND ALLUSERS", "notes": "Short-circuit evaluation"},
+    {"operator": "OR", "precedence": 3, "description": "Logical OR. Either condition can be true.", "example": "VersionNT = 501 OR VersionNT = 502", "notes": "Short-circuit evaluation"},
+    {"operator": "XOR", "precedence": 4, "description": "Logical exclusive OR. Exactly one must be true.", "example": "Property1 XOR Property2", "notes": "Rarely used"},
+    {"operator": "EQV", "precedence": 5, "description": "Logical equivalence. Both same (both true or both false).", "example": "Cond1 EQV Cond2", "notes": "Rarely used"},
+    {"operator": "IMP", "precedence": 6, "description": "Logical implication. If first is true, second must be true.", "example": "AdminUser IMP Privileged", "notes": "Lowest precedence, rarely used"}
+  ],
+  "comparison_operators": [
+    {"operator": "=", "description": "Equality comparison. Case-sensitive for strings.", "example": "Property = \"value\"", "string_behavior": "Case-sensitive comparison", "integer_behavior": "Numeric equality"},
+    {"operator": "<>", "description": "Inequality comparison.", "example": "Property <> \"value\"", "string_behavior": "Case-sensitive comparison", "integer_behavior": "Numeric inequality"},
+    {"operator": "<", "description": "Less than comparison.", "example": "VersionNT < 600", "string_behavior": "Lexicographic comparison", "integer_behavior": "Numeric less than"},
+    {"operator": ">", "description": "Greater than comparison.", "example": "VersionNT > 501", "string_behavior": "Lexicographic comparison", "integer_behavior": "Numeric greater than"},
+    {"operator": "<=", "description": "Less than or equal comparison.", "example": "VersionNT <= 602", "string_behavior": "Lexicographic comparison", "integer_behavior": "Numeric less than or equal"},
+    {"operator": ">=", "description": "Greater than or equal comparison.", "example": "VersionNT >= 600", "string_behavior": "Lexicographic comparison", "integer_behavior": "Numeric greater than or equal"},
+    {"operator": "><", "description": "Numeric comparison only. Greater than or less than (not equal).", "example": "Count >< 0", "string_behavior": "Not applicable", "integer_behavior": "Same as <>"},
+    {"operator": "~=", "description": "Case-insensitive equality.", "example": "Property ~= \"VALUE\"", "string_behavior": "Case-insensitive comparison", "integer_behavior": "Same as ="},
+    {"operator": "~<>", "description": "Case-insensitive inequality.", "example": "Property ~<> \"VALUE\"", "string_behavior": "Case-insensitive comparison", "integer_behavior": "Same as <>"},
+    {"operator": "~<", "description": "Case-insensitive less than.", "example": "Property ~< \"Z\"", "string_behavior": "Case-insensitive comparison", "integer_behavior": "Same as <"},
+    {"operator": "~>", "description": "Case-insensitive greater than.", "example": "Property ~> \"A\"", "string_behavior": "Case-insensitive comparison", "integer_behavior": "Same as >"},
+    {"operator": "~<=", "description": "Case-insensitive less than or equal.", "example": "Property ~<= \"Z\"", "string_behavior": "Case-insensitive comparison", "integer_behavior": "Same as <="},
+    {"operator": "~>=", "description": "Case-insensitive greater than or equal.", "example": "Property ~>= \"A\"", "string_behavior": "Case-insensitive comparison", "integer_behavior": "Same as >="}
+  ],
+  "substring_operators": [
+    {"operator": "><", "description": "Contains substring.", "example": "Property >< \"substr\"", "notes": "True if left contains right as substring"},
+    {"operator": "<<", "description": "Starts with substring.", "example": "Property << \"prefix\"", "notes": "True if left starts with right"},
+    {"operator": ">>", "description": "Ends with substring.", "example": "Property >> \"suffix\"", "notes": "True if left ends with right"},
+    {"operator": "~><", "description": "Case-insensitive contains.", "example": "Property ~>< \"SUBSTR\"", "notes": "Case-insensitive substring search"},
+    {"operator": "~<<", "description": "Case-insensitive starts with.", "example": "Property ~<< \"PREFIX\"", "notes": "Case-insensitive prefix match"},
+    {"operator": "~>>", "description": "Case-insensitive ends with.", "example": "Property ~>> \"SUFFIX\"", "notes": "Case-insensitive suffix match"}
+  ],
+  "bitwise_operators": [
+    {"operator": "><", "description": "Bitwise AND with non-zero result.", "example": "Property >< 4", "notes": "True if (left AND right) != 0"},
+    {"operator": "<<", "description": "Bitwise left shift comparison.", "example": "Property << 2", "notes": "True if left << right evaluates to non-zero"},
+    {"operator": ">>", "description": "Bitwise right shift comparison.", "example": "Property >> 2", "notes": "True if left >> right evaluates to non-zero"}
+  ],
+  "feature_component_operators": [
+    {"operator": "&", "prefix": true, "description": "Feature action state.", "example": "&FeatureName = 3", "states": [
+      {"value": -1, "name": "INSTALLSTATE_UNKNOWN", "description": "No action to be taken"},
+      {"value": 1, "name": "INSTALLSTATE_ADVERTISED", "description": "Feature will be advertised"},
+      {"value": 2, "name": "INSTALLSTATE_ABSENT", "description": "Feature will be removed"},
+      {"value": 3, "name": "INSTALLSTATE_LOCAL", "description": "Feature will be installed locally"},
+      {"value": 4, "name": "INSTALLSTATE_SOURCE", "description": "Feature will run from source"}
+    ]},
+    {"operator": "!", "prefix": true, "description": "Feature installed state.", "example": "!FeatureName = 3", "notes": "Current installed state of feature"},
+    {"operator": "$", "prefix": true, "description": "Component action state.", "example": "$ComponentName = 3", "states": [
+      {"value": -1, "name": "INSTALLSTATE_UNKNOWN", "description": "No action"},
+      {"value": 2, "name": "INSTALLSTATE_ABSENT", "description": "Component will be removed"},
+      {"value": 3, "name": "INSTALLSTATE_LOCAL", "description": "Component will be installed locally"},
+      {"value": 4, "name": "INSTALLSTATE_SOURCE", "description": "Component will run from source"}
+    ]},
+    {"operator": "?", "prefix": true, "description": "Component installed state.", "example": "?ComponentName = 3", "notes": "Current installed state of component"}
+  ],
+  "property_evaluation": [
+    {"syntax": "PropertyName", "description": "True if property is set and not empty string", "example": "ALLUSERS", "notes": "Most common pattern for checking if property exists"},
+    {"syntax": "PropertyName = \"value\"", "description": "True if property equals value (case-sensitive)", "example": "ALLUSERS = \"1\"", "notes": "String comparison"},
+    {"syntax": "PropertyName = 1", "description": "True if property equals numeric value", "example": "UILevel = 2", "notes": "Numeric comparison"},
+    {"syntax": "NOT PropertyName", "description": "True if property is not set or empty", "example": "NOT Installed", "notes": "Common for first-time install check"},
+    {"syntax": "(condition)", "description": "Parentheses for grouping", "example": "(A OR B) AND C", "notes": "Use for complex conditions"}
+  ],
+  "common_patterns": [
+    {"name": "First install only", "condition": "NOT Installed", "description": "Runs only on first installation, not upgrade/repair"},
+    {"name": "Upgrade only", "condition": "Installed AND NOT REINSTALL", "description": "Runs only during upgrade"},
+    {"name": "Uninstall only", "condition": "REMOVE = \"ALL\"", "description": "Runs only during complete uninstall"},
+    {"name": "Repair only", "condition": "REINSTALL", "description": "Runs only during repair"},
+    {"name": "Install or upgrade", "condition": "NOT REMOVE", "description": "Runs on install and upgrade, not uninstall"},
+    {"name": "Per-machine install", "condition": "ALLUSERS = 1", "description": "Runs only for per-machine installation"},
+    {"name": "Admin install", "condition": "ACTION = \"ADMIN\"", "description": "Runs only during administrative install"},
+    {"name": "UI install", "condition": "UILevel > 2", "description": "Runs only when UI is displayed"},
+    {"name": "Silent install", "condition": "UILevel = 2", "description": "Runs only during silent installation"},
+    {"name": "Windows Vista or later", "condition": "VersionNT >= 600", "description": "OS version check"},
+    {"name": "64-bit OS", "condition": "VersionNT64", "description": "True on 64-bit Windows"},
+    {"name": "Feature selected", "condition": "&MyFeature = 3", "description": "Feature being installed locally"},
+    {"name": "Feature installed", "condition": "!MyFeature = 3", "description": "Feature currently installed"},
+    {"name": "Privileged install", "condition": "Privileged", "description": "Running with admin rights"},
+    {"name": "Property has value", "condition": "MYPROP ~= \"expected\"", "description": "Case-insensitive property check"}
+  ],
+  "special_properties": [
+    {"name": "Installed", "description": "Set if product is already installed", "usage": "NOT Installed (first install)"},
+    {"name": "REINSTALL", "description": "Set during repair operations", "usage": "REINSTALL (repair mode)"},
+    {"name": "REMOVE", "description": "Features being removed", "usage": "REMOVE = \"ALL\" (uninstall)"},
+    {"name": "ACTION", "description": "Current action (INSTALL, ADMIN, ADVERTISE)", "usage": "ACTION = \"INSTALL\""},
+    {"name": "UILevel", "description": "UI level (2=none, 3=basic, 4=reduced, 5=full)", "usage": "UILevel >= 3"},
+    {"name": "Privileged", "description": "Running with elevated privileges", "usage": "Privileged (has admin rights)"},
+    {"name": "AdminUser", "description": "User is administrator", "usage": "AdminUser"},
+    {"name": "ALLUSERS", "description": "Per-machine (1) or per-user (empty/2)", "usage": "ALLUSERS = 1"},
+    {"name": "VersionNT", "description": "Windows NT version * 100 + minor", "usage": "VersionNT >= 603"},
+    {"name": "VersionNT64", "description": "Set on 64-bit Windows", "usage": "VersionNT64"}
+  ]
+}

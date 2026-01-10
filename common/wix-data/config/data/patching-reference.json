@@ -1,0 +1,159 @@
+{
+  "_description": "MSI Patching and Transform reference for WiX",
+  "patch_types": {
+    "minor_upgrade_patch": {
+      "description": "Patch that performs minor upgrade (same ProductCode, different Version)",
+      "requirements": [
+        "Same ProductCode between base and target",
+        "Different ProductVersion",
+        "Same UpgradeCode",
+        "No component GUID changes",
+        "No feature hierarchy changes"
+      ],
+      "use_cases": ["Bug fixes", "Small feature additions", "Security updates"]
+    },
+    "small_update_patch": {
+      "description": "Patch that updates files without changing ProductVersion",
+      "requirements": [
+        "Same ProductCode, ProductVersion, and UpgradeCode",
+        "Only file content changes allowed",
+        "No schema changes"
+      ],
+      "use_cases": ["Hotfixes", "Emergency file replacements"]
+    },
+    "major_upgrade_patch": {
+      "description": "Rare - patch that triggers major upgrade behavior",
+      "requirements": ["Different ProductCode", "Typically avoided in favor of full major upgrade"],
+      "use_cases": ["Complex upgrade scenarios", "Rarely used"]
+    }
+  },
+  "patch_creation_workflow": [
+    {"step": 1, "action": "Create baseline MSI", "notes": "Build the original released version"},
+    {"step": 2, "action": "Create updated MSI", "notes": "Build the patched version with same ProductCode"},
+    {"step": 3, "action": "Create patch", "notes": "Use 'wix build' with .wixmsp output or PatchCreation element"},
+    {"step": 4, "action": "Sign patch", "notes": "Sign the MSP file for distribution"},
+    {"step": 5, "action": "Test patch", "notes": "Apply to baseline installation, test functionality"}
+  ],
+  "msp_elements": {
+    "Patch": {
+      "description": "Root element for patch definition",
+      "attributes": [
+        {"name": "AllowRemoval", "type": "yesno", "description": "Allow patch uninstallation. Default 'yes'."},
+        {"name": "Classification", "values": ["Hotfix", "Security", "Update", "ServicePack"], "description": "Patch classification for ARP."},
+        {"name": "Description", "type": "string", "description": "Patch description."},
+        {"name": "DisplayName", "type": "string", "description": "Patch name in ARP."},
+        {"name": "Manufacturer", "type": "string", "description": "Patch manufacturer."},
+        {"name": "MoreInfoURL", "type": "string", "description": "URL for more information."}
+      ]
+    },
+    "PatchFamily": {
+      "description": "Groups patch content and targets specific products",
+      "attributes": [
+        {"name": "Id", "type": "identifier", "description": "Unique family identifier."},
+        {"name": "Version", "type": "version", "description": "Family version for sequencing."},
+        {"name": "Supersede", "type": "yesno", "description": "Supersede earlier family versions."},
+        {"name": "ProductCode", "type": "guid", "description": "Target ProductCode."}
+      ]
+    },
+    "PatchBaseline": {
+      "description": "Defines the baseline (original) MSI for comparison",
+      "attributes": [
+        {"name": "Id", "type": "identifier", "description": "Baseline identifier."}
+      ]
+    },
+    "TargetProductCode": {
+      "description": "Product this patch applies to",
+      "attributes": [
+        {"name": "Id", "type": "guid", "description": "ProductCode to target. Use '*' for all products with matching UpgradeCode."}
+      ]
+    }
+  },
+  "transform_creation": {
+    "description": "Transforms (MST files) modify MSI behavior without changing the MSI",
+    "use_cases": [
+      "Change default property values",
+      "Customize for different environments",
+      "Set organization-specific settings",
+      "Modify feature states",
+      "Add language resources"
+    ],
+    "creation_methods": [
+      {"method": "wix msi transform", "syntax": "wix msi transform base.msi modified.msi -o changes.mst"},
+      {"method": "Orca", "notes": "Microsoft's MSI editor can create transforms via UI"},
+      {"method": "WiX PatchCreation", "notes": "Embedded in WiX authoring"}
+    ],
+    "application": [
+      {"method": "Command line", "syntax": "msiexec /i Product.msi TRANSFORMS=changes.mst"},
+      {"method": "Multiple transforms", "syntax": "msiexec /i Product.msi TRANSFORMS=t1.mst;t2.mst"},
+      {"method": "Embedded", "notes": "Can embed transform in MSI for secure transforms"}
+    ]
+  },
+  "transform_validation_flags": {
+    "description": "Validation flags control when transform can be applied",
+    "flags": [
+      {"name": "Language", "value": 1, "description": "Validate transform language matches package language"},
+      {"name": "Product", "value": 2, "description": "Validate ProductCode matches"},
+      {"name": "MajorVer", "value": 8, "description": "Check major version matches"},
+      {"name": "MinorVer", "value": 16, "description": "Check minor version matches"},
+      {"name": "UpdateVer", "value": 32, "description": "Check update version matches"},
+      {"name": "GreaterThan", "value": 64, "description": "Applied version >= original version"},
+      {"name": "LessThan", "value": 128, "description": "Applied version <= original version"},
+      {"name": "Equals", "value": 256, "description": "Versions must be equal"},
+      {"name": "UpgradeCode", "value": 512, "description": "Validate UpgradeCode matches"}
+    ],
+    "common_combinations": [
+      {"name": "Product+Language", "value": 3, "description": "Standard validation"},
+      {"name": "Product+UpgradeCode", "value": 514, "description": "Common for enterprise deployments"}
+    ]
+  },
+  "patch_sequencing": {
+    "description": "How patches are ordered and applied",
+    "concepts": [
+      {"name": "PatchFamily", "description": "Patches in same family are sequenced by Version attribute"},
+      {"name": "Supersedence", "description": "Newer patch can supersede older, making it unnecessary"},
+      {"name": "Obsolescence", "description": "Patch can mark another as obsolete and remove it"},
+      {"name": "Baseline", "description": "Original MSI version the patch is relative to"}
+    ],
+    "best_practices": [
+      "Assign logical version numbers to patch families",
+      "Always test patch on clean baseline installation",
+      "Test cumulative scenarios (base + patch1 + patch2)",
+      "Document which patches supersede which",
+      "Keep baseline MSI available for future patches"
+    ]
+  },
+  "common_issues": [
+    {
+      "issue": "Patch fails with error 1635",
+      "cause": "Patch package cannot be opened, usually corrupt or unsigned",
+      "solution": "Ensure patch is properly signed and not corrupted"
+    },
+    {
+      "issue": "Patch fails with error 1642",
+      "cause": "Patch does not apply to installed product",
+      "solution": "Check ProductCode and UpgradeCode match"
+    },
+    {
+      "issue": "Patch uninstall not working",
+      "cause": "AllowRemoval set to 'no' or MsiPatchRemoval policy blocking",
+      "solution": "Set AllowRemoval='yes' on Patch element"
+    },
+    {
+      "issue": "Transform ignored",
+      "cause": "Transform validation failed or transform path incorrect",
+      "solution": "Check TRANSFORMS path and validation flags"
+    },
+    {
+      "issue": "Component key path changed error",
+      "cause": "KeyPath or ComponentId changed between versions",
+      "solution": "Maintain stable KeyPaths and Component GUIDs"
+    }
+  ],
+  "msiexec_patch_options": [
+    {"option": "/p", "syntax": "/p <patch.msp>", "description": "Apply patch to product"},
+    {"option": "/a /p", "syntax": "/a <product.msi> /p <patch.msp>", "description": "Apply patch to admin image"},
+    {"option": "PATCH=", "syntax": "PATCH=<path1>;<path2>", "description": "Apply multiple patches"},
+    {"option": "REINSTALL=ALL", "syntax": "REINSTALL=ALL REINSTALLMODE=omus", "description": "Force reinstall to apply patch"},
+    {"option": "/package {guid} /uninstall {patchguid}", "syntax": "msiexec /package {product} /uninstall {patch}", "description": "Uninstall specific patch"}
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "_description": "WiX version migration mappings for v3 to v4 to v5",
+  "v3_to_v4": {
+    "namespace_changes": [
+      {"from": "http://schemas.microsoft.com/wix/2006/wi", "to": "http://wixtoolset.org/schemas/v4/wxs"},
+      {"from": "http://schemas.microsoft.com/wix/UtilExtension", "to": "http://wixtoolset.org/schemas/v4/wxs/util"},
+      {"from": "http://schemas.microsoft.com/wix/NetFxExtension", "to": "http://wixtoolset.org/schemas/v4/wxs/netfx"},
+      {"from": "http://schemas.microsoft.com/wix/BalExtension", "to": "http://wixtoolset.org/schemas/v4/wxs/bal"},
+      {"from": "http://schemas.microsoft.com/wix/IIsExtension", "to": "http://wixtoolset.org/schemas/v4/wxs/iis"},
+      {"from": "http://schemas.microsoft.com/wix/SqlExtension", "to": "http://wixtoolset.org/schemas/v4/wxs/sql"},
+      {"from": "http://schemas.microsoft.com/wix/FirewallExtension", "to": "http://wixtoolset.org/schemas/v4/wxs/firewall"},
+      {"from": "http://schemas.microsoft.com/wix/HttpExtension", "to": "http://wixtoolset.org/schemas/v4/wxs/http"},
+      {"from": "http://schemas.microsoft.com/wix/ComPlusExtension", "to": "http://wixtoolset.org/schemas/v4/wxs/complus"},
+      {"from": "http://schemas.microsoft.com/wix/MsmqExtension", "to": "http://wixtoolset.org/schemas/v4/wxs/msmq"},
+      {"from": "http://schemas.microsoft.com/wix/VSExtension", "to": "http://wixtoolset.org/schemas/v4/wxs/vs"}
+    ],
+    "element_renames": [
+      {"from": "Product", "to": "Package", "notes": "Product element renamed to Package"},
+      {"from": "Wix", "to": "Wix", "notes": "Wix element unchanged but namespace updated"}
+    ],
+    "attribute_changes": [
+      {"element": "Package", "from": "Id", "to": "ProductCode", "notes": "Attribute renamed for clarity"},
+      {"element": "Package", "from": "Manufacturer", "to": "Manufacturer", "notes": "Now required"},
+      {"element": "Package", "from": "InstallerVersion", "to": "InstallerVersion", "notes": "Default changed to 500"},
+      {"element": "File", "from": "KeyPath", "to": "KeyPath", "notes": "Values changed from 'yes'/'no' to yesno type"},
+      {"element": "Component", "from": "Win64", "to": "Bitness", "notes": "Win64='yes' becomes Bitness='always64'"},
+      {"element": "CustomAction", "from": "BinaryKey", "to": "BinaryRef", "notes": "Attribute renamed"},
+      {"element": "CustomAction", "from": "FileKey", "to": "FileRef", "notes": "Attribute renamed"},
+      {"element": "CustomAction", "from": "PropertyRef", "to": "Property", "notes": "Attribute renamed"},
+      {"element": "RegistrySearch", "from": "Type", "to": "Type", "notes": "Value 'raw' replaced with 'value'"},
+      {"element": "Shortcut", "from": "Advertise", "to": "Advertise", "notes": "Default changed"}
+    ],
+    "element_additions": [
+      {"element": "StandardDirectory", "notes": "New element for referencing standard Windows directories"},
+      {"element": "SummaryInformation", "notes": "New element for MSI summary stream properties"},
+      {"element": "Launch", "notes": "New element for post-install launch"},
+      {"element": "Files", "notes": "New element for simplified file harvesting"}
+    ],
+    "element_removals": [
+      {"element": "WixVariable", "notes": "Removed, use <?define?> preprocessor instead"},
+      {"element": "PropertyRef", "notes": "Removed, properties auto-referenced"},
+      {"element": "DirectorySearch", "notes": "Merged into DirectorySearchRef"},
+      {"element": "RegistrySearchRef", "notes": "Removed, use RegistrySearch directly"}
+    ],
+    "tool_changes": [
+      {"from": "candle.exe", "to": "wix build", "notes": "Compiler integrated into wix tool"},
+      {"from": "light.exe", "to": "wix build", "notes": "Linker integrated into wix tool"},
+      {"from": "dark.exe", "to": "wix msi decompile", "notes": "Decompiler as subcommand"},
+      {"from": "heat.exe", "to": "wix build -harvester", "notes": "Harvester integrated"},
+      {"from": "insignia.exe", "to": "wix msi inscribe", "notes": "Cabinet signing as subcommand"},
+      {"from": "torch.exe", "to": "wix msi transform", "notes": "Transform tool as subcommand"},
+      {"from": "smoke.exe", "to": "wix msi validate", "notes": "Validation as subcommand"}
+    ],
+    "behavior_changes": [
+      {"area": "DefaultGuid", "notes": "Components default to Guid='*' for auto-generation"},
+      {"area": "Compression", "notes": "Default compression is now 'high'"},
+      {"area": "StandardDirectories", "notes": "Use StandardDirectory element instead of hard-coded IDs like 'ProgramFilesFolder'"},
+      {"area": "MajorUpgrade", "notes": "MajorUpgrade now has better defaults, less configuration needed"},
+      {"area": "MediaTemplate", "notes": "MediaTemplate is now the default, explicit Media elements optional"},
+      {"area": "FeatureRef", "notes": "ComponentRef can be placed directly under Feature without ComponentGroup"}
+    ]
+  },
+  "v4_to_v5": {
+    "namespace_changes": [
+      {"from": "http://wixtoolset.org/schemas/v4/wxs", "to": "http://wixtoolset.org/schemas/v4/wxs", "notes": "Namespace unchanged in v5"}
+    ],
+    "element_additions": [
+      {"element": "Files", "notes": "Simplified file element, auto-creates Component"},
+      {"element": "DotNetCompatibilityCheck", "notes": ".NET compatibility verification"},
+      {"element": "DotNetCoreSdkFeatureBandSearch", "notes": ".NET SDK feature band detection"},
+      {"element": "WixPrerequisiteBootstrapperApplication", "notes": "Replaces WixManagedBootstrapperApplicationHost"},
+      {"element": "BootstrapperExtension", "notes": "Renamed from BundleExtension for clarity"},
+      {"element": "BootstrapperExtensionRef", "notes": "Renamed from BundleExtensionRef"}
+    ],
+    "element_removals": [
+      {"element": "WixDifxAppExtension", "notes": "Driver install extension removed, use PnP driver installation instead"},
+      {"element": "BundleExtension", "notes": "Renamed to BootstrapperExtension"},
+      {"element": "BundleExtensionRef", "notes": "Renamed to BootstrapperExtensionRef"}
+    ],
+    "attribute_changes": [
+      {"element": "Package", "attribute": "Id", "notes": "New attribute for global package identifier"},
+      {"element": "Bundle", "attribute": "Id", "notes": "New attribute for global bundle identifier"},
+      {"element": "File", "attribute": "Bitness", "notes": "Can be used on File outside Component for simplified authoring"}
+    ],
+    "behavior_changes": [
+      {"area": "DefaultFeature", "notes": "Components without explicit feature get default feature"},
+      {"area": "DefaultInstallFolder", "notes": "INSTALLFOLDER automatically defined if not present"},
+      {"area": "VirtualSymbols", "notes": "Support for virtual override modifiers in symbols"},
+      {"area": "DefaultMajorUpgrade", "notes": "MajorUpgrade auto-added if UpgradeCode present but no MajorUpgrade element"},
+      {"area": "SimplifiedFiles", "notes": "File element can appear outside Component, auto-creates component"}
+    ],
+    "tool_changes": [
+      {"area": "WixNativeImage", "notes": "Removed, use standard .NET SDK publishing"},
+      {"area": "WixManagedBootstrapperApplicationHost", "notes": "Deprecated, use WixPrerequisiteBootstrapperApplication"}
+    ]
+  },
+  "common_migration_issues": [
+    {
+      "issue": "Namespace not updated",
+      "symptom": "Elements not recognized, xmlns error",
+      "solution": "Update xmlns to http://wixtoolset.org/schemas/v4/wxs"
+    },
+    {
+      "issue": "Product element not found",
+      "symptom": "Error: 'Product' is not a valid element",
+      "solution": "Rename Product to Package"
+    },
+    {
+      "issue": "Win64 attribute error",
+      "symptom": "Win64 attribute not recognized",
+      "solution": "Replace Win64='yes' with Bitness='always64'"
+    },
+    {
+      "issue": "BinaryKey attribute error",
+      "symptom": "BinaryKey not valid on CustomAction",
+      "solution": "Rename BinaryKey to BinaryRef"
+    },
+    {
+      "issue": "Directory ID not found",
+      "symptom": "Error referencing ProgramFilesFolder",
+      "solution": "Use <StandardDirectory Id='ProgramFilesFolder'> wrapper"
+    },
+    {
+      "issue": "WixVariable not recognized",
+      "symptom": "WixVariable element causes error",
+      "solution": "Use <?define Name=Value?> preprocessor directive"
+    },
+    {
+      "issue": "Extension namespace mismatch",
+      "symptom": "Extension elements not recognized",
+      "solution": "Update extension namespaces (e.g., util: to http://wixtoolset.org/schemas/v4/wxs/util)"
+    },
+    {
+      "issue": "heat.exe not found",
+      "symptom": "Build script fails finding heat.exe",
+      "solution": "Use 'wix build' with file harvesting or update to new harvester API"
+    }
+  ]
+}

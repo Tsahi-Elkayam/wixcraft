@@ -1,0 +1,654 @@
+{
+  "_source": "WiX version migration notes",
+  "_description": "Migration guidance for upgrading between WiX versions",
+  "migrations": [
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "attribute_added",
+      "old_value": null,
+      "new_value": "Scope",
+      "notes": "Migration from v3 to v4: attribute_added"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "attribute_changed",
+      "old_value": "BinaryKey",
+      "new_value": "BinaryRef",
+      "notes": "Migration from v3 to v4: attribute_changed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "attribute_changed",
+      "old_value": "FileKey",
+      "new_value": "FileRef",
+      "notes": "Migration from v3 to v4: attribute_changed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "attribute_changed",
+      "old_value": "PropertyRef",
+      "new_value": "Property",
+      "notes": "Migration from v3 to v4: attribute_changed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "attribute_changed",
+      "old_value": "AllowAbsent",
+      "new_value": "AllowAbsent",
+      "notes": "Migration from v3 to v4: attribute_changed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "attribute_changed",
+      "old_value": "Package/@Id",
+      "new_value": "Package/@ProductCode",
+      "notes": "Attribute renamed for clarity"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "attribute_changed",
+      "old_value": "Package/@Manufacturer",
+      "new_value": "Package/@Manufacturer",
+      "notes": "Now required"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "attribute_changed",
+      "old_value": "Package/@InstallerVersion",
+      "new_value": "Package/@InstallerVersion",
+      "notes": "Default changed to 500"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "attribute_changed",
+      "old_value": "File/@KeyPath",
+      "new_value": "File/@KeyPath",
+      "notes": "Values changed from 'yes'/'no' to yesno type"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "attribute_changed",
+      "old_value": "Component/@Win64",
+      "new_value": "Component/@Bitness",
+      "notes": "Win64='yes' becomes Bitness='always64'"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "attribute_changed",
+      "old_value": "CustomAction/@BinaryKey",
+      "new_value": "CustomAction/@BinaryRef",
+      "notes": "Attribute renamed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "attribute_changed",
+      "old_value": "CustomAction/@FileKey",
+      "new_value": "CustomAction/@FileRef",
+      "notes": "Attribute renamed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "attribute_changed",
+      "old_value": "CustomAction/@PropertyRef",
+      "new_value": "CustomAction/@Property",
+      "notes": "Attribute renamed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "attribute_changed",
+      "old_value": "RegistrySearch/@Type",
+      "new_value": "RegistrySearch/@Type",
+      "notes": "Value 'raw' replaced with 'value'"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "attribute_changed",
+      "old_value": "Shortcut/@Advertise",
+      "new_value": "Shortcut/@Advertise",
+      "notes": "Default changed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "attribute_removed",
+      "old_value": "Id",
+      "new_value": null,
+      "notes": "Migration from v3 to v4: attribute_removed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "attribute_removed",
+      "old_value": "Compressed",
+      "new_value": null,
+      "notes": "Migration from v3 to v4: attribute_removed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "attribute_removed",
+      "old_value": "FileSource",
+      "new_value": null,
+      "notes": "Migration from v3 to v4: attribute_removed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "attribute_renamed",
+      "old_value": "InstallerVersion",
+      "new_value": "InstallerVersion",
+      "notes": "Migration from v3 to v4: attribute_renamed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "attribute_renamed",
+      "old_value": "KeyPath",
+      "new_value": "KeyPath",
+      "notes": "Migration from v3 to v4: attribute_renamed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "element_added",
+      "old_value": null,
+      "new_value": "StandardDirectory",
+      "notes": "Migration from v3 to v4: element_added"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "element_changed",
+      "old_value": null,
+      "new_value": null,
+      "notes": "Migration from v3 to v4: element_changed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "element_removed",
+      "old_value": "WixVariable",
+      "new_value": null,
+      "notes": "Migration from v3 to v4: element_removed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "element_renamed",
+      "old_value": "Product",
+      "new_value": "Package",
+      "notes": "Migration from v3 to v4: element_renamed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "element_renamed",
+      "old_value": "Module",
+      "new_value": "Module",
+      "notes": "Migration from v3 to v4: element_renamed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "element_renamed",
+      "old_value": "EmbeddedChainer",
+      "new_value": "BundlePackagePayload",
+      "notes": "Migration from v3 to v4: element_renamed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "element_renamed",
+      "old_value": "UIRef/@Id='WixUI_Mondo'",
+      "new_value": "ui:WixUI[@Id='WixUI_Mondo']",
+      "notes": "Migration from v3 to v4: element_renamed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "element_renamed",
+      "old_value": "Product",
+      "new_value": "Package",
+      "notes": "Product element renamed to Package"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "element_renamed",
+      "old_value": "Wix",
+      "new_value": "Wix",
+      "notes": "Wix element unchanged but namespace updated"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "extension_namespace",
+      "old_value": "http://schemas.microsoft.com/wix/UtilExtension",
+      "new_value": "http://wixtoolset.org/schemas/v4/wxs/util",
+      "notes": "Migration from v3 to v4: extension_namespace"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "extension_namespace",
+      "old_value": "http://schemas.microsoft.com/wix/NetFxExtension",
+      "new_value": "http://wixtoolset.org/schemas/v4/wxs/netfx",
+      "notes": "Migration from v3 to v4: extension_namespace"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "extension_namespace",
+      "old_value": "http://schemas.microsoft.com/wix/BalExtension",
+      "new_value": "http://wixtoolset.org/schemas/v4/wxs/bal",
+      "notes": "Migration from v3 to v4: extension_namespace"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "file_extension",
+      "old_value": ".wxs",
+      "new_value": ".wxs",
+      "notes": "Migration from v3 to v4: file_extension"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "file_extension",
+      "old_value": ".wixobj",
+      "new_value": ".wixobj",
+      "notes": "Migration from v3 to v4: file_extension"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "file_extension",
+      "old_value": ".wixlib",
+      "new_value": ".wixlib",
+      "notes": "Migration from v3 to v4: file_extension"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "namespace",
+      "old_value": "http://schemas.microsoft.com/wix/2006/wi",
+      "new_value": "http://wixtoolset.org/schemas/v4/wxs",
+      "notes": "Namespace changed from 'http://schemas.microsoft.com/wix/2006/wi' to 'http://wixtoolset.org/schemas/v4/wxs'. Update xmlns declarations."
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "namespace",
+      "old_value": "http://schemas.microsoft.com/wix/2006/wi",
+      "new_value": "http://wixtoolset.org/schemas/v4/wxs",
+      "notes": "Namespace changed from 'http://schemas.microsoft.com/wix/2006/wi' to 'http://wixtoolset.org/schemas/v4/wxs'. Update xmlns declarations."
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "namespace",
+      "old_value": "http://schemas.microsoft.com/wix/UtilExtension",
+      "new_value": "http://wixtoolset.org/schemas/v4/wxs/util",
+      "notes": "Namespace changed from 'http://schemas.microsoft.com/wix/UtilExtension' to 'http://wixtoolset.org/schemas/v4/wxs/util'. Update xmlns declarations."
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "namespace",
+      "old_value": "http://schemas.microsoft.com/wix/NetFxExtension",
+      "new_value": "http://wixtoolset.org/schemas/v4/wxs/netfx",
+      "notes": "Namespace changed from 'http://schemas.microsoft.com/wix/NetFxExtension' to 'http://wixtoolset.org/schemas/v4/wxs/netfx'. Update xmlns declarations."
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "namespace",
+      "old_value": "http://schemas.microsoft.com/wix/BalExtension",
+      "new_value": "http://wixtoolset.org/schemas/v4/wxs/bal",
+      "notes": "Namespace changed from 'http://schemas.microsoft.com/wix/BalExtension' to 'http://wixtoolset.org/schemas/v4/wxs/bal'. Update xmlns declarations."
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "namespace",
+      "old_value": "http://schemas.microsoft.com/wix/IIsExtension",
+      "new_value": "http://wixtoolset.org/schemas/v4/wxs/iis",
+      "notes": "Namespace changed from 'http://schemas.microsoft.com/wix/IIsExtension' to 'http://wixtoolset.org/schemas/v4/wxs/iis'. Update xmlns declarations."
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "namespace",
+      "old_value": "http://schemas.microsoft.com/wix/SqlExtension",
+      "new_value": "http://wixtoolset.org/schemas/v4/wxs/sql",
+      "notes": "Namespace changed from 'http://schemas.microsoft.com/wix/SqlExtension' to 'http://wixtoolset.org/schemas/v4/wxs/sql'. Update xmlns declarations."
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "namespace",
+      "old_value": "http://schemas.microsoft.com/wix/FirewallExtension",
+      "new_value": "http://wixtoolset.org/schemas/v4/wxs/firewall",
+      "notes": "Namespace changed from 'http://schemas.microsoft.com/wix/FirewallExtension' to 'http://wixtoolset.org/schemas/v4/wxs/firewall'. Update xmlns declarations."
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "namespace",
+      "old_value": "http://schemas.microsoft.com/wix/HttpExtension",
+      "new_value": "http://wixtoolset.org/schemas/v4/wxs/http",
+      "notes": "Namespace changed from 'http://schemas.microsoft.com/wix/HttpExtension' to 'http://wixtoolset.org/schemas/v4/wxs/http'. Update xmlns declarations."
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "namespace",
+      "old_value": "http://schemas.microsoft.com/wix/ComPlusExtension",
+      "new_value": "http://wixtoolset.org/schemas/v4/wxs/complus",
+      "notes": "Namespace changed from 'http://schemas.microsoft.com/wix/ComPlusExtension' to 'http://wixtoolset.org/schemas/v4/wxs/complus'. Update xmlns declarations."
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "namespace",
+      "old_value": "http://schemas.microsoft.com/wix/MsmqExtension",
+      "new_value": "http://wixtoolset.org/schemas/v4/wxs/msmq",
+      "notes": "Namespace changed from 'http://schemas.microsoft.com/wix/MsmqExtension' to 'http://wixtoolset.org/schemas/v4/wxs/msmq'. Update xmlns declarations."
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "namespace",
+      "old_value": "http://schemas.microsoft.com/wix/VSExtension",
+      "new_value": "http://wixtoolset.org/schemas/v4/wxs/vs",
+      "notes": "Namespace changed from 'http://schemas.microsoft.com/wix/VSExtension' to 'http://wixtoolset.org/schemas/v4/wxs/vs'. Update xmlns declarations."
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "tool_removed",
+      "old_value": "lit.exe",
+      "new_value": null,
+      "notes": "Migration from v3 to v4: tool_removed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "tool_renamed",
+      "old_value": "candle.exe",
+      "new_value": "wix build",
+      "notes": "Migration from v3 to v4: tool_renamed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "tool_renamed",
+      "old_value": "light.exe",
+      "new_value": "wix build",
+      "notes": "Migration from v3 to v4: tool_renamed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "tool_renamed",
+      "old_value": "heat.exe",
+      "new_value": "wix heat",
+      "notes": "Migration from v3 to v4: tool_renamed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "tool_renamed",
+      "old_value": "dark.exe",
+      "new_value": "wix decompile",
+      "notes": "Migration from v3 to v4: tool_renamed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "tool_renamed",
+      "old_value": "torch.exe",
+      "new_value": "wix diff",
+      "notes": "Migration from v3 to v4: tool_renamed"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "tool_renamed",
+      "old_value": "candle.exe",
+      "new_value": "wix build",
+      "notes": "Compiler integrated into wix tool"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "tool_renamed",
+      "old_value": "light.exe",
+      "new_value": "wix build",
+      "notes": "Linker integrated into wix tool"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "tool_renamed",
+      "old_value": "dark.exe",
+      "new_value": "wix msi decompile",
+      "notes": "Decompiler as subcommand"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "tool_renamed",
+      "old_value": "heat.exe",
+      "new_value": "wix build -harvester",
+      "notes": "Harvester integrated"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "tool_renamed",
+      "old_value": "insignia.exe",
+      "new_value": "wix msi inscribe",
+      "notes": "Cabinet signing as subcommand"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "tool_renamed",
+      "old_value": "torch.exe",
+      "new_value": "wix msi transform",
+      "notes": "Transform tool as subcommand"
+    },
+    {
+      "from_version": "v3",
+      "to_version": "v4",
+      "change_type": "tool_renamed",
+      "old_value": "smoke.exe",
+      "new_value": "wix msi validate",
+      "notes": "Validation as subcommand"
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "added",
+      "old_value": null,
+      "new_value": "Files",
+      "notes": "New element/attribute 'Files' available in v5."
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "added",
+      "old_value": null,
+      "new_value": "default_major_upgrade",
+      "notes": "New element/attribute 'default_major_upgrade' available in v5."
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "added",
+      "old_value": null,
+      "new_value": "default_installfolder",
+      "notes": "New element/attribute 'default_installfolder' available in v5."
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "added",
+      "old_value": null,
+      "new_value": "virtual_override_modifiers",
+      "notes": "New element/attribute 'virtual_override_modifiers' available in v5."
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "added",
+      "old_value": null,
+      "new_value": "DotNetCompatibilityCheck",
+      "notes": "New element/attribute 'DotNetCompatibilityCheck' available in v5."
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "added",
+      "old_value": null,
+      "new_value": "DotNetCoreSdkFeatureBandSearch",
+      "notes": "New element/attribute 'DotNetCoreSdkFeatureBandSearch' available in v5."
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "added",
+      "old_value": null,
+      "new_value": "Files",
+      "notes": "Simplified file element, auto-creates Component"
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "added",
+      "old_value": null,
+      "new_value": "DotNetCompatibilityCheck",
+      "notes": ".NET compatibility verification"
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "added",
+      "old_value": null,
+      "new_value": "DotNetCoreSdkFeatureBandSearch",
+      "notes": ".NET SDK feature band detection"
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "added",
+      "old_value": null,
+      "new_value": "WixPrerequisiteBootstrapperApplication",
+      "notes": "Replaces WixManagedBootstrapperApplicationHost"
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "added",
+      "old_value": null,
+      "new_value": "BootstrapperExtension",
+      "notes": "Renamed from BundleExtension for clarity"
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "added",
+      "old_value": null,
+      "new_value": "BootstrapperExtensionRef",
+      "notes": "Renamed from BundleExtensionRef"
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "changed",
+      "old_value": "explicit_feature_required",
+      "new_value": "default_feature_for_components",
+      "notes": "Behavior or syntax changed from 'explicit_feature_required' to 'default_feature_for_components'. Review migration guide."
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "changed",
+      "old_value": null,
+      "new_value": null,
+      "notes": "Behavior or syntax changed from 'None' to 'None'. Review migration guide."
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "deprecated",
+      "old_value": "WixManagedBootstrapperApplicationHost",
+      "new_value": "WixPrerequisiteBootstrapperApplication",
+      "notes": "Migration from v4 to v5: deprecated"
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "removed",
+      "old_value": "WixDifxAppExtension",
+      "new_value": null,
+      "notes": "'WixDifxAppExtension' has been removed. Check documentation for alternative approaches."
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "removed",
+      "old_value": "WixDifxAppExtension",
+      "new_value": null,
+      "notes": "Driver install extension removed, use PnP driver installation instead"
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "removed",
+      "old_value": "BundleExtension",
+      "new_value": null,
+      "notes": "Renamed to BootstrapperExtension"
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "removed",
+      "old_value": "BundleExtensionRef",
+      "new_value": null,
+      "notes": "Renamed to BootstrapperExtensionRef"
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "unchanged",
+      "old_value": null,
+      "new_value": null,
+      "notes": "Migration from v4 to v5: unchanged"
+    },
+    {
+      "from_version": "v4",
+      "to_version": "v5",
+      "change_type": "unchanged",
+      "old_value": null,
+      "new_value": null,
+      "notes": "Migration from v4 to v5: unchanged"
+    }
+  ]
+}

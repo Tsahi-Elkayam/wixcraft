@@ -1,0 +1,34 @@
+name: wix
+version: 0.1.0
+description: WiX installer language support
+
+language:
+  id: wix
+  extensions:
+    - .wxs
+    - .wxi
+    - .wxl
+  trigger_characters:
+    - "<"
+    - " "
+    - "\""
+    - "="
+
+data:
+  search_paths:
+    - wix-data
+    - .wix-data
+    - src/core/wix-data
+    - ../wix-data
+    - ../../wix-data
+  required_subdirs:
+    - elements
+
+capabilities:
+  completion: true
+  hover: true
+  document_symbols: true
+  diagnostics: true
+  formatting: true
+  definition: false
+  references: false

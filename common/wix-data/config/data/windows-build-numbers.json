@@ -1,0 +1,84 @@
+{
+  "_source": "Microsoft Learn",
+  "_url": "https://learn.microsoft.com/en-us/windows/release-health/release-information",
+  "windows_builds": [
+    {"build": 10240, "version": "1507", "name": "Windows 10 RTM", "release_date": "2015-07-29", "support_ended": true},
+    {"build": 10586, "version": "1511", "name": "Windows 10 November Update", "release_date": "2015-11-10", "support_ended": true},
+    {"build": 14393, "version": "1607", "name": "Windows 10 Anniversary Update", "release_date": "2016-08-02", "support_ended": true},
+    {"build": 15063, "version": "1703", "name": "Windows 10 Creators Update", "release_date": "2017-04-05", "support_ended": true},
+    {"build": 16299, "version": "1709", "name": "Windows 10 Fall Creators Update", "release_date": "2017-10-17", "support_ended": true},
+    {"build": 17134, "version": "1803", "name": "Windows 10 April 2018 Update", "release_date": "2018-04-30", "support_ended": true},
+    {"build": 17763, "version": "1809", "name": "Windows 10 October 2018 Update", "release_date": "2018-11-13", "support_ended": true, "ltsc": true, "ltsc_name": "Windows 10 Enterprise LTSC 2019"},
+    {"build": 18362, "version": "1903", "name": "Windows 10 May 2019 Update", "release_date": "2019-05-21", "support_ended": true},
+    {"build": 18363, "version": "1909", "name": "Windows 10 November 2019 Update", "release_date": "2019-11-12", "support_ended": true},
+    {"build": 19041, "version": "2004", "name": "Windows 10 May 2020 Update", "release_date": "2020-05-27", "support_ended": true},
+    {"build": 19042, "version": "20H2", "name": "Windows 10 October 2020 Update", "release_date": "2020-10-20", "support_ended": true},
+    {"build": 19043, "version": "21H1", "name": "Windows 10 May 2021 Update", "release_date": "2021-05-18", "support_ended": true},
+    {"build": 19044, "version": "21H2", "name": "Windows 10 November 2021 Update", "release_date": "2021-11-16", "support_ended": false, "ltsc": true, "ltsc_name": "Windows 10 Enterprise LTSC 2021"},
+    {"build": 19045, "version": "22H2", "name": "Windows 10 2022 Update", "release_date": "2022-10-18", "support_ended": false, "notes": "Final Windows 10 feature update"},
+    {"build": 22000, "version": "21H2", "name": "Windows 11 (original release)", "release_date": "2021-10-05", "support_ended": true, "os": "Windows 11"},
+    {"build": 22621, "version": "22H2", "name": "Windows 11 2022 Update", "release_date": "2022-09-20", "support_ended": false, "os": "Windows 11"},
+    {"build": 22631, "version": "23H2", "name": "Windows 11 2023 Update", "release_date": "2023-10-31", "support_ended": false, "os": "Windows 11"},
+    {"build": 26100, "version": "24H2", "name": "Windows 11 2024 Update", "release_date": "2024-10-01", "support_ended": false, "os": "Windows 11"}
+  ],
+  "windows_server_builds": [
+    {"build": 14393, "version": "1607", "name": "Windows Server 2016", "release_date": "2016-10-12", "support_ended": false},
+    {"build": 17763, "version": "1809", "name": "Windows Server 2019", "release_date": "2018-11-13", "support_ended": false},
+    {"build": 20348, "version": "21H2", "name": "Windows Server 2022", "release_date": "2021-08-18", "support_ended": false},
+    {"build": 26100, "version": "24H2", "name": "Windows Server 2025", "release_date": "2024-11-01", "support_ended": false}
+  ],
+  "condition_examples": [
+    {
+      "name": "Windows 10 1809 or later",
+      "condition": "Installed OR (VersionNT >= 603 AND WindowsBuild >= 17763)",
+      "message": "This application requires Windows 10 version 1809 or later."
+    },
+    {
+      "name": "Windows 10 21H2 or later",
+      "condition": "Installed OR (VersionNT >= 603 AND WindowsBuild >= 19044)",
+      "message": "This application requires Windows 10 version 21H2 or later."
+    },
+    {
+      "name": "Windows 10 22H2 or later",
+      "condition": "Installed OR (VersionNT >= 603 AND WindowsBuild >= 19045)",
+      "message": "This application requires Windows 10 version 22H2 or later."
+    },
+    {
+      "name": "Windows 11 21H2 or later",
+      "condition": "Installed OR (VersionNT >= 603 AND WindowsBuild >= 22000)",
+      "message": "This application requires Windows 11."
+    },
+    {
+      "name": "Windows 11 22H2 or later",
+      "condition": "Installed OR (VersionNT >= 603 AND WindowsBuild >= 22621)",
+      "message": "This application requires Windows 11 version 22H2 or later."
+    },
+    {
+      "name": "Windows 11 23H2 or later",
+      "condition": "Installed OR (VersionNT >= 603 AND WindowsBuild >= 22631)",
+      "message": "This application requires Windows 11 version 23H2 or later."
+    },
+    {
+      "name": "Windows 11 24H2 or later",
+      "condition": "Installed OR (VersionNT >= 603 AND WindowsBuild >= 26100)",
+      "message": "This application requires Windows 11 version 24H2 or later."
+    },
+    {
+      "name": "Windows Server 2019 or later",
+      "condition": "Installed OR (VersionNT >= 603 AND WindowsBuild >= 17763 AND MsiNTProductType >= 2)",
+      "message": "This application requires Windows Server 2019 or later."
+    },
+    {
+      "name": "Windows Server 2022 or later",
+      "condition": "Installed OR (VersionNT >= 603 AND WindowsBuild >= 20348 AND MsiNTProductType >= 2)",
+      "message": "This application requires Windows Server 2022 or later."
+    }
+  ],
+  "notes": [
+    "Windows 10 and Windows 11 both report VersionNT=603 (same as Windows 8.1)",
+    "Use WindowsBuild property to distinguish between Windows 10/11 versions",
+    "WindowsBuild is available in Windows Installer 5.0 and later",
+    "For earlier Windows Installer versions, use registry search to detect build number",
+    "LTSC versions have extended support cycles (10 years)"
+  ]
+}
