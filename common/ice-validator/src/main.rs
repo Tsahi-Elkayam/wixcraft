@@ -22,11 +22,11 @@ enum Commands {
         /// Path to MSI file
         msi: PathBuf,
 
-        /// Path to wixkb database (default: ~/.wixcraft/wixkb.db)
+        /// Path to wix-data database (default: ~/.wixcraft/wix-data.db)
         #[arg(short, long)]
         db: Option<PathBuf>,
 
-        /// Use only built-in rules (ignore wixkb)
+        /// Use only built-in rules (ignore database)
         #[arg(long)]
         builtin: bool,
 
@@ -45,7 +45,7 @@ enum Commands {
 
     /// List available ICE rules
     Rules {
-        /// Path to wixkb database
+        /// Path to wix-data database
         #[arg(short, long)]
         db: Option<PathBuf>,
 
@@ -63,7 +63,7 @@ enum Commands {
         /// Rule code (e.g., ICE03)
         code: String,
 
-        /// Path to wixkb database
+        /// Path to wix-data database
         #[arg(short, long)]
         db: Option<PathBuf>,
     },
@@ -146,13 +146,13 @@ fn cmd_rules(db_path: Option<PathBuf>, builtin: bool, format: &str) -> Result<()
         rules::builtin_rules()
     } else {
         let db = db_path
-            .or_else(rules::default_wixkb_path)
-            .context("No wixkb database found")?;
+            .or_else(rules::default_db_path)
+            .context("No wix-data database found")?;
 
         if db.exists() {
-            rules::load_from_wixkb(&db)?
+            rules::load_from_db(&db)?
         } else {
-            eprintln!("Warning: wixkb database not found, using built-in rules");
+            eprintln!("Warning: wix-data database not found, using built-in rules");
             rules::builtin_rules()
         }
     };
@@ -171,11 +171,11 @@ fn cmd_rules(db_path: Option<PathBuf>, builtin: bool, format: &str) -> Result<()
 
 fn cmd_info(code: &str, db_path: Option<PathBuf>) -> Result<()> {
     let db = db_path
-        .or_else(rules::default_wixkb_path)
-        .context("No wixkb database found")?;
+        .or_else(rules::default_db_path)
+        .context("No wix-data database found")?;
 
     let rules = if db.exists() {
-        rules::load_from_wixkb(&db)?
+        rules::load_from_db(&db)?
     } else {
         rules::builtin_rules()
     };
@@ -209,14 +209,14 @@ fn create_validator(db_path: Option<PathBuf>, builtin: bool) -> Result<Validator
         return Ok(Validator::with_builtin_rules());
     }
 
-    let db = db_path.or_else(rules::default_wixkb_path);
+    let db = db_path.or_else(rules::default_db_path);
 
     match db {
         Some(path) if path.exists() => {
-            Validator::from_wixkb(&path).context("Failed to load rules from wixkb")
+            Validator::from_db(&path).context("Failed to load rules from wix-data")
         }
         _ => {
-            eprintln!("Warning: wixkb database not found, using built-in rules");
+            eprintln!("Warning: wix-data database not found, using built-in rules");
             Ok(Validator::with_builtin_rules())
         }
     }

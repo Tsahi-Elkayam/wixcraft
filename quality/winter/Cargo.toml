@@ -57,7 +57,7 @@ colored = "2.1"
 # Home directory
 dirs = "5.0"
 
-# SQLite database (match wixkb version)
+# SQLite database
 rusqlite = { version = "0.31", features = ["bundled"] }
 
 # Logging

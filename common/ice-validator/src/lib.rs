@@ -5,7 +5,7 @@
 //!
 //! # Features
 //!
-//! - Load ICE rules from wixkb database
+//! - Load ICE rules from wix-data database
 //! - Built-in subset of common ICE rules
 //! - Validate MSI files against rules
 //! - Cross-platform (Windows, macOS, Linux)
@@ -18,8 +18,8 @@
 //! // Create validator with built-in rules
 //! let validator = Validator::with_builtin_rules();
 //!
-//! // Or load from wixkb database
-//! // let validator = Validator::from_wixkb("~/.wixcraft/wixkb.db")?;
+//! // Or load from wix-data database
+//! // let validator = Validator::from_db("~/.wixcraft/wix-data.db")?;
 //!
 //! // Validate an MSI file
 //! let result = validator.validate("installer.msi").unwrap();
@@ -59,9 +59,9 @@ pub type Result<T> = std::result::Result<T, IceError>;
 
 /// Convenience function to validate an MSI with default settings
 pub fn validate_msi<P: AsRef<std::path::Path>>(msi_path: P) -> Result<ValidationResult> {
-    let validator = if let Some(db_path) = rules::default_wixkb_path() {
+    let validator = if let Some(db_path) = rules::default_db_path() {
         if db_path.exists() {
-            Validator::from_wixkb(db_path)?
+            Validator::from_db(db_path)?
         } else {
             Validator::with_builtin_rules()
         }

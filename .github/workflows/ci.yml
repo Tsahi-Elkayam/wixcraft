@@ -65,9 +65,6 @@ jobs:
       - name: Build common/wix-data
         run: cd common/wix-data && cargo build --release
 
-      - name: Build common/wixkb
-        run: cd common/wixkb && cargo build --release
-
       - name: Build common/ice-validator
         run: cd common/ice-validator && cargo build --release
 

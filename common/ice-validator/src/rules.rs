@@ -1,12 +1,12 @@
-//! ICE rule loading from wixkb database
+//! ICE rule loading from wix-data database
 
 use crate::types::{IceRule, Severity};
 use crate::Result;
 use rusqlite::Connection;
 use std::path::Path;
 
-/// Load ICE rules from wixkb database
-pub fn load_from_wixkb<P: AsRef<Path>>(db_path: P) -> Result<Vec<IceRule>> {
+/// Load ICE rules from wix-data database
+pub fn load_from_db<P: AsRef<Path>>(db_path: P) -> Result<Vec<IceRule>> {
     let conn = Connection::open(db_path)?;
 
     let mut stmt = conn.prepare(
@@ -41,12 +41,12 @@ pub fn load_from_wixkb<P: AsRef<Path>>(db_path: P) -> Result<Vec<IceRule>> {
     rules.collect::<std::result::Result<Vec<_>, _>>().map_err(Into::into)
 }
 
-/// Get default wixkb database path
-pub fn default_wixkb_path() -> Option<std::path::PathBuf> {
-    dirs::home_dir().map(|h| h.join(".wixcraft").join("wixkb.db"))
+/// Get default wix-data database path
+pub fn default_db_path() -> Option<std::path::PathBuf> {
+    dirs::home_dir().map(|h| h.join(".wixcraft").join("wix-data.db"))
 }
 
-/// Built-in subset of common ICE rules (fallback when wixkb not available)
+/// Built-in subset of common ICE rules (fallback when wix-data not available)
 pub fn builtin_rules() -> Vec<IceRule> {
     vec![
         IceRule {
@@ -144,9 +144,9 @@ mod tests {
     }
 
     #[test]
-    fn test_default_wixkb_path() {
-        let path = default_wixkb_path();
+    fn test_default_db_path() {
+        let path = default_db_path();
         assert!(path.is_some());
-        assert!(path.unwrap().ends_with("wixkb.db"));
+        assert!(path.unwrap().ends_with("wix-data.db"));
     }
 }

@@ -17,7 +17,7 @@ path = "src/lib.rs"
 # MSI database parsing
 msi = "0.9"
 
-# SQLite for wixkb access
+# SQLite for wix-data access
 rusqlite = { version = "0.32", features = ["bundled"] }
 
 # CLI

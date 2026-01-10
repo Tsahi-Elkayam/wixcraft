@@ -17,9 +17,9 @@ impl Validator {
         Self { rules }
     }
 
-    /// Create validator loading rules from wixkb
-    pub fn from_wixkb<P: AsRef<Path>>(db_path: P) -> Result<Self> {
-        let rules = crate::rules::load_from_wixkb(db_path)?;
+    /// Create validator loading rules from wix-data database
+    pub fn from_db<P: AsRef<Path>>(db_path: P) -> Result<Self> {
+        let rules = crate::rules::load_from_db(db_path)?;
         Ok(Self::new(rules))
     }
 
