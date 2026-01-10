@@ -123,7 +123,8 @@ fn main() -> Result<()> {
                 std::process::exit(1);
             }
 
-            let files: Vec<FileConfig> = file.iter()
+            let files: Vec<FileConfig> = file
+                .iter()
                 .map(|f| FileConfig {
                     source: f.clone(),
                     subdir: None,
@@ -132,7 +133,8 @@ fn main() -> Result<()> {
 
             let shortcuts = if shortcut {
                 // Use first executable file for shortcut
-                let exe_file = file.iter()
+                let exe_file = file
+                    .iter()
                     .find(|f| f.to_lowercase().ends_with(".exe"))
                     .unwrap_or(&file[0]);
                 let target = std::path::Path::new(exe_file)

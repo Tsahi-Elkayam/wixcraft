@@ -69,14 +69,19 @@ impl SimpleGenerator {
     pub fn generate(config: &SimpleConfig) -> String {
         let mut wix = String::new();
 
-        let upgrade_code = config.upgrade_code.clone()
+        let upgrade_code = config
+            .upgrade_code
+            .clone()
             .unwrap_or_else(|| format!("{{{}}}", Uuid::new_v4().to_string().to_uppercase()));
-        let install_dir = config.install_dir.clone()
+        let install_dir = config
+            .install_dir
+            .clone()
             .unwrap_or_else(|| config.name.clone());
         let _safe_name = sanitize_id(&config.name);
 
         // Header
-        wix.push_str(&format!(r#"<?xml version="1.0" encoding="UTF-8"?>
+        wix.push_str(&format!(
+            r#"<?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
   <Package Name="{}"
            Version="{}"
@@ -88,14 +93,23 @@ impl SimpleGenerator {
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <MediaTemplate EmbedCab="yes" />
 
-"#, config.name, config.version, config.manufacturer, upgrade_code, config.platform));
+"#,
+            config.name, config.version, config.manufacturer, upgrade_code, config.platform
+        ));
 
         // Directory structure
-        let program_files = if config.platform == "x86" { "ProgramFilesFolder" } else { "ProgramFiles64Folder" };
-        wix.push_str(&format!(r#"    <!-- Directory Structure -->
+        let program_files = if config.platform == "x86" {
+            "ProgramFilesFolder"
+        } else {
+            "ProgramFiles64Folder"
+        };
+        wix.push_str(&format!(
+            r#"    <!-- Directory Structure -->
     <StandardDirectory Id="{}">
       <Directory Id="INSTALLDIR" Name="{}">
-"#, program_files, install_dir));
+"#,
+            program_files, install_dir
+        ));
 
         // Collect subdirectories
         let mut subdirs: std::collections::HashSet<String> = std::collections::HashSet::new();
@@ -108,19 +122,22 @@ impl SimpleGenerator {
         // Generate subdirectory elements
         for subdir in &subdirs {
             let subdir_id = format!("Dir_{}", sanitize_id(subdir));
-            wix.push_str(&format!(r#"        <Directory Id="{}" Name="{}">
+            wix.push_str(&format!(
+                r#"        <Directory Id="{}" Name="{}">
         </Directory>
-"#, subdir_id, subdir));
+"#,
+                subdir_id, subdir
+            ));
         }
 
         // Main component for files without subdir
-        let main_files: Vec<_> = config.files.iter()
-            .filter(|f| f.subdir.is_none())
-            .collect();
+        let main_files: Vec<_> = config.files.iter().filter(|f| f.subdir.is_none()).collect();
 
         if !main_files.is_empty() {
-            wix.push_str(r#"        <Component Id="MainComponent" Guid="*">
-"#);
+            wix.push_str(
+                r#"        <Component Id="MainComponent" Guid="*">
+"#,
+            );
             for (i, file) in main_files.iter().enumerate() {
                 let file_name = std::path::Path::new(&file.source)
                     .file_name()
@@ -128,41 +145,58 @@ impl SimpleGenerator {
                     .unwrap_or("file");
                 let file_id = format!("File_{}", sanitize_id(file_name));
                 let key_path = if i == 0 { " KeyPath=\"yes\"" } else { "" };
-                wix.push_str(&format!(r#"          <File Id="{}" Source="{}"{} />
-"#, file_id, file.source, key_path));
+                wix.push_str(&format!(
+                    r#"          <File Id="{}" Source="{}"{} />
+"#,
+                    file_id, file.source, key_path
+                ));
             }
-            wix.push_str(r#"        </Component>
-"#);
+            wix.push_str(
+                r#"        </Component>
+"#,
+            );
         }
 
-        wix.push_str(r#"      </Directory>
+        wix.push_str(
+            r#"      </Directory>
     </StandardDirectory>
 
-"#);
+"#,
+        );
 
         // Shortcuts
         if !config.shortcuts.is_empty() {
-            let start_menu_shortcuts: Vec<_> = config.shortcuts.iter()
+            let start_menu_shortcuts: Vec<_> = config
+                .shortcuts
+                .iter()
                 .filter(|s| s.location == "start_menu")
                 .collect();
-            let desktop_shortcuts: Vec<_> = config.shortcuts.iter()
+            let desktop_shortcuts: Vec<_> = config
+                .shortcuts
+                .iter()
                 .filter(|s| s.location == "desktop")
                 .collect();
 
             if !start_menu_shortcuts.is_empty() {
-                wix.push_str(&format!(r#"    <!-- Start Menu Shortcuts -->
+                wix.push_str(&format!(
+                    r#"    <!-- Start Menu Shortcuts -->
     <StandardDirectory Id="ProgramMenuFolder">
       <Directory Id="ApplicationProgramsFolder" Name="{}">
         <Component Id="StartMenuShortcuts" Guid="*">
-"#, config.name));
+"#,
+                    config.name
+                ));
 
                 for shortcut in &start_menu_shortcuts {
                     let shortcut_id = format!("Shortcut_{}", sanitize_id(&shortcut.name));
-                    wix.push_str(&format!(r#"          <Shortcut Id="{}"
+                    wix.push_str(&format!(
+                        r#"          <Shortcut Id="{}"
                     Name="{}"
                     Target="[INSTALLDIR]{}"
                     WorkingDirectory="INSTALLDIR" />
-"#, shortcut_id, shortcut.name, shortcut.target));
+"#,
+                        shortcut_id, shortcut.name, shortcut.target
+                    ));
                 }
 
                 wix.push_str(&format!(r#"          <RemoveFolder Id="CleanUpStartMenu" Directory="ApplicationProgramsFolder" On="uninstall" />
@@ -175,18 +209,23 @@ impl SimpleGenerator {
             }
 
             if !desktop_shortcuts.is_empty() {
-                wix.push_str(r#"    <!-- Desktop Shortcuts -->
+                wix.push_str(
+                    r#"    <!-- Desktop Shortcuts -->
     <StandardDirectory Id="DesktopFolder">
       <Component Id="DesktopShortcuts" Guid="*">
-"#);
+"#,
+                );
 
                 for shortcut in &desktop_shortcuts {
                     let shortcut_id = format!("DesktopShortcut_{}", sanitize_id(&shortcut.name));
-                    wix.push_str(&format!(r#"        <Shortcut Id="{}"
+                    wix.push_str(&format!(
+                        r#"        <Shortcut Id="{}"
                   Name="{}"
                   Target="[INSTALLDIR]{}"
                   WorkingDirectory="INSTALLDIR" />
-"#, shortcut_id, shortcut.name, shortcut.target));
+"#,
+                        shortcut_id, shortcut.name, shortcut.target
+                    ));
                 }
 
                 wix.push_str(&format!(r#"        <RegistryValue Root="HKCU" Key="Software\\{}\\{}\\Desktop" Name="installed" Type="integer" Value="1" KeyPath="yes" />
@@ -198,30 +237,41 @@ impl SimpleGenerator {
         }
 
         // Feature
-        wix.push_str(&format!(r#"    <!-- Feature -->
+        wix.push_str(&format!(
+            r#"    <!-- Feature -->
     <Feature Id="MainFeature" Title="{}" Level="1">
-"#, config.name));
+"#,
+            config.name
+        ));
 
         if !main_files.is_empty() {
-            wix.push_str(r#"      <ComponentRef Id="MainComponent" />
-"#);
+            wix.push_str(
+                r#"      <ComponentRef Id="MainComponent" />
+"#,
+            );
         }
 
         if config.shortcuts.iter().any(|s| s.location == "start_menu") {
-            wix.push_str(r#"      <ComponentRef Id="StartMenuShortcuts" />
-"#);
+            wix.push_str(
+                r#"      <ComponentRef Id="StartMenuShortcuts" />
+"#,
+            );
         }
 
         if config.shortcuts.iter().any(|s| s.location == "desktop") {
-            wix.push_str(r#"      <ComponentRef Id="DesktopShortcuts" />
-"#);
+            wix.push_str(
+                r#"      <ComponentRef Id="DesktopShortcuts" />
+"#,
+            );
         }
 
-        wix.push_str(r#"    </Feature>
+        wix.push_str(
+            r#"    </Feature>
 
   </Package>
 </Wix>
-"#);
+"#,
+        );
 
         wix
     }
@@ -248,13 +298,11 @@ impl SimpleGenerator {
                     subdir: None,
                 },
             ],
-            shortcuts: vec![
-                ShortcutConfig {
-                    name: "My Application".to_string(),
-                    target: "myapp.exe".to_string(),
-                    location: "start_menu".to_string(),
-                },
-            ],
+            shortcuts: vec![ShortcutConfig {
+                name: "My Application".to_string(),
+                target: "myapp.exe".to_string(),
+                location: "start_menu".to_string(),
+            }],
             platform: "x64".to_string(),
             install_dir: None,
             upgrade_code: None,
@@ -278,12 +326,10 @@ mod tests {
             name: "TestApp".to_string(),
             version: "1.0.0".to_string(),
             manufacturer: "Test Corp".to_string(),
-            files: vec![
-                FileConfig {
-                    source: "app.exe".to_string(),
-                    subdir: None,
-                },
-            ],
+            files: vec![FileConfig {
+                source: "app.exe".to_string(),
+                subdir: None,
+            }],
             shortcuts: vec![],
             platform: "x64".to_string(),
             install_dir: None,
@@ -303,19 +349,15 @@ mod tests {
             name: "TestApp".to_string(),
             version: "1.0.0".to_string(),
             manufacturer: "Test Corp".to_string(),
-            files: vec![
-                FileConfig {
-                    source: "app.exe".to_string(),
-                    subdir: None,
-                },
-            ],
-            shortcuts: vec![
-                ShortcutConfig {
-                    name: "Test App".to_string(),
-                    target: "app.exe".to_string(),
-                    location: "start_menu".to_string(),
-                },
-            ],
+            files: vec![FileConfig {
+                source: "app.exe".to_string(),
+                subdir: None,
+            }],
+            shortcuts: vec![ShortcutConfig {
+                name: "Test App".to_string(),
+                target: "app.exe".to_string(),
+                location: "start_menu".to_string(),
+            }],
             platform: "x64".to_string(),
             install_dir: None,
             upgrade_code: None,
