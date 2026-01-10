@@ -513,8 +513,14 @@ fn main() {
             if dry_run {
                 println!("Would execute:\n  {}", cmd);
             } else {
-                println!("Command: {}", cmd);
-                println!("\nNote: Run this command with administrator privileges on Windows.");
+                println!("Executing: {}", cmd);
+                let result = MsiExecCommand::execute(&opts);
+                if result.success {
+                    println!("Success: {}", result.message);
+                } else {
+                    eprintln!("Failed (exit code {}): {}", result.exit_code, result.message);
+                    std::process::exit(result.exit_code);
+                }
             }
         }
 
@@ -534,7 +540,14 @@ fn main() {
             if dry_run {
                 println!("Would execute:\n  {}", cmd);
             } else {
-                println!("Command: {}", cmd);
+                println!("Executing: {}", cmd);
+                let result = MsiExecCommand::execute(&opts);
+                if result.success {
+                    println!("Success: {}", result.message);
+                } else {
+                    eprintln!("Failed (exit code {}): {}", result.exit_code, result.message);
+                    std::process::exit(result.exit_code);
+                }
             }
         }
 
@@ -553,7 +566,14 @@ fn main() {
             opts = opts.with_property("REINSTALLMODE", "vomus");
 
             let cmd = MsiExecCommand::build_string(&opts);
-            println!("Update command: {}", cmd);
+            println!("Executing: {}", cmd);
+            let result = MsiExecCommand::execute(&opts);
+            if result.success {
+                println!("Success: {}", result.message);
+            } else {
+                eprintln!("Failed (exit code {}): {}", result.exit_code, result.message);
+                std::process::exit(result.exit_code);
+            }
         }
 
         Commands::Repair { target, silent, log } => {
@@ -568,7 +588,14 @@ fn main() {
             }
 
             let cmd = MsiExecCommand::build_string(&opts);
-            println!("Repair command: {}", cmd);
+            println!("Executing: {}", cmd);
+            let result = MsiExecCommand::execute(&opts);
+            if result.success {
+                println!("Success: {}", result.message);
+            } else {
+                eprintln!("Failed (exit code {}): {}", result.exit_code, result.message);
+                std::process::exit(result.exit_code);
+            }
         }
 
         Commands::Doctor => {

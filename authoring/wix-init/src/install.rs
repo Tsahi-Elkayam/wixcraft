@@ -109,10 +109,34 @@ impl InstallOptions {
     }
 }
 
-/// Command builder for msiexec
+/// Command builder and executor for msiexec
 pub struct MsiExecCommand;
 
 impl MsiExecCommand {
+    /// Execute msiexec command (Windows only)
+    #[cfg(target_os = "windows")]
+    pub fn execute(options: &InstallOptions) -> InstallResult {
+        use std::process::Command;
+
+        let args = Self::build(options);
+
+        match Command::new("msiexec").args(&args).status() {
+            Ok(status) => {
+                let code = status.code().unwrap_or(-1);
+                let mut result = InstallResult::from_exit_code(code);
+                result.log_path = options.log_path.clone();
+                result
+            }
+            Err(e) => InstallResult::failure(-1, &format!("Failed to execute msiexec: {}", e)),
+        }
+    }
+
+    /// Execute msiexec command (non-Windows stub)
+    #[cfg(not(target_os = "windows"))]
+    pub fn execute(_options: &InstallOptions) -> InstallResult {
+        InstallResult::failure(-1, "MSI installation is only supported on Windows")
+    }
+
     /// Build msiexec command line
     pub fn build(options: &InstallOptions) -> Vec<String> {
         let mut args = Vec::new();
