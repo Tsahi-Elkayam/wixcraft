@@ -40,7 +40,6 @@ pub struct PluginSettings {
     pub enabled: Vec<String>,
 }
 
-
 impl Default for EngineSettings {
     fn default() -> Self {
         Self {
