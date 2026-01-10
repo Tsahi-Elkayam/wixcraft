@@ -66,7 +66,7 @@ jobs:
           done
 
           # Other tools
-          for tool in msi-explorer msi-repair wix-migrate wix-guid wix-silent wix-msix wix-install wix-uninstall wix-update wix-preview wix-analytics; do
+          for tool in msi-explorer msi-repair wix-migrate wix-guid wix-silent wix-msix wix-update wix-preview wix-analytics; do
             echo "Building tools/$tool..."
             cd tools/$tool && cargo build --release && cd ../..
             cp tools/$tool/target/release/$tool dist/linux/ 2>/dev/null || true
@@ -154,7 +154,7 @@ jobs:
           done
 
           # Other tools
-          for tool in msi-explorer msi-repair wix-migrate wix-guid wix-silent wix-msix wix-install wix-uninstall wix-update wix-preview wix-analytics; do
+          for tool in msi-explorer msi-repair wix-migrate wix-guid wix-silent wix-msix wix-update wix-preview wix-analytics; do
             echo "Building tools/$tool..."
             cd tools/$tool && cargo build --release && cd ../..
             cp tools/$tool/target/release/$tool dist/macos/ 2>/dev/null || true
@@ -206,7 +206,7 @@ jobs:
             @{path="build"; tools=@("wix-build","wix-bundle","wix-ci","wix-intune","wix-arm64","wix-ext")},
             @{path="core"; tools=@("wixcraft","wix-msi","schema-loader","code-detector","project-map")},
             @{path="debug"; tools=@("wix-doctor","wix-diff","wix-test","wix-repl","wix-ca-debug")},
-            @{path="tools"; tools=@("msi-explorer","msi-repair","wix-migrate","wix-guid","wix-silent","wix-msix","wix-install","wix-uninstall","wix-update","wix-preview","wix-analytics")}
+            @{path="tools"; tools=@("msi-explorer","msi-repair","wix-migrate","wix-guid","wix-silent","wix-msix","wix-update","wix-preview","wix-analytics")}
           )
 
           foreach ($category in $tools) {

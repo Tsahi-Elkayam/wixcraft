@@ -209,12 +209,6 @@ jobs:
       - name: Build tools/wix-msix
         run: cd tools/wix-msix && cargo build --release
 
-      - name: Build tools/wix-install
-        run: cd tools/wix-install && cargo build --release
-
-      - name: Build tools/wix-uninstall
-        run: cd tools/wix-uninstall && cargo build --release
-
       - name: Build tools/wix-update
         run: cd tools/wix-update && cargo build --release
 
