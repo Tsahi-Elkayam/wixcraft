@@ -1,0 +1,24 @@
+[package]
+name = "wix-help"
+version = "0.1.0"
+edition = "2021"
+description = "PowerShell-like help system for WiX elements, errors, and snippets"
+license = "MIT"
+
+[[bin]]
+name = "wix-help"
+path = "src/main.rs"
+
+[lib]
+name = "wix_help"
+path = "src/lib.rs"
+
+[dependencies]
+clap = { version = "4", features = ["derive", "env"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+walkdir = "2"
+colored = "2"
+
+[dev-dependencies]
+tempfile = "3"
