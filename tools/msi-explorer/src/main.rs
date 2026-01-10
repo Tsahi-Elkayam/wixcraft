@@ -481,10 +481,10 @@ fn cmd_validate(path: &PathBuf, builtin: bool, format: &str, warnings_as_errors:
     let validator = if builtin {
         Validator::with_builtin_rules()
     } else {
-        match ice_validator::rules::default_wixkb_path() {
-            Some(db) if db.exists() => Validator::from_wixkb(&db)?,
+        match ice_validator::rules::default_db_path() {
+            Some(db) if db.exists() => Validator::from_db(&db)?,
             _ => {
-                eprintln!("Warning: wixkb not found, using built-in rules");
+                eprintln!("Warning: wix-data not found, using built-in rules");
                 Validator::with_builtin_rules()
             }
         }
