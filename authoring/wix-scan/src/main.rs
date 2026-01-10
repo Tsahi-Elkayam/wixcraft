@@ -1,16 +1,16 @@
-//! wix-harvest CLI - Modern file harvester for WiX
+//! wix-scan CLI - Directory scanner for WiX
 
 use clap::Parser;
 use std::fs;
 use std::path::PathBuf;
-use wix_harvest::{HarvestOptions, Harvester};
+use wix_scan::{ScanOptions, Scanner};
 
 #[derive(Parser)]
-#[command(name = "wix-harvest")]
-#[command(about = "Modern file harvester for WiX - scan directories and generate WXS fragments")]
+#[command(name = "wix-scan")]
+#[command(about = "Directory scanner for WiX - scan directories and generate WXS fragments")]
 #[command(version)]
 struct Cli {
-    /// Directory to harvest
+    /// Directory to scan
     path: PathBuf,
 
     /// Output file (default: stdout)
@@ -74,12 +74,12 @@ fn main() {
     let cli = Cli::parse();
 
     let exclude_patterns = if cli.exclude.is_empty() {
-        HarvestOptions::default().exclude_patterns
+        ScanOptions::default().exclude_patterns
     } else {
         cli.exclude
     };
 
-    let options = HarvestOptions {
+    let options = ScanOptions {
         generate_guids: cli.generate_guids,
         component_group: cli.component_group,
         directory_ref: cli.directory_ref,
@@ -94,13 +94,13 @@ fn main() {
         preserve_structure: true,
     };
 
-    let harvester = Harvester::new(options);
+    let scanner = Scanner::new(options);
 
-    match harvester.harvest(&cli.path) {
+    match scanner.scan(&cli.path) {
         Ok(result) => {
             if cli.stats {
                 let stats = result.stats();
-                println!("Harvest Statistics");
+                println!("Scan Statistics");
                 println!("══════════════════");
                 println!("Files:       {}", stats.total_files);
                 println!("Directories: {}", stats.total_directories);
@@ -118,7 +118,7 @@ fn main() {
                 match fs::write(&output_path, &output) {
                     Ok(_) => {
                         eprintln!(
-                            "Harvested {} files to {}",
+                            "Scanned {} files to {}",
                             result.files.len(),
                             output_path.display()
                         );

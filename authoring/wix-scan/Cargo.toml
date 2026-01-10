@@ -1,8 +1,8 @@
 [package]
-name = "wix-harvest"
+name = "wix-scan"
 version = "0.1.0"
 edition = "2021"
-description = "Modern file harvester for WiX - scan directories and generate WXS fragments"
+description = "Directory scanner for WiX - scan directories and generate WXS fragments"
 license = "MIT"
 
 [dependencies]
@@ -18,9 +18,9 @@ glob = "0.3"
 tempfile = "3"
 
 [[bin]]
-name = "wix-harvest"
+name = "wix-scan"
 path = "src/main.rs"
 
 [lib]
-name = "wix_harvest"
+name = "wix_scan"
 path = "src/lib.rs"

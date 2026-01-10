@@ -38,7 +38,7 @@ jobs:
           done
 
           # Authoring tools
-          for tool in wix-init wix-harvest wix-simple wix-easy wix-ui wix-prereq wix-patch wix-license wix-env; do
+          for tool in wix-init wix-scan wix-simple wix-easy wix-ui wix-prereq wix-patch wix-license wix-env; do
             echo "Building authoring/$tool..."
             cd authoring/$tool && cargo build --release && cd ../..
             cp authoring/$tool/target/release/$tool dist/linux/ 2>/dev/null || true
@@ -126,7 +126,7 @@ jobs:
           done
 
           # Authoring tools
-          for tool in wix-init wix-harvest wix-simple wix-easy wix-ui wix-prereq wix-patch wix-license wix-env; do
+          for tool in wix-init wix-scan wix-simple wix-easy wix-ui wix-prereq wix-patch wix-license wix-env; do
             echo "Building authoring/$tool..."
             cd authoring/$tool && cargo build --release && cd ../..
             cp authoring/$tool/target/release/$tool dist/macos/ 2>/dev/null || true
@@ -202,7 +202,7 @@ jobs:
           $tools = @(
             @{path="quality"; tools=@("winter","wix-analyzer","wix-fmt","wix-wdac","wix-compat","wix-security","wix-upgrade")},
             @{path="editor"; tools=@("wix-lsp","wintellisense","wix-hover","wix-symbols","wix-references","wix-snippets","wix-ai","wix-syntax")},
-            @{path="authoring"; tools=@("wix-init","wix-harvest","wix-simple","wix-easy","wix-ui","wix-prereq","wix-patch","wix-license","wix-env")},
+            @{path="authoring"; tools=@("wix-init","wix-scan","wix-simple","wix-easy","wix-ui","wix-prereq","wix-patch","wix-license","wix-env")},
             @{path="build"; tools=@("wix-build","wix-bundle","wix-ci","wix-intune","wix-arm64","wix-ext")},
             @{path="core"; tools=@("wixcraft","wix-msi","schema-loader","code-detector","project-map")},
             @{path="debug"; tools=@("wix-doctor","wix-diff","wix-test","wix-repl","wix-ca-debug")},

@@ -122,8 +122,8 @@ jobs:
       - name: Build authoring/wix-init
         run: cd authoring/wix-init && cargo build --release
 
-      - name: Build authoring/wix-harvest
-        run: cd authoring/wix-harvest && cargo build --release
+      - name: Build authoring/wix-scan
+        run: cd authoring/wix-scan && cargo build --release
 
       - name: Build authoring/wix-simple
         run: cd authoring/wix-simple && cargo build --release

@@ -1,15 +1,15 @@
-//! Modern file harvester for WiX
+//! Directory scanner for WiX
 //!
 //! Scans directories and generates WXS fragments with Component/File elements.
 //!
 //! # Example
 //!
 //! ```no_run
-//! use wix_harvest::{Harvester, HarvestOptions};
+//! use wix_scan::{Scanner, ScanOptions};
 //!
-//! let options = HarvestOptions::default();
-//! let harvester = Harvester::new(options);
-//! let result = harvester.harvest("./dist").unwrap();
+//! let options = ScanOptions::default();
+//! let scanner = Scanner::new(options);
+//! let result = scanner.scan("./dist").unwrap();
 //! println!("{}", result.to_wxs());
 //! ```
 
@@ -18,9 +18,9 @@ use std::path::{Path, PathBuf};
 use thiserror::Error;
 use uuid::Uuid;
 
-/// Harvest errors
+/// Scan errors
 #[derive(Error, Debug)]
-pub enum HarvestError {
+pub enum ScanError {
     #[error("Directory not found: {0}")]
     DirectoryNotFound(String),
     #[error("IO error: {0}")]
@@ -29,9 +29,9 @@ pub enum HarvestError {
     InvalidPath(String),
 }
 
-/// Options for harvesting
+/// Options for scanning
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct HarvestOptions {
+pub struct ScanOptions {
     /// Generate GUIDs for components (false = use "*")
     pub generate_guids: bool,
     /// Component group ID
@@ -58,11 +58,11 @@ pub struct HarvestOptions {
     pub preserve_structure: bool,
 }
 
-impl Default for HarvestOptions {
+impl Default for ScanOptions {
     fn default() -> Self {
         Self {
             generate_guids: false,
-            component_group: "HarvestedComponents".to_string(),
+            component_group: "ScannedComponents".to_string(),
             directory_ref: "INSTALLFOLDER".to_string(),
             component_prefix: "cmp".to_string(),
             include_hidden: false,
@@ -83,16 +83,16 @@ impl Default for HarvestOptions {
     }
 }
 
-/// A harvested file
+/// A scanned file
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct HarvestedFile {
+pub struct ScannedFile {
     /// Component ID
     pub component_id: String,
     /// File ID
     pub file_id: String,
     /// Source path (absolute)
     pub source_path: PathBuf,
-    /// Relative path from harvest root
+    /// Relative path from scan root
     pub relative_path: PathBuf,
     /// File name
     pub name: String,
@@ -102,9 +102,9 @@ pub struct HarvestedFile {
     pub key_path: bool,
 }
 
-/// A harvested directory
+/// A scanned directory
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct HarvestedDirectory {
+pub struct ScannedDirectory {
     /// Directory ID
     pub id: String,
     /// Directory name
@@ -112,18 +112,18 @@ pub struct HarvestedDirectory {
     /// Parent directory ID
     pub parent_id: Option<String>,
     /// Files in this directory
-    pub files: Vec<HarvestedFile>,
+    pub files: Vec<ScannedFile>,
     /// Subdirectories
-    pub subdirs: Vec<HarvestedDirectory>,
+    pub subdirs: Vec<ScannedDirectory>,
 }
 
-/// Result of harvesting
+/// Result of scanning
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
-pub struct HarvestResult {
+pub struct ScanResult {
     /// Root directory
-    pub root: Option<HarvestedDirectory>,
+    pub root: Option<ScannedDirectory>,
     /// All files (flat list)
-    pub files: Vec<HarvestedFile>,
+    pub files: Vec<ScannedFile>,
     /// All directories (flat list)
     pub directories: Vec<String>,
     /// Component group ID
@@ -131,10 +131,10 @@ pub struct HarvestResult {
     /// Directory reference
     pub directory_ref: String,
     /// Options used
-    pub options: HarvestOptions,
+    pub options: ScanOptions,
 }
 
-impl HarvestResult {
+impl ScanResult {
     /// Generate WXS fragment
     pub fn to_wxs(&self) -> String {
         let mut wxs = String::new();
@@ -173,7 +173,7 @@ impl HarvestResult {
         wxs
     }
 
-    fn write_directory(&self, wxs: &mut String, dir: &HarvestedDirectory, indent: usize) {
+    fn write_directory(&self, wxs: &mut String, dir: &ScannedDirectory, indent: usize) {
         let pad = "  ".repeat(indent);
 
         // Write directory element if not root or if we want the root
@@ -238,8 +238,8 @@ impl HarvestResult {
     }
 
     /// Get statistics
-    pub fn stats(&self) -> HarvestStats {
-        HarvestStats {
+    pub fn stats(&self) -> ScanStats {
+        ScanStats {
             total_files: self.files.len(),
             total_directories: self.directories.len(),
             total_components: self.files.len(),
@@ -247,29 +247,29 @@ impl HarvestResult {
     }
 }
 
-/// Statistics about harvest
+/// Statistics about scan
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
-pub struct HarvestStats {
+pub struct ScanStats {
     pub total_files: usize,
     pub total_directories: usize,
     pub total_components: usize,
 }
 
-/// File harvester
-pub struct Harvester {
-    options: HarvestOptions,
+/// Directory scanner
+pub struct Scanner {
+    options: ScanOptions,
     exclude_matchers: Vec<glob::Pattern>,
     include_matchers: Vec<glob::Pattern>,
 }
 
-impl Default for Harvester {
+impl Default for Scanner {
     fn default() -> Self {
-        Self::new(HarvestOptions::default())
+        Self::new(ScanOptions::default())
     }
 }
 
-impl Harvester {
-    pub fn new(options: HarvestOptions) -> Self {
+impl Scanner {
+    pub fn new(options: ScanOptions) -> Self {
         let exclude_matchers: Vec<_> = options
             .exclude_patterns
             .iter()
@@ -289,31 +289,31 @@ impl Harvester {
         }
     }
 
-    /// Harvest files from a directory
-    pub fn harvest(&self, path: impl AsRef<Path>) -> Result<HarvestResult, HarvestError> {
+    /// Scan files from a directory
+    pub fn scan(&self, path: impl AsRef<Path>) -> Result<ScanResult, ScanError> {
         let path = path.as_ref();
 
         if !path.exists() {
-            return Err(HarvestError::DirectoryNotFound(
+            return Err(ScanError::DirectoryNotFound(
                 path.display().to_string(),
             ));
         }
 
         if !path.is_dir() {
-            return Err(HarvestError::InvalidPath(format!(
+            return Err(ScanError::InvalidPath(format!(
                 "Not a directory: {}",
                 path.display()
             )));
         }
 
-        let mut result = HarvestResult {
+        let mut result = ScanResult {
             component_group: self.options.component_group.clone(),
             directory_ref: self.options.directory_ref.clone(),
             options: self.options.clone(),
             ..Default::default()
         };
 
-        let root_dir = self.harvest_directory(path, path, None)?;
+        let root_dir = self.scan_directory(path, path, None)?;
         self.flatten_files(&root_dir, &mut result.files);
         self.flatten_directories(&root_dir, &mut result.directories);
         result.root = Some(root_dir);
@@ -321,12 +321,12 @@ impl Harvester {
         Ok(result)
     }
 
-    fn harvest_directory(
+    fn scan_directory(
         &self,
         path: &Path,
         root: &Path,
         parent_id: Option<&str>,
-    ) -> Result<HarvestedDirectory, HarvestError> {
+    ) -> Result<ScannedDirectory, ScanError> {
         let name = path
             .file_name()
             .map(|n| n.to_string_lossy().to_string())
@@ -334,7 +334,7 @@ impl Harvester {
 
         let id = self.generate_directory_id(&name, parent_id);
 
-        let mut dir = HarvestedDirectory {
+        let mut dir = ScannedDirectory {
             id: id.clone(),
             name,
             parent_id: parent_id.map(|s| s.to_string()),
@@ -366,7 +366,7 @@ impl Harvester {
             }
 
             if entry_path.is_dir() {
-                let subdir = self.harvest_directory(&entry_path, root, Some(&id))?;
+                let subdir = self.scan_directory(&entry_path, root, Some(&id))?;
                 if !subdir.files.is_empty() || !subdir.subdirs.is_empty() {
                     dir.subdirs.push(subdir);
                 }
@@ -376,7 +376,7 @@ impl Harvester {
                     continue;
                 }
 
-                let file = self.harvest_file(&entry_path, root, &id)?;
+                let file = self.scan_file(&entry_path, root, &id)?;
                 dir.files.push(file);
             }
         }
@@ -384,12 +384,12 @@ impl Harvester {
         Ok(dir)
     }
 
-    fn harvest_file(
+    fn scan_file(
         &self,
         path: &Path,
         root: &Path,
         _parent_id: &str,
-    ) -> Result<HarvestedFile, HarvestError> {
+    ) -> Result<ScannedFile, ScanError> {
         let name = path
             .file_name()
             .map(|n| n.to_string_lossy().to_string())
@@ -406,7 +406,7 @@ impl Harvester {
             "*".to_string()
         };
 
-        Ok(HarvestedFile {
+        Ok(ScannedFile {
             component_id,
             file_id,
             source_path: path.to_path_buf(),
@@ -473,14 +473,14 @@ impl Harvester {
         format!("{:08x}", hasher.finish() & 0xFFFFFFFF)
     }
 
-    fn flatten_files(&self, dir: &HarvestedDirectory, files: &mut Vec<HarvestedFile>) {
+    fn flatten_files(&self, dir: &ScannedDirectory, files: &mut Vec<ScannedFile>) {
         files.extend(dir.files.clone());
         for subdir in &dir.subdirs {
             self.flatten_files(subdir, files);
         }
     }
 
-    fn flatten_directories(&self, dir: &HarvestedDirectory, dirs: &mut Vec<String>) {
+    fn flatten_directories(&self, dir: &ScannedDirectory, dirs: &mut Vec<String>) {
         if !dir.id.is_empty() {
             dirs.push(dir.id.clone());
         }
@@ -490,9 +490,9 @@ impl Harvester {
     }
 }
 
-/// Quick harvest with default options
-pub fn harvest(path: impl AsRef<Path>) -> Result<HarvestResult, HarvestError> {
-    Harvester::default().harvest(path)
+/// Quick scan with default options
+pub fn scan(path: impl AsRef<Path>) -> Result<ScanResult, ScanError> {
+    Scanner::default().scan(path)
 }
 
 #[cfg(test)]
@@ -511,11 +511,11 @@ mod tests {
     }
 
     #[test]
-    fn test_harvest_basic() {
+    fn test_scan_basic() {
         let dir = tempdir().unwrap();
         create_test_structure(dir.path());
 
-        let result = harvest(dir.path()).unwrap();
+        let result = scan(dir.path()).unwrap();
 
         assert_eq!(result.files.len(), 3);
         assert!(result.files.iter().any(|f| f.name == "app.exe"));
@@ -524,11 +524,11 @@ mod tests {
     }
 
     #[test]
-    fn test_harvest_generates_wxs() {
+    fn test_scan_generates_wxs() {
         let dir = tempdir().unwrap();
         create_test_structure(dir.path());
 
-        let result = harvest(dir.path()).unwrap();
+        let result = scan(dir.path()).unwrap();
         let wxs = result.to_wxs();
 
         assert!(wxs.contains("<Wix"));
@@ -539,19 +539,19 @@ mod tests {
     }
 
     #[test]
-    fn test_harvest_empty_dir() {
+    fn test_scan_empty_dir() {
         let dir = tempdir().unwrap();
 
-        let result = harvest(dir.path()).unwrap();
+        let result = scan(dir.path()).unwrap();
 
         assert!(result.files.is_empty());
     }
 
     #[test]
-    fn test_harvest_nonexistent_dir() {
-        let result = harvest("/nonexistent/path");
+    fn test_scan_nonexistent_dir() {
+        let result = scan("/nonexistent/path");
 
-        assert!(matches!(result, Err(HarvestError::DirectoryNotFound(_))));
+        assert!(matches!(result, Err(ScanError::DirectoryNotFound(_))));
     }
 
     #[test]
@@ -561,12 +561,12 @@ mod tests {
         File::create(dir.path().join("debug.pdb")).unwrap();
         File::create(dir.path().join("test.log")).unwrap();
 
-        let options = HarvestOptions {
+        let options = ScanOptions {
             exclude_patterns: vec!["*.pdb".to_string(), "*.log".to_string()],
             ..Default::default()
         };
-        let harvester = Harvester::new(options);
-        let result = harvester.harvest(dir.path()).unwrap();
+        let scanner = Scanner::new(options);
+        let result = scanner.scan(dir.path()).unwrap();
 
         assert_eq!(result.files.len(), 1);
         assert_eq!(result.files[0].name, "app.exe");
@@ -579,13 +579,13 @@ mod tests {
         File::create(dir.path().join("helper.dll")).unwrap();
         File::create(dir.path().join("readme.txt")).unwrap();
 
-        let options = HarvestOptions {
+        let options = ScanOptions {
             include_patterns: vec!["*.exe".to_string(), "*.dll".to_string()],
             exclude_patterns: vec![],
             ..Default::default()
         };
-        let harvester = Harvester::new(options);
-        let result = harvester.harvest(dir.path()).unwrap();
+        let scanner = Scanner::new(options);
+        let result = scanner.scan(dir.path()).unwrap();
 
         assert_eq!(result.files.len(), 2);
         assert!(result.files.iter().all(|f| f.name.ends_with(".exe") || f.name.ends_with(".dll")));
@@ -596,12 +596,12 @@ mod tests {
         let dir = tempdir().unwrap();
         File::create(dir.path().join("app.exe")).unwrap();
 
-        let options = HarvestOptions {
+        let options = ScanOptions {
             generate_guids: true,
             ..Default::default()
         };
-        let harvester = Harvester::new(options);
-        let result = harvester.harvest(dir.path()).unwrap();
+        let scanner = Scanner::new(options);
+        let result = scanner.scan(dir.path()).unwrap();
 
         assert!(!result.files[0].guid.is_empty());
         assert_ne!(result.files[0].guid, "*");
@@ -614,12 +614,12 @@ mod tests {
         let dir = tempdir().unwrap();
         File::create(dir.path().join("app.exe")).unwrap();
 
-        let options = HarvestOptions {
+        let options = ScanOptions {
             generate_guids: false,
             ..Default::default()
         };
-        let harvester = Harvester::new(options);
-        let result = harvester.harvest(dir.path()).unwrap();
+        let scanner = Scanner::new(options);
+        let result = scanner.scan(dir.path()).unwrap();
 
         assert_eq!(result.files[0].guid, "*");
     }
@@ -629,12 +629,12 @@ mod tests {
         let dir = tempdir().unwrap();
         File::create(dir.path().join("app.exe")).unwrap();
 
-        let options = HarvestOptions {
+        let options = ScanOptions {
             component_group: "MyAppFiles".to_string(),
             ..Default::default()
         };
-        let harvester = Harvester::new(options);
-        let result = harvester.harvest(dir.path()).unwrap();
+        let scanner = Scanner::new(options);
+        let result = scanner.scan(dir.path()).unwrap();
 
         assert_eq!(result.component_group, "MyAppFiles");
         let wxs = result.to_wxs();
@@ -646,12 +646,12 @@ mod tests {
         let dir = tempdir().unwrap();
         File::create(dir.path().join("app.exe")).unwrap();
 
-        let options = HarvestOptions {
+        let options = ScanOptions {
             directory_ref: "ProgramFilesFolder".to_string(),
             ..Default::default()
         };
-        let harvester = Harvester::new(options);
-        let result = harvester.harvest(dir.path()).unwrap();
+        let scanner = Scanner::new(options);
+        let result = scanner.scan(dir.path()).unwrap();
 
         let wxs = result.to_wxs();
         assert!(wxs.contains("DirectoryRef Id=\"ProgramFilesFolder\""));
@@ -662,12 +662,12 @@ mod tests {
         let dir = tempdir().unwrap();
         File::create(dir.path().join("app.exe")).unwrap();
 
-        let options = HarvestOptions {
+        let options = ScanOptions {
             win64: true,
             ..Default::default()
         };
-        let harvester = Harvester::new(options);
-        let result = harvester.harvest(dir.path()).unwrap();
+        let scanner = Scanner::new(options);
+        let result = scanner.scan(dir.path()).unwrap();
 
         let wxs = result.to_wxs();
         assert!(wxs.contains("Bitness=\"always64\""));
@@ -678,12 +678,12 @@ mod tests {
         let dir = tempdir().unwrap();
         File::create(dir.path().join("app.exe")).unwrap();
 
-        let options = HarvestOptions {
+        let options = ScanOptions {
             source_var: Some("SourceDir".to_string()),
             ..Default::default()
         };
-        let harvester = Harvester::new(options);
-        let result = harvester.harvest(dir.path()).unwrap();
+        let scanner = Scanner::new(options);
+        let result = scanner.scan(dir.path()).unwrap();
 
         let wxs = result.to_wxs();
         assert!(wxs.contains("$(var.SourceDir)"));
@@ -695,7 +695,7 @@ mod tests {
         fs::create_dir_all(dir.path().join("a/b/c")).unwrap();
         File::create(dir.path().join("a/b/c/deep.txt")).unwrap();
 
-        let result = harvest(dir.path()).unwrap();
+        let result = scan(dir.path()).unwrap();
 
         assert_eq!(result.files.len(), 1);
         assert!(result.directories.len() >= 3); // a, b, c
@@ -707,12 +707,12 @@ mod tests {
         File::create(dir.path().join("visible.txt")).unwrap();
         File::create(dir.path().join(".hidden")).unwrap();
 
-        let options = HarvestOptions {
+        let options = ScanOptions {
             include_hidden: false,
             ..Default::default()
         };
-        let harvester = Harvester::new(options);
-        let result = harvester.harvest(dir.path()).unwrap();
+        let scanner = Scanner::new(options);
+        let result = scanner.scan(dir.path()).unwrap();
 
         assert_eq!(result.files.len(), 1);
         assert_eq!(result.files[0].name, "visible.txt");
@@ -724,23 +724,23 @@ mod tests {
         File::create(dir.path().join("visible.txt")).unwrap();
         File::create(dir.path().join(".hidden")).unwrap();
 
-        let options = HarvestOptions {
+        let options = ScanOptions {
             include_hidden: true,
             exclude_patterns: vec![],
             ..Default::default()
         };
-        let harvester = Harvester::new(options);
-        let result = harvester.harvest(dir.path()).unwrap();
+        let scanner = Scanner::new(options);
+        let result = scanner.scan(dir.path()).unwrap();
 
         assert_eq!(result.files.len(), 2);
     }
 
     #[test]
-    fn test_harvest_stats() {
+    fn test_scan_stats() {
         let dir = tempdir().unwrap();
         create_test_structure(dir.path());
 
-        let result = harvest(dir.path()).unwrap();
+        let result = scan(dir.path()).unwrap();
         let stats = result.stats();
 
         assert_eq!(stats.total_files, 3);
@@ -753,12 +753,12 @@ mod tests {
         let dir = tempdir().unwrap();
         File::create(dir.path().join("app.exe")).unwrap();
 
-        let options = HarvestOptions {
+        let options = ScanOptions {
             component_prefix: "MyApp".to_string(),
             ..Default::default()
         };
-        let harvester = Harvester::new(options);
-        let result = harvester.harvest(dir.path()).unwrap();
+        let scanner = Scanner::new(options);
+        let result = scanner.scan(dir.path()).unwrap();
 
         assert!(result.files[0].component_id.starts_with("MyApp_"));
     }
@@ -769,8 +769,8 @@ mod tests {
         let file_path = dir.path().join("file.txt");
         File::create(&file_path).unwrap();
 
-        let result = Harvester::default().harvest(&file_path);
-        assert!(matches!(result, Err(HarvestError::InvalidPath(_))));
+        let result = Scanner::default().scan(&file_path);
+        assert!(matches!(result, Err(ScanError::InvalidPath(_))));
     }
 
     #[test]
@@ -778,12 +778,12 @@ mod tests {
         let dir = tempdir().unwrap();
         File::create(dir.path().join("app.exe")).unwrap();
 
-        let options = HarvestOptions {
+        let options = ScanOptions {
             generate_registry_key: true,
             ..Default::default()
         };
-        let harvester = Harvester::new(options);
-        let result = harvester.harvest(dir.path()).unwrap();
+        let scanner = Scanner::new(options);
+        let result = scanner.scan(dir.path()).unwrap();
 
         let wxs = result.to_wxs();
         assert!(wxs.contains("<RegistryValue"));
@@ -799,7 +799,7 @@ mod tests {
         File::create(dir.path().join("a/file.txt")).unwrap();
         File::create(dir.path().join("b/file.txt")).unwrap();
 
-        let result = harvest(dir.path()).unwrap();
+        let result = scan(dir.path()).unwrap();
 
         let file_ids: HashSet<_> = result.files.iter().map(|f| &f.file_id).collect();
         assert_eq!(file_ids.len(), 2); // Should be unique
@@ -807,7 +807,7 @@ mod tests {
 
     #[test]
     fn test_default_options() {
-        let options = HarvestOptions::default();
+        let options = ScanOptions::default();
 
         assert!(!options.generate_guids);
         assert!(!options.include_hidden);
